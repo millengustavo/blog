@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Introduction to Machine Learning with Python: A Guide for Data Scientists | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Introduction to Machine Learning with Python: A Guide for Data Scientists" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-22T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Introduction to Machine Learning with Python: A Guide for Data Scientists","dateModified":"2020-01-22T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-22T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Introduction to Machine Learning with Python: A Guide for Data Scientists | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Introduction to Machine Learning with Python: A Guide for Data Scientists" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-22T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Introduction to Machine Learning with Python: A Guide for Data Scientists","dateModified":"2020-01-22T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-22T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Introduction to Machine Learning with Python: A Guide for Data Scientists</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-22T00:00:00-06:00" itemprop="datePublished">
+        Jan 22, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      15 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-introduction">1. Introduction</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#why-ml">Why ML?</a></li>
+<li class="toc-entry toc-h2"><a href="#knowing-your-task-and-knowing-your-data">Knowing your task and knowing your data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#jupyter-notebook">Jupyter notebook</a></li>
+<li class="toc-entry toc-h3"><a href="#numpy">NumPy</a></li>
+<li class="toc-entry toc-h3"><a href="#scipy">SciPy</a></li>
+<li class="toc-entry toc-h3"><a href="#matplotlib">Matplotlib</a></li>
+<li class="toc-entry toc-h3"><a href="#pandas">Pandas</a></li>
+<li class="toc-entry toc-h3"><a href="#mglearn">mglearn</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#first-things-first-look-at-your-data">First things first: look at your data</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#2-supervised-learning">2. Supervised Learning</a></li>
+<li class="toc-entry toc-h1"><a href="#3-unsupervised-learning-and-preprocessing">3. Unsupervised Learning and Preprocessing</a></li>
+<li class="toc-entry toc-h1"><a href="#4-representing-data-and-engineering-features">4. Representing Data and Engineering Features</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#categorical-variables">Categorical Variables</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#one-hot-encoding-dummy-variables">One-Hot Encoding (Dummy Variables)</a></li>
+<li class="toc-entry toc-h3"><a href="#numbers-can-encode-categoricals">Numbers Can Encode Categoricals</a></li>
+<li class="toc-entry toc-h3"><a href="#binning-discretization-linear-models-and-trees">Binning, Discretization, Linear Models and Trees</a></li>
+<li class="toc-entry toc-h3"><a href="#interactions-and-polynomials">Interactions and Polynomials</a></li>
+<li class="toc-entry toc-h3"><a href="#univariate-nonlinear-transformations">Univariate Nonlinear Transformations</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#automatic-feature-selection">Automatic Feature Selection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#univariate-statistics">Univariate Statistics</a></li>
+<li class="toc-entry toc-h3"><a href="#model-based-feature-selection">Model-Based Feature Selection</a></li>
+<li class="toc-entry toc-h3"><a href="#iterative-feature-selection">Iterative Feature Selection</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#utilizing-expert-knowledge">Utilizing Expert Knowledge</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-model-evaluation-and-improvement">5. Model Evaluation and Improvement</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#cross-validation">Cross-Validation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#benefits-of-cross-validation">Benefits of Cross-Validation</a></li>
+<li class="toc-entry toc-h3"><a href="#stratified-k-fold-cross-validation">Stratified k-Fold Cross-Validation</a></li>
+<li class="toc-entry toc-h3"><a href="#leave-one-out-cross-validation">Leave-one-out cross-validation</a></li>
+<li class="toc-entry toc-h3"><a href="#shuffle-split-cross-validation">Shuffle-split cross-validation</a></li>
+<li class="toc-entry toc-h3"><a href="#cross-validation-with-groups">Cross-validation with groups</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#grid-search">Grid Search</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-danger-of-overfitting-the-parameters-and-the-validation-set">The danger of overfitting the parameters and the validation set</a></li>
+<li class="toc-entry toc-h3"><a href="#grid-search-with-cross-validation">Grid Search with Cross-Validation</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#analyzing-the-result-of-cross-validation">Analyzing the result of cross-validation</a></li>
+<li class="toc-entry toc-h2"><a href="#nested-cross-validation">Nested cross-validation</a></li>
+<li class="toc-entry toc-h2"><a href="#evaluation-metrics-and-scoring">Evaluation Metrics and Scoring</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#keep-the-end-goal-in-mind">Keep the end goal in mind</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#metrics-for-binary-classification">Metrics for binary classification</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#kinds-of-errors">Kinds of errors</a></li>
+<li class="toc-entry toc-h3"><a href="#imbalanced-datasets">Imbalanced datasets</a></li>
+<li class="toc-entry toc-h3"><a href="#confusion-matrices">Confusion matrices</a></li>
+<li class="toc-entry toc-h3"><a href="#taking-uncertainty-into-account">Taking uncertainty into account</a></li>
+<li class="toc-entry toc-h3"><a href="#precision-recall-curves-and-roc-curves">Precision-recall curves and ROC curves</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#metrics-for-multiclass-classification">Metrics for Multiclass Classification</a></li>
+<li class="toc-entry toc-h2"><a href="#regression-metrics">Regression metrics</a></li>
+<li class="toc-entry toc-h2"><a href="#using-evaluation-metrics-in-model-selection">Using evaluation metrics in model selection</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6-algorithm-chains-and-pipelines">6. Algorithm Chains and Pipelines</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#parameter-selection-with-preprocessing">Parameter selection with preprocessing</a></li>
+<li class="toc-entry toc-h2"><a href="#building-pipelines">Building Pipelines</a></li>
+<li class="toc-entry toc-h2"><a href="#information-leakage">Information Leakage</a></li>
+<li class="toc-entry toc-h2"><a href="#the-general-pipeline-interface">The General Pipeline Interface</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#convenient-pipeline-creation-with-make_pipeline">Convenient pipeline creation with make_pipeline</a></li>
+<li class="toc-entry toc-h3"><a href="#accessing-step-attributes">Accessing step attributes</a></li>
+<li class="toc-entry toc-h3"><a href="#grid-searching-which-model-to-use">Grid-Searching Which Model to Use</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#7-working-with-text-data">7. Working with Text Data</a></li>
+<li class="toc-entry toc-h1"><a href="#8-wrapping-up">8. Wrapping Up</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#approaching-a-ml-problem">Approaching a ML problem</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#humans-in-the-loop">Humans in the loop</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#from-prototype-to-production">From prototype to production</a></li>
+<li class="toc-entry toc-h2"><a href="#testing-production-systems">Testing production systems</a></li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Authors: Andreas C. Müller and Sarah Guido</p>
+
+<h1 id="1-introduction">
+<a class="anchor" href="#1-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Introduction</h1>
+<h2 id="why-ml">
+<a class="anchor" href="#why-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why ML?</h2>
+<p>Using handcoded rules to make decisions has two disadvantages:</p>
+<ul>
+  <li>logic is specific to a domain and task. Change the task slightly -&gt; rewrite the whole system</li>
+  <li>designing rules requires a deep understanding of how a decision should be made by a human expert</li>
+</ul>
+
+<h2 id="knowing-your-task-and-knowing-your-data">
+<a class="anchor" href="#knowing-your-task-and-knowing-your-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Knowing your task and knowing your data</h2>
+<p>When building a ML solution:</p>
+<ul>
+  <li>What question(s) am I trying to answer? Do I think the data collected can answer that question?</li>
+  <li>What is the best way to phrase my question(s) as a machine learning problem?</li>
+  <li>Have I collected enough data to represent the problem I want to solve?</li>
+  <li>What features of the data did I extract, and will these enable the right predictions?</li>
+  <li>How will I measure success in my application?</li>
+  <li>How will the machine learning solution interact with other parts of my research or business product?</li>
+</ul>
+
+<blockquote>
+  <p>Many spend a lot of time building complex ML solutions, only to find out they don’t solve the right problem. When going deep into the technical aspects of ML, it is easy to lose sight of the ultimate goals</p>
+</blockquote>
+
+<h3 id="jupyter-notebook">
+<a class="anchor" href="#jupyter-notebook" aria-hidden="true"><span class="octicon octicon-link"></span></a>Jupyter notebook</h3>
+<p>Interactive environment for running code in the browser</p>
+
+<h3 id="numpy">
+<a class="anchor" href="#numpy" aria-hidden="true"><span class="octicon octicon-link"></span></a>NumPy</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">ndarray</code>: multidimensional (<em>n</em>) array with elements of the same type</li>
+  <li>high-level mathematical functions, such as linear algebra, Fourier transform, pseudorandom number generators</li>
+</ul>
+
+<h3 id="scipy">
+<a class="anchor" href="#scipy" aria-hidden="true"><span class="octicon octicon-link"></span></a>SciPy</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">scipy.sparse</code>: provides sparse matrices</li>
+  <li>advanced linear algebra routines, mathematical function optimization, signal processing, statistical distributions</li>
+</ul>
+
+<h3 id="matplotlib">
+<a class="anchor" href="#matplotlib" aria-hidden="true"><span class="octicon octicon-link"></span></a>Matplotlib</h3>
+<ul>
+  <li>On jupyter: <code class="highlighter-rouge">%matplotlib inline</code>
+</li>
+  <li>Primary scientific plotting library in Python</li>
+</ul>
+
+<h3 id="pandas">
+<a class="anchor" href="#pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas</h3>
+<p>Library for data wrangling and analysis</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">DataFrame</code>: allows each column to have a separate type</li>
+</ul>
+
+<h3 id="mglearn">
+<a class="anchor" href="#mglearn" aria-hidden="true"><span class="octicon octicon-link"></span></a>mglearn</h3>
+<p>Library of utility functions wrote for this specific book. Avoid boilerplate with plotting and loading data</p>
+
+<h2 id="first-things-first-look-at-your-data">
+<a class="anchor" href="#first-things-first-look-at-your-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>First things first: look at your data</h2>
+<p>Before building a ML model, inspect the data:</p>
+<ul>
+  <li>task easily solvable without ML</li>
+  <li>desired information may not be contained in the data</li>
+  <li>find abnormalities and peculiarities</li>
+  <li>real world: inconsistencies in the data and unexpected measurements are very common</li>
+  <li>
+<em>scatter plot</em>: <code class="highlighter-rouge">pd.scatter_matrix</code>
+</li>
+</ul>
+
+<h1 id="2-supervised-learning">
+<a class="anchor" href="#2-supervised-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Supervised Learning</h1>
+
+<h1 id="3-unsupervised-learning-and-preprocessing">
+<a class="anchor" href="#3-unsupervised-learning-and-preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Unsupervised Learning and Preprocessing</h1>
+
+<h1 id="4-representing-data-and-engineering-features">
+<a class="anchor" href="#4-representing-data-and-engineering-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Representing Data and Engineering Features</h1>
+<p><strong>Feature engineering</strong>: how to represent your data best for a particular application -&gt; can have a bigger influence on the performance of a model than the exact parameters you choose</p>
+
+<h2 id="categorical-variables">
+<a class="anchor" href="#categorical-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Categorical Variables</h2>
+<h3 id="one-hot-encoding-dummy-variables">
+<a class="anchor" href="#one-hot-encoding-dummy-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>One-Hot Encoding (Dummy Variables)</h3>
+<p>Replace a categorical variable with one or more features that can have the values 0 and 1 -&gt; introduce a new feature per category</p>
+
+<blockquote>
+  <p>In pandas <code class="highlighter-rouge">pd.get_dummies(data)</code> automatically transform all columns that have object type or are categorical</p>
+</blockquote>
+
+<h3 id="numbers-can-encode-categoricals">
+<a class="anchor" href="#numbers-can-encode-categoricals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numbers Can Encode Categoricals</h3>
+<p>The <code class="highlighter-rouge">get_dummies</code> function in pandas treats all numbers as continuous and will not create dummy variables for them. To get around this, use scikit-learn’s <code class="highlighter-rouge">OneHotEncoder</code></p>
+
+<h3 id="binning-discretization-linear-models-and-trees">
+<a class="anchor" href="#binning-discretization-linear-models-and-trees" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binning, Discretization, Linear Models and Trees</h3>
+<p>One way to make linear models more powerful on continuous data is to use <em>binning</em> (aka <em>discretization</em>) of the feature to split it up into multiple features</p>
+
+<p>Binning features generally has no beneficial effect for tree-based models, as these models can learn to split up the data anywhere</p>
+
+<h3 id="interactions-and-polynomials">
+<a class="anchor" href="#interactions-and-polynomials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interactions and Polynomials</h3>
+<p>Enrich a feature representation, particularly for linear models, is adding <em>interaction features</em> and <em>polynomial features</em> of the original data</p>
+
+<h3 id="univariate-nonlinear-transformations">
+<a class="anchor" href="#univariate-nonlinear-transformations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Univariate Nonlinear Transformations</h3>
+<p>Applying mathematical functions like:</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">log</code>, <code class="highlighter-rouge">exp</code>: help adjusting the relative scales in the data</li>
+  <li>
+<code class="highlighter-rouge">sin</code>, <code class="highlighter-rouge">cos</code>: dealing with data that encodes periodic patterns</li>
+</ul>
+
+<p>Most models work best when each feature (and in regression also the target) is loosely Gaussian distributed -&gt; histogram should have something resembling the familiar “bell curve” shape. Using <code class="highlighter-rouge">log</code> or <code class="highlighter-rouge">exp</code> is a hacky but simple and efficient way to achieve this -&gt; helpful when dealing with integer count data</p>
+
+<blockquote>
+  <p>These kind of transformations are irrelevant for tree-based models, but might be essential for linear models. Sometimes it’s also a good idea to transform the target variable in regression</p>
+</blockquote>
+
+<h2 id="automatic-feature-selection">
+<a class="anchor" href="#automatic-feature-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Automatic Feature Selection</h2>
+<p>Adding more features makes all models more complex, and so increases the chance of overfitting</p>
+
+<p>It can be good idea to reduce the number of features to only the most useful ones, and discard the rest</p>
+
+<h3 id="univariate-statistics">
+<a class="anchor" href="#univariate-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Univariate Statistics</h3>
+<p>Compute whether there is a statistically significant relationship between each feature and the target -&gt; the features with highest confidence are selected. Also know as <em>analysis of variance</em> (ANOVA) for classification</p>
+
+<p>Only consider each feature individually. <em>f_classify</em> or <em>f_regression</em> tests in scikit-learn and then <em>SelectKBest</em> or <em>SelectPercentile</em></p>
+
+<h3 id="model-based-feature-selection">
+<a class="anchor" href="#model-based-feature-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model-Based Feature Selection</h3>
+<p>Uses a supervised ML model to judge the importance of each feature, and keeps only the most important ones</p>
+<ul>
+  <li>Decision tree-based models: <em>feature_importances_</em> attribute</li>
+  <li>Linear models: coefficients can capture feature importances</li>
+</ul>
+
+<blockquote>
+  <p>Model-based considers all features at once, so can capture interactions. <em>SelectFromModel</em></p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">SelectFromModel</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="n">select</span> <span class="o">=</span> <span class="n">SelectFromModel</span><span class="p">(</span>
+    <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="n">threshold</span><span class="o">=</span><span class="s">"median"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="iterative-feature-selection">
+<a class="anchor" href="#iterative-feature-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Iterative Feature Selection</h3>
+<p>A series of models are built, with varying numbers of features. Two methods:</p>
+<ul>
+  <li>starting with no features and adding one by one</li>
+  <li>starting with all features and removing one by one</li>
+</ul>
+
+<p>More computationally expensive</p>
+
+<p><em>recursive feature elimination</em> (RFE): starts with all features, builds a model, and discards the least important feature according to the model -&gt; repeat</p>
+
+<blockquote>
+  <p><strong>Feature Selection</strong>: Can speed up prediction, allow for more interpretable model. In most real-world cases, is unlikely to provide large gains in performance</p>
+</blockquote>
+
+<h2 id="utilizing-expert-knowledge">
+<a class="anchor" href="#utilizing-expert-knowledge" aria-hidden="true"><span class="octicon octicon-link"></span></a>Utilizing Expert Knowledge</h2>
+<p>Prior knowledge about the nature of the task can be encoded in the features to aid a ML algorithm</p>
+
+<blockquote>
+  <p>Adding a feature does not force a machine learning algorithm to use it, and even if the holiday information turns out to be noninformative for flight prices, augmenting the data with this information doesn’t hurt.</p>
+</blockquote>
+
+<ul>
+  <li>COOL example with bike rental on the book -&gt; check to see the coefficients learned by the linear model</li>
+</ul>
+
+<h1 id="5-model-evaluation-and-improvement">
+<a class="anchor" href="#5-model-evaluation-and-improvement" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Model Evaluation and Improvement</h1>
+<h2 id="cross-validation">
+<a class="anchor" href="#cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross-Validation</h2>
+<p>Data is split repeatedly and multiple models are trained. Most common: <em>k-fold cross-validation</em></p>
+
+<blockquote>
+  <p>Scikit-learn: <code class="highlighter-rouge">cross_val_score</code> from the <em>model_seleciton</em> module</p>
+</blockquote>
+
+<p>High variance in the metric (e.g., accuracy) between folds -&gt; model is very dependent on the particular folds for train, or it could also be consequence of the small size of the dataset</p>
+
+<h3 id="benefits-of-cross-validation">
+<a class="anchor" href="#benefits-of-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benefits of Cross-Validation</h3>
+<ul>
+  <li>avoid “lucky”/”unlucky” random train_test_split</li>
+  <li>in cross-validation each example will be in the training set exactly once: each example is in one of the folds, and each fold is the test set once -&gt; the model needs to generalize well to all of the samples in the dataset for all of the cross-validation scores to be high</li>
+  <li>multiple splits provides information about how sensitive the model is to the selection of the training set -&gt; idea of the best/worst case scenarios</li>
+  <li>use data more effectively: more data usually leads to more accurate models</li>
+</ul>
+
+<p>Disadvantage: increased computational cost -&gt; train <em>k</em> models instead of one</p>
+
+<blockquote>
+  <p>Cross-validation does not return a model, its purpose is only to evaluate how well a given algorithm will generalize when trained on a specific dataset</p>
+</blockquote>
+
+<h3 id="stratified-k-fold-cross-validation">
+<a class="anchor" href="#stratified-k-fold-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stratified k-Fold Cross-Validation</h3>
+<p><em>Stratified k-fold cross-validation</em>: split the data such that the proportions between classes are the same in each fold as they are in the whole dataset</p>
+
+<p>Results in more reliable estimates of generalization performance</p>
+
+<p>For regression scikit-learn uses the standard <em>k-fold cross-validation</em> by default</p>
+
+<h3 id="leave-one-out-cross-validation">
+<a class="anchor" href="#leave-one-out-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Leave-one-out cross-validation</h3>
+<p><em>k-fold cross-validation</em> where each fold is a single sample. <code class="highlighter-rouge">LeaveOneOut</code> on sklearn.model_selection</p>
+
+<p>Can be very time consuming for large datasets, but sometimes provides better estimates on small datasets</p>
+
+<h3 id="shuffle-split-cross-validation">
+<a class="anchor" href="#shuffle-split-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shuffle-split cross-validation</h3>
+<p>Each split samples train_size many points for the training set and test_size many (disjoint) points for the test set. This splitting is repeated n_iter times</p>
+
+<ul>
+  <li>allows for control over the number of iterations independently of the training and test sizes</li>
+  <li>allows for using only part of the data in each iteration by providing train_size and test_size that don’t add up to one -&gt; subsampling like that can be useful for experimenting with large datasets</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">ShuffleSplit</code> and <code class="highlighter-rouge">StratifiedShuffleSplit</code> on sklearn</p>
+</blockquote>
+
+<h3 id="cross-validation-with-groups">
+<a class="anchor" href="#cross-validation-with-groups" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross-validation with groups</h3>
+<p>When there are groups in the data that are highly related</p>
+
+<p><code class="highlighter-rouge">GroupKFold</code>: takes an array of groups as arguments -&gt; indicates groups in the data that should not be split when creating the training and test sets, and should not be confused with the class label</p>
+
+<blockquote>
+  <p>GroupKFold: important for medical applications (multiple samples for same patient), also speech recognition</p>
+</blockquote>
+
+<h2 id="grid-search">
+<a class="anchor" href="#grid-search" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grid Search</h2>
+<p>Trying all possible combinations of the parameters of interest</p>
+
+<h3 id="the-danger-of-overfitting-the-parameters-and-the-validation-set">
+<a class="anchor" href="#the-danger-of-overfitting-the-parameters-and-the-validation-set" aria-hidden="true"><span class="octicon octicon-link"></span></a>The danger of overfitting the parameters and the validation set</h3>
+<p>To avoid this split the data in three sets: the training set to build the model, the validation (or development) set to select the parameters of the model, and the test set to evaluate the performance of the selected parameters</p>
+
+<blockquote>
+  <p>After selecting the best parameters using the validation set, rebuild the model using the parameter settings found, but now training on both the training data and the validation data</p>
+</blockquote>
+
+<p><strong>Important to keep the distinction of training, validation and test sets clear!</strong> Evaluating more than one model on the test set and choosing the better of the two will result in an overly optimistic estimate of how accurate the model is -&gt; “Leak” information from the test set into the model</p>
+
+<h3 id="grid-search-with-cross-validation">
+<a class="anchor" href="#grid-search-with-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grid Search with Cross-Validation</h3>
+<p>Beautiful plot from <code class="highlighter-rouge">mglearn</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_cross_val_selection</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">GridSearchCV</code> on sklearn: implemented in the form of an estimator -&gt; not only searchs for the best parameters, but also automatically fits a new model on the whole training dataset with the parameters that yielded the best CV performance</p>
+
+<blockquote>
+  <p><code class="highlighter-rouge">best_score_</code> != <code class="highlighter-rouge">score</code>: first stores the mean CV accuracy performed in the training set, second evaluate the output of the predict method of the model trained on the whole training set!</p>
+</blockquote>
+
+<h2 id="analyzing-the-result-of-cross-validation">
+<a class="anchor" href="#analyzing-the-result-of-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Analyzing the result of cross-validation</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># cool example of a heatmap using SVM
+</span><span class="n">mglearn</span><span class="o">.</span><span class="n">tools</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">scores</span><span class="p">,</span> <span class="n">xlabel</span><span class="o">=</span><span class="s">'gamma'</span><span class="p">,</span> <span class="n">xticklabels</span><span class="o">=</span><span class="n">param_grid</span><span class="p">[</span><span class="s">'gamma'</span><span class="p">],</span>
+                      <span class="n">ylabel</span><span class="o">=</span><span class="s">'C'</span><span class="p">,</span> <span class="n">yticklabels</span><span class="o">=</span><span class="n">param_grid</span><span class="p">[</span><span class="s">'C'</span><span class="p">],</span> <span class="n">cmap</span><span class="o">=</span><span class="s">"viridis"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Optimum values for each parameter on the edges of the plot: parameters not large enough!</p>
+
+<h2 id="nested-cross-validation">
+<a class="anchor" href="#nested-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nested cross-validation</h2>
+<p>An outer loop over splits of the data into training and test sets. For each of them, a grid search is run (which might result in different best parameters for each split in the outer loop). Then, for each outer split, the test set score using the best settings is reported</p>
+
+<ul>
+  <li>Rarely used in practice</li>
+  <li>Useful for evaluating how well a given model works on a particular dataset</li>
+  <li>Computationally expensive procedure</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># example of nested CV
+</span><span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">GridSearchCV</span><span class="p">(</span><span class="n">SVC</span><span class="p">(),</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">),</span>
+                         <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="evaluation-metrics-and-scoring">
+<a class="anchor" href="#evaluation-metrics-and-scoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation Metrics and Scoring</h2>
+<h3 id="keep-the-end-goal-in-mind">
+<a class="anchor" href="#keep-the-end-goal-in-mind" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keep the end goal in mind</h3>
+<ul>
+  <li>
+<em>Business metric</em>: We are interested in using the predictions as part of a larger decision-making process, you should think about the high-level goal of the application</li>
+  <li>
+<em>Business impact</em>: consequences of choosing a particular algorithm for a ML application</li>
+</ul>
+
+<p>When choosing a model or adjusting parameters, you should pick the model or parameter values that have the most positive influence on the business metric</p>
+
+<blockquote>
+  <p>Sometimes infeasible to put models in production just for testing purposes (high business risk): find some surrogate evaluation procedure (as close as possible to the business goal), using an evaluation metric that is easier to compute</p>
+</blockquote>
+
+<h2 id="metrics-for-binary-classification">
+<a class="anchor" href="#metrics-for-binary-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Metrics for binary classification</h2>
+<h3 id="kinds-of-errors">
+<a class="anchor" href="#kinds-of-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kinds of errors</h3>
+<ul>
+  <li>
+<strong>false positive</strong>: incorrect positive prediction, <strong>type I error</strong>
+</li>
+  <li>
+<strong>false negative</strong>: incorrect negative prediction, <strong>type II error</strong>
+</li>
+</ul>
+
+<h3 id="imbalanced-datasets">
+<a class="anchor" href="#imbalanced-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Imbalanced datasets</h3>
+<p>Accuracy is an inadequate measure for quantifying predictive performance in most imbalanced settings</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">pred_most_frequent</code>: model that make predictions to the most frequent class</li>
+  <li>
+<code class="highlighter-rouge">pred_dummy</code>: random predictions</li>
+</ul>
+
+<h3 id="confusion-matrices">
+<a class="anchor" href="#confusion-matrices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Confusion matrices</h3>
+<p><code class="highlighter-rouge">confusion_matrix</code></p>
+<ul>
+  <li>rows: true classes</li>
+  <li>columns: predicted classes</li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>negative class</td>
+      <td>TN</td>
+      <td>FP</td>
+    </tr>
+    <tr>
+      <td>positive class</td>
+      <td>FN</td>
+      <td>TP</td>
+    </tr>
+    <tr>
+      <td>-</td>
+      <td>predicted negative</td>
+      <td>predicted positive</td>
+    </tr>
+  </tbody>
+</table>
+
+<ul>
+  <li>
+    <p>Accuracy = (TP+TN)/(TP+TN+FP+FN)</p>
+  </li>
+  <li>
+    <p>Precision = (TP)/(TP+FP)</p>
+  </li>
+</ul>
+
+<p>Precision is used when the goal is to limit the number of false positives. AKA <em>positive predictive value (PPV)</em></p>
+
+<ul>
+  <li>Recall = (TP)/(TP+FN)</li>
+</ul>
+
+<p>Recall is used when we need to identify all positive samples; that is, when it is important to avoid false negatives. AKA <em>sensitivity</em>, <em>hit rate</em>, or <em>true positive rate (TPR)</em></p>
+
+<ul>
+  <li>F-score or f-measure or f1-score -&gt; F = 2<em>(precision</em>recall)/(precision+recall)</li>
+</ul>
+
+<p>Harmonic mean of precision and recall</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+</code></pre></div></div>
+
+<h3 id="taking-uncertainty-into-account">
+<a class="anchor" href="#taking-uncertainty-into-account" aria-hidden="true"><span class="octicon octicon-link"></span></a>Taking uncertainty into account</h3>
+<ul>
+  <li>You can change the decision threshold depending on the problem</li>
+  <li>
+<em>calibration</em>: a calibrated model is a model that provides an accurate measure of its uncertainty</li>
+</ul>
+
+<h3 id="precision-recall-curves-and-roc-curves">
+<a class="anchor" href="#precision-recall-curves-and-roc-curves" aria-hidden="true"><span class="octicon octicon-link"></span></a>Precision-recall curves and ROC curves</h3>
+<p>Setting a requirement on a classifier like 90% recall is often called setting the <em>operation point</em></p>
+
+<p>Precision-recall curve: look at all possible thresholds, or all possible trade-offs of precision and recalls at once. <code class="highlighter-rouge">precision_recall_curve</code></p>
+
+<blockquote>
+  <p><em>Average precision</em>: Area under the precision-recall curve. <code class="highlighter-rouge">average_precision_score</code></p>
+</blockquote>
+
+<p>Receiver operating characteristics (ROC) curve: consider all possible thresholds for a given classifier, shows the <em>false positive rate (FPR)</em> against the <em>true positive rate (TPR)</em>. <code class="highlighter-rouge">roc_curve</code></p>
+
+<ul>
+  <li>TPR = recall = (TP)/(TP+FN)</li>
+  <li>FPR = (FP)/(FP+TN)</li>
+</ul>
+
+<p>Average precision always returns a value between 0 (worst) and 1 (best). Predicting randomly always produces an AUC of 0.5 -&gt; AUC is much better than accuracy as a metric for imbalanced datasets</p>
+
+<p>AUC: evaluating the ranking of positive samples. Probability that a randomly picked point of the positive class will have a higher score according to the classifier than a randomly picked point from the negative class</p>
+
+<blockquote>
+  <p>AUC does not make use of the default threshold, so adjusting the decision threshold might be necessary to obtain useful classification results from a model with a high AUC</p>
+</blockquote>
+
+<h2 id="metrics-for-multiclass-classification">
+<a class="anchor" href="#metrics-for-multiclass-classification" aria-hidden="true"><span class="octicon octicon-link"></span></a>Metrics for Multiclass Classification</h2>
+<p>Metrics for multiclass classification are derived from binary, but averaged over all classes</p>
+
+<p>For imbalanced datasets: multiclass f-score -&gt; one binary f-score per class (that being the positive) and others being the negative -&gt; then average these per-class f-scores</p>
+
+<h2 id="regression-metrics">
+<a class="anchor" href="#regression-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Regression metrics</h2>
+<ul>
+  <li>Rˆ2 is enough for most applications</li>
+  <li>Mean squared error (MSE)</li>
+  <li>Mean absolute error (MAE)</li>
+</ul>
+
+<h2 id="using-evaluation-metrics-in-model-selection">
+<a class="anchor" href="#using-evaluation-metrics-in-model-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using evaluation metrics in model selection</h2>
+<p><code class="highlighter-rouge">scoring</code> parameters for classification:</p>
+<ul>
+  <li><code class="highlighter-rouge">accuracy</code></li>
+  <li><code class="highlighter-rouge">roc_auc</code></li>
+  <li><code class="highlighter-rouge">average_precision</code></li>
+  <li>
+<code class="highlighter-rouge">f1</code>, <code class="highlighter-rouge">f1_macro</code>, <code class="highlighter-rouge">f1_micro</code>, <code class="highlighter-rouge">f1_weighted</code>
+</li>
+</ul>
+
+<p>for regression:</p>
+<ul>
+  <li><code class="highlighter-rouge">r2</code></li>
+  <li><code class="highlighter-rouge">mean_squared_error</code></li>
+  <li><code class="highlighter-rouge">mean_absolute_error</code></li>
+</ul>
+
+<p>for more, see: <code class="highlighter-rouge">sklearn.metrics.scores</code></p>
+
+<h1 id="6-algorithm-chains-and-pipelines">
+<a class="anchor" href="#6-algorithm-chains-and-pipelines" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Algorithm Chains and Pipelines</h1>
+<p>ML algorithms requires chaining together many different processing steps and ML models. <code class="highlighter-rouge">Pipeline</code> class simplify the process of building chains of transformations and models</p>
+
+<h2 id="parameter-selection-with-preprocessing">
+<a class="anchor" href="#parameter-selection-with-preprocessing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parameter selection with preprocessing</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mglearn</span><span class="o">.</span><span class="n">plots</span><span class="o">.</span><span class="n">plot_improper_processing</span><span class="p">()</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Splitting the dataset during cross-validation should be done <em>before doing any preprocessing</em>. Any process that extracts knowledge from the dataset should only ever be applied to the training portion of the dataset, so any CV should be the “outermost loop” in your processing</p>
+</blockquote>
+
+<h2 id="building-pipelines">
+<a class="anchor" href="#building-pipelines" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building Pipelines</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+<span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s">"scaler"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s">"lr"</span><span class="p">,</span> <span class="n">LogisticRegression</span><span class="p">())])</span>
+
+<span class="n">pipe</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">pipe</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>reduce the code needed for “preprocessing + classification”</li>
+  <li>main benefit: now you can use this single estimator in <code class="highlighter-rouge">cross_val_score</code> or <code class="highlighter-rouge">GridSearchCV</code>
+</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="o">=</span><span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">best_score_</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">grid</span><span class="o">.</span><span class="n">best_params_</span><span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>For each split in the CV, the Scaler is refit with only the training splits and no information is leaked from the test split in to the parameter search</p>
+</blockquote>
+
+<h2 id="information-leakage">
+<a class="anchor" href="#information-leakage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Information Leakage</h2>
+<p>The impact varies depending on the preprocessing step:</p>
+<ul>
+  <li>estimating the scale of the data using the test fold usually doesn’t have a terrible impact</li>
+  <li>using the test fold in feature extraction and feature selection can lead to <strong>substantial differences</strong> in outcomes</li>
+</ul>
+
+<h2 id="the-general-pipeline-interface">
+<a class="anchor" href="#the-general-pipeline-interface" aria-hidden="true"><span class="octicon octicon-link"></span></a>The General Pipeline Interface</h2>
+<ul>
+  <li>not restricted to preprocessing and classification</li>
+  <li>only requirement: all estimators but the last step need to have a transform method</li>
+  <li>during <code class="highlighter-rouge">Pipeline.fit</code>, the pipeline calls fit and then transform on each step; for the last step, just fit is called</li>
+  <li>when predicting, we similarly transform the data using all but the last step, and then call predict on the last step</li>
+  <li>there is no requirement to have predict in the last step; the last step is only required to have a fit method</li>
+</ul>
+
+<h3 id="convenient-pipeline-creation-with-make_pipeline">
+<a class="anchor" href="#convenient-pipeline-creation-with-make_pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convenient pipeline creation with make_pipeline</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="n">pipe_short</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="n">LogisticRegression</span><span class="p">())</span>
+</code></pre></div></div>
+
+<h3 id="accessing-step-attributes">
+<a class="anchor" href="#accessing-step-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accessing step attributes</h3>
+<p><code class="highlighter-rouge">named_steps</code> attribute -&gt; dictionary from the step names to estimators</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">components</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s">"pca"</span><span class="p">]</span><span class="o">.</span><span class="n">components_</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grid</span><span class="o">.</span><span class="n">best_estimator_</span><span class="o">.</span><span class="n">named_steps</span><span class="p">[</span><span class="s">"logisticregression"</span><span class="p">]</span><span class="o">.</span><span class="n">coef_</span>
+</code></pre></div></div>
+
+<h3 id="grid-searching-which-model-to-use">
+<a class="anchor" href="#grid-searching-which-model-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Grid-Searching Which Model to Use</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([(</span><span class="s">"preprocessing"</span><span class="p">,</span> <span class="n">StandardScaler</span><span class="p">()),</span> <span class="p">(</span><span class="s">"classifier"</span><span class="p">,</span> <span class="n">SVC</span><span class="p">())])</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">param_grid</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s">'classifier'</span><span class="p">:</span> <span class="p">[</span><span class="n">SVC</span><span class="p">()],</span> <span class="s">'preprocessing'</span><span class="p">:</span> <span class="p">[</span><span class="n">StandardScaler</span><span class="p">(),</span> <span class="bp">None</span><span class="p">],</span>
+     <span class="s">'classifier__gamma'</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span>
+     <span class="s">'classifier__C'</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">]},</span>
+    <span class="p">{</span><span class="s">'classifier'</span><span class="p">:</span> <span class="p">[</span><span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">n_estimators</span><span class="o">=</span><span class="mi">100</span><span class="p">)],</span>
+     <span class="s">'preprocessing'</span><span class="p">:</span> <span class="p">[</span><span class="bp">None</span><span class="p">],</span> <span class="s">'classifier__max_features'</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]}]</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span>
+    <span class="n">cancer</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">cancer</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">grid</span> <span class="o">=</span> <span class="n">GridSearchCV</span><span class="p">(</span><span class="n">pipe</span><span class="p">,</span> <span class="n">param_grid</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">grid</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="7-working-with-text-data">
+<a class="anchor" href="#7-working-with-text-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Working with Text Data</h1>
+
+<h1 id="8-wrapping-up">
+<a class="anchor" href="#8-wrapping-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. Wrapping Up</h1>
+<h2 id="approaching-a-ml-problem">
+<a class="anchor" href="#approaching-a-ml-problem" aria-hidden="true"><span class="octicon octicon-link"></span></a>Approaching a ML problem</h2>
+<p>It may be tempting to jump in and starting solving you data-related problem by running your favorite algorithm</p>
+
+<p>To make effective use of ML, we need to take a step back and consider the problem at large. First, you should think what kind of question you want to answer</p>
+
+<p>It is best if you can measure the performance of your algorithm directly using a business metric</p>
+
+<p>Collecting more or different data or changing the task formulation slightly might provide a much higher payoff than running endless grid searches to tune parameters</p>
+
+<h3 id="humans-in-the-loop">
+<a class="anchor" href="#humans-in-the-loop" aria-hidden="true"><span class="octicon octicon-link"></span></a>Humans in the loop</h3>
+<p>Many applications are dominated by “simple cases”, for which an algorithm can make a decision, with relatively few “complicated cases”, which can be rerouted to a human</p>
+
+<h2 id="from-prototype-to-production">
+<a class="anchor" href="#from-prototype-to-production" aria-hidden="true"><span class="octicon octicon-link"></span></a>From prototype to production</h2>
+<ul>
+  <li>Production systems have differente requirements from one-off analysis scripts</li>
+  <li>reliability, predictability, runtime, and memory requirements gain relevance</li>
+  <li>simplicity is key</li>
+</ul>
+
+<h2 id="testing-production-systems">
+<a class="anchor" href="#testing-production-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing production systems</h2>
+<ul>
+  <li>offline evaluation: test set collected beforehand</li>
+  <li>online/live testing: consequences of employing the algorithm in the overall system are evaluated</li>
+</ul>
+
+<p><strong>A/B testing</strong>: enables us to evaluate the algorithms “in the wild”, which might help us to discover unexpected consequences when users are interacting with our model</p>
+
+<p><strong>Bandit algorithms</strong>: more elaborate mechanisms for online testing that go beyond A/B testing</p>
+
+  </div><a class="u-url" href="/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

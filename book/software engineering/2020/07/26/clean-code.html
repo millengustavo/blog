@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Clean Code: A Handbook of Agile Software Craftsmanship | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Clean Code: A Handbook of Agile Software Craftsmanship" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/clean_code/clean_code.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Clean Code: A Handbook of Agile Software Craftsmanship","dateModified":"2020-07-26T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-07-26T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/clean_code/clean_code.jpeg","url":"https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Clean Code: A Handbook of Agile Software Craftsmanship | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Clean Code: A Handbook of Agile Software Craftsmanship" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/clean_code/clean_code.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-07-26T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Clean Code: A Handbook of Agile Software Craftsmanship","dateModified":"2020-07-26T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-07-26T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/clean_code/clean_code.jpeg","url":"https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/2020/07/26/clean-code.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Clean Code: A Handbook of Agile Software Craftsmanship</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-07-26T00:00:00-05:00" itemprop="datePublished">
+        Jul 26, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      18 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#software engineering">software engineering</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#ch1-clean-code">Ch1. Clean Code</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#reading-vs-writing">Reading vs. Writing</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-meaningful-names">Ch2. Meaningful Names</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#use-intention-revealing-names">Use intention-revealing names</a></li>
+<li class="toc-entry toc-h2"><a href="#avoid-disinformation">Avoid disinformation</a></li>
+<li class="toc-entry toc-h2"><a href="#make-meaningful-distinctions">Make meaningful distinctions</a></li>
+<li class="toc-entry toc-h2"><a href="#use-pronounceable-names">Use pronounceable names</a></li>
+<li class="toc-entry toc-h2"><a href="#use-searchable-names">Use searchable names</a></li>
+<li class="toc-entry toc-h2"><a href="#avoid-encodings">Avoid encodings</a></li>
+<li class="toc-entry toc-h2"><a href="#avoid-mental-mapping">Avoid mental mapping</a></li>
+<li class="toc-entry toc-h2"><a href="#class-names">Class names</a></li>
+<li class="toc-entry toc-h2"><a href="#method-names">Method names</a></li>
+<li class="toc-entry toc-h2"><a href="#dont-be-cute">Don’t be cute</a></li>
+<li class="toc-entry toc-h2"><a href="#pick-one-word-per-concept">Pick one word per concept</a></li>
+<li class="toc-entry toc-h2"><a href="#dont-pun">Don’t pun</a></li>
+<li class="toc-entry toc-h2"><a href="#use-solution-domain-names">Use solution domain names</a></li>
+<li class="toc-entry toc-h2"><a href="#use-problem-domain-names">Use problem domain names</a></li>
+<li class="toc-entry toc-h2"><a href="#add-meaningful-context">Add meaningful context</a></li>
+<li class="toc-entry toc-h2"><a href="#dont-add-gratuitous-context">Don’t add gratuitous context</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch3-functions">Ch3. Functions</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#small">Small</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#blocks-and-indenting">Blocks and Indenting</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#do-one-thing">Do one thing</a></li>
+<li class="toc-entry toc-h2"><a href="#one-level-of-abstraction-per-function">One level of abstraction per function</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-stepdown-rule">The Stepdown rule</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#use-descriptive-names">Use descriptive names</a></li>
+<li class="toc-entry toc-h2"><a href="#function-arguments">Function arguments</a></li>
+<li class="toc-entry toc-h2"><a href="#how-do-you-write-functions-like-this">How do you write functions like this?</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch4-comments">Ch4. Comments</a></li>
+<li class="toc-entry toc-h1"><a href="#ch5-formatting">Ch5. Formatting</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-newspaper-metaphor">The newspaper metaphor</a></li>
+<li class="toc-entry toc-h2"><a href="#vertical-formatting">Vertical formatting</a></li>
+<li class="toc-entry toc-h2"><a href="#horizontal-formatting">Horizontal formatting</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-objects-and-data-structures">Ch6. Objects and Data Structures</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#dataobject-anti-symmetry">Data/Object anti-symmetry</a></li>
+<li class="toc-entry toc-h2"><a href="#data-transfer-objects-dto">Data transfer objects (DTO)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#active-records">Active records</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#objects">Objects</a></li>
+<li class="toc-entry toc-h2"><a href="#data-structures">Data Structures</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch7-error-handling">Ch7. Error Handling</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#write-your-try-catch-finally-statement-first">Write your Try-Catch-Finally statement first</a></li>
+<li class="toc-entry toc-h2"><a href="#provide-context-with-exceptions">Provide context with exceptions</a></li>
+<li class="toc-entry toc-h2"><a href="#define-the-normal-flow">Define the normal flow</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch8-boundaries">Ch8. Boundaries</a></li>
+<li class="toc-entry toc-h1"><a href="#ch9-unit-tests">Ch9. Unit Tests</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-three-laws-of-tdd">The three laws of TDD</a></li>
+<li class="toc-entry toc-h2"><a href="#keeping-tests-clean">Keeping tests clean</a></li>
+<li class="toc-entry toc-h2"><a href="#clean-tests">Clean tests</a></li>
+<li class="toc-entry toc-h2"><a href="#first">F.I.R.S.T.</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-classes">Ch10. Classes</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-single-responsibility-principle">The Single Responsibility Principle</a></li>
+<li class="toc-entry toc-h2"><a href="#cohesion">Cohesion</a></li>
+<li class="toc-entry toc-h2"><a href="#organizing-for-change">Organizing for change</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch11-systems">Ch11. Systems</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#separate-constructing-a-system-from-using-it">Separate constructing a system from using it</a></li>
+<li class="toc-entry toc-h2"><a href="#separation-of-main">Separation of main</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#factories">Factories</a></li>
+<li class="toc-entry toc-h3"><a href="#dependency-injection-di">Dependency injection (DI)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#scaling-up">Scaling up</a></li>
+<li class="toc-entry toc-h2"><a href="#test-drive-the-system-architecture">Test drive the system architecture</a></li>
+<li class="toc-entry toc-h2"><a href="#optimize-decision-making">Optimize decision making</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch12-emergence">Ch12. Emergence</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#simple-design-rule-1-runs-all-the-tests">Simple design rule 1: runs all the tests</a></li>
+<li class="toc-entry toc-h2"><a href="#simple-design-rule-2-4-refactoring">Simple design rule 2-4: refactoring</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#no-duplication">No duplication</a></li>
+<li class="toc-entry toc-h3"><a href="#expressive">Expressive</a></li>
+<li class="toc-entry toc-h3"><a href="#minimal-classes-and-methods">Minimal classes and methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch13-concurrency">Ch13. Concurrency</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#why-concurrency">Why concurrency?</a></li>
+<li class="toc-entry toc-h2"><a href="#myths-and-misconceptions">Myths and misconceptions</a></li>
+<li class="toc-entry toc-h2"><a href="#concurrency-defense-principles">Concurrency defense principles</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#know-your-execution-models">Know your execution models</a></li>
+<li class="toc-entry toc-h3"><a href="#others">Others</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Authors: Robert C. Martin</p>
+
+<p><a href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Available here</a></p>
+
+<h1 id="ch1-clean-code">
+<a class="anchor" href="#ch1-clean-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. Clean Code</h1>
+<blockquote>
+  <p>“Most managers want good code, even when they are obsessing about the schedule (…) It’s <em>your</em> job to defend the code with equal passion”</p>
+</blockquote>
+
+<ul>
+  <li>Clean code is <em>focused</em>: each function, each class, each module exposes a single-minded attitude that remains entirely undistracted, and upolluted, by the surrounding details</li>
+  <li>Code, without tests, is not clean. No matter how elegant it is, no matter how readable and accessible, if it hath not tests, it be unclean</li>
+  <li>You will read it, and it will be pretty much what you expected. It will be obvious, simple, and compelling</li>
+</ul>
+
+<h2 id="reading-vs-writing">
+<a class="anchor" href="#reading-vs-writing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reading vs. Writing</h2>
+<ul>
+  <li>The ratio of time spent reading vs. writing is well over 10:1</li>
+  <li>We are constantly reading old code as part of the effort to write new code</li>
+  <li><strong>We want the reading of code to be easy, even if it makes the writing harder</strong></li>
+  <li>You cannot write code if you cannot read the surrounding code</li>
+  <li>If you want to go fast, get done quickly, if you want your code to be easy to write, make it easy to read</li>
+</ul>
+
+<h1 id="ch2-meaningful-names">
+<a class="anchor" href="#ch2-meaningful-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. Meaningful Names</h1>
+
+<h2 id="use-intention-revealing-names">
+<a class="anchor" href="#use-intention-revealing-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use intention-revealing names</h2>
+<blockquote>
+  <p>Choosing good names takes time, but saves more than it takes. Take care with your names and change them when you find better ones</p>
+</blockquote>
+
+<h2 id="avoid-disinformation">
+<a class="anchor" href="#avoid-disinformation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Avoid disinformation</h2>
+<ul>
+  <li>Avoid leaving false clues that obscure the meaning of code</li>
+  <li>Avoid words whose entrenched meanings vary from our intended meaning</li>
+</ul>
+
+<h2 id="make-meaningful-distinctions">
+<a class="anchor" href="#make-meaningful-distinctions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Make meaningful distinctions</h2>
+<p>If names must be different, then they should also mean something different</p>
+
+<h2 id="use-pronounceable-names">
+<a class="anchor" href="#use-pronounceable-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use pronounceable names</h2>
+<ul>
+  <li>Humans are good at words</li>
+  <li>Words are, by definition, pronounceable</li>
+</ul>
+
+<h2 id="use-searchable-names">
+<a class="anchor" href="#use-searchable-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use searchable names</h2>
+<p>Single-letter names and numeric constants have a particular problem in that they are not easy to locate across a body of text</p>
+
+<h2 id="avoid-encodings">
+<a class="anchor" href="#avoid-encodings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Avoid encodings</h2>
+<p>Encoding type or scope information into names simply adds an extra burden of deciphering</p>
+
+<h2 id="avoid-mental-mapping">
+<a class="anchor" href="#avoid-mental-mapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Avoid mental mapping</h2>
+<blockquote>
+  <p>Clarity is king</p>
+</blockquote>
+
+<h2 id="class-names">
+<a class="anchor" href="#class-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Class names</h2>
+<ul>
+  <li>Classes and objects should have noun or noun phrase names</li>
+  <li>A class name should not be a verb</li>
+</ul>
+
+<h2 id="method-names">
+<a class="anchor" href="#method-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Method names</h2>
+<p>Methods should have verb or verb phrase names</p>
+
+<h2 id="dont-be-cute">
+<a class="anchor" href="#dont-be-cute" aria-hidden="true"><span class="octicon octicon-link"></span></a>Don’t be cute</h2>
+<ul>
+  <li>Choose clarity over entertainment value</li>
+  <li>Say what you mean. Mean what you say</li>
+</ul>
+
+<h2 id="pick-one-word-per-concept">
+<a class="anchor" href="#pick-one-word-per-concept" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pick one word per concept</h2>
+<p>A consistent lexicon is a great boon to the programmers who must use your code</p>
+
+<h2 id="dont-pun">
+<a class="anchor" href="#dont-pun" aria-hidden="true"><span class="octicon octicon-link"></span></a>Don’t pun</h2>
+<p>Avoid using the same word for two purposes -&gt; essentially a pun</p>
+
+<h2 id="use-solution-domain-names">
+<a class="anchor" href="#use-solution-domain-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use solution domain names</h2>
+<ul>
+  <li>People who read your code will be programmers</li>
+  <li>Use CS terms, algorithm names, pattern names, math terms</li>
+</ul>
+
+<h2 id="use-problem-domain-names">
+<a class="anchor" href="#use-problem-domain-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use problem domain names</h2>
+<ul>
+  <li>Separate solution and problem domain concepts</li>
+  <li>Code that has more to do with problem domain concepts should have names drawn from the problem domain</li>
+</ul>
+
+<h2 id="add-meaningful-context">
+<a class="anchor" href="#add-meaningful-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Add meaningful context</h2>
+<p>Most names are not meaningful in and of themselves</p>
+
+<h2 id="dont-add-gratuitous-context">
+<a class="anchor" href="#dont-add-gratuitous-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Don’t add gratuitous context</h2>
+<ul>
+  <li>Shorter names are generally better than long ones, so long as they are clear</li>
+  <li>Add no more context to a name than is necessary</li>
+</ul>
+
+<blockquote>
+  <p>Choosing good names requires good descriptive skills and a shared cultural background. This is a teaching issue rather than a technical, business, or management issue</p>
+</blockquote>
+
+<h1 id="ch3-functions">
+<a class="anchor" href="#ch3-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. Functions</h1>
+<h2 id="small">
+<a class="anchor" href="#small" aria-hidden="true"><span class="octicon octicon-link"></span></a>Small</h2>
+<p>Functions should be small</p>
+
+<h3 id="blocks-and-indenting">
+<a class="anchor" href="#blocks-and-indenting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Blocks and Indenting</h3>
+<ul>
+  <li>Blocks within <code class="highlighter-rouge">if</code> statements, <code class="highlighter-rouge">else</code> statements, <code class="highlighter-rouge">while</code> statements should be on line long -&gt; probably a function call</li>
+  <li>Keep the enclosing function small, adds documentary value</li>
+  <li>Functions should not be large enough to hold nested structures -&gt; makes easier to read and understand</li>
+</ul>
+
+<h2 id="do-one-thing">
+<a class="anchor" href="#do-one-thing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Do one thing</h2>
+<blockquote>
+  <p>Functions should do one thing. They should do it well. They should do it only</p>
+</blockquote>
+
+<ul>
+  <li>Reasons to write functions: decompose a larger concept (the name of the function) into a set of steps at the next level of abstraction</li>
+  <li>Functions that do one thing cannot be divided into sections</li>
+</ul>
+
+<h2 id="one-level-of-abstraction-per-function">
+<a class="anchor" href="#one-level-of-abstraction-per-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>One level of abstraction per function</h2>
+<ul>
+  <li>Once details are mixed with essential concepts, more details tend to accrete within the function</li>
+</ul>
+
+<h3 id="the-stepdown-rule">
+<a class="anchor" href="#the-stepdown-rule" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Stepdown rule</h3>
+<ul>
+  <li>We want code to be read like a top-down narrative</li>
+  <li>A set of TO paragraphs, each describing the current level of abstraction and referencing subsequent TO paragraphs at the next level down</li>
+</ul>
+
+<h2 id="use-descriptive-names">
+<a class="anchor" href="#use-descriptive-names" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use descriptive names</h2>
+<p>Ward’s principle: <em>“You know you are working on clean code when each routine turns out to be pretty much what you expected”</em></p>
+
+<ul>
+  <li>Spend time choosing a name</li>
+  <li>You should try several different names and read the code with each in place</li>
+</ul>
+
+<h2 id="function-arguments">
+<a class="anchor" href="#function-arguments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Function arguments</h2>
+<p>Ideal number of arguments for a function:</p>
+<ul>
+  <li>zero (niladic)</li>
+  <li>one (monadic)</li>
+  <li>two (dyadic)</li>
+  <li>
+    <p>more than that should be avoided where possible</p>
+  </li>
+  <li>
+<strong>Arguments are hard from a testing point of view</strong> -&gt; test cases for all combinations of arguments</li>
+  <li>Output arguments are harder to understand than input arguments</li>
+  <li>
+<strong>Passing a boolean into a function (flag arguments) is a terrible practice</strong> -&gt; loudly proclaiming that this function does more than one thing -&gt; does one thing if the flag is true and another if the flag is false!</li>
+  <li>When a function seems to need more than two or three arguments, it is likely that some of those arguments ought to be wrapped into a class of their own -&gt; When groups of variables are passed together, they are likely part of a concept that deserves a name of its own</li>
+  <li>Side effects are lies -&gt; your functions promises to do one thing, but it also does other <em>hidden</em> things</li>
+  <li>Either your function should change the state of an object, or it should return some information about the object</li>
+  <li><strong>Prefer Exceptions to returing error codes</strong></li>
+  <li>Extract try/catch blocks into functions of their own</li>
+  <li>Functions should do one thing -&gt; error handling is one thing</li>
+  <li>Don’t repeat yourself -&gt; duplication may be the root of all evil in software</li>
+</ul>
+
+<h2 id="how-do-you-write-functions-like-this">
+<a class="anchor" href="#how-do-you-write-functions-like-this" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do you write functions like this?</h2>
+<p>Writing software is like any other kind of writing</p>
+<ol>
+  <li>Get your thoughts down first</li>
+  <li>Massage it until it reads well</li>
+</ol>
+
+<p>The first draft might be clumsy and disorganized, so you restructure it and refine it until it reads the way you want it to read</p>
+
+<blockquote>
+  <p>Every system is built from a domain-specific language designed by the programmers to describe the system. Functions are the verbs of that language, and classes are the nouns.</p>
+</blockquote>
+
+<h1 id="ch4-comments">
+<a class="anchor" href="#ch4-comments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. Comments</h1>
+<ul>
+  <li>Comments are always failures. We must have them because we cannot always figure out how to express ourselves without them, but their use is not a cause for celebration</li>
+  <li>Comments lie. Not always, and not intentionally, but too often</li>
+  <li>The older a comment is, and the farther away it is from the code it describes, the more likely it is to be wrong</li>
+  <li><strong>Truth can only be found in the code</strong></li>
+  <li>Explain your intent in code: <strong>create a function that says the same thing as the comment you want to write</strong>
+</li>
+  <li>A comment may be used to amplify the importance of something that may otherwise seem inconsequential</li>
+  <li>We have good source code control systems now. Those systems will remember the code for us. We don’t have to comment it out any more. Just delete the code</li>
+  <li>Short functions don’t need much description -&gt; well-chosen name for a small function that does one thing is better than a comment header</li>
+</ul>
+
+<h1 id="ch5-formatting">
+<a class="anchor" href="#ch5-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. Formatting</h1>
+<p>Code formatting</p>
+<ul>
+  <li>Too important to ignore</li>
+  <li>Is about communication -&gt; developer’s first order of business</li>
+</ul>
+
+<blockquote>
+  <p>Small files are easier to understand than large files are</p>
+</blockquote>
+
+<h2 id="the-newspaper-metaphor">
+<a class="anchor" href="#the-newspaper-metaphor" aria-hidden="true"><span class="octicon octicon-link"></span></a>The newspaper metaphor</h2>
+<p>Source file should be like a newspaper article</p>
+<ul>
+  <li>Name should be simple but explanatory</li>
+  <li>The name, by itself, should be sufficient to tell us whether we are in the right module or not</li>
+</ul>
+
+<h2 id="vertical-formatting">
+<a class="anchor" href="#vertical-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vertical formatting</h2>
+<ul>
+  <li>Avoid forcing the reader to hop around through the source files and classes</li>
+  <li>
+<strong>Dependent functions</strong>: if one function calls another, they should be vertically close, and the caller should be above the callee</li>
+</ul>
+
+<h2 id="horizontal-formatting">
+<a class="anchor" href="#horizontal-formatting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Horizontal formatting</h2>
+<ul>
+  <li>Strive to keep your lines short</li>
+  <li>Beyond 100~120 isn’t advisable</li>
+</ul>
+
+<h1 id="ch6-objects-and-data-structures">
+<a class="anchor" href="#ch6-objects-and-data-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. Objects and Data Structures</h1>
+
+<h2 id="dataobject-anti-symmetry">
+<a class="anchor" href="#dataobject-anti-symmetry" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data/Object anti-symmetry</h2>
+<blockquote>
+  <p>Objects hide their data behind abstractions and expose functions that operate on that data. Data structure expose their data and have no meaningful functions</p>
+</blockquote>
+
+<ul>
+  <li>Procedural code (code using data structures) makes it easy to add new functions without changing the existing data structures. OO code makes it easy to add new classes without changing existing functions</li>
+  <li>Procedural code makes it hard to add new data structures because all the functions must change. OO code makes it hard to add new functions because all the classes must change</li>
+</ul>
+
+<blockquote>
+  <p>Mature programmers know that the idea that <em>everything is an object is a myth</em>. Sometimes you really do want simple data structures with procedures operating on them</p>
+</blockquote>
+
+<h2 id="data-transfer-objects-dto">
+<a class="anchor" href="#data-transfer-objects-dto" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data transfer objects (DTO)</h2>
+<p>DTO: quintessential form of a data structure -&gt; a class with public variables and no functions</p>
+
+<h3 id="active-records">
+<a class="anchor" href="#active-records" aria-hidden="true"><span class="octicon octicon-link"></span></a>Active records</h3>
+<ul>
+  <li>Special forms of DTOs</li>
+  <li>Data structures with public (or bean-accessed) variables; but they typically have navigational methods like <code class="highlighter-rouge">save</code> and <code class="highlighter-rouge">find</code>
+</li>
+</ul>
+
+<h2 id="objects">
+<a class="anchor" href="#objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects</h2>
+<ul>
+  <li>expose behavior and hide data</li>
+  <li>easy to add new kinds of objects without changing existing behaviors</li>
+  <li>hard to add new behaviors to existing objects</li>
+</ul>
+
+<h2 id="data-structures">
+<a class="anchor" href="#data-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Structures</h2>
+<ul>
+  <li>expose data and have no significant behavior</li>
+  <li>easy to add new behaviors to existing data structures</li>
+  <li>hard to add new data structures to existing functions</li>
+</ul>
+
+<h1 id="ch7-error-handling">
+<a class="anchor" href="#ch7-error-handling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. Error Handling</h1>
+<blockquote>
+  <p>Things can go wrong, and when they do, we as programmers are responsible for making sure that our code what it needs to do</p>
+</blockquote>
+
+<ul>
+  <li>Error handling is important, but if it obscures logic, it’s wrong</li>
+  <li>It is better to throw an exception when you encounter an error. The calling code is cleaner. Its logic is not obscured by error handling</li>
+</ul>
+
+<h2 id="write-your-try-catch-finally-statement-first">
+<a class="anchor" href="#write-your-try-catch-finally-statement-first" aria-hidden="true"><span class="octicon octicon-link"></span></a>Write your <code class="highlighter-rouge">Try-Catch-Finally</code> statement first</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">try</code> blocks are like transactions</li>
+  <li>Your <code class="highlighter-rouge">catch</code> has to leave your program in a consistent state, no matter what happens in the <code class="highlighter-rouge">try</code>
+</li>
+  <li>Try to write tests to force exceptions, and then add behavior to your handler to satisfy your tests -&gt; cause you to build the transaction scope of the <code class="highlighter-rouge">try</code> block first and help maintain the transaction nature of that scope</li>
+</ul>
+
+<h2 id="provide-context-with-exceptions">
+<a class="anchor" href="#provide-context-with-exceptions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Provide context with exceptions</h2>
+<ul>
+  <li>Create informative error messages and pass them along with your exceptions</li>
+  <li>Mention the operation that failed and the type of failure</li>
+  <li>If you are logging in your application, pass along enough information to be able to log the error in your <code class="highlighter-rouge">catch</code>
+</li>
+</ul>
+
+<blockquote>
+  <p>Wrapping third-party APIs is a best practice -&gt; minimize your dependencies upon it: you can choose to move to a different library in the future without much penalty; makes it easier to mock out third-party calls when you are testing your own code</p>
+</blockquote>
+
+<h2 id="define-the-normal-flow">
+<a class="anchor" href="#define-the-normal-flow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Define the normal flow</h2>
+<p><strong>Special case pattern</strong>: you create a class or configure an object so that it handles a special case for you -&gt; the client code doesn’t have to deal with exceptional behavior</p>
+
+<h1 id="ch8-boundaries">
+<a class="anchor" href="#ch8-boundaries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. Boundaries</h1>
+<ul>
+  <li>It’s not our job to test the third-party code, but it may be in our best interest to write tests for the third-party code we use</li>
+  <li>
+<strong>Learning tests</strong>: call the third-party API, as we expect to use it in our application -&gt; controlled experiments that check our understanding of that API</li>
+  <li>
+<strong>Clean Boundaries</strong>: code at the boundaries needs clear separation and tests that define expectations</li>
+</ul>
+
+<blockquote>
+  <p>Avoid letting too much of our code know about the third-party particulars. It’s betters to depend on something you control than on something you don’t control, lest it end up controlling you</p>
+</blockquote>
+
+<h1 id="ch9-unit-tests">
+<a class="anchor" href="#ch9-unit-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. Unit Tests</h1>
+<h2 id="the-three-laws-of-tdd">
+<a class="anchor" href="#the-three-laws-of-tdd" aria-hidden="true"><span class="octicon octicon-link"></span></a>The three laws of TDD</h2>
+<ul>
+  <li>
+<strong>First Law</strong>: You may not write production code until you have written a failing unit test</li>
+  <li>
+<strong>Second Law</strong>: You may not write more of a unit test than is sufficient to fail, and not compiling is failing</li>
+  <li>
+<strong>Third Law</strong>: You may not write more production code than is sufficient to pass the current failing test</li>
+</ul>
+
+<h2 id="keeping-tests-clean">
+<a class="anchor" href="#keeping-tests-clean" aria-hidden="true"><span class="octicon octicon-link"></span></a>Keeping tests clean</h2>
+<ul>
+  <li>Having dirty tests is equivalent to, if not worse than, having no tests</li>
+  <li>Tests must change as the production code evolves -&gt; the dirtier the tests, the harder they are to change</li>
+  <li>If your tests are dirty, you begin to lose the ability to improve the structure of that code
+    <blockquote>
+      <p>Test code is just as important as production code. It requires thought, design, and care. It must be kept as clean as production code</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="clean-tests">
+<a class="anchor" href="#clean-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clean tests</h2>
+<p>Readability is perhaps even more important in unit tests than it is in production code</p>
+<ul>
+  <li>Clarity</li>
+  <li>Simplicity</li>
+  <li>Density of expression (say a lot with as few expressions as possible)</li>
+</ul>
+
+<p><strong>BUILD-OPERATE-CHECK</strong> pattern:</p>
+<ul>
+  <li>First part builds up the test data</li>
+  <li>Second part operates on that test data</li>
+  <li>Third part checks that the operation yielded the expected results</li>
+</ul>
+
+<p><strong>Domain-Specific Testing Language</strong>: testing language (specialized API used by the tests) -&gt; make tests expressive and succint -&gt; make the tests more convenient to write and easier to read</p>
+
+<p><strong>given-when-then</strong> convention: makes the tests even easier to read</p>
+
+<p><strong>TEMPLATE METHOD</strong> pattern -&gt; putting the given/when parts in the base classs, and the then parts in different derivatives</p>
+
+<ul>
+  <li>The number of asserts in a test ought to be minimized</li>
+  <li>We want to test a single concept in each test function</li>
+</ul>
+
+<h2 id="first">
+<a class="anchor" href="#first" aria-hidden="true"><span class="octicon octicon-link"></span></a>F.I.R.S.T.</h2>
+<ul>
+  <li>
+<strong>Fast</strong>: when tests run slow, you won’t want to run them frequently</li>
+  <li>
+<strong>Independent</strong>: you should be able to run each test independently and run the tests in any order you like</li>
+  <li>
+<strong>Repeatable</strong>: if your tests aren’t repeatable in any environment, then you’ll always have an excuse for why they fail</li>
+  <li>
+<strong>Self-Validating</strong>: you should not have to read through a log file to tell whether the tests pass (should have a boolean output -&gt; pass/fail)</li>
+  <li>
+<strong>Timely</strong>: unit tests should be written just before the production code that makes them pass</li>
+</ul>
+
+<h1 id="ch10-classes">
+<a class="anchor" href="#ch10-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. Classes</h1>
+<ul>
+  <li>Smaller is the primary rule when it comes to designing classes</li>
+  <li>Name of the class = describe what responsibilities it fulfills</li>
+  <li>If we cannot derive a concise name for a class, then it’s likely too large -&gt; the more ambiguous the class name, the more likely it has too many responsibilities</li>
+</ul>
+
+<h2 id="the-single-responsibility-principle">
+<a class="anchor" href="#the-single-responsibility-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Single Responsibility Principle</h2>
+<ul>
+  <li>
+<strong>SRP</strong> is one of the more important concepts in OO design</li>
+  <li>States that a class or module should have one and only one, <em>reason to change</em>
+</li>
+  <li>Definition of responsibility</li>
+  <li>Guidelines for class size</li>
+  <li>A system with many small classes has no more moving parts than a system with a few large classes</li>
+</ul>
+
+<blockquote>
+  <p>Trying to identify responsibilities (reasons to change) often helps us recognize and create better abstractions in our code</p>
+</blockquote>
+
+<h2 id="cohesion">
+<a class="anchor" href="#cohesion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cohesion</h2>
+<ul>
+  <li>Classes should have a small number of instance variables</li>
+  <li>Each of the methods of a class should manipulate one or more of those variables</li>
+  <li>A class in which each variable is used by each method is <strong>maximally cohesive</strong>
+</li>
+  <li>Maintaining cohesion results in many small classes</li>
+</ul>
+
+<h2 id="organizing-for-change">
+<a class="anchor" href="#organizing-for-change" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing for change</h2>
+<ul>
+  <li>Change is continual</li>
+  <li>Every change -&gt; risk that the remainder of the system no longer works as intended</li>
+  <li>Clean system -&gt; organize our classes to reduce the risk of change</li>
+</ul>
+
+<blockquote>
+  <p><strong>Open-Closed Principle (OCP)</strong>: another key OO class design principle -&gt; Classes should be open for extension but closed for modification</p>
+</blockquote>
+
+<ul>
+  <li>Ideal system -&gt; we incorporate new features by extending the system, not by making modifications to existing code</li>
+</ul>
+
+<blockquote>
+  <p><strong>Dependency Inversion Principle (DIP)</strong> -&gt; classes should depend upon abstractions, not on concrete details</p>
+</blockquote>
+
+<h1 id="ch11-systems">
+<a class="anchor" href="#ch11-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch11. Systems</h1>
+<h2 id="separate-constructing-a-system-from-using-it">
+<a class="anchor" href="#separate-constructing-a-system-from-using-it" aria-hidden="true"><span class="octicon octicon-link"></span></a>Separate constructing a system from using it</h2>
+<blockquote>
+  <p>Software systems should separate the startup process, when the application objects are constructed and the dependencies are “wired” together, from the runtime logic that takes over after startup</p>
+</blockquote>
+
+<ul>
+  <li>Startup process: <em>concern</em> that any application must address</li>
+  <li>
+<em>Separation of concerns</em>: one of the most important design techniques</li>
+  <li>Never let little, convenient idioms lead to modularity breakdown</li>
+</ul>
+
+<h2 id="separation-of-main">
+<a class="anchor" href="#separation-of-main" aria-hidden="true"><span class="octicon octicon-link"></span></a>Separation of main</h2>
+<h3 id="factories">
+<a class="anchor" href="#factories" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factories</h3>
+<ul>
+  <li>
+<strong>ABSTRACT FACTORY</strong>: pattern -&gt; give the application control of <em>when</em> to build the object, but keep the details of that construction separate from the application code</li>
+</ul>
+
+<h3 id="dependency-injection-di">
+<a class="anchor" href="#dependency-injection-di" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dependency injection (DI)</h3>
+<ul>
+  <li>Powerful mechanism for separating construction from use</li>
+  <li>Application of <em>Inversion of Control</em> (IoC) to dependency management</li>
+  <li>Moves secondary responsibilities from an object to other objects that are dedicated to the purpose (supporting SRP)</li>
+  <li>The invoking object doesn’t control what kind of object is actually returned, but the invoking object still actively resolves the dependency
+    <blockquote>
+      <p>An object should not take responsibility for instantiating dependencies itself. Instead, it should pass this responsibility to another “authoritative” mechanism (inverting control). Setup is a global concern, this authoritative mechanism will be either the “main” routine or a special-purpose container</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="scaling-up">
+<a class="anchor" href="#scaling-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scaling up</h2>
+<ul>
+  <li>
+<strong>Myth</strong>: we can get systems “right the first time”</li>
+  <li>Implement only today’s stories -&gt; then refactor and expand the system to implement new stories tomorrow = essence of iterative and incremental agility</li>
+  <li>TDD, refactoring, and the clean code they produce make this work at the code level</li>
+  <li>Software systems are unique compared to physical systems. Their archiectures can grow incrementally, <strong>if we maintain the proper separation of concerns</strong>
+</li>
+</ul>
+
+<h2 id="test-drive-the-system-architecture">
+<a class="anchor" href="#test-drive-the-system-architecture" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test drive the system architecture</h2>
+<ul>
+  <li>
+<strong>Big Design Up Front (BDUF)</strong>: harmful because it inhibits adapting to change, due to psychological resistance to discarding prior effort and because of the way architecture choices influence subsequent thinking about the design</li>
+</ul>
+
+<h2 id="optimize-decision-making">
+<a class="anchor" href="#optimize-decision-making" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optimize decision making</h2>
+<ul>
+  <li>Modularity and separation of concerns make decentralized management and decision making possible</li>
+  <li>Give responsibilities to the most qualified persons</li>
+  <li>
+<strong>It is best to postpone decisions until the last possible moment</strong> -&gt; lets us make informed choices with the best possible information. A premature decision is a decision made with suboptimal knowledge</li>
+</ul>
+
+<blockquote>
+  <p>Whether you are designing systems or individual modules, never forget to use <strong>the simplest thing that can possibly work</strong></p>
+</blockquote>
+
+<h1 id="ch12-emergence">
+<a class="anchor" href="#ch12-emergence" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch12. Emergence</h1>
+<p>A design is “simple”, if it follows these rules:</p>
+<ul>
+  <li>Run all the tests</li>
+  <li>Contains no duplication</li>
+  <li>Expresses the intent of the programmer</li>
+  <li>Minimizes the number of classes and methods</li>
+</ul>
+
+<h2 id="simple-design-rule-1-runs-all-the-tests">
+<a class="anchor" href="#simple-design-rule-1-runs-all-the-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple design rule 1: runs all the tests</h2>
+<ul>
+  <li>Systems that aren’t testable aren’t verifiable</li>
+  <li>A system that cannot be verified should never be deployed</li>
+  <li>Tight coupling makes it difficult to write tests</li>
+  <li>The more tests we write, the more we use principles like DIP and tools like dependency injection, interfaces, and abstraction to minimize coupling -&gt; our designs improve even more</li>
+  <li>Primary OO goals -&gt; low coupling and high cohesion</li>
+</ul>
+
+<h2 id="simple-design-rule-2-4-refactoring">
+<a class="anchor" href="#simple-design-rule-2-4-refactoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple design rule 2-4: refactoring</h2>
+<p>For each few lines of code we add, we pause and reflect on the new design</p>
+
+<h3 id="no-duplication">
+<a class="anchor" href="#no-duplication" aria-hidden="true"><span class="octicon octicon-link"></span></a>No duplication</h3>
+<ul>
+  <li>Duplication is the primary enemy of a well-designed system</li>
+  <li>It represents additional work, additional risk, and additional unnecessary complexity</li>
+  <li>TEMPLATE METHOD pattern: common technique for removing higher-level duplication</li>
+</ul>
+
+<h3 id="expressive">
+<a class="anchor" href="#expressive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expressive</h3>
+<blockquote>
+  <p>It’s easy to write code that <em>we</em> understand, because at the time we write it we’re deep in an understanding of the problem we’re trying to solve. Other maintainers of the code aren’t going to have so deep an understanding</p>
+</blockquote>
+
+<ul>
+  <li>Choose good names</li>
+  <li>Keep your functions and classes small</li>
+  <li>Use standard nomenclature</li>
+  <li>Tests primary goal = act as documentation by example</li>
+  <li><strong>The most important way to be expressive is to try. Care is a precious resource</strong></li>
+</ul>
+
+<h3 id="minimal-classes-and-methods">
+<a class="anchor" href="#minimal-classes-and-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Minimal classes and methods</h3>
+<ul>
+  <li>Effort to make our classes and methods small -&gt; we might create too many tiny classes and methods -&gt; <strong>also keep our function and class counts low!</strong>
+</li>
+</ul>
+
+<blockquote>
+  <p>Although it’s important to keep class and function count low, it’s more important to have tests, eliminate duplication, and express yourself</p>
+</blockquote>
+
+<h1 id="ch13-concurrency">
+<a class="anchor" href="#ch13-concurrency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch13. Concurrency</h1>
+<blockquote>
+  <p>Objects are abstractions of processing. Threads are abstractions of schedule - James O. Coplien</p>
+</blockquote>
+
+<h2 id="why-concurrency">
+<a class="anchor" href="#why-concurrency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why concurrency?</h2>
+<ul>
+  <li>Concurrency is a decoupling strategy</li>
+  <li>Helps us decouple <strong>what</strong> gets done from <strong>when</strong> it gets done</li>
+</ul>
+
+<h2 id="myths-and-misconceptions">
+<a class="anchor" href="#myths-and-misconceptions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Myths and misconceptions</h2>
+<ul>
+  <li>Concurrency can <em>sometimes</em> improve performance, but only when there is a lot of wait time that can be shared between multiple threads or multiple processors</li>
+  <li>The design of a concurrent algorithm can be remarkably different from the design of a single-threaded system</li>
+  <li>
+<strong>Concurrency bugs aren’t usually repeatable</strong>, so they are often ignored as one-offs instead of the true defects they are</li>
+  <li>Concurrency often requires a fundamental change in design strategy</li>
+</ul>
+
+<h2 id="concurrency-defense-principles">
+<a class="anchor" href="#concurrency-defense-principles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Concurrency defense principles</h2>
+<ul>
+  <li>
+<strong>Single responsibility principle</strong>: keep your concurrency-related code separate from other code</li>
+  <li>
+<strong>Limit the scope of data</strong>: data encapsulation; severely limit the access of any data that may be shared</li>
+  <li><strong>Use copies of data</strong></li>
+  <li><strong>Threads should be as independent as possible</strong></li>
+</ul>
+
+<h3 id="know-your-execution-models">
+<a class="anchor" href="#know-your-execution-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Know your execution models</h3>
+<ul>
+  <li><strong>Producer-Consumer</strong></li>
+  <li><strong>Readers-Writers</strong></li>
+  <li><strong>Dining Philosophers</strong></li>
+</ul>
+
+<h3 id="others">
+<a class="anchor" href="#others" aria-hidden="true"><span class="octicon octicon-link"></span></a>Others</h3>
+<ul>
+  <li>Keep synchronized sections small</li>
+  <li>Think about shut-down early and get it working early</li>
+  <li>Write tests that have the potential to expose problems and then run them frequently, with different programatic configurations and system configurations and load</li>
+  <li>Do not ignore system failures as one-offs</li>
+  <li>Do not try to chase down nonthreading bugs and threading bugs at the same time. Make sure your code works outside of threads</li>
+  <li>Make your thread-based code especially pluggable so that you can run it in various configurations</li>
+  <li>Run your threaded code on all target platforms early and often</li>
+</ul>
+
+<blockquote>
+  <p>Code that is simple to follow can become nightmarish when multiple threads and shared data get into the mix -&gt; you need to write clean code with rigor or else face subtle and infrequent failures</p>
+</blockquote>
+
+  </div><a class="u-url" href="/blog/book/software%20engineering/2020/07/26/clean-code.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Storytelling with Data | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Storytelling with Data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for." />
+<meta property="og:description" content="Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/storytelling/storytelling.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-24T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Storytelling with Data","dateModified":"2019-08-24T00:00:00-05:00","description":"Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for.","datePublished":"2019-08-24T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/storytelling/storytelling.jpg","url":"https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Storytelling with Data | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Storytelling with Data" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for." />
+<meta property="og:description" content="Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/storytelling/storytelling.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-08-24T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Storytelling with Data","dateModified":"2019-08-24T00:00:00-05:00","description":"Gustavo is a data scientist that is trying to grow a data driven culture in the company he works for.","datePublished":"2019-08-24T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/storytelling/storytelling.jpg","url":"https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Storytelling with Data</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-08-24T00:00:00-05:00" itemprop="datePublished">
+        Aug 24, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#storytelling">storytelling</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data driven">data driven</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#exploratory-vs-explanatory">Exploratory vs Explanatory</a></li>
+<li class="toc-entry toc-h1"><a href="#understand-the-context">Understand the context</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-big-idea">The Big Idea</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#choosing-an-effective-visual">Choosing an effective visual</a></li>
+<li class="toc-entry toc-h1"><a href="#focus-your-audiences-attention">Focus your audience’s attention</a></li>
+<li class="toc-entry toc-h1"><a href="#think-like-a-designer">Think like a designer</a></li>
+<li class="toc-entry toc-h1"><a href="#lessons-in-storytelling">Lessons in Storytelling</a></li>
+<li class="toc-entry toc-h1"><a href="#final-thoughts">Final thoughts</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reference">Reference:</a></li>
+</ul>
+</li>
+</ul><p>Gustavo is a data scientist that is trying to grow a <strong>data driven</strong> culture in the company he works for.</p>
+
+<p>Many hours of study of scientific method, statistics and programming have made him technically competent in his role.</p>
+
+<p>For him, analyzing charts coming from his usual tools is trivial. However, Gustavo works with other amazing people in different roles from his. His goal of making the company data driven depends on their <strong>engagement</strong>.</p>
+
+<p>To fulfill his goal, our hero embarks on an arduous journey to make his visualizations more assertive and explain his points simply and elegantly.</p>
+
+<p>Make no mistake, often summarizing an idea to the essentials is a much more complex task than expected.</p>
+
+<p>The above seems like the synopsis of a book, doesn’t it? That was the way I found it most interesting to engage the reader inspired by the chapter <em>“The magic of story”</em> from the book Storytelling with Data.</p>
+
+<p>This post is my summary of interesting points from the book. As a three-act structure for plays, we had the <strong>setup</strong> and <strong>conflict</strong> already laid down. The following is my attempt of <strong>resolution</strong>.</p>
+
+<h1 id="exploratory-vs-explanatory">
+<a class="anchor" href="#exploratory-vs-explanatory" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploratory vs Explanatory</h1>
+
+<p>After undertaking an entire analysis, it can be tempting to want to show your audience everything, as evidence of all of the work you did and the robustness of the analysis (<strong>Exploratory</strong>). Resist this urge. Concentrate on the information your audience needs to know (<strong>Explanatory</strong>).</p>
+
+<p>Being concise is often more challenging than being verbose. If you know exactly what it is you want to communicate, you can make it fit the time slot you’re given.</p>
+
+<h1 id="understand-the-context">
+<a class="anchor" href="#understand-the-context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understand the context</h1>
+
+<p>Build a clear understanding of who you are communicating to, what you need them to know or do, how you will communicate to them, and what data you have to back up your case. Employ concepts like the 3‐minute story, the Big Idea, and storyboarding to articulate your story and plan the desired content and flow.</p>
+
+<h2 id="the-big-idea">
+<a class="anchor" href="#the-big-idea" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Big Idea</h2>
+
+<ol>
+  <li>Must articulate your unique point of view;</li>
+  <li>Must convey what’s at stake;</li>
+  <li>Must be a complete sentence.</li>
+</ol>
+
+<h1 id="choosing-an-effective-visual">
+<a class="anchor" href="#choosing-an-effective-visual" aria-hidden="true"><span class="octicon octicon-link"></span></a>Choosing an effective visual</h1>
+
+<p><img src="https://millengustavo.github.io/blog/images/storytelling/visual.jpg" alt="visual"></p>
+
+<ul>
+  <li>
+<strong>Simple text</strong>: When you have a number or two that you want to communicate, think about using the numbers themselves. When you have more data that you want to show, generally a table or graph is the way to go.</li>
+  <li>
+<strong>Tables</strong> and <strong>Graphs</strong>: While tables interact with our verbal system, graphs interact with our visual system, which is faster at processing information.</li>
+  <li>
+<strong>Scatterplots</strong> can be useful for showing the relationship between two things.</li>
+  <li>
+<strong>Line graphs</strong> are most commonly used to plot continuous data.</li>
+  <li>
+<strong>Slopegraphs</strong> can be useful when you have two time periods or points of comparison and want to quickly show relative increases and decreases or differences across various categories between the two data points.</li>
+  <li>
+<strong>Bar charts</strong> are easy for our eyes to read. Our eyes compare the endpoints of the bars, so it is easy to see quickly which category is the biggest, which is the smallest, and also the incremental difference between categories. Note that, because of how our eyes compare the relative end points of the bars, it is important that bar charts always have a zero baseline (where the x‐axis crosses the y‐axis at zero), otherwise you get a false visual comparison.</li>
+  <li>
+<strong>Stacked vertical bar chart</strong> are meant to allow you to compare totals across categories and also see the subcomponent pieces within a given category.</li>
+  <li>
+<strong>Horizontal bar chart</strong> are the go-to graph for categorical data. They are especially useful if your category names are long, as the text is written from left to right, making your graph legible for your audience.</li>
+  <li>
+<strong>Avoid</strong>: pie charts, donut charts, 3D and secondary y-axes.</li>
+</ul>
+
+<h1 id="focus-your-audiences-attention">
+<a class="anchor" href="#focus-your-audiences-attention" aria-hidden="true"><span class="octicon octicon-link"></span></a>Focus your audience’s attention</h1>
+
+<ul>
+  <li>If we use <strong>preattentive attributes</strong> strategically, they can help us enable our audience to see what we want them to see before they even know they’re seeing it!</li>
+  <li>Don’t let your design choices be happenstance; rather, they should be the result of <strong>explicit decisions</strong>.</li>
+  <li>The use of <strong>color</strong> should always be an intentional decision. Never let your tool make this important decision for you!</li>
+  <li>If something is important, try not to make your audience wade through other stuff to get to it. Eliminate this work by putting the important thing at the top.</li>
+</ul>
+
+<h1 id="think-like-a-designer">
+<a class="anchor" href="#think-like-a-designer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Think like a designer</h1>
+
+<blockquote>
+  <p>Antoine de Saint‐Exupery famously said, “You know you’ve achieved perfection, not when you have nothing more to add, but when you have <strong>nothing to take away</strong>”</p>
+</blockquote>
+
+<ul>
+  <li>Ask yourself: would eliminating this change anything? No? Take it out! Resist the temptation to keep things because they are cute or because you worked hard to create them; if they don’t support the message, they don’t serve the purpose of communication.</li>
+  <li>Push necessary, but non‐message‐impacting items to the background. Use your knowledge of preattentive attributes to deemphasize. Light grey works well for this.</li>
+  <li>Make it legible; Keep it clean; Use straightforward language; Remove unnecessary complexity.</li>
+  <li>Assume that every chart needs a title and every axis needs a title (exceptions to this rule will be extremely rare). The absence of these titles—no matter how clear you think it may be from context—causes your audience to stop and question what they are looking at. Instead, <strong>label explicitly</strong> so they can use their brainpower to understand the information, rather than spend it trying to figure out how to read the visual.</li>
+  <li>In data visualization—and communicating with data in general—spending time to make our designs <strong>aesthetically pleasing</strong> can mean our audience will have more patience with our visuals, increasing our chance of success for getting our message across.</li>
+</ul>
+
+<h1 id="lessons-in-storytelling">
+<a class="anchor" href="#lessons-in-storytelling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lessons in Storytelling</h1>
+
+<ul>
+  <li>A good story grabs your attention and takes you on a journey, evoking an <strong>emotional response</strong>. In the middle of it, you find yourself not wanting to turn away or put it down. After finishing it—a day, a week, or even a month later—you could easily describe it to a friend.</li>
+  <li>Aristotle introduced a basic but profound idea: that story has a clear beginning, middle, and end. He proposed a <strong>three‐act structure for plays</strong>. This concept has been refined over time and is commonly referred to as the setup, conflict, and resolution.</li>
+</ul>
+
+<blockquote>
+  <p>What exactly is story? At a fundamental level, a story expresses how and why life changes. Stories start with balance. Then something happens—an event that throws things out of balance. McKee describes this as “subjective expectation meets cruel reality.”</p>
+</blockquote>
+
+<ul>
+  <li>Telling a compelling story is harder than conventional rhetoric. But delving into your creative recesses is worth it because a story allows you to engage your audience on an entirely new level.</li>
+  <li>
+<strong>End with a call to action</strong>: make it totally clear to your audience what you want them to do with the new understanding or knowledge that you’ve imparted to them. One classic way to end a story is to tie it back to the beginning</li>
+</ul>
+
+<p>In his book, Beyond Bullet Points, Cliff Atkinson outlines the following questions to consider and address when it comes to setting up the story:</p>
+
+<ol>
+  <li>The setting: When and where does the story take place?</li>
+  <li>The main character: Who is driving the action? (This should be framed in terms of your audience!)</li>
+  <li>The imbalance: Why is it necessary, what has changed?</li>
+  <li>The balance: What do you want to see happen?</li>
+  <li>The solution: How will you bring about the changes?</li>
+</ol>
+
+<h1 id="final-thoughts">
+<a class="anchor" href="#final-thoughts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Final thoughts</h1>
+
+<p>The default settings of our graphing application are typically far from ideal. <strong>Our tools do not know the story we aim to tell</strong>. Combine these two things and you run the risk of losing a great deal of potential value—including the opportunity to drive action and effect change—if adequate time isn’t spent on this final step in the analytical process: the communication step.</p>
+
+<p>As a Python programmer I found this amazing Github repository with code to plot the same graphs the author presents in her book using the library Matplotlib:
+https://github.com/empathy87/storytelling-with-data</p>
+
+<p>I intentionally did not present any graphs here to encourage you to read the book and navigate through the examples that are beautifully laid out by the author.</p>
+
+<blockquote>
+  <p>“Nirvana in communicating with data is reached when the effective visuals are combined with a powerful narrative.”</p>
+</blockquote>
+
+<h3 id="reference">
+<a class="anchor" href="#reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference:</h3>
+
+<p>Knaflic, Cole Nussbaumer. Storytelling with data: A data visualization guide for business professionals. John Wiley &amp; Sons, 2015.</p>
+
+<p>Header: Photo by <a href="https://unsplash.com/@californong?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Nong Vang</a> on <a href="https://unsplash.com/search/photos/storytelling?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+
+<p>Body: Photo by <a href="https://unsplash.com/@ifbdesign?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Benjamin Smith</a> on <a href="https://unsplash.com/search/photos/graph?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+
+
+  </div><a class="u-url" href="/blog/data%20science/storytelling/data%20driven/book/2019/08/24/storytelling.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

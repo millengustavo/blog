@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Forecasting: Principles and Practice | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Forecasting: Principles and Practice" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/hyndman_forecasting/hyndman_forecasting.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-07T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Forecasting: Principles and Practice","dateModified":"2020-01-07T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-07T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/hyndman_forecasting/hyndman_forecasting.jpeg","url":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Forecasting: Principles and Practice | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Forecasting: Principles and Practice" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/hyndman_forecasting/hyndman_forecasting.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-07T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Forecasting: Principles and Practice","dateModified":"2020-01-07T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-07T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/hyndman_forecasting/hyndman_forecasting.jpeg","url":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Forecasting: Principles and Practice</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-07T00:00:00-06:00" itemprop="datePublished">
+        Jan 7, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      25 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#time series">time series</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#forecasting">forecasting</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#statistics">statistics</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-getting-started">1. Getting Started</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#qualitative-x-quantitative-forecasting">Qualitative x Quantitative forecasting</a></li>
+<li class="toc-entry toc-h3"><a href="#basic-steps-of-a-forecasting-task">Basic steps of a forecasting task</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#2-time-series-graphics">2. Time series graphics</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#correlation">Correlation</a></li>
+<li class="toc-entry toc-h3"><a href="#autocorrelation-function-acf">Autocorrelation Function (ACF)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#3-the-forecasters-toolbox">3. The forecaster’s toolbox</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#simple-methods-benchmarks-mostly">Simple methods (benchmarks mostly)</a></li>
+<li class="toc-entry toc-h3"><a href="#transformations-and-adjustments">Transformations and adjustments</a></li>
+<li class="toc-entry toc-h3"><a href="#residuals">Residuals</a></li>
+<li class="toc-entry toc-h3"><a href="#training-and-test-sets">Training and Test sets</a></li>
+<li class="toc-entry toc-h3"><a href="#time-series-cross-validation">Time series cross-validation</a></li>
+<li class="toc-entry toc-h3"><a href="#prediction-intervals">Prediction intervals</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#4-judgemental-forecasts">4. Judgemental forecasts</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#limitations">Limitations</a></li>
+<li class="toc-entry toc-h2"><a href="#key-principles">Key principles</a></li>
+<li class="toc-entry toc-h2"><a href="#the-delphi-method">The Delphi method</a></li>
+<li class="toc-entry toc-h2"><a href="#forecasting-by-analogy">Forecasting by analogy</a></li>
+<li class="toc-entry toc-h2"><a href="#scenario-forecasting">Scenario forecasting</a></li>
+<li class="toc-entry toc-h2"><a href="#new-product-forecasting">New product forecasting</a></li>
+<li class="toc-entry toc-h2"><a href="#judgemental-adjustments">Judgemental adjustments</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-time-series-regression-models">5. Time series regression models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#linear-regression">Linear Regression</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#goodness-of-fit">Goodness-of-fit</a></li>
+<li class="toc-entry toc-h3"><a href="#standard-error-of-the-regression">Standard error of the regression</a></li>
+<li class="toc-entry toc-h3"><a href="#evaluating-the-regression-model">Evaluating the regression model</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#acf-plot-of-residuals">ACF plot of residuals</a></li>
+<li class="toc-entry toc-h4"><a href="#histogram-of-residuals">Histogram of residuals</a></li>
+<li class="toc-entry toc-h4"><a href="#residual-plots-against-predictors">Residual plots against predictors</a></li>
+<li class="toc-entry toc-h4"><a href="#residual-plots-against-fitted-values">Residual plots against fitted values</a></li>
+<li class="toc-entry toc-h4"><a href="#outliers-and-influential-observations">Outliers and influential observations</a></li>
+<li class="toc-entry toc-h4"><a href="#spurious-regression">Spurious regression</a></li>
+<li class="toc-entry toc-h4"><a href="#some-useful-predictors">Some useful predictors</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#selecting-predictors">Selecting predictors</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#not-recommended">Not recommended</a></li>
+<li class="toc-entry toc-h3"><a href="#recommended">Recommended</a></li>
+<li class="toc-entry toc-h3"><a href="#stepwise-regression">Stepwise regression</a></li>
+<li class="toc-entry toc-h3"><a href="#ex-ante-vs-ex-post-forecasts">Ex-ante vs ex-post forecasts</a></li>
+<li class="toc-entry toc-h3"><a href="#matrix-formulation">Matrix formulation</a></li>
+<li class="toc-entry toc-h3"><a href="#correlation-causation-and-forecasting">Correlation, causation and forecasting</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#confounded-predictors">Confounded predictors</a></li>
+<li class="toc-entry toc-h4"><a href="#multicollinearity-and-forecasting">Multicollinearity and forecasting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6-time-series-decomposition">6. Time series decomposition</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#time-series-components">Time series components</a></li>
+<li class="toc-entry toc-h2"><a href="#moving-averages">Moving averages</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#weighted-moving-averages">Weighted moving averages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#classical-decomposition-not-recommended">Classical decomposition (not recommended)</a></li>
+<li class="toc-entry toc-h2"><a href="#x11-decomposition">X11 decomposition</a></li>
+<li class="toc-entry toc-h2"><a href="#seats-decomposition">SEATS decomposition</a></li>
+<li class="toc-entry toc-h2"><a href="#stl-decomposition">STL decomposition</a></li>
+<li class="toc-entry toc-h2"><a href="#measuring-strength-of-trend-and-seasonality">Measuring strength of trend and seasonality</a></li>
+<li class="toc-entry toc-h2"><a href="#forecasting-with-decomposition">Forecasting with decomposition</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#7-exponential-smoothing">7. Exponential smoothing</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#simple-exponential-smoothing-ses">Simple exponential smoothing (SES)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#optimisation">Optimisation</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#trend-methods">Trend methods</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#holts-linear-trend-method">Holt’s linear trend method</a></li>
+<li class="toc-entry toc-h3"><a href="#damped-trend-methods">Damped trend methods</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#holt-winters-seasonal-method">Holt-Winters’ seasonal method</a></li>
+<li class="toc-entry toc-h2"><a href="#a-taxonomy-of-exponential-smoothing-methods">A taxonomy of exponential smoothing methods</a></li>
+<li class="toc-entry toc-h2"><a href="#innovations-state-space-models-for-exponential-smoothing">Innovations state space models for exponential smoothing</a></li>
+<li class="toc-entry toc-h2"><a href="#estimation-and-model-selection">Estimation and model selection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#estimating-ets-models">Estimating ETS models</a></li>
+<li class="toc-entry toc-h3"><a href="#model-selection">Model selection</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#forecasting-with-ets-models">Forecasting with ETS models</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#prediction-intervals-1">Prediction intervals</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#8-arima-models">8. ARIMA models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#stationarity-and-differencing">Stationarity and differencing</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#differencing">Differencing</a></li>
+<li class="toc-entry toc-h3"><a href="#random-walk-model">Random walk model</a></li>
+<li class="toc-entry toc-h3"><a href="#second-order-differencing">Second-order differencing</a></li>
+<li class="toc-entry toc-h3"><a href="#seasonal-differencing">Seasonal differencing</a></li>
+<li class="toc-entry toc-h3"><a href="#unit-root-tests">Unit root tests</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#backshift-notation">Backshift notation</a></li>
+<li class="toc-entry toc-h2"><a href="#autoregressive-models">Autoregressive models</a></li>
+<li class="toc-entry toc-h2"><a href="#moving-average-models">Moving average models</a></li>
+<li class="toc-entry toc-h2"><a href="#non-seasonal-arima-models">Non-seasonal ARIMA models</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#acf-and-pacf-plots">ACF and PACF plots</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#estimation-and-order-selection">Estimation and order selection</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#maximum-likelihood-estimation-mle">Maximum likelihood estimation (MLE)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#information-criteria">Information Criteria</a></li>
+<li class="toc-entry toc-h2"><a href="#forecasting">Forecasting</a></li>
+<li class="toc-entry toc-h2"><a href="#seasonal-arima-models">Seasonal ARIMA models</a></li>
+<li class="toc-entry toc-h2"><a href="#arima-vs-ets">ARIMA vs ETS</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#9-dynamic-regression-models">9. Dynamic regression models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#estimation">Estimation</a></li>
+<li class="toc-entry toc-h2"><a href="#forecasting-1">Forecasting</a></li>
+<li class="toc-entry toc-h2"><a href="#stochastic-and-deterministic-trends">Stochastic and deterministic trends</a></li>
+<li class="toc-entry toc-h2"><a href="#dynamic-harmonic-regression">Dynamic harmonic regression</a></li>
+<li class="toc-entry toc-h2"><a href="#lagged-predictors">Lagged predictors</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#10-forecasting-hierarchical-or-grouped-time-series">10. Forecasting hierarchical or grouped time series</a></li>
+<li class="toc-entry toc-h1"><a href="#11-advanced-forecasting-methods">11. Advanced forecasting methods</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#complex-seasonality">Complex seasonality</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dynamic-harmonic-regression-with-multiple-seasonal-periods">Dynamic harmonic regression with multiple seasonal periods</a></li>
+<li class="toc-entry toc-h3"><a href="#tbats-models">TBATS models</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#vector-autoregressions">Vector autoregressions</a></li>
+<li class="toc-entry toc-h2"><a href="#neural-network-models">Neural network models</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#neural-network-autoregression">Neural network autoregression</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#bootstrapping-and-bagging">Bootstrapping and bagging</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#baggeg-forecasts">Baggeg forecasts</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#12-some-practical-forecasting-issues">12. Some practical forecasting issues</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#weekly-data">Weekly data</a></li>
+<li class="toc-entry toc-h3"><a href="#daily-and-sub-daily-data">Daily and sub-daily data</a></li>
+<li class="toc-entry toc-h2"><a href="#ensuring-forecasts-stay-within-limits">Ensuring forecasts stay within limits</a></li>
+<li class="toc-entry toc-h2"><a href="#forecast-combinations">Forecast combinations</a></li>
+<li class="toc-entry toc-h2"><a href="#prediction-intervals-for-aggregates">Prediction intervals for aggregates</a></li>
+<li class="toc-entry toc-h2"><a href="#backcasting">Backcasting</a></li>
+<li class="toc-entry toc-h2"><a href="#very-long-and-very-short-time-series">Very long and very short time series</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#forecasting-very-short-time-series">Forecasting very short time series</a></li>
+<li class="toc-entry toc-h3"><a href="#forecasting-very-long-time-series">Forecasting very long time series</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#dealing-with-missing-values-and-outliers">Dealing with missing values and outliers</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#missing-values">Missing values</a></li>
+<li class="toc-entry toc-h3"><a href="#outliers">Outliers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Authors: Rob J Hyndman and George Athanasopoulos</p>
+
+<p><a href="https://otexts.com/fpp2">Available for free here (online)</a></p>
+
+<h1 id="1-getting-started">
+<a class="anchor" href="#1-getting-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Getting Started</h1>
+<blockquote>
+  <p>Forecasting is difficult. Businesses that do it well have a big advantage over those whose forecasts fail</p>
+</blockquote>
+
+<ul>
+  <li>Important aid to effective and efficient planning</li>
+</ul>
+
+<p>predictability:</p>
+<ul>
+  <li>how well we understand the factors</li>
+  <li>how much data we have</li>
+  <li>our forecasts affect the thing?</li>
+</ul>
+
+<blockquote>
+  <p><strong>Naïve method</strong>: using the most recent observation as a forecast</p>
+</blockquote>
+
+<h3 id="qualitative-x-quantitative-forecasting">
+<a class="anchor" href="#qualitative-x-quantitative-forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Qualitative x Quantitative forecasting</h3>
+<ul>
+  <li>
+<strong>qualitative</strong>: no data available</li>
+  <li>
+<strong>quantitative</strong>: numerical info about the past is available; reasonable to assume that some aspects of the past will continue in the future</li>
+</ul>
+
+<blockquote>
+  <p><em>Explanatory models</em> / mixed models / dynamic regression models / longitudinal models / transfer function models / linear system models: incorporates information about other vars rather than only historical values of the variable to forecast</p>
+</blockquote>
+
+<p>Drawbacks of explanatory models:</p>
+<ul>
+  <li>system may not be understood</li>
+  <li>necessary to know/forecast the future values of various predictors</li>
+  <li>main concern may be only to predict what, not why</li>
+  <li>time series model may give more accurate forecasts</li>
+</ul>
+
+<h3 id="basic-steps-of-a-forecasting-task">
+<a class="anchor" href="#basic-steps-of-a-forecasting-task" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic steps of a forecasting task</h3>
+<ol>
+  <li>Problem definition</li>
+  <li>Gathering information</li>
+  <li>Preliminary (exploratory) analysis</li>
+  <li>Choosing and fitting models</li>
+  <li>Using and evaluating a forecasting model</li>
+</ol>
+
+<h1 id="2-time-series-graphics">
+<a class="anchor" href="#2-time-series-graphics" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Time series graphics</h1>
+
+<p>Graphs enable:</p>
+<ul>
+  <li>patterns</li>
+  <li>unusual observations</li>
+  <li>changes over time</li>
+  <li>relationships between vars</li>
+</ul>
+
+<blockquote>
+  <p><strong>Time plot</strong>: observations against time of observation</p>
+</blockquote>
+
+<ul>
+  <li>
+<strong>trend</strong>: long-term increase/decrease in the data</li>
+  <li>
+<strong>seasonal</strong>: always of a fixed and known frequency (factors: time of the year and/or day of the week)</li>
+  <li>
+<strong>cyclic</strong>: rises/falls that are not of a fixed frequency</li>
+</ul>
+
+<h3 id="correlation">
+<a class="anchor" href="#correlation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Correlation</h3>
+<p>Ranges between -1 and 1</p>
+
+<p>Correlation coefficient only measures the strenght of the <em>linear</em> relationship</p>
+
+<blockquote>
+  <p>Scatterplot matrix: relationships between all pairs of variables</p>
+</blockquote>
+
+<h3 id="autocorrelation-function-acf">
+<a class="anchor" href="#autocorrelation-function-acf" aria-hidden="true"><span class="octicon octicon-link"></span></a>Autocorrelation Function (ACF)</h3>
+<p>Measures the relationship between <em>lagged</em> values of a time series</p>
+
+<blockquote>
+  <p><strong>Correlogram</strong>: autocorrelation coefficients plot</p>
+</blockquote>
+
+<p>Data with trend, ACs for small lags -&gt; large and positive because observations nearby in time are also nearby in size. So the ACF of trended time series -&gt; positive values that slowly decrease as the lags increase.</p>
+
+<p>Data seasonal, the ACs will be larger for the seasonal lags (at multiples of the seasonal frequency) than for other lags.</p>
+
+<p>Data are both trended and seasonal -&gt; combination of these effects</p>
+
+<blockquote>
+  <p><strong>White noise</strong>: time series that show no autocorrelation. 95% of the spikes in the ACF lie within <code class="highlighter-rouge">+-2/sqrt(T)</code> where <code class="highlighter-rouge">T</code> is the length of the time series</p>
+</blockquote>
+
+<h1 id="3-the-forecasters-toolbox">
+<a class="anchor" href="#3-the-forecasters-toolbox" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. The forecaster’s toolbox</h1>
+
+<h3 id="simple-methods-benchmarks-mostly">
+<a class="anchor" href="#simple-methods-benchmarks-mostly" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple methods (benchmarks mostly)</h3>
+<ul>
+  <li>
+<strong>Average method</strong>: future values are equal to the average (or “mean”)</li>
+  <li>
+<strong>Naïve method</strong>: equal to the value of the last observation -&gt; optimal when data follow a random walk = <strong>random walk forecasts</strong>
+</li>
+  <li>
+<strong>Seasonal naïve method</strong>: equal to the last observed value from the same season of the year</li>
+  <li>
+<strong>Drift method</strong>: drawing a line between the first and last observations, and extrapolating it into the future</li>
+</ul>
+
+<p>Any forecasting methods we develop will be compared to these simple methods -&gt; test if it is worth considering</p>
+
+<h3 id="transformations-and-adjustments">
+<a class="anchor" href="#transformations-and-adjustments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transformations and adjustments</h3>
+<p>Adjusting the data can lead to simpler forecasting task</p>
+
+<ul>
+  <li>
+<strong>Calendar adjustments</strong>: e.g., removing variation of days between months (use average per day instead of monthly)</li>
+  <li>
+<strong>Population adjustments</strong>: data affected by population changes, it is best to use per-capita data rather than the totals</li>
+  <li>
+<strong>Inflation adjustments</strong>: data affected by the value of money are best adjusted before modelling (price indexes, Consumer Price Index - CPI)</li>
+  <li>
+<strong>Mathematical transformations</strong>: data show variation that increases/decreases with the level of the series, math transf. can be useful. e.g., log transformation (interpretable), power transformations, <em>Box-Cox transformations</em>. Often no transformation is needed. Transformations sometimes make little difference to the forecasts but have a large effect on prediction intervals</li>
+</ul>
+
+<h3 id="residuals">
+<a class="anchor" href="#residuals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Residuals</h3>
+<p>What is left over after fitting a model</p>
+<ul>
+  <li>Residuals are uncorrelated. Or there is information left in the residuals -&gt; should be used in computing forecasts</li>
+  <li>Residuals have zero mean. Or the forecasts are biases. (easy to fix)</li>
+  <li>Residuals have constant variance</li>
+  <li>Residuals are normally distributed</li>
+</ul>
+
+<blockquote>
+  <p><strong>Portmanteau test</strong>: test for a group of autocorrelations. e.g., <em>Box-Pierce test</em>, <em>Ljung-Box test</em></p>
+</blockquote>
+
+<h3 id="training-and-test-sets">
+<a class="anchor" href="#training-and-test-sets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training and Test sets</h3>
+<p><strong>Size of the test set (hold-out set or out-of-sample data)</strong>: about 20% of the total sample. Ideally be at least as large as the maximum forecast horizon required</p>
+<ul>
+  <li>residuals are calculated in the training set</li>
+  <li>forecast errors are calculated in the test set</li>
+</ul>
+
+<p><strong>Forecast errors</strong></p>
+<ul>
+  <li>
+<strong>Scale-dependent errors</strong>: forecast errors are on the same scale as the data. e.g., MAE, RMSE.</li>
+  <li>
+<strong>Percentage errors</strong>: unit-free, freq. used to compare forecast performance between data sets. e.g., MAPE (mean absolute percentage error), sMAPE (not recommended by Hyndman)</li>
+  <li>
+<strong>Scaled errors</strong>: scale the errors based on the training MAE -&gt; MASE (mean absolute scaled error)</li>
+</ul>
+
+<h3 id="time-series-cross-validation">
+<a class="anchor" href="#time-series-cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Time series cross-validation</h3>
+<p>Series of test sets, each consisting of a single observation. Corresponding training set consists only of observations that occurred <em>prior</em> to the observation that forms the test set -&gt; forecast accuracy computed by avg over the test sets -&gt; “evaluation on a rolling forecasting origin”</p>
+
+<blockquote>
+  <p>A good way to choose the best forecasting model is to find the model with the smallest RMSE computed using time series cross-validation.</p>
+</blockquote>
+
+<h3 id="prediction-intervals">
+<a class="anchor" href="#prediction-intervals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prediction intervals</h3>
+<ul>
+  <li>
+<strong>One-step</strong>: stdev of the forecast distribution ~= stdev of the residuals</li>
+  <li>
+<strong>Multi-step</strong>: intervals increase in length as the forecast horizon increases</li>
+  <li>From <strong>bootstrapped residuals</strong>: when a normal distribution for the forecast errors is an unreasonable assumption -&gt; use bootstrapping (only assume errors are uncorrelated)</li>
+  <li>With <strong>transformations</strong>: should be computed on the transformed scale</li>
+</ul>
+
+<h1 id="4-judgemental-forecasts">
+<a class="anchor" href="#4-judgemental-forecasts" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Judgemental forecasts</h1>
+<p>Used when:</p>
+<ul>
+  <li>no available data</li>
+  <li>data available, statistical forecasts are generated, and these are then adjusted used judgement</li>
+  <li>data available, statistical and judgmental forecasts are generated independently and then combined</li>
+</ul>
+
+<p>Accuracy of judmental forecasting (lack of historical data) increases when the forecaster has:</p>
+<ul>
+  <li>important domain knowledge</li>
+  <li>more timely, up-to-date information</li>
+</ul>
+
+<p>JF is subjective and comes with limitations. But implementing systematic and well-structured approachs can confine these limitations and markedly improve forecast accuracy</p>
+
+<h2 id="limitations">
+<a class="anchor" href="#limitations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Limitations</h2>
+<ul>
+  <li>Subjective</li>
+  <li>Can be inconsistent</li>
+  <li>Depends heavily on human cognition (be aware of the multiple cognitive biases)</li>
+  <li>Anchoring effect -&gt; subsequent forecasts tend to converge or be close to an inital familiar reference point (create systematic bias)</li>
+</ul>
+
+<h2 id="key-principles">
+<a class="anchor" href="#key-principles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key principles</h2>
+<ul>
+  <li>Set the forecasting task clearly and concisely (avoid emotive terms and irrelevant information)</li>
+  <li>Implement a systematic approach</li>
+  <li>Document and justify (accountability -&gt; reduces bias)</li>
+  <li>Systematically evaluate forecasts</li>
+  <li>Segregate forecasters and users</li>
+</ul>
+
+<h2 id="the-delphi-method">
+<a class="anchor" href="#the-delphi-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Delphi method</h2>
+<p>Forecasts from a group are generally more accurate than those from individuals -&gt; construct consensus forecasts from a group of experts in a structured iterative manner</p>
+
+<h2 id="forecasting-by-analogy">
+<a class="anchor" href="#forecasting-by-analogy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting by analogy</h2>
+<p>Thinking and discussing analogous products or situations can generate useful information (e.g., market value of a house by comparing it to similar properties sold in the area)</p>
+
+<h2 id="scenario-forecasting">
+<a class="anchor" href="#scenario-forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scenario forecasting</h2>
+<p>Generate forecasts based on plausible scenarios (e.g.: “best”, “middle”, “worst”)</p>
+
+<h2 id="new-product-forecasting">
+<a class="anchor" href="#new-product-forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>New product forecasting</h2>
+<ul>
+  <li>Sales force composite: aggregate forecast for each outlet/branch/store of a company generated by salespeople</li>
+  <li>Executive opinion (remember accountability!)</li>
+  <li>Customer intentions: questionnaires, beware of varying correlation between intention and behaviour</li>
+</ul>
+
+<h2 id="judgemental-adjustments">
+<a class="anchor" href="#judgemental-adjustments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Judgemental adjustments</h2>
+<ul>
+  <li>Use adjustments sparingly</li>
+  <li>Apply a structure approach</li>
+</ul>
+
+<h1 id="5-time-series-regression-models">
+<a class="anchor" href="#5-time-series-regression-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Time series regression models</h1>
+<p>Forecast the time series of interest assuming it has a linear relationship with other time series</p>
+
+<h2 id="linear-regression">
+<a class="anchor" href="#linear-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Linear Regression</h2>
+<p>Assumptions about the errors:</p>
+<ul>
+  <li>mean = 0, otherwise forecasts systematically biased</li>
+  <li>not autocorrelated, otherwise there is still information to be exploited</li>
+  <li>unrelated to the predictor vars, otherwise more info should be included in the systematic part of the model</li>
+</ul>
+
+<h3 id="goodness-of-fit">
+<a class="anchor" href="#goodness-of-fit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goodness-of-fit</h3>
+<p><strong>Coefficient of determination (R²)</strong>: proportion of variation in the forecast variable that is accounted by the regression model. Range between 0 (worst) and 1 (best)</p>
+
+<blockquote>
+  <p>Validating performance on the test data is much better than measuring R² on the training data</p>
+</blockquote>
+
+<h3 id="standard-error-of-the-regression">
+<a class="anchor" href="#standard-error-of-the-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standard error of the regression</h3>
+<p>“Residual standard error”</p>
+
+<h3 id="evaluating-the-regression-model">
+<a class="anchor" href="#evaluating-the-regression-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluating the regression model</h3>
+<p>Residuals (training-set errors): difference between observed and fitted values. Average of the residuals = 0 and correlations between residuals and predictor = 0</p>
+
+<h4 id="acf-plot-of-residuals">
+<a class="anchor" href="#acf-plot-of-residuals" aria-hidden="true"><span class="octicon octicon-link"></span></a>ACF plot of residuals</h4>
+<p>If there is autocorrelation in the residuals -&gt; info left over which should be accounted in the model -&gt; usually have larger prediction intervals</p>
+
+<p><strong>Breusch-Godfrey</strong>: Lagrange Multiplier (LM) test for serial correlation -&gt; similar to Ljung-Box test, but specifically for regression models</p>
+
+<h4 id="histogram-of-residuals">
+<a class="anchor" href="#histogram-of-residuals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Histogram of residuals</h4>
+<p>Check whether the residuals are normally distributed, not essential, but makes the calculation of prediction intervals easier</p>
+
+<h4 id="residual-plots-against-predictors">
+<a class="anchor" href="#residual-plots-against-predictors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Residual plots against predictors</h4>
+<p>If the scatterplots show a pattern, the relationship may be nonlinear and the model will need to be modified</p>
+
+<blockquote>
+  <p>Also plot the residuals against predictors that are <strong>not</strong> in the model -&gt; if show pattern, the corresponding predictor may need to be added to the model</p>
+</blockquote>
+
+<h4 id="residual-plots-against-fitted-values">
+<a class="anchor" href="#residual-plots-against-fitted-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Residual plots against fitted values</h4>
+<p>If pattern is observed, there may be “heteroscedasticity” in the errors -&gt; variance of the residuals may not be constant -&gt; transformation of the forecast variable (e.g., logarithm or square root)</p>
+
+<h4 id="outliers-and-influential-observations">
+<a class="anchor" href="#outliers-and-influential-observations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Outliers and influential observations</h4>
+<ul>
+  <li>outliers -&gt; obs with extreme values compared to the majority of the data</li>
+  <li>influential observations -&gt; obs that have a large influence on the estimated coeff of a regression model</li>
+</ul>
+
+<h4 id="spurious-regression">
+<a class="anchor" href="#spurious-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spurious regression</h4>
+<p>More often than not, time series data are “non-stationary” -&gt; values do not fluctuate around a constant mean or with a constant variance</p>
+
+<p>Regressing non-stationary time series can lead to spurious regressions. Signs: High R², high residual autocorrelation</p>
+
+<h4 id="some-useful-predictors">
+<a class="anchor" href="#some-useful-predictors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some useful predictors</h4>
+<ul>
+  <li>Trend</li>
+  <li>Dummy variables: when a predictor is a categorical variable</li>
+  <li>Intervention variables: when the effect lasts only for one period -&gt; “spike” variable</li>
+  <li>Trading days</li>
+  <li>Distributed lags</li>
+  <li>Fourier series: alternative to seasonal dummy vars, especially for long seasonal periods. Regression model containing Fourier terms -&gt; <strong>harmonic regression</strong>
+</li>
+</ul>
+
+<h2 id="selecting-predictors">
+<a class="anchor" href="#selecting-predictors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Selecting predictors</h2>
+
+<h3 id="not-recommended">
+<a class="anchor" href="#not-recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Not recommended</h3>
+<ul>
+  <li>Plot forecast var against a particular predictor -&gt; not always possible to see a relationship without accounting for other predictors</li>
+  <li>Multiple linear regression with all predictors and disregard vars with high p-value</li>
+</ul>
+
+<h3 id="recommended">
+<a class="anchor" href="#recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Recommended</h3>
+<ul>
+  <li>Adjusted R² (tends to select too many predictors)</li>
+  <li><strong>Cross-validation (CV)</strong></li>
+  <li>Akaike’s Information Criterion (AIC)</li>
+  <li><strong>Corrected Akaike’s Information Criterion (AICc)</strong></li>
+  <li>Schwarz’s Bayesian Information Criterion (BIC)</li>
+</ul>
+
+<blockquote>
+  <p>Best subset regression: fit all potential regression models and choose the best (based on the criteria above) -&gt; “all possible subsets” regression</p>
+</blockquote>
+
+<h3 id="stepwise-regression">
+<a class="anchor" href="#stepwise-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stepwise regression</h3>
+
+<ul>
+  <li>
+<strong>Backwards stepwise regression</strong>: starts with all predictors, remove one at a time, keep the model if improves, iterate until no further improvement -&gt; bad if n_predictors is very large</li>
+  <li>
+<strong>Forward stepwise regression</strong>: starts with one, add one at a time, the one the most improves is kept, iterate…</li>
+</ul>
+
+<blockquote>
+  <p>Not guaranteed to lead to the best possible model</p>
+</blockquote>
+
+<h3 id="ex-ante-vs-ex-post-forecasts">
+<a class="anchor" href="#ex-ante-vs-ex-post-forecasts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ex-ante vs ex-post forecasts</h3>
+<ul>
+  <li>Ex-ante: made using only info available in advance</li>
+  <li>Ex-post: made using later info on the predictors (not genuine forecasts, but useful for studying the behaviour of forecasting models)</li>
+</ul>
+
+<h3 id="matrix-formulation">
+<a class="anchor" href="#matrix-formulation" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://otexts.com/fpp2/regression-matrices.html">Matrix formulation</a>
+</h3>
+
+<h3 id="correlation-causation-and-forecasting">
+<a class="anchor" href="#correlation-causation-and-forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Correlation, causation and forecasting</h3>
+<blockquote>
+  <p>It is important not to confuse correlation with causation, or causation with forecasting</p>
+</blockquote>
+
+<p>Correlations are useful for forecasting, even when there is no causal relationship. Often a better model is possible if a causal mechanism can be determined.</p>
+
+<h4 id="confounded-predictors">
+<a class="anchor" href="#confounded-predictors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Confounded predictors</h4>
+<p>Two vars are <strong>confounded</strong> when their effects on the forecast variable cannot be separated</p>
+
+<blockquote>
+  <p>Confounding: not a problem for forecasting. However, it becomes a problem with scenario forecasting -&gt; take account of the relationships between predictors. Also a problem if some historical analysis of the contributions of various predictors is required.</p>
+</blockquote>
+
+<h4 id="multicollinearity-and-forecasting">
+<a class="anchor" href="#multicollinearity-and-forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multicollinearity and forecasting</h4>
+<p><strong>Multicollinearity</strong>: when similar info is provided by 2+ predictors in a multiple regression (e.g., dummy var trap). Generally not a problem if you are not interested in the specific contributions of each predictor, except when there is perfect correlation</p>
+
+<h1 id="6-time-series-decomposition">
+<a class="anchor" href="#6-time-series-decomposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>6. Time series decomposition</h1>
+
+<p>Three types of time series patterns:</p>
+<ul>
+  <li>trend-cycle (or just trend)</li>
+  <li>seasonality</li>
+  <li>remainder (anything else in the time series)</li>
+</ul>
+
+<h2 id="time-series-components">
+<a class="anchor" href="#time-series-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Time series components</h2>
+<ul>
+  <li>
+<strong>Additive decomposition</strong>: if the magnitude of the seasonal fluctuations, or the variation around the trend-cycle, does not vary with the level of the time series</li>
+  <li>
+<strong>Multiplicative decomposition</strong>: when the variation in the seasonal pattern or the variation around the trend-cycle, appears to be proportional to the level of the time series -&gt; common with economic time series</li>
+</ul>
+
+<blockquote>
+  <p>Alternative to using multiplicative: first transform the data -&gt; variation appears to be stable over time -&gt; use additive</p>
+</blockquote>
+
+<p><strong>Seasonally adjusted data</strong>: if the seasonal component is removed from the original data</p>
+
+<blockquote>
+  <p>Seasonally adjusted series contain the remainder component as well as the trend-cycle. Therefore, they are not “smooth”, and “downturns” or “upturns” can be misleading. If the purpose is to look for turning points in a series, and interpret any changes in direction, then it is better to use the trend-cycle component rather than the seasonally adjusted data.</p>
+</blockquote>
+
+<h2 id="moving-averages">
+<a class="anchor" href="#moving-averages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Moving averages</h2>
+<p>First step in classical decomposition -&gt; using MA to estimate the trend-cycle. The order of the moving average determines the smoothness of the trend-cycle estimate (larger order = smoother curve).</p>
+
+<p>Odd order -&gt; symmetric MA</p>
+
+<p>Applying MA to a MA -&gt; symmetric MA</p>
+
+<p>Most common use of centred MAs -&gt; estimating the trend-cycle form seasonal data</p>
+
+<blockquote>
+  <p>A 2×12-MA can be used to estimate the trend-cycle of monthly data and a 7-MA can be used to estimate the trend-cycle of daily data with a weekly seasonality. Other choices for the order of the MA will usually result in trend-cycle estimates being contaminated by the seasonality in the data.</p>
+</blockquote>
+
+<h3 id="weighted-moving-averages">
+<a class="anchor" href="#weighted-moving-averages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Weighted moving averages</h3>
+<p>Combinations of moving averages result in weighted moving averages</p>
+
+<p>Advantage: yield a smoother estimate of the trend-cycle</p>
+
+<h2 id="classical-decomposition-not-recommended">
+<a class="anchor" href="#classical-decomposition-not-recommended" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classical decomposition (<em>not recommended</em>)</h2>
+<p>Starting point for most other methods of time series decomposition</p>
+<ul>
+  <li>don’t estimate trend-cycle/remainder for first and last few observations</li>
+  <li>tends to over-smooth rapid rises and falls</li>
+  <li>unable to capture seasonal changes over time</li>
+  <li>not robust to unusual values</li>
+</ul>
+
+<h2 id="x11-decomposition">
+<a class="anchor" href="#x11-decomposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>X11 decomposition</h2>
+<p>for quarterly and monthly data</p>
+
+<h2 id="seats-decomposition">
+<a class="anchor" href="#seats-decomposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>SEATS decomposition</h2>
+<p>“Seasonal Extraction in ARIMA Time Series”: works only with quarterly and monthly data</p>
+
+<h2 id="stl-decomposition">
+<a class="anchor" href="#stl-decomposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>STL decomposition</h2>
+<p>“Seasonal and Trend decomposition using Loess”</p>
+
+<ul>
+  <li>handle any type of seasonality</li>
+  <li>seasonal component is allowed to change over time</li>
+  <li>smoothness of the trend-cycle can be controlled by the user</li>
+  <li>can be robust to outliers</li>
+  <li>doesn’t handle trading day or calendar variation automatically</li>
+</ul>
+
+<h2 id="measuring-strength-of-trend-and-seasonality">
+<a class="anchor" href="#measuring-strength-of-trend-and-seasonality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring strength of trend and seasonality</h2>
+<p>Useful when you have a large collection of time series and you need to find the series with the most trend or the most seasonality</p>
+
+<h2 id="forecasting-with-decomposition">
+<a class="anchor" href="#forecasting-with-decomposition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting with decomposition</h2>
+<p>Decomposition is primarily useful for studying time series data and exploring historical changes over time, but can also be used in forecasting</p>
+
+<p>Forecast the seasonal component and the seasonally adjusted component separately:</p>
+<ul>
+  <li>assume the seasonal component is unchanging (or changing slowly) -&gt; seasonal naïve method</li>
+  <li>to forecast the seasonally adjusted component -&gt; any non-seasonal forecasting method may be used</li>
+</ul>
+
+<h1 id="7-exponential-smoothing">
+<a class="anchor" href="#7-exponential-smoothing" aria-hidden="true"><span class="octicon octicon-link"></span></a>7. Exponential smoothing</h1>
+<blockquote>
+  <p>Forecasts produced using exponential smoothing methods are weighted averages of past observations, with the weights decaying exponentially as the observations get older. In other words, the more recent the observation the higher the associated weight</p>
+</blockquote>
+
+<h2 id="simple-exponential-smoothing-ses">
+<a class="anchor" href="#simple-exponential-smoothing-ses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple exponential smoothing (SES)</h2>
+<p>For data with no clear trend or seasonal pattern</p>
+
+<h3 id="optimisation">
+<a class="anchor" href="#optimisation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Optimisation</h3>
+<p>Exponential smoothing method requires the smoothing parameters and the initial values to be chosen</p>
+<ul>
+  <li>subjective manner</li>
+  <li>estimate from observed data -&gt; minimising the SSE (sum of squared errors)</li>
+</ul>
+
+<h2 id="trend-methods">
+<a class="anchor" href="#trend-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trend methods</h2>
+<h3 id="holts-linear-trend-method">
+<a class="anchor" href="#holts-linear-trend-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Holt’s linear trend method</h3>
+<p>Extends simple exponential smoothing to allow the forecasting of data with a trend</p>
+
+<h3 id="damped-trend-methods">
+<a class="anchor" href="#damped-trend-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Damped trend methods</h3>
+<p>Introduce a parameter that “dampens” the trend to a flat line some time in the future</p>
+
+<blockquote>
+  <p>As forecasting tasks can vary by many dimensions (length of forecast horizon, size of test set, forecast error measures, frequency of data, etc.), it is unlikely that one method will be better than all others for all forecasting scenarios. What we require from a forecasting method are <strong>consistently sensible forecasts</strong>, and these should be frequently evaluated against the task at hand.</p>
+</blockquote>
+
+<h2 id="holt-winters-seasonal-method">
+<a class="anchor" href="#holt-winters-seasonal-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Holt-Winters’ seasonal method</h2>
+<p>Extends Holt’s method to capture seasonality</p>
+<ul>
+  <li>Additive</li>
+  <li>Multiplicative</li>
+</ul>
+
+<p>Additive preferred when the seasonal variations are roughly constant. Multiplicative preferred when the seasonal variations are changing proportional to the level of the series</p>
+
+<h2 id="a-taxonomy-of-exponential-smoothing-methods">
+<a class="anchor" href="#a-taxonomy-of-exponential-smoothing-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>A taxonomy of exponential smoothing methods</h2>
+<p>By considering variations in the combinations of the trend and seasonal components, nine exponential smoothing methods are possible</p>
+
+<h2 id="innovations-state-space-models-for-exponential-smoothing">
+<a class="anchor" href="#innovations-state-space-models-for-exponential-smoothing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Innovations state space models for exponential smoothing</h2>
+<p>Statistical models generate point forecasts, but can also generate forecast intervals -&gt; stochastic (or random) data generating process that can produce an entire forecast distribution</p>
+
+<p><strong>State space models</strong>: model consists of a measurement equation (observed data) and state equations (unobserved components or states: level, trend, seasonal change over time)</p>
+<ul>
+  <li>ETS(A,N,N): simple exponential smoothing with additive errors</li>
+  <li>ETS(M,N,N): simple exponential smoothing with multiplicative errors</li>
+  <li>ETS(A,A,N): Holt’s linear method with additive errors</li>
+  <li>ETS(M,A,N): Holt’s linear method with multiplicative errors</li>
+  <li>Other ETS models</li>
+</ul>
+
+<h2 id="estimation-and-model-selection">
+<a class="anchor" href="#estimation-and-model-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimation and model selection</h2>
+<h3 id="estimating-ets-models">
+<a class="anchor" href="#estimating-ets-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimating ETS models</h3>
+<ul>
+  <li>minimize SSE</li>
+  <li>maximize “likelihood” (probability of the data arising from the specified model)</li>
+</ul>
+
+<h3 id="model-selection">
+<a class="anchor" href="#model-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model selection</h3>
+<p>Information criteria can be used for model selection on the ETS statistical framework</p>
+<ul>
+  <li>AIC</li>
+  <li>AICc</li>
+  <li>BIC</li>
+</ul>
+
+<h2 id="forecasting-with-ets-models">
+<a class="anchor" href="#forecasting-with-ets-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting with ETS models</h2>
+<p>ETS point forecasts are equal to the medians of the forecast distributions</p>
+
+<h3 id="prediction-intervals-1">
+<a class="anchor" href="#prediction-intervals-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prediction intervals</h3>
+<p>Big advantage: prediction intervals can also be generated</p>
+
+<h1 id="8-arima-models">
+<a class="anchor" href="#8-arima-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>8. ARIMA models</h1>
+<p>Exponential smoothing -&gt; describe the trend and seasonality</p>
+
+<p>ARIMA -&gt; describe the autocorrelations</p>
+
+<h2 id="stationarity-and-differencing">
+<a class="anchor" href="#stationarity-and-differencing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stationarity and differencing</h2>
+<p><strong>Stationary time series</strong>: properties do not depend on the time at which the series is observed. Time series with trends, or with seasonality, are not stationary. White noise is stationary</p>
+
+<p>Stationary time series will have no predictable patterns in the long-term -&gt; time plot roughly horizontal, with constant variance</p>
+
+<h3 id="differencing">
+<a class="anchor" href="#differencing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Differencing</h3>
+<p>Differencing: computing the differences between consecutive observations = “first differences” -&gt; one way to make a non-stationary time series stationary</p>
+
+<p>Transformations such as logarithms can help to stabilise the variance of a time series. Differencing can help stabilise the mean of a time series by removing changes in the level of a time series, and therefore eliminating (or reducing) trend and seasonality.</p>
+
+<blockquote>
+  <p><strong>ACF Plot</strong>: For a stationary time series, the ACF will drop to zero relatively quickly, while the ACF of non-stationary data decreases slowly.</p>
+</blockquote>
+
+<h3 id="random-walk-model">
+<a class="anchor" href="#random-walk-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Random walk model</h3>
+<p>Widely used for non-stationary data -&gt; financial, economic data</p>
+
+<p>y_t = y_(t-1) + white_noise_t</p>
+
+<p>Typically have:</p>
+<ul>
+  <li>long periods of apparent trends up or down</li>
+  <li>sudden and unpredictable changes in direction</li>
+</ul>
+
+<p>Underpins naïve forecasts</p>
+
+<h3 id="second-order-differencing">
+<a class="anchor" href="#second-order-differencing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Second-order differencing</h3>
+<p>When difference data not appear stationary. “Change in the changes”. Almost never necessary to go beyond second-order.</p>
+
+<h3 id="seasonal-differencing">
+<a class="anchor" href="#seasonal-differencing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Seasonal differencing</h3>
+<p>Seasonal difference: difference between an observation and the previous observation from the same season</p>
+
+<blockquote>
+  <p>There is a degree of subjectivity in selecting which differences to apply. It is important that if differencing is used, the differences are interpretable.</p>
+</blockquote>
+
+<h3 id="unit-root-tests">
+<a class="anchor" href="#unit-root-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unit root tests</h3>
+<p>Statistical hypothesis tests of stationarity that are designed for determining whether differencing is required.</p>
+
+<ul>
+  <li>Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test: null hypothesis = data stationary -&gt; <code class="highlighter-rouge">p-value &lt; 0.05</code> -&gt; differencing is required</li>
+</ul>
+
+<h2 id="backshift-notation">
+<a class="anchor" href="#backshift-notation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backshift notation</h2>
+<p><code class="highlighter-rouge">L</code> -&gt; “lag”</p>
+
+<p><code class="highlighter-rouge">B</code> -&gt; “backshift”</p>
+
+<p>B¹²y_t = y_(t-12)</p>
+
+<h2 id="autoregressive-models">
+<a class="anchor" href="#autoregressive-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Autoregressive models</h2>
+<p>Forecast the variable of interest using a linear combination of <em>past values of the variable</em></p>
+
+<p><strong>AR(p) model</strong>: an autoregressive model of order p</p>
+
+<h2 id="moving-average-models">
+<a class="anchor" href="#moving-average-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Moving average models</h2>
+<p>Uses past forecast errors in a regression-like model</p>
+
+<p><strong>MA(q) model</strong>: a moving average model of order q</p>
+
+<blockquote>
+  <p>Moving average models should not be confused with the moving average smoothing. A moving average model is used for forecasting future values, while moving average smoothing is used for estimating the trend-cycle of past values</p>
+</blockquote>
+
+<p>MA model is called <strong>invertible</strong></p>
+
+<h2 id="non-seasonal-arima-models">
+<a class="anchor" href="#non-seasonal-arima-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Non-seasonal ARIMA models</h2>
+<p>Combine differencing with autoregression and a moving average model</p>
+
+<p><strong>ARIMA(p,d,q) model</strong></p>
+<ul>
+  <li>p = order of the autoregressive part</li>
+  <li>d = degree of first differencing involved</li>
+  <li>q = order of the moving average part</li>
+</ul>
+
+<h3 id="acf-and-pacf-plots">
+<a class="anchor" href="#acf-and-pacf-plots" aria-hidden="true"><span class="octicon octicon-link"></span></a>ACF and PACF plots</h3>
+<p>Sometimes used to determine appropriate values for <code class="highlighter-rouge">p</code> and <code class="highlighter-rouge">q</code></p>
+
+<p>Extensible explanation <a href="https://otexts.com/fpp2/non-seasonal-arima.html">here</a></p>
+
+<h2 id="estimation-and-order-selection">
+<a class="anchor" href="#estimation-and-order-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimation and order selection</h2>
+<h3 id="maximum-likelihood-estimation-mle">
+<a class="anchor" href="#maximum-likelihood-estimation-mle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maximum likelihood estimation (MLE)</h3>
+<p>Finds the values of the parameters which maximise the probability of obtaining the data that we have observed</p>
+
+<h2 id="information-criteria">
+<a class="anchor" href="#information-criteria" aria-hidden="true"><span class="octicon octicon-link"></span></a>Information Criteria</h2>
+<p>Good models are obtained by minimising the Akaike’s Information Criterion (AIC) or AICc or BIC</p>
+
+<p>Tend not to be good for selecting <code class="highlighter-rouge">d</code>, but only for selecting <code class="highlighter-rouge">p</code> and <code class="highlighter-rouge">q</code></p>
+
+<h2 id="forecasting">
+<a class="anchor" href="#forecasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting</h2>
+<blockquote>
+  <p>The prediction intervals for ARIMA models are based on assumptions that the residuals are uncorrelated and normally distributed. If either of these assumptions does not hold, then the prediction intervals may be incorrect. For this reason, always plot the ACF and histogram of the residuals to check the assumptions before producing prediction intervals.</p>
+</blockquote>
+
+<h2 id="seasonal-arima-models">
+<a class="anchor" href="#seasonal-arima-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Seasonal ARIMA models</h2>
+<p>Formed by including additional seasonal terms in the ARIMA models</p>
+
+<p>The seasonal part of the model consists of terms that are similar to the non-seasonal components of the model, but involve backshifts of the seasonal period</p>
+
+<blockquote>
+  <p>The seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF</p>
+</blockquote>
+
+<p>Good examples in the book <a href="https://otexts.com/fpp2/seasonal-arima.html">here</a></p>
+
+<h2 id="arima-vs-ets">
+<a class="anchor" href="#arima-vs-ets" aria-hidden="true"><span class="octicon octicon-link"></span></a>ARIMA vs ETS</h2>
+<blockquote>
+  <p>Myth: ARIMA models are more general than exponential smoothing</p>
+</blockquote>
+
+<p>All ETS models are non-stationary, while some ARIMA models are stationary</p>
+
+<p>ETS models with seasonality or non-damped trend or both have two unit roots (i.e., they need two levels of differencing to make them stationary). All other ETS models have one unit root (they need one level of differencing to make them stationary).</p>
+
+<h1 id="9-dynamic-regression-models">
+<a class="anchor" href="#9-dynamic-regression-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>9. Dynamic regression models</h1>
+<p>Extend ARIMA models in order to allow other information to be included in the models</p>
+
+<h2 id="estimation">
+<a class="anchor" href="#estimation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimation</h2>
+<p>Minimizing sum of squared errors or maximum likelihood estimation can be used</p>
+
+<h2 id="forecasting-1">
+<a class="anchor" href="#forecasting-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting</h2>
+<p>Forecast the regression part of the model and the ARIMA part of the model, and combine the results</p>
+
+<p>In order to obtain forecasts we first need to forecast the predictors. When the predictors are known into the future, this is straightforward. But when the predictors are themselves unknown, we must either model them separately, or use assumed future values for each predictor.</p>
+
+<h2 id="stochastic-and-deterministic-trends">
+<a class="anchor" href="#stochastic-and-deterministic-trends" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stochastic and deterministic trends</h2>
+<blockquote>
+  <p>There is an implicit assumption with deterministic trends that the slope of the trend is not going to change over time. On the other hand, stochastic trends can change, and the estimated growth is only assumed to be the average growth over the historical period, not necessarily the rate of growth that will be observed into the future. Consequently, it is safer to forecast with stochastic trends, especially for longer forecast horizons, as the prediction intervals allow for greater uncertainty in future growth.</p>
+</blockquote>
+
+<h2 id="dynamic-harmonic-regression">
+<a class="anchor" href="#dynamic-harmonic-regression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dynamic harmonic regression</h2>
+<p>Long seasonal periods -&gt; a dynamic regression with Fourier terms is often better than other models</p>
+
+<p>“Disadvantage”: the seasonal pattern is not allowed to change over time (usually remarkably constant)</p>
+
+<h2 id="lagged-predictors">
+<a class="anchor" href="#lagged-predictors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lagged predictors</h2>
+<p>Sometimes, the impact of a predictor which is included in a regression model will not be simple and immediate. In these situations, we need to allow for lagged effects of the predictor.</p>
+
+<h1 id="10-forecasting-hierarchical-or-grouped-time-series">
+<a class="anchor" href="#10-forecasting-hierarchical-or-grouped-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>10. Forecasting hierarchical or grouped time series</h1>
+<p>Time series can often be naturally disaggregated by various attributes of interest. These categories are nested within the larger group categories, and so the collection of time series follow a hierarchical aggregation structure -&gt; “hierarchical time series”</p>
+
+<p>Often arise due to geographic divisions</p>
+
+<p>Challenge: require forecasts that are <em>coherent</em> across the aggregation structure</p>
+
+<h1 id="11-advanced-forecasting-methods">
+<a class="anchor" href="#11-advanced-forecasting-methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>11. Advanced forecasting methods</h1>
+
+<h2 id="complex-seasonality">
+<a class="anchor" href="#complex-seasonality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Complex seasonality</h2>
+<p>Higher frequency time series often exhibit more complicated seasonal patterns</p>
+
+<h3 id="dynamic-harmonic-regression-with-multiple-seasonal-periods">
+<a class="anchor" href="#dynamic-harmonic-regression-with-multiple-seasonal-periods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dynamic harmonic regression with multiple seasonal periods</h3>
+<p>Multiple seasonalities -&gt; add Fourier terms for each seasonal period</p>
+
+<h3 id="tbats-models">
+<a class="anchor" href="#tbats-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>TBATS models</h3>
+<p>Combination of Fourier terms with an exponential smoothing state space model and a Box-Cox transformation, in a completely automated manner. Seasonality is allowed to change slowly over time. Can be slow to estimate, especially with long time series. Do not allow for covariates</p>
+
+<h2 id="vector-autoregressions">
+<a class="anchor" href="#vector-autoregressions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vector autoregressions</h2>
+<p>Other models: unidirectional relationship -&gt; forecast variable is influenced by the predictor variables</p>
+
+<p>Many cases: all variables affect each other</p>
+
+<p>Feedback relationships are allowed for in the vector autoregressive (VAR) framework. All variables are treated symmetrically, they are all modelled as if they all influence each other equally -&gt; all variables are treated as “endogenous”</p>
+
+<p>Despite being atheoretical, VARs are useful in several contexts:</p>
+<ul>
+  <li>forecasting a collection of related variables</li>
+  <li>testing whether one variable is useful in forecasting another (basis of Grande causality tests)</li>
+  <li>impulse response analysis</li>
+  <li>forecast error variance decomposition</li>
+</ul>
+
+<h2 id="neural-network-models">
+<a class="anchor" href="#neural-network-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neural network models</h2>
+<p>Allow complex nonlinear relationships between the response variable and its predictors</p>
+
+<p>The predictors (or inputs) form the bottom layer, and the forecasts (or outputs) form the top layer. There may also be intermediate layers containing “hidden neurons”.</p>
+
+<h3 id="neural-network-autoregression">
+<a class="anchor" href="#neural-network-autoregression" aria-hidden="true"><span class="octicon octicon-link"></span></a>Neural network autoregression</h3>
+<p><strong>NNAR model</strong>: lagged values of the time series can be used as inputs to a neural network</p>
+
+<p>When it comes to forecasting, the network is applied iteratively. For forecasting one step ahead, we simply use the available historical inputs. For forecasting two steps ahead, we use the one-step forecast as an input, along with the historical data.</p>
+
+<h2 id="bootstrapping-and-bagging">
+<a class="anchor" href="#bootstrapping-and-bagging" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bootstrapping and bagging</h2>
+
+<p>There are at least four sources of uncertainty in forecasting using time series models:</p>
+<ol>
+  <li>The random error term;</li>
+  <li>The parameter estimates;</li>
+  <li>The choice of model for the historical data;</li>
+  <li>The continuation of the historical data generating process into the future.</li>
+</ol>
+
+<h3 id="baggeg-forecasts">
+<a class="anchor" href="#baggeg-forecasts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Baggeg forecasts</h3>
+<p>If we produce forecasts from each of the additional time series, and average the resulting forecasts, we get better forecasts than if we simply forecast the original time series directly. This is called “bagging” which stands for “<strong>b</strong>ootstrap <strong>agg</strong>regating”</p>
+
+<h1 id="12-some-practical-forecasting-issues">
+<a class="anchor" href="#12-some-practical-forecasting-issues" aria-hidden="true"><span class="octicon octicon-link"></span></a>12. Some practical forecasting issues</h1>
+
+<h3 id="weekly-data">
+<a class="anchor" href="#weekly-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Weekly data</h3>
+<p>Difficult to work because the seasonal period (number of weeks in a year) is both large and non-integer (~52.18). Even if approximate to 52, most methods won’t handle such a large seasonal period efficiently</p>
+
+<ul>
+  <li>STL decomposition along with a non-seasonal method applied to the seasonally adjusted data</li>
+  <li>Dynamic harmonic regression model</li>
+  <li>TBATS model</li>
+</ul>
+
+<h3 id="daily-and-sub-daily-data">
+<a class="anchor" href="#daily-and-sub-daily-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Daily and sub-daily data</h3>
+<p>Often involve multiple seasonal patterns -&gt; we need to use a method that handles such complex seasonality</p>
+
+<h2 id="ensuring-forecasts-stay-within-limits">
+<a class="anchor" href="#ensuring-forecasts-stay-within-limits" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ensuring forecasts stay within limits</h2>
+<p>Transform the data using a scaled logit transform which maps (floor, cap) to the whole real line</p>
+
+<p>y = log((x-a)/(b-x))</p>
+
+<h2 id="forecast-combinations">
+<a class="anchor" href="#forecast-combinations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecast combinations</h2>
+<blockquote>
+  <p>The results have been virtually unanimous: combining multiple forecasts leads to increased forecast accuracy. In many cases one can make dramatic performance improvements by simply averaging the forecasts.</p>
+</blockquote>
+
+<p>While there has been considerable research on using weighted averages, or some other more complicated combination approach, using a simple average has proven hard to beat.</p>
+
+<h2 id="prediction-intervals-for-aggregates">
+<a class="anchor" href="#prediction-intervals-for-aggregates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prediction intervals for aggregates</h2>
+<p>If the point forecasts are means, then adding them up will give a good estimate of the total. But prediction intervals are more tricky due to the correlations between forecast errors.</p>
+
+<p>A general solution is to use simulations</p>
+
+<h2 id="backcasting">
+<a class="anchor" href="#backcasting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Backcasting</h2>
+<p>Forecast in reverse time</p>
+
+<h2 id="very-long-and-very-short-time-series">
+<a class="anchor" href="#very-long-and-very-short-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Very long and very short time series</h2>
+<h3 id="forecasting-very-short-time-series">
+<a class="anchor" href="#forecasting-very-short-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting very short time series</h3>
+<p>The sample size required increases with the number of parameters to be estimated, and the amount of noise in the data.</p>
+
+<p>With short series, there is not enough data to allow some observations to be withheld for testing purposes, and even time series cross validation can be difficult to apply. The AICc is particularly useful here, because it is a proxy for the one-step forecast out-of-sample MSE</p>
+
+<h3 id="forecasting-very-long-time-series">
+<a class="anchor" href="#forecasting-very-long-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>Forecasting very long time series</h3>
+<p>Most time series models do not work well for very long time series. The problem is that real data do not come from the models we use. Also the optimisation of the parameters becomes more time consuming.</p>
+
+<blockquote>
+  <p>If we are only interested in forecasting the next few observations, one simple approach is to throw away the earliest observations and only fit a model to the most recent observations.</p>
+</blockquote>
+
+<h2 id="dealing-with-missing-values-and-outliers">
+<a class="anchor" href="#dealing-with-missing-values-and-outliers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with missing values and outliers</h2>
+<h3 id="missing-values">
+<a class="anchor" href="#missing-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>Missing values</h3>
+<p>It is worth considering whether the missingness will induce bias in the forecasting model. When it is not random, use a dynamic regression model, with dummy variables</p>
+
+<p>Some methods allow for missing values without any problems. Whey they cause errors:</p>
+<ul>
+  <li>assuming long enough series, we could just take the section of data after the last missing value</li>
+  <li>we could replace the missing values with estimates (i.e., interpolation)</li>
+</ul>
+
+<h3 id="outliers">
+<a class="anchor" href="#outliers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Outliers</h3>
+<p>All methods considered in the book will not work well if there are extreme outliers in the data -&gt; replace them with missing or with a more consistent estimate</p>
+
+<blockquote>
+  <p>Simply replacing outliers without thinking about why they have occurred is a dangerous practice. They may provide useful information about the process that produced the data, and which should be taken into account when forecasting.</p>
+</blockquote>
+
+<p>Further reading: <a href="https://www.amazon.com/dp/0999064916/">“Forecasting in practice”</a></p>
+
+  </div><a class="u-url" href="/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/07/hyndman-forecasting.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

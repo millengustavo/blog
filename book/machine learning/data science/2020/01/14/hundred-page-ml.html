@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The Hundred-Page Machine Learning Book | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The Hundred-Page Machine Learning Book" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/100_page_ml/100_page_ml.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"The Hundred-Page Machine Learning Book","dateModified":"2020-01-14T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-14T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/100_page_ml/100_page_ml.png","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>The Hundred-Page Machine Learning Book | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="The Hundred-Page Machine Learning Book" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/100_page_ml/100_page_ml.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"The Hundred-Page Machine Learning Book","dateModified":"2020-01-14T00:00:00-06:00","description":"My notes and highlights on the book.","datePublished":"2020-01-14T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/100_page_ml/100_page_ml.png","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">The Hundred-Page Machine Learning Book</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-14T00:00:00-06:00" itemprop="datePublished">
+        Jan 14, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      15 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-introduction">1 Introduction</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#what-is-machine-learning">What is Machine Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#supervised-learning">Supervised Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#unsupervised-learning">Unsupervised Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#semi-supervised-learning">Semi-supervised Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#reinforcement-learning">Reinforcement Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#why-the-model-works-on-new-data">Why the Model Works on New Data</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#2-notation-and-definitions">2 Notation and Definitions</a></li>
+<li class="toc-entry toc-h1"><a href="#3-fundamental-algorithms">3 Fundamental Algorithms</a></li>
+<li class="toc-entry toc-h1"><a href="#4-anatomy-of-a-learning-algorithm">4 Anatomy of a Learning Algorithm</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#building-blocks-of-a-learning-algorithm">Building Blocks of a Learning Algorithm</a></li>
+<li class="toc-entry toc-h2"><a href="#gradient-descent">Gradient Descent</a></li>
+<li class="toc-entry toc-h2"><a href="#how-machine-learning-engineers-work">How Machine Learning Engineers Work</a></li>
+<li class="toc-entry toc-h2"><a href="#learning-algorithms-particularities">Learning Algorithms’ Particularities</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-basic-practice">5 Basic Practice</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#feature-engineering">Feature Engineering</a></li>
+<li class="toc-entry toc-h2"><a href="#one-hot-encoding">One-Hot Encoding</a></li>
+<li class="toc-entry toc-h2"><a href="#binning">Binning</a></li>
+<li class="toc-entry toc-h2"><a href="#normalization">Normalization</a></li>
+<li class="toc-entry toc-h2"><a href="#standardization">Standardization</a></li>
+<li class="toc-entry toc-h2"><a href="#dealing-with-missing-features">Dealing with Missing Features</a></li>
+<li class="toc-entry toc-h2"><a href="#data-imputation-techniques">Data Imputation Techniques</a></li>
+<li class="toc-entry toc-h2"><a href="#learning-algorithm-selection">Learning Algorithm Selection</a></li>
+<li class="toc-entry toc-h2"><a href="#three-sets">Three Sets</a></li>
+<li class="toc-entry toc-h2"><a href="#underfitting-and-overfitting">Underfitting and Overfitting</a></li>
+<li class="toc-entry toc-h2"><a href="#regularization">Regularization</a></li>
+<li class="toc-entry toc-h2"><a href="#model-performance-assessment">Model Performance Assessment</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#confusion-matrix">Confusion Matrix</a></li>
+<li class="toc-entry toc-h3"><a href="#precisionrecall">Precision/Recall</a></li>
+<li class="toc-entry toc-h3"><a href="#accuracy">Accuracy</a></li>
+<li class="toc-entry toc-h3"><a href="#cost-sensitive-accuracy">Cost-Sensitive Accuracy</a></li>
+<li class="toc-entry toc-h3"><a href="#area-under-the-roc-curve-auc">Area under the ROC Curve (AUC)</a></li>
+<li class="toc-entry toc-h3"><a href="#hyperparameter-tuning">Hyperparameter Tuning</a></li>
+<li class="toc-entry toc-h3"><a href="#cross-validation">Cross-Validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#6-neural-networks-and-deep-learning">6 Neural Networks and Deep Learning</a></li>
+<li class="toc-entry toc-h1"><a href="#7-problems-and-solutions">7 Problems and Solutions</a></li>
+<li class="toc-entry toc-h1"><a href="#8-advanced-practice">8 Advanced Practice</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#handling-imbalanced-datasets">Handling Imbalanced Datasets</a></li>
+<li class="toc-entry toc-h2"><a href="#combining-models">Combining Models</a></li>
+<li class="toc-entry toc-h2"><a href="#training-neural-networks">Training Neural Networks</a></li>
+<li class="toc-entry toc-h2"><a href="#advanced-regularization">Advanced Regularization</a></li>
+<li class="toc-entry toc-h2"><a href="#handling-multiple-inputs">Handling Multiple Inputs</a></li>
+<li class="toc-entry toc-h2"><a href="#handling-multiple-outputs">Handling Multiple Outputs</a></li>
+<li class="toc-entry toc-h2"><a href="#transfer-learning">Transfer Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#algorithmic-efficiency">Algorithmic Efficiency</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#9-unsupervised-learning">9 Unsupervised Learning</a></li>
+<li class="toc-entry toc-h1"><a href="#10-other-forms-of-learning">10 Other Forms of Learning</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#metric-learning">Metric Learning</a></li>
+<li class="toc-entry toc-h2"><a href="#learning-to-rank">Learning to Rank</a></li>
+<li class="toc-entry toc-h2"><a href="#learning-to-recommend">Learning to Recommend</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#factorization-machines-fm">Factorization Machines (FM)</a></li>
+<li class="toc-entry toc-h3"><a href="#denoising-autoencoders-dae">Denoising Autoencoders (DAE)</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#self-supervised-learning-word-embeddings">Self-Supervised Learning: Word Embeddings</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#11-conclusion">11 Conclusion</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#topic-modeling">Topic Modeling</a></li>
+<li class="toc-entry toc-h2"><a href="#gaussian-process-gp">Gaussian Process (GP)</a></li>
+<li class="toc-entry toc-h2"><a href="#generalized-linear-models-glm">Generalized Linear Models (GLM)</a></li>
+<li class="toc-entry toc-h2"><a href="#probabilistic-graphical-models-pgm">Probabilistic Graphical Models (PGM)</a></li>
+<li class="toc-entry toc-h2"><a href="#markov-chain-monte-carlo-mcmc">Markov Chain Monte Carlo (MCMC)</a></li>
+<li class="toc-entry toc-h2"><a href="#generative-adversarial-networks-gan">Generative Adversarial Networks (GAN)</a></li>
+<li class="toc-entry toc-h2"><a href="#genetic-algorithms-ga">Genetic Algorithms (GA)</a></li>
+<li class="toc-entry toc-h2"><a href="#reinforcement-learning-rl">Reinforcement Learning (RL)</a></li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Author: Andriy Burkov</p>
+
+<h1 id="1-introduction">
+<a class="anchor" href="#1-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1 Introduction</h1>
+<h2 id="what-is-machine-learning">
+<a class="anchor" href="#what-is-machine-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Machine Learning</h2>
+<p>Process of solving a practical problem:</p>
+<ol>
+  <li>Gathering a dataset</li>
+  <li>Algorithmically building a statistical model based on that dataset to be used somehow to solve the practical problem</li>
+</ol>
+
+<h2 id="supervised-learning">
+<a class="anchor" href="#supervised-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Supervised Learning</h2>
+<p>Dataset is a collection of <strong>labeled examples</strong></p>
+
+<p>Goal is to use the dataset to produce a model that takes a feature vector as input and outputs information that allows deducing the label for this feature vector</p>
+
+<h2 id="unsupervised-learning">
+<a class="anchor" href="#unsupervised-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unsupervised Learning</h2>
+<p>Dataset is a collection of <strong>unlabeled examples</strong></p>
+
+<p>Goal is to create a model that takes a feature vector as input and either transforms it into another vector or into a value that can be used to solve a practical problem</p>
+
+<h2 id="semi-supervised-learning">
+<a class="anchor" href="#semi-supervised-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Semi-supervised Learning</h2>
+<p>Dataset contains both labeled and unlabeled examples. Usually unlabeled quantity » labeled quantity</p>
+
+<p>Goal is the same as supervised learning. When you add unlabeled examples, you add more information about your problem, a larger sample reflects better the probability distribution the data we labeled came from</p>
+
+<h2 id="reinforcement-learning">
+<a class="anchor" href="#reinforcement-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reinforcement Learning</h2>
+<p>Machine “lives” in an environment and is capable of perceiving the <strong>state</strong> as a vector of features. Machine can execute <strong>actions</strong> in every state. Different actions bring different <strong>rewards</strong> and could also move the machine to another state.</p>
+
+<p>The goal of RL algorithm is to learn a <strong>policy</strong>. A policy is a function that takes the feature vector of a state as input and outputs an optimal action to execute. The action is optimal if it maximizes the expected average reward</p>
+
+<h2 id="why-the-model-works-on-new-data">
+<a class="anchor" href="#why-the-model-works-on-new-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why the Model Works on New Data</h2>
+<p><em>PAC (“probably approximately correct”) learning</em>: theory that helps to analyze whether and under what conditions a learning algorithm will probably output an approximately correct classifier</p>
+
+<h1 id="2-notation-and-definitions">
+<a class="anchor" href="#2-notation-and-definitions" aria-hidden="true"><span class="octicon octicon-link"></span></a>2 Notation and Definitions</h1>
+
+<h1 id="3-fundamental-algorithms">
+<a class="anchor" href="#3-fundamental-algorithms" aria-hidden="true"><span class="octicon octicon-link"></span></a>3 Fundamental Algorithms</h1>
+
+<h1 id="4-anatomy-of-a-learning-algorithm">
+<a class="anchor" href="#4-anatomy-of-a-learning-algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>4 Anatomy of a Learning Algorithm</h1>
+
+<h2 id="building-blocks-of-a-learning-algorithm">
+<a class="anchor" href="#building-blocks-of-a-learning-algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building Blocks of a Learning Algorithm</h2>
+<ol>
+  <li>a loss function</li>
+  <li>an optimization criterion based on the loss function</li>
+  <li>an optimization routine leveraging training data to find a solution to the optimization criterion</li>
+</ol>
+
+<h2 id="gradient-descent">
+<a class="anchor" href="#gradient-descent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gradient Descent</h2>
+<p>Iterative optimization algorithm for finding the minimum of a function</p>
+
+<p>Find a <em>local minimum</em>: Starts at some random point and takes steps proportional to the negative of the gradient of the function at the current point</p>
+
+<p>Gradient descent proceeds in <strong>epochs</strong>. Epoch: using the training set entirely to update each parameter</p>
+
+<p>The learning rate controls the size of an update</p>
+
+<p>Regular gradient descent is sensitive to the choice of the learning rate and slow for large datasets</p>
+
+<blockquote>
+  <p><strong>Minibatch stochastic gradient descent (SGD)</strong>: speed up the computation by approximating the gradient descent using smaller batches (subsets) of the training data.</p>
+</blockquote>
+
+<p>Upgrades to SGD:</p>
+<ul>
+  <li>Adagrad</li>
+  <li>Momentum</li>
+  <li>RMSprop</li>
+  <li>Adam</li>
+</ul>
+
+<h2 id="how-machine-learning-engineers-work">
+<a class="anchor" href="#how-machine-learning-engineers-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>How Machine Learning Engineers Work</h2>
+<p>You don’t implement algorithms yourself, you use libraries, most of which are open source -&gt; <em>scikit-learn</em></p>
+
+<h2 id="learning-algorithms-particularities">
+<a class="anchor" href="#learning-algorithms-particularities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Learning Algorithms’ Particularities</h2>
+<ul>
+  <li>different hyperparameters</li>
+  <li>some can accept categorical features</li>
+  <li>some allow the data analyst to provide weightings for each class -&gt; influence the decision boundary</li>
+  <li>some given a feature vector only output the class -&gt; others the probability</li>
+  <li>some allow for online learning</li>
+  <li>some can be used for both classification and regression</li>
+</ul>
+
+<h1 id="5-basic-practice">
+<a class="anchor" href="#5-basic-practice" aria-hidden="true"><span class="octicon octicon-link"></span></a>5 Basic Practice</h1>
+
+<h2 id="feature-engineering">
+<a class="anchor" href="#feature-engineering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature Engineering</h2>
+<p>Transforming raw data into a dataset. Labor-intensive process, demands creativity and domain knowledge</p>
+
+<p>Highly informative features = high predictive power</p>
+
+<p><strong>Low bias</strong>: predicts the training data well</p>
+
+<h2 id="one-hot-encoding">
+<a class="anchor" href="#one-hot-encoding" aria-hidden="true"><span class="octicon octicon-link"></span></a>One-Hot Encoding</h2>
+<p>Transform categorical feature into several binary ones -&gt; increase the dimensionality of the feature vectors</p>
+
+<h2 id="binning">
+<a class="anchor" href="#binning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Binning</h2>
+<p>Also called bucketing. Convert a continuous feature into multiple binary features (bins or buckets), based on value range</p>
+
+<p>Can help the learning algorithm to learn using fewer examples</p>
+
+<h2 id="normalization">
+<a class="anchor" href="#normalization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Normalization</h2>
+<p>Converting the actual range of values into a standard range of values, typically in the interval [-1, 1] or [0, 1]</p>
+
+<p>Can increase speed of learning. Avoid numerical overflow</p>
+
+<h2 id="standardization">
+<a class="anchor" href="#standardization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Standardization</h2>
+<p>Also called <strong>z-score normalization</strong>. Values are rescaled so that they have the properties of a standard normal distribution with <code class="highlighter-rouge">mean=0</code> and <code class="highlighter-rouge">stdev=1</code></p>
+
+<p>If feature has outliers -&gt; prefer standardization than normalization</p>
+
+<p>Feature rescaling -&gt; usually benefical to most learning algorithms</p>
+
+<h2 id="dealing-with-missing-features">
+<a class="anchor" href="#dealing-with-missing-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dealing with Missing Features</h2>
+<ul>
+  <li>Remove the examples (if data big enough)</li>
+  <li>Using algorithm that can deal with missing features</li>
+  <li>Data imputation</li>
+</ul>
+
+<h2 id="data-imputation-techniques">
+<a class="anchor" href="#data-imputation-techniques" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Imputation Techniques</h2>
+<ul>
+  <li>Average</li>
+  <li>Median</li>
+  <li>Value outside the normal range (i.e., -1 for data in [0, 1])</li>
+  <li>Use the missing value as target for a regression problem</li>
+  <li>If data large enough: add binary indicator (another column) for each feature with missing value</li>
+</ul>
+
+<blockquote>
+  <p>Use the same data imputation technique to fill the missing values on the test set you used to complete the training data</p>
+</blockquote>
+
+<h2 id="learning-algorithm-selection">
+<a class="anchor" href="#learning-algorithm-selection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Learning Algorithm Selection</h2>
+<ul>
+  <li>Explainability</li>
+  <li>In-memory vs. out-of-memory</li>
+  <li>Number of features and examples</li>
+  <li>Categorical vs. numerical features</li>
+  <li>Nonlinearity of the data</li>
+  <li>Training speed</li>
+  <li>Prediction speed</li>
+  <li>Test on the validation set</li>
+</ul>
+
+<h2 id="three-sets">
+<a class="anchor" href="#three-sets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Three Sets</h2>
+<ol>
+  <li>Training set</li>
+  <li>Validation set</li>
+  <li>Test set</li>
+</ol>
+
+<p>Shuffle the examples and split the dataset into three subsets. Training set is usually the biggest one, use it to build the model. Validation and test sets are roughly the same sizes, much smaller than the training set. The learning algorithm cannot use these two subsets to build the model -&gt; those two are also often called <em>holdout sets</em></p>
+
+<p>Why two holdout sets? We use the validation set to choose the learning algorithm and find the best hyperparameters. We use the test set to assess the model before putting it in production</p>
+
+<h2 id="underfitting-and-overfitting">
+<a class="anchor" href="#underfitting-and-overfitting" aria-hidden="true"><span class="octicon octicon-link"></span></a>Underfitting and Overfitting</h2>
+<p><strong>High bias</strong>: model makes many mistakes on the training data -&gt; <strong>underfitting</strong>. Reasons:</p>
+<ul>
+  <li>model is too simple for the data</li>
+  <li>the features are not informative enough</li>
+</ul>
+
+<p>Solutions:</p>
+<ul>
+  <li>try a more complex model</li>
+  <li>engineer features with higher predictive power</li>
+</ul>
+
+<p><strong>Overfitting</strong>: model predicts very well the training data but poorly the data from at least one of the two holdout sets. Reasons:</p>
+<ul>
+  <li>model is too complex for the data</li>
+  <li>too many features but a small number of training examples</li>
+</ul>
+
+<p><strong>High variance</strong>: error of the model due to its sensitivity to small fluctuations in the training set</p>
+
+<p>The model learn the idiosyncrasies of the training set: the noise in the values of features, the sampling imperfection (due to small dataset size) and other artifacts extrinsic to the decision problem at hand but present in the training set</p>
+
+<p>Solutions:</p>
+<ul>
+  <li>try a simpler model</li>
+  <li>reduce the dimensionality of the dataset</li>
+  <li>add more training data</li>
+  <li>regularize the model</li>
+</ul>
+
+<h2 id="regularization">
+<a class="anchor" href="#regularization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Regularization</h2>
+<p>Methods that force the learning algorithm to build a less complex model. Often leads to slightly higher bias but significantly reduces the variance -&gt; <strong>bias-variance tradeoff</strong></p>
+
+<ul>
+  <li>
+<strong>L1 regularization</strong>: produces a sparse model, most of its parameters equal to zero. Makes feature selection by deciding which features are essential for prediction. <em>Lasso regularization</em>
+</li>
+  <li>
+<strong>L2 regularization</strong>: penalizes larger weights, if your only goal is to decrease variance, L2 usually gives better results. L2 also has the advantage of being differentiable, so gradient descent can be used for optimizing the objective function. <em>Ridge Regularization</em>
+</li>
+  <li>
+<strong>Elastic net regularization</strong>: combine L1 and L2</li>
+</ul>
+
+<p>Neural networks also benefit from two other regularization techniques:</p>
+<ul>
+  <li>Dropout</li>
+  <li>Batch Normalization</li>
+</ul>
+
+<p>Also non-mathematical methods have a regularization effect: data augmentation and early stopping</p>
+
+<h2 id="model-performance-assessment">
+<a class="anchor" href="#model-performance-assessment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model Performance Assessment</h2>
+<p>Model <em>generalizes well</em>: model performs well on predicting the test set</p>
+
+<p>Overfitting: error on the test data is <em>substantially higher</em> then the error obtained in the training data</p>
+
+<h3 id="confusion-matrix">
+<a class="anchor" href="#confusion-matrix" aria-hidden="true"><span class="octicon octicon-link"></span></a>Confusion Matrix</h3>
+<p>Table that summarizes how successful the classification model is at predicting examples belonging to various classes</p>
+
+<p>Used to calculate two other metrics: precision and recall</p>
+
+<h3 id="precisionrecall">
+<a class="anchor" href="#precisionrecall" aria-hidden="true"><span class="octicon octicon-link"></span></a>Precision/Recall</h3>
+<ul>
+  <li>
+<strong>Precision</strong>: ratio of correct positive predictions to the overall number of positive predictions: TP/(TP+FP)</li>
+  <li>
+<strong>Recall</strong>: ratio of correct positive predictions to the overall number of positive examples in the dataset: TP/(TP+FN)</li>
+</ul>
+
+<p>In practice, almost always have to choose between high precision or high recall -&gt; usually impossible to have both</p>
+<ul>
+  <li>assign a higher weighting to the examples of a specific class</li>
+  <li>tune hyperparameters to maximize precision or recall on the validation set</li>
+  <li>vary the decision threshold for algorithms that return probabilities of classes</li>
+</ul>
+
+<h3 id="accuracy">
+<a class="anchor" href="#accuracy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accuracy</h3>
+<p>Number of correctly classified examples divided by the total number of classified examples: (TP+TN)/(TP+TN+FP+FN)</p>
+
+<p>Useful metric when errors in predicting all classes are equally important</p>
+
+<h3 id="cost-sensitive-accuracy">
+<a class="anchor" href="#cost-sensitive-accuracy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cost-Sensitive Accuracy</h3>
+<p>When different classes have different importances</p>
+
+<p>Assign a cost (positive number) to both types of mistakes: FP and FN. Then compute the counts TP, TN, FP, FN as usual and multiply the counst for FP and FN by the corresponding cost before calculating the accuracy normally</p>
+
+<h3 id="area-under-the-roc-curve-auc">
+<a class="anchor" href="#area-under-the-roc-curve-auc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Area under the ROC Curve (AUC)</h3>
+<p>ROC curve (“receiver operating characteristic”, comes from radar engineering): use a combination of the <strong>true positive rate</strong> (define exactly as recall) and <strong>false positive rate</strong> (proportion of negative examples predicted incorrectly) to build up a summary picture of the classification performance</p>
+
+<p>TPR = TP/(TP+FN)</p>
+
+<p>FPR = FP/(FP+TN)</p>
+
+<p>ROC curvers can only be used to assess classifiers that return some confidence score (or a probability) of prediction</p>
+
+<p>The higher the <strong>area under the ROC curve (AUC)</strong> the better the classifier. AUC &gt; 0.5 -&gt; better than a random classifier. AUC = 1 -&gt; perfect classifier -&gt; TPR closer to 1 while keeping FPR near 0</p>
+
+<h3 id="hyperparameter-tuning">
+<a class="anchor" href="#hyperparameter-tuning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hyperparameter Tuning</h3>
+<ul>
+  <li>
+<strong>Grid Search</strong>: when you have enough data for a validation set and the number of hyperparameters and their range is not too large</li>
+  <li>
+<strong>Random Search</strong>: instead of providing discrete set of values to explore, you provide a statistical distribution for each hyperparameter from which values are randomly samples and set the total number of combinations you want to try</li>
+  <li>
+<strong>Bayesian hyperparameter optimization</strong>: use past evaluation results to choose the next values to evaluate</li>
+  <li><strong>Gradient-based techniques</strong></li>
+  <li><strong>Evolutionary optimization techniques</strong></li>
+</ul>
+
+<h3 id="cross-validation">
+<a class="anchor" href="#cross-validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross-Validation</h3>
+<p>When you have few training examples, it could be prohibitive to have both validation and test set. You would prefer to use more data to train the model. In such case, you only split your data into training and test. Then you use <strong>cross-validation</strong> on the training set to simulate a validation set</p>
+
+<h1 id="6-neural-networks-and-deep-learning">
+<a class="anchor" href="#6-neural-networks-and-deep-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>6 Neural Networks and Deep Learning</h1>
+
+<h1 id="7-problems-and-solutions">
+<a class="anchor" href="#7-problems-and-solutions" aria-hidden="true"><span class="octicon octicon-link"></span></a>7 Problems and Solutions</h1>
+
+<h1 id="8-advanced-practice">
+<a class="anchor" href="#8-advanced-practice" aria-hidden="true"><span class="octicon octicon-link"></span></a>8 Advanced Practice</h1>
+
+<h2 id="handling-imbalanced-datasets">
+<a class="anchor" href="#handling-imbalanced-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling Imbalanced Datasets</h2>
+<ul>
+  <li>Set the cost of misclassification of examples of the minority class higher</li>
+  <li>oversampling -&gt; make multiple copies of the example of some class</li>
+  <li>undersampling -&gt; randomly remove from training set some examples of the majority class</li>
+  <li>synthetic minority oversampling technique (SMOTE)</li>
+  <li>adaptive synthetic sampling method (ADASYN)</li>
+  <li>algorithms less sensitive to imbalanced datasets: Decision trees, Random Forest, Gradient Boosting</li>
+</ul>
+
+<h2 id="combining-models">
+<a class="anchor" href="#combining-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining Models</h2>
+<p>Ensemble models, typically combine models of the same nature. Boost performance by combining hundreds of weak models. We can sometimes get an additional performance gain by combining strong models made with different learning algorithms (two or three models):</p>
+<ul>
+  <li>averaging</li>
+  <li>majority vote</li>
+  <li>stacking</li>
+</ul>
+
+<blockquote>
+  <p><strong>Stacking</strong>: building a meta-model that takes the output of base models as input. Make sure your stacked model performs better on the validation set than each of the base models you stacked. When several <strong>uncorrelated</strong> strong models agree they are more likely to agree on the correct outcome</p>
+</blockquote>
+
+<h2 id="training-neural-networks">
+<a class="anchor" href="#training-neural-networks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Training Neural Networks</h2>
+<ul>
+  <li>Challenge to convert your data into the input the network can work with (i.e., resize images, word embeddings)</li>
+  <li>The choice of specific NN architecture is a difficult one</li>
+  <li>Decide the number of layers, their type and size</li>
+  <li>Regularization</li>
+</ul>
+
+<h2 id="advanced-regularization">
+<a class="anchor" href="#advanced-regularization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advanced Regularization</h2>
+<p>For NNs, besides L1 and L2 regularization:</p>
+<ul>
+  <li>Dropout: for each pass, temporarily exclude at random some units frrom the computation</li>
+  <li>Early Stopping: stop training once observe a decreased performance on the validation set</li>
+  <li>Batch Normalization: standardize the outputs of each layer</li>
+  <li>Data augmentation: create a synthetic example from an original by applying various transformations</li>
+</ul>
+
+<h2 id="handling-multiple-inputs">
+<a class="anchor" href="#handling-multiple-inputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling Multiple Inputs</h2>
+<p>Multimodal data -&gt; e.g., input is an image and text and binary output indicates whether the text describes this image</p>
+
+<p>It’s hard to adapt shallow learning algorithms to work with multimodal data -&gt; train one shallow model on the image and another one in the text</p>
+
+<h2 id="handling-multiple-outputs">
+<a class="anchor" href="#handling-multiple-outputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handling Multiple Outputs</h2>
+<p>Some problems you would like to predict multiple outputs for one input -&gt; sometimes can convert into a multi-label classification problem -&gt; Subnetworks</p>
+
+<h2 id="transfer-learning">
+<a class="anchor" href="#transfer-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Transfer Learning</h2>
+<p>Pick an existing model trained on some dataset, and adapt this model to predict examples from another dataset, different from the one the model was built on</p>
+
+<ol>
+  <li>Build a deep model on the original big dataset</li>
+  <li>Compile a much smaller labeled dataset for your second model</li>
+  <li>Remove the last one or several layers from the first model</li>
+  <li>Replace the removed layers with new layers adapted for the new problem</li>
+  <li>“Freeze” the parameters of the layers remaining from the first model</li>
+  <li>Use your smaller labeled dataset and gradient descent to train the parameters of only the new layers</li>
+</ol>
+
+<h2 id="algorithmic-efficiency">
+<a class="anchor" href="#algorithmic-efficiency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Algorithmic Efficiency</h2>
+<p><strong>Big O notation</strong>: classify algorithms according to how their running time or space requirements grow as the input size grows. Complexity measured in the worst case</p>
+
+<ul>
+  <li>avoid using loops whenever possible</li>
+  <li>use appropriate data structures (e.g., if order is not important, use a set instead of a list)</li>
+  <li>use dict (hashmap) -&gt; allows you to define a collection of key-value pairs with very fast lookups for keys</li>
+  <li>use Scientific Python packages -&gt; many methods implemented in C</li>
+  <li>if you need to iterate over a vast collection of elements, use generators that create a function that return one element at a time rather than all the elements at once</li>
+  <li>
+<em>cProfile</em> package to find inefficiencies</li>
+  <li>
+<em>multiprocessing</em> package</li>
+  <li>
+<em>PyPy</em>, <em>Numba</em>
+</li>
+</ul>
+
+<h1 id="9-unsupervised-learning">
+<a class="anchor" href="#9-unsupervised-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>9 Unsupervised Learning</h1>
+
+<h1 id="10-other-forms-of-learning">
+<a class="anchor" href="#10-other-forms-of-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>10 Other Forms of Learning</h1>
+
+<h2 id="metric-learning">
+<a class="anchor" href="#metric-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Metric Learning</h2>
+<p>You can create a metric that would work better for your dataset</p>
+
+<blockquote>
+  <p>One-shot learning with siamese networks and triplet loss can be seen as metric learning problem</p>
+</blockquote>
+
+<h2 id="learning-to-rank">
+<a class="anchor" href="#learning-to-rank" aria-hidden="true"><span class="octicon octicon-link"></span></a>Learning to Rank</h2>
+<p>Supervised learning problem (e.g., optimization of search results returned by a search engine for a query)</p>
+
+<p>Three approaches:</p>
+<ul>
+  <li>pointwise</li>
+  <li>parwise</li>
+  <li>listwise</li>
+</ul>
+
+<blockquote>
+  <p>State of the art rank learning algorithm: <strong>LambdaMART</strong>. Listwise approach -&gt; one popular metric that combines both precision and recall is called <em>mean average precision (MAP)</em></p>
+</blockquote>
+
+<p>In typical supervised learning algorithm, we optimize the cost instead of the metric (usually metrics are not differentiable). In LambdaMART the metric is optmized directly</p>
+
+<h2 id="learning-to-recommend">
+<a class="anchor" href="#learning-to-recommend" aria-hidden="true"><span class="octicon octicon-link"></span></a>Learning to Recommend</h2>
+<ul>
+  <li>
+<strong>Content-based filtering</strong>: learning what users like based on the description of the content they consume -&gt; user can be trapped in a “filter bubble”</li>
+  <li>
+<strong>Collaborative filtering</strong>: recommendations to one user are computed based on what other users consume or rate -&gt; content of the item consumed is ignored -&gt; huge and extremely sparse matrix</li>
+</ul>
+
+<p>Real-world recommender systems -&gt; hybrid approach</p>
+
+<h3 id="factorization-machines-fm">
+<a class="anchor" href="#factorization-machines-fm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factorization Machines (FM)</h3>
+<p>Explicity designed for sparse datasets. Users and items are encoded as one-hot vectors</p>
+
+<h3 id="denoising-autoencoders-dae">
+<a class="anchor" href="#denoising-autoencoders-dae" aria-hidden="true"><span class="octicon octicon-link"></span></a>Denoising Autoencoders (DAE)</h3>
+<p>NN that reconstructs its input from the bottleneck layer. Ideal tool to build a recommender system: input is corrupted by noise while the output shouldn’t be</p>
+
+<p>Idea: new items a user could like are seen as if they were removed from the complete set by some corruption process -&gt; goal of the denoising autoencoder is to reconstruct those removed items</p>
+
+<blockquote>
+  <p>Another effective collaborative-filtering model is an FFNN with two inputs and one output</p>
+</blockquote>
+
+<h2 id="self-supervised-learning-word-embeddings">
+<a class="anchor" href="#self-supervised-learning-word-embeddings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Self-Supervised Learning: Word Embeddings</h2>
+<p>Word embeddings: feature vectors that represent words -&gt; similar words have similar feature vectors</p>
+
+<p><strong>word2vec</strong>: pretrained embeddings for many languages are available to download online. <strong>skip-gram</strong></p>
+
+<blockquote>
+  <p>Self-supervised: the labeled examples get extracted from the unlabeled data such as text</p>
+</blockquote>
+
+<h1 id="11-conclusion">
+<a class="anchor" href="#11-conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>11 Conclusion</h1>
+
+<h2 id="topic-modeling">
+<a class="anchor" href="#topic-modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Topic Modeling</h2>
+<p>Prevalent unsupervised learning problem. <strong>Latent Dirichlet Allocation (LDA)</strong> -&gt; You decide how many topics are in your collection, the algorithm assigns a topic to each word in this collection. To extract the topics from a document -&gt; count how many words of each topic are present in that document</p>
+
+<h2 id="gaussian-process-gp">
+<a class="anchor" href="#gaussian-process-gp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gaussian Process (GP)</h2>
+<p>Supervised learning method that competes with kernel regression</p>
+
+<h2 id="generalized-linear-models-glm">
+<a class="anchor" href="#generalized-linear-models-glm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generalized Linear Models (GLM)</h2>
+<p>Generalization of the linear regression to modeling various forms of dependency between the input feature vector and the target</p>
+
+<h2 id="probabilistic-graphical-models-pgm">
+<a class="anchor" href="#probabilistic-graphical-models-pgm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probabilistic Graphical Models (PGM)</h2>
+<p>One example: Conditional Random Fields (CRF) -&gt; model the input sequence of words and relationships between the features and labels in this sequence as a sequential <em>dependency graph</em></p>
+
+<p><strong>Graph</strong>: structure consisting of a colletion of nodes and edges that join a pair of nodes</p>
+
+<blockquote>
+  <p>PGMs are also know under names of Bayesian networks, belief networks and probabilistic independence networks</p>
+</blockquote>
+
+<h2 id="markov-chain-monte-carlo-mcmc">
+<a class="anchor" href="#markov-chain-monte-carlo-mcmc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Markov Chain Monte Carlo (MCMC)</h2>
+<p>If you work with graphical models and want to sample examples from a very complex distribution defined by the dependency graph. MCMC is a class of algorithms for sampling from any probability distribution defined mathematically</p>
+
+<h2 id="generative-adversarial-networks-gan">
+<a class="anchor" href="#generative-adversarial-networks-gan" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generative Adversarial Networks (GAN)</h2>
+<p>Class of NN used in unsupervised learning. System of two neural networks contesting with each other in a <em>zero-sum game</em> setting</p>
+
+<h2 id="genetic-algorithms-ga">
+<a class="anchor" href="#genetic-algorithms-ga" aria-hidden="true"><span class="octicon octicon-link"></span></a>Genetic Algorithms (GA)</h2>
+<p>Numerical optimization technique used to optimize undifferentiable optimization objective functions. Use concepts from evolutionary biology to search for a global optimum (minimum or maximum) of an optimization problem, by mimicking evolutionary biological processes</p>
+
+<blockquote>
+  <p>GA allow finding solutions to any measurable optimization criteria (i.e., optimize hyperparameters of a learning algorithm -&gt; typically much slower than gradient-based optimization techniques)</p>
+</blockquote>
+
+<h2 id="reinforcement-learning-rl">
+<a class="anchor" href="#reinforcement-learning-rl" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reinforcement Learning (RL)</h2>
+<p>Solves a very specific kind of problem where the decision making is sequential. There’s an agent acting in a unknown environment. Each action brings a reward and moves the agent to another state of the envinronment. The goal of the agent is to optimize its long-term reward</p>
+
+  </div><a class="u-url" href="/blog/book/machine%20learning/data%20science/2020/01/14/hundred-page-ml.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

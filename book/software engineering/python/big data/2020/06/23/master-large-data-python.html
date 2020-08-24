@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code","dateModified":"2020-06-23T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-06-23T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg","url":"https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-23T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code","dateModified":"2020-06-23T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-06-23T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg","url":"https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Mastering Large Datasets with Python: Parallelize and Distribute Your Python Code</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-23T00:00:00-05:00" itemprop="datePublished">
+        Jun 23, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      24 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#software engineering">software engineering</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#big data">big data</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#ch1-introduction">Ch1. Introduction</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#procedural-programming">Procedural programming</a></li>
+<li class="toc-entry toc-h2"><a href="#parallel-programming">Parallel programming</a></li>
+<li class="toc-entry toc-h2"><a href="#the-map-function-for-transforming-data">The map function for transforming data</a></li>
+<li class="toc-entry toc-h2"><a href="#the-reduce-function-for-advanced-transformations">The reduce function for advanced transformations</a></li>
+<li class="toc-entry toc-h2"><a href="#distributed-computing-for-speed-and-scale">Distributed computing for speed and scale</a></li>
+<li class="toc-entry toc-h2"><a href="#hadoop-a-distributed-framework-for-map-and-reduce">Hadoop: A distributed framework for map and reduce</a></li>
+<li class="toc-entry toc-h2"><a href="#spark-for-high-powered-map-reduce-and-more">Spark for high-powered map, reduce, and more</a></li>
+<li class="toc-entry toc-h2"><a href="#aws-elastic-mapreduce-emr---large-datasets-in-the-cloud">AWS Elastic MapReduce (EMR) - Large datasets in the cloud</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-accelerating-large-dataset-work-map-and-parallel-computing">Ch2. Accelerating large dataset work: Map and parallel computing</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#pattern">Pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#lazy-functions-for-large-datasets">Lazy functions for large datasets</a></li>
+<li class="toc-entry toc-h2"><a href="#parallel-processing">Parallel processing</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#problems">Problems</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#inability-to-pickle-data-or-functions">Inability to pickle data or functions</a></li>
+<li class="toc-entry toc-h4"><a href="#order-sensitive-operations">Order-sensitive operations</a></li>
+<li class="toc-entry toc-h4"><a href="#state-dependent-operations">State-dependent operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#other-observations">Other observations</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch3-function-pipelines-for-mapping-complex-transformations">Ch3. Function pipelines for mapping complex transformations</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#helper-functions-and-function-chains">Helper functions and function chains</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creating-a-pipeline">Creating a pipeline</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#compose">Compose</a></li>
+<li class="toc-entry toc-h4"><a href="#pipe">Pipe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch4-processing-large-datasets-with-lazy-workflows">Ch4. Processing large datasets with lazy workflows</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#laziness">Laziness</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#shrinking-sequences-with-the-filter-function">Shrinking sequences with the filter function</a></li>
+<li class="toc-entry toc-h3"><a href="#combining-sequences-with-zip">Combining sequences with zip</a></li>
+<li class="toc-entry toc-h3"><a href="#lazy-file-searching-with-iglob">Lazy file searching with iglob</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#understanding-iterators-the-magic-behind-lazy-python">Understanding iterators: the magic behind lazy Python</a></li>
+<li class="toc-entry toc-h2"><a href="#generators-functions-for-creating-data">Generators: functions for creating data</a></li>
+<li class="toc-entry toc-h2"><a href="#simulations">Simulations</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch5-accumulation-operations-with-reduce">Ch5. Accumulation operations with reduce</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#three-parts-of-reduce">Three parts of reduce</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#accumulator-functions">Accumulator functions</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#reductions">Reductions</a></li>
+<li class="toc-entry toc-h2"><a href="#using-map-and-reduce-together">Using map and reduce together</a></li>
+<li class="toc-entry toc-h2"><a href="#speeding-up-map-and-reduce">Speeding up map and reduce</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-speeding-up-map-and-reduce-with-advanced-parallelization">Ch6. Speeding up map and reduce with advanced parallelization</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#getting-the-most-out-of-parallel-map">Getting the most out of parallel map</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#more-parallel-maps-imap-and-starmap">More parallel maps: .imap and starmap</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#imap">.imap</a></li>
+<li class="toc-entry toc-h4"><a href="#starmap">starmap</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#parallel-reduce-for-faster-reductions">Parallel reduce for faster reductions</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch7-processing-truly-big-datasets-with-hadoop-and-spark">Ch7. Processing truly big datasets with Hadoop and Spark</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#distributed-computing">Distributed computing</a></li>
+<li class="toc-entry toc-h2"><a href="#hadoop-five-modules">Hadoop five modules</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#yarn-for-job-scheduling">YARN for job scheduling</a></li>
+<li class="toc-entry toc-h3"><a href="#the-data-storage-backbone-of-hadoop-hdfs">The data storage backbone of Hadoop: HDFS</a></li>
+<li class="toc-entry toc-h3"><a href="#mapreduce-jobs-using-python-and-hadoop-streaming">MapReduce jobs using Python and Hadoop Streaming</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#spark-for-interactive-workflows">Spark for interactive workflows</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#pyspark-for-mixing-python-and-spark">PySpark for mixing Python and Spark</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch8-best-practices-for-large-data-with-apache-streaming-and-mrjob">Ch8. Best practices for large data with Apache Streaming and mrjob</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#unstructured-data-logs-and-documents">Unstructured data: Logs and documents</a></li>
+<li class="toc-entry toc-h2"><a href="#json-for-passing-data-between-mapper-and-reducer">JSON for passing data between mapper and reducer</a></li>
+<li class="toc-entry toc-h2"><a href="#mrjob-for-pythonic-hadoop-streaming">mrjob for pythonic Hadoop streaming</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch9-pagerank-with-map-and-reduce-in-pyspark">Ch9. PageRank with map and reduce in PySpark</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#map-like-methods-in-pyspark">Map-like methods in PySpark</a></li>
+<li class="toc-entry toc-h3"><a href="#reduce-like-methods-in-pyspark">Reduce-like methods in PySpark</a></li>
+<li class="toc-entry toc-h3"><a href="#convenience-methods-in-pyspark">Convenience methods in PySpark</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#saving-rdds-to-text-files">Saving RDDs to text files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-faster-decision-making-with-machine-learning-and-pyspark">Ch10. Faster decision-making with machine learning and PySpark</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#organizing-the-data-for-learning">Organizing the data for learning</a></li>
+<li class="toc-entry toc-h2"><a href="#auxiliary-classes">Auxiliary classes</a></li>
+<li class="toc-entry toc-h2"><a href="#evaluation">Evaluation</a></li>
+<li class="toc-entry toc-h2"><a href="#cross-validation-in-pyspark">Cross-validation in PySpark</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch11-large-datasets-in-the-cloud-with-amazon-web-services-and-s3">Ch11. Large datasets in the cloud with Amazon Web Services and S3</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#objects-for-convenient-heterogenous-storage">Objects for convenient heterogenous storage</a></li>
+<li class="toc-entry toc-h2"><a href="#parquet-a-concise-tabular-data-store">Parquet: A concise tabular data store</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch12-mapreduce-in-the-cloud-with-amazons-elastic-mapreduce">Ch12. MapReduce in the cloud with Amazon’s Elastic MapReduce</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#convenient-cloud-clusters-with-emr">Convenient cloud clusters with EMR</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#aws-emr">AWS EMR</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#starting-emr-clusters-with-mrjob">Starting EMR clusters with mrjob</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#machine-learning-in-the-cloud-with-spark-on-emr">Machine learning in the cloud with Spark on EMR</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#running-machine-learning-algorithms-on-a-truly-large-dataset">Running machine learning algorithms on a truly large dataset</a></li>
+<li class="toc-entry toc-h3"><a href="#ec2-instance-types-and-clusters">EC2 instance types and clusters</a></li>
+<li class="toc-entry toc-h3"><a href="#software-available-on-emr">Software available on EMR</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Authors: John T. Wolohan</p>
+
+<p><a href="https://www.manning.com/books/mastering-large-datasets-with-python">Available here</a></p>
+
+<h1 id="ch1-introduction">
+<a class="anchor" href="#ch1-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. Introduction</h1>
+<p>Map and reduce style of programming:</p>
+<ul>
+  <li>easily write parallel programs</li>
+  <li>organize the code around two functions: <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code>
+</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">MapReduce</code> = framework for parallel and distributed computing; <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code> = style of programming that allows running the work in parallel with minimal rewriting and extend the work to distributed workflows</p>
+</blockquote>
+
+<p><strong>Dask</strong> -&gt; another tool for managing large data without <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code></p>
+
+<h2 id="procedural-programming">
+<a class="anchor" href="#procedural-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Procedural programming</h2>
+<p>Program Workflow</p>
+<ol>
+  <li>Starts to run</li>
+  <li>issues an instruction</li>
+  <li>instruction is executed</li>
+  <li>repeat 2 and 3</li>
+  <li>finishes running</li>
+</ol>
+
+<h2 id="parallel-programming">
+<a class="anchor" href="#parallel-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parallel programming</h2>
+<p>Program workflow</p>
+<ol>
+  <li>Starts to run</li>
+  <li>divides up the work into chunks of instructions and data</li>
+  <li>each chunk of work is executed independently</li>
+  <li>chunks of work are reassembled</li>
+  <li>finishes running</li>
+</ol>
+
+<p><img src="map_reduce.png" alt="map_reduce"></p>
+
+<blockquote>
+  <p>The <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code> style is applicable everywhere, but its specific strengths are in areas where you may need to scale</p>
+</blockquote>
+
+<h2 id="the-map-function-for-transforming-data">
+<a class="anchor" href="#the-map-function-for-transforming-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>The map function for transforming data</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">map</code>: function to transform sequences of data from one type to another</li>
+  <li>Always retains the same number of objects in the output as were provided in the input</li>
+  <li>performs one-to-one transformations -&gt; is a great way to transform data so it is more suitable for use</li>
+</ul>
+
+<blockquote>
+  <p>Declarative programming: focuses on explaining the logic of the code and not on specifying low-level details -&gt; scaling is natural, the logic stays the same</p>
+</blockquote>
+
+<h2 id="the-reduce-function-for-advanced-transformations">
+<a class="anchor" href="#the-reduce-function-for-advanced-transformations" aria-hidden="true"><span class="octicon octicon-link"></span></a>The reduce function for advanced transformations</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">reduce</code>: transform a sequence of data into a data structure of any shape or size</li>
+  <li>MapReduce programming pattern relies on the <code class="highlighter-rouge">map</code> function to transform some data into another type of data and then uses the <code class="highlighter-rouge">reduce</code> function to combine that data</li>
+  <li>performs one-to-any transformations -&gt; is a great way to assemble data into a final result</li>
+</ul>
+
+<h2 id="distributed-computing-for-speed-and-scale">
+<a class="anchor" href="#distributed-computing-for-speed-and-scale" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distributed computing for speed and scale</h2>
+<p>Extension of parallel computing in which the computer resource we are dedicating to work on each chunk of a given task is its own machine</p>
+
+<h2 id="hadoop-a-distributed-framework-for-map-and-reduce">
+<a class="anchor" href="#hadoop-a-distributed-framework-for-map-and-reduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hadoop: A distributed framework for map and reduce</h2>
+<ul>
+  <li>Designed as an open source implementation of Google’s original MapReduce framework</li>
+  <li>Evolved into distributed computing software used widely by companies processing large amounts of data</li>
+</ul>
+
+<h2 id="spark-for-high-powered-map-reduce-and-more">
+<a class="anchor" href="#spark-for-high-powered-map-reduce-and-more" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spark for high-powered map, reduce, and more</h2>
+<ul>
+  <li>Something of a sucessor to the Apache Hadoop framework that does more of its work in memory instead of by writing to file</li>
+  <li>Can run more than 100x faster than Hadoop</li>
+</ul>
+
+<h2 id="aws-elastic-mapreduce-emr---large-datasets-in-the-cloud">
+<a class="anchor" href="#aws-elastic-mapreduce-emr---large-datasets-in-the-cloud" aria-hidden="true"><span class="octicon octicon-link"></span></a>AWS Elastic MapReduce (EMR) - Large datasets in the cloud</h2>
+<ul>
+  <li>Popular way to implement Hadoop and Spark</li>
+  <li>tackle small problems with parallel programming as its cost effective</li>
+  <li>tackle large problems with parallel programming because we can procure as many resources as we need</li>
+</ul>
+
+<h1 id="ch2-accelerating-large-dataset-work-map-and-parallel-computing">
+<a class="anchor" href="#ch2-accelerating-large-dataset-work-map-and-parallel-computing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. Accelerating large dataset work: Map and parallel computing</h1>
+<p><code class="highlighter-rouge">map</code>’s primary capabilities:</p>
+<ul>
+  <li>Replace <code class="highlighter-rouge">for</code> loops</li>
+  <li>Transform data</li>
+  <li>
+<code class="highlighter-rouge">map</code> evaluates only when necessary, not when called -&gt; generic <code class="highlighter-rouge">map</code> object as output</li>
+</ul>
+
+<p><code class="highlighter-rouge">map</code> makes easy to parallel code -&gt; break into pieces</p>
+
+<h2 id="pattern">
+<a class="anchor" href="#pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pattern</h2>
+<ul>
+  <li>Take a sequence of data</li>
+  <li>Transform it with a function</li>
+  <li>Get the outputs</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">Generators</code> instead of normal loops prevents storing all objects in memory in advance</p>
+</blockquote>
+
+<h2 id="lazy-functions-for-large-datasets">
+<a class="anchor" href="#lazy-functions-for-large-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lazy functions for large datasets</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">map</code> = lazy function = it doesn’t evaluate when we call <code class="highlighter-rouge">map</code>
+</li>
+  <li>Python stores the instructions for evaluating the function and runs them at the exact moment we ask for the value</li>
+  <li>Common lazy objects in Python = <code class="highlighter-rouge">range</code> function</li>
+  <li>Lazy <code class="highlighter-rouge">map</code> allows us to transform a lot of data without an unnecessarily large amount of memory or spending the time to generate it</li>
+</ul>
+
+<h2 id="parallel-processing">
+<a class="anchor" href="#parallel-processing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parallel processing</h2>
+<h3 id="problems">
+<a class="anchor" href="#problems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problems</h3>
+<h4 id="inability-to-pickle-data-or-functions">
+<a class="anchor" href="#inability-to-pickle-data-or-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inability to pickle data or functions</h4>
+<ul>
+  <li>
+<em>Pickling</em>: Python’s version of object serialization or mashalling</li>
+  <li>Storing objects from our code in an efficient binary format on the disk that can be read back by our program at a later time (<code class="highlighter-rouge">pickle</code> module)</li>
+  <li>allows us to share data across procesors or even machines, saving the instructions and data and then executing them elsewhere</li>
+  <li>Objects we can’t pickle: lambda functions, nested functions, nested classes</li>
+  <li>
+<code class="highlighter-rouge">pathos</code> and <code class="highlighter-rouge">dill</code> module allows us to pickle almost anything</li>
+</ul>
+
+<h4 id="order-sensitive-operations">
+<a class="anchor" href="#order-sensitive-operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Order-sensitive operations</h4>
+<ul>
+  <li>Work in parallel: not guaranteed that tasks will be finished in the same order they’re input</li>
+  <li>If work needs to be processed in a linear order -&gt; probably shouldn’t do it in parallel</li>
+  <li>Even though Python may not complete the problems in order, it still remembers the order in which it was supposed to do them -&gt; <code class="highlighter-rouge">map</code> returns in the exact order we would expect, even if it doesn’t process in that order</li>
+</ul>
+
+<h4 id="state-dependent-operations">
+<a class="anchor" href="#state-dependent-operations" aria-hidden="true"><span class="octicon octicon-link"></span></a>State-dependent operations</h4>
+<ul>
+  <li>Common solution for the state problem: <strong>take the internal state and make it an external variable</strong>
+</li>
+</ul>
+
+<h2 id="other-observations">
+<a class="anchor" href="#other-observations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other observations</h2>
+<ul>
+  <li>Best way to flatten a list into one big list -&gt; Python’s itertools <code class="highlighter-rouge">chain</code> function: takes an iterable of iterables and chains them together so they can all be accessed one after another -&gt; lazy by default</li>
+  <li>Best way to visualize graphs is to take it out of Python and import it into Gephi: dedicated piece of graph visualization software</li>
+</ul>
+
+<blockquote>
+  <p>Anytime we’re converting a sequence of some type into a sequence of another type, what we’re doing can be expressed as a map -&gt; N-to-N transformation: we’re converting N data elements, into N data elements but in different format</p>
+</blockquote>
+
+<ul>
+  <li>To make this type of problem parallel only adds up to few lines of code:
+    <ul>
+      <li>one import</li>
+      <li>wrangling our processors with <code class="highlighter-rouge">Pool()</code>
+</li>
+      <li>modifying our <code class="highlighter-rouge">map</code> statements to use <code class="highlighter-rouge">Pool.map</code> method</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="ch3-function-pipelines-for-mapping-complex-transformations">
+<a class="anchor" href="#ch3-function-pipelines-for-mapping-complex-transformations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. Function pipelines for mapping complex transformations</h1>
+
+<h2 id="helper-functions-and-function-chains">
+<a class="anchor" href="#helper-functions-and-function-chains" aria-hidden="true"><span class="octicon octicon-link"></span></a>Helper functions and function chains</h2>
+<p><strong>Helper functions</strong>: small, simple functions that we rely on to do complex things -&gt; break down large problems into small pieces that we can code quickly</p>
+
+<p><strong>Function chains</strong> or <strong>pipelines</strong>: the way we put helper functions to work</p>
+
+<h3 id="creating-a-pipeline">
+<a class="anchor" href="#creating-a-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating a pipeline</h3>
+<ul>
+  <li>Chaining helper functions together</li>
+  <li>Ways to do this:
+    <ul>
+      <li>Using a sequence of maps</li>
+      <li>Chaining functions together with <code class="highlighter-rouge">compose</code>
+</li>
+      <li>Creating a function pipeline with <code class="highlighter-rouge">pipe</code>
+</li>
+    </ul>
+  </li>
+  <li>
+<code class="highlighter-rouge">compose</code> and <code class="highlighter-rouge">pipe</code> are functions in the <code class="highlighter-rouge">toolz</code> package</li>
+</ul>
+
+<h4 id="compose">
+<a class="anchor" href="#compose" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compose</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from toolz.functoolz import compose
+</code></pre></div></div>
+
+<ul>
+  <li>Pass <code class="highlighter-rouge">compose</code> all the functions we want to include in our pipeline</li>
+  <li>Pass in <strong>reverse order</strong> because <code class="highlighter-rouge">compose</code> is going to apply them backwards</li>
+  <li>Store the output of our <code class="highlighter-rouge">compose</code> function, which is itself a function, to a variable</li>
+  <li>Call that variable or pass it along to <code class="highlighter-rouge">map</code>
+</li>
+</ul>
+
+<h4 id="pipe">
+<a class="anchor" href="#pipe" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pipe</h4>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from toolz.functoolz import pipe
+</code></pre></div></div>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">pipe</code> function will pass a value through a pipeline</li>
+  <li>
+<code class="highlighter-rouge">pipe</code> expects the functions to be in the order we want to apply them</li>
+  <li>
+<code class="highlighter-rouge">pipe</code> evaluates each of the functions and returns a results</li>
+  <li>If we want to pass it to <code class="highlighter-rouge">map</code>, we have to wrap it in a function definition</li>
+</ul>
+
+<h2 id="summary">
+<a class="anchor" href="#summary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary</h2>
+<blockquote>
+  <p>Major advantages of creating pipelines of helper functions are that the code becomes: <strong>Readable and clear; Modular and easy to edit</strong></p>
+</blockquote>
+
+<ul>
+  <li>Modular code play very nice with <code class="highlighter-rouge">map</code> and can readily move into parallel workflows, such as by using the <code class="highlighter-rouge">Pool()</code>
+</li>
+  <li>We can simplify working with nested data structures by using nested function pipelines, which we can apply with <code class="highlighter-rouge">map</code>
+</li>
+</ul>
+
+<h1 id="ch4-processing-large-datasets-with-lazy-workflows">
+<a class="anchor" href="#ch4-processing-large-datasets-with-lazy-workflows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. Processing large datasets with lazy workflows</h1>
+<h2 id="laziness">
+<a class="anchor" href="#laziness" aria-hidden="true"><span class="octicon octicon-link"></span></a>Laziness</h2>
+<ul>
+  <li>
+<em>Lazy evaluation</em>: strategy when deciding when to perform computations</li>
+  <li>Under lazy evaluation, the Python interpreter executes lazy Python code only when the program needs the results of that code</li>
+  <li>Opposite of <em>eager evaluation</em>, where everything is evaluated when it’s called</li>
+</ul>
+
+<h3 id="shrinking-sequences-with-the-filter-function">
+<a class="anchor" href="#shrinking-sequences-with-the-filter-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Shrinking sequences with the filter function</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">filter</code>: function for pruning sequences.</li>
+  <li>Takes a sequence and restricts it to only the elements that meet a given condition</li>
+  <li>Related functions to know
+    <ul>
+      <li>
+<code class="highlighter-rouge">itertools.filterfalse</code>: get all the results that make a qualifier function return <code class="highlighter-rouge">False</code>
+</li>
+      <li>
+<code class="highlighter-rouge">toolz.dicttoolz.keyfilter</code>: filter on the keys of a <code class="highlighter-rouge">dict</code>
+</li>
+      <li>
+<code class="highlighter-rouge">toolz.dicttoolz.valfilter</code>: filter on the values of a <code class="highlighter-rouge">dict</code>
+</li>
+      <li>
+<code class="highlighter-rouge">toolz.dicttoolz.itemfilter</code>: filter on both the keys and the values of a dict</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="combining-sequences-with-zip">
+<a class="anchor" href="#combining-sequences-with-zip" aria-hidden="true"><span class="octicon octicon-link"></span></a>Combining sequences with zip</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">zip</code>: function for merging sequences.</li>
+  <li>Takes two sequences and returns a single sequence of <code class="highlighter-rouge">tuples</code>, each of which contains an element from each of the original sequences</li>
+  <li>Behaves like a zipper, it interlocks the values of Python iterables</li>
+</ul>
+
+<h3 id="lazy-file-searching-with-iglob">
+<a class="anchor" href="#lazy-file-searching-with-iglob" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lazy file searching with iglob</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">iglob</code>: function for lazily reading from the filesystem.</li>
+  <li>Lazy way of querying our filesystem</li>
+  <li>Find a sequence of files on our filesystem that match a given pattern</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from glob import iglob
+posts = iglob("path/to/posts/2020/06/*.md")
+</code></pre></div></div>
+
+<h2 id="understanding-iterators-the-magic-behind-lazy-python">
+<a class="anchor" href="#understanding-iterators-the-magic-behind-lazy-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding iterators: the magic behind lazy Python</h2>
+<ul>
+  <li>Replace data with instructions about where to find data and replace transformations with instructions for how to execute those transformations.</li>
+  <li>The computer only has to concern itself with the data it is processing right now, as opposed to the data it just processed or has to process in the future</li>
+  <li>Iterators are the base class of all the Python data types that can be iterated over</li>
+</ul>
+
+<blockquote>
+  <p>The iteration process is defined by a special method called <code class="highlighter-rouge">.__iter__()</code>. If a class has this method and returns an object with a <code class="highlighter-rouge">.__next__()</code> method, then we can iterate over it.</p>
+</blockquote>
+
+<ul>
+  <li>One-way streets: once we call <code class="highlighter-rouge">next</code>, the item returned is removed from the sequence. We can never back up or retrieve that item again</li>
+  <li>Not meant for by-hand inspection -&gt; meant for processing big data</li>
+</ul>
+
+<h2 id="generators-functions-for-creating-data">
+<a class="anchor" href="#generators-functions-for-creating-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generators: functions for creating data</h2>
+<ul>
+  <li>Class of functions in Python that lazily produce values in a sequence</li>
+  <li>We can create generators with functions using <code class="highlighter-rouge">yield</code> statements or through concise and powerful list comprehension-like generator expressions</li>
+  <li>They’re a simple way of implementing an iterator</li>
+  <li>Primary advantage of generators and lazy functions: <strong>avoiding storing more in memory than we need to</strong>
+</li>
+  <li>
+<code class="highlighter-rouge">itertools.islice</code>: take chunks from a sequence</li>
+</ul>
+
+<blockquote>
+  <p>Lazy functions are great at processing data, but hardware still limits how quickly we can work through it</p>
+</blockquote>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">toolz.frequencies</code>: takes a sequence in and returns a <code class="highlighter-rouge">dict</code> of items that occurred in the sequence as keys with corresponding values equal to the number of times they occurred -&gt; provides the frequencies of items in our sequence</li>
+</ul>
+
+<h2 id="simulations">
+<a class="anchor" href="#simulations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulations</h2>
+<ul>
+  <li>For simulations -&gt; writing classes allow us to consolidate the data about each piece of the simulation</li>
+  <li>
+<code class="highlighter-rouge">itertools.count()</code>: returns a generator that produces an infinite sequence of increasing numbers</li>
+  <li>Unzipping = the opposite of zipping -&gt; takes a single sequence and returns two -&gt; unzip = <code class="highlighter-rouge">zip(*my_sequence)</code>
+</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">operator.methodcaller</code>: takes a string and returns a function that calls that method with the name of that string on any object passed to it -&gt; call class methods using functions is helpful = allows us to use functions like <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">filter</code> on them</p>
+</blockquote>
+
+<h1 id="ch5-accumulation-operations-with-reduce">
+<a class="anchor" href="#ch5-accumulation-operations-with-reduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. Accumulation operations with reduce</h1>
+<ul>
+  <li>
+<code class="highlighter-rouge">reduce</code>: function for N-to-X transformations</li>
+  <li>We have a sequence and want to transform it into something that we can’t use <code class="highlighter-rouge">map</code> for</li>
+  <li>
+<code class="highlighter-rouge">map</code> can take care of the transformations in a very concise manner, whereas <code class="highlighter-rouge">reduce</code> can take care of the very final transformation</li>
+</ul>
+
+<h2 id="three-parts-of-reduce">
+<a class="anchor" href="#three-parts-of-reduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Three parts of reduce</h2>
+<ul>
+  <li><strong>Accumulator function</strong></li>
+  <li>
+<strong>Sequence</strong>: object that we can iterate through, such as lists, strings, and generators</li>
+  <li>
+<strong>Initializer</strong>: initial value to be passed to our accumulator (may be <em>optional</em>) -&gt; use an initalizer not when we want to change the value of our data, but when we want to change the <em>type</em> of the data</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from functools import reduce
+
+reduce(acc_fn, sequence, initializer)
+</code></pre></div></div>
+
+<h3 id="accumulator-functions">
+<a class="anchor" href="#accumulator-functions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Accumulator functions</h3>
+<ul>
+  <li>Does the heavy lifting for <code class="highlighter-rouge">reduce</code>
+</li>
+  <li>Special type of helper function</li>
+  <li>Common prototype:
+    <ul>
+      <li>take an accumulated value and the next element in the sequence</li>
+      <li>return another object, typically of the same type as the accumulated value</li>
+      <li><strong>accumulator functions always needs to return a value</strong></li>
+    </ul>
+  </li>
+  <li>Accumulator functions take two variables: one for the accumulated data (often designated as acc, left, or a), and one for the next element in the sequence (designated nxt, right, or b).</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>def my_add(acc, nxt):
+    return acc + nxt
+
+# or, using lambda functions
+lambda acc, nxt: acc + nxt
+</code></pre></div></div>
+
+<h2 id="reductions">
+<a class="anchor" href="#reductions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reductions</h2>
+<ul>
+  <li><code class="highlighter-rouge">filter</code></li>
+  <li><code class="highlighter-rouge">frequencies</code></li>
+</ul>
+
+<h2 id="using-map-and-reduce-together">
+<a class="anchor" href="#using-map-and-reduce-together" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using map and reduce together</h2>
+<blockquote>
+  <p>If you can decompose a problem into an N-to-X transformation, all that stands between you and a reduction that solves that problem is a well-crafted accumulation function</p>
+</blockquote>
+
+<ul>
+  <li>Using <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code> pattern to decouple the transformation logic from the actual transformation itself:
+    <ul>
+      <li>leads to highly reusable code</li>
+      <li>with large datasets -&gt; simple functions becomes paramount -&gt; we may have to wait a long time to discover we made a small error</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="speeding-up-map-and-reduce">
+<a class="anchor" href="#speeding-up-map-and-reduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Speeding up map and reduce</h2>
+<blockquote>
+  <p>Using a parallel map can counterintuitively be slower than using a lazy map in map an reduce scenarios</p>
+</blockquote>
+
+<ul>
+  <li>We can always use parallelization at the <code class="highlighter-rouge">reduce</code> level instead of at the <code class="highlighter-rouge">map</code> level</li>
+</ul>
+
+<h1 id="ch6-speeding-up-map-and-reduce-with-advanced-parallelization">
+<a class="anchor" href="#ch6-speeding-up-map-and-reduce-with-advanced-parallelization" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. Speeding up map and reduce with advanced parallelization</h1>
+<ul>
+  <li>Parallel <code class="highlighter-rouge">reduce</code>: use parallelization in the accumulation process instead of the transformation process</li>
+</ul>
+
+<h2 id="getting-the-most-out-of-parallel-map">
+<a class="anchor" href="#getting-the-most-out-of-parallel-map" aria-hidden="true"><span class="octicon octicon-link"></span></a>Getting the most out of parallel map</h2>
+<p>Parallel <code class="highlighter-rouge">map</code> will be slower than lazy <code class="highlighter-rouge">map</code> when:</p>
+<ul>
+  <li>we’re going to iterate through the sequence a second time later in our workflow</li>
+  <li>size of the work done in each parallel instance is small compared to the overhead that parallelization imposes -&gt; <em>chunksize</em>: size of the different pieces into which we break our tasks for parallel processing</li>
+  <li>Python makes <em>chunksize</em> available as an option -&gt; vary according to the task at hand</li>
+</ul>
+
+<h3 id="more-parallel-maps-imap-and-starmap">
+<a class="anchor" href="#more-parallel-maps-imap-and-starmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>More parallel maps: <code class="highlighter-rouge">.imap</code> and <code class="highlighter-rouge">starmap</code>
+</h3>
+<h4 id="imap">
+<a class="anchor" href="#imap" aria-hidden="true"><span class="octicon octicon-link"></span></a><code class="highlighter-rouge">.imap</code>
+</h4>
+<ul>
+  <li>
+<code class="highlighter-rouge">.imap</code>: for lazy parallel mapping</li>
+  <li>use <code class="highlighter-rouge">.imap</code> method to work in parallel on very large sequences efficiently</li>
+  <li>Lazy and parallel? use the <code class="highlighter-rouge">.imap</code> and <code class="highlighter-rouge">.imap_unordered</code> methods of <code class="highlighter-rouge">Pool()</code> -&gt; both methods return iterators instead of lists</li>
+  <li>
+<code class="highlighter-rouge">.imap_unordered</code>: behaves the same, except it doesn’t necessarily put the sequence in the right order for our iterator</li>
+</ul>
+
+<h4 id="starmap">
+<a class="anchor" href="#starmap" aria-hidden="true"><span class="octicon octicon-link"></span></a><code class="highlighter-rouge">starmap</code>
+</h4>
+<ul>
+  <li>use <code class="highlighter-rouge">starmap</code> to work with complex iterables, especially those we’re likely to create using the <code class="highlighter-rouge">zip</code> function -&gt; more than one single parameter (map’s limitation)</li>
+  <li>
+<code class="highlighter-rouge">starmap</code> unpacks <code class="highlighter-rouge">tuples</code> as <strong>positional parameters</strong> to the function with which we’re mapping</li>
+  <li>
+<code class="highlighter-rouge">itertools.starmap</code>: lazy function</li>
+  <li>
+<code class="highlighter-rouge">Pool().starmap</code>: parallel function</li>
+</ul>
+
+<h2 id="parallel-reduce-for-faster-reductions">
+<a class="anchor" href="#parallel-reduce-for-faster-reductions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parallel reduce for faster reductions</h2>
+<p>Parallel <code class="highlighter-rouge">reduce</code>:</p>
+<ul>
+  <li>break a problem into chunks</li>
+  <li>make no guarantees about order</li>
+  <li>need to pickle data</li>
+  <li>be finicky about stateful objects</li>
+  <li>run slower than its linear counterpart on small datasets</li>
+  <li>run faster than its linear counterpart on big datasets</li>
+  <li>require an accumulator function, some data, and an initial value</li>
+  <li>perform N-to-X transformations</li>
+</ul>
+
+<blockquote>
+  <p>Parallel reduce has six parameters: an accumulation function, a sequence, an initializer value, a map, a chunksize, and a combination function - three more than the standard reduce function</p>
+</blockquote>
+
+<p>Parallel <code class="highlighter-rouge">reduce</code> workflow:</p>
+<ul>
+  <li>break our problem into pieces</li>
+  <li>do some work</li>
+  <li>combine the work</li>
+  <li>return a result</li>
+</ul>
+
+<blockquote>
+  <p>With parallel <code class="highlighter-rouge">reduce</code> we trade the simplicity of always having the same combination function for the flexibility of more possible transformations</p>
+</blockquote>
+
+<p>Implementing parallel <code class="highlighter-rouge">reduce</code>:</p>
+<ol>
+  <li>Importing the proper classes and functions</li>
+  <li>Rounding up some processors</li>
+  <li>Passing our <code class="highlighter-rouge">reduce</code> function the right helper functions and variables</li>
+</ol>
+
+<ul>
+  <li>Python doesn’t natively support parallel <code class="highlighter-rouge">reduce</code> -&gt; <code class="highlighter-rouge">pathos</code> library</li>
+  <li>
+<code class="highlighter-rouge">toolz.fold</code> -&gt; parallel <code class="highlighter-rouge">reduce</code> implementation</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">toolz</code> library: functional utility library that Python never came with. High-performance version of the library = <code class="highlighter-rouge">CyToolz</code></p>
+</blockquote>
+
+<h1 id="ch7-processing-truly-big-datasets-with-hadoop-and-spark">
+<a class="anchor" href="#ch7-processing-truly-big-datasets-with-hadoop-and-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. Processing truly big datasets with Hadoop and Spark</h1>
+<ul>
+  <li>
+<strong>Hadoop</strong>: set of tools that support distributed map and reduce style of programming through Hadoop MapReduce</li>
+  <li>
+<strong>Spark</strong>: analytics toolkit designed to modernize Hadoop</li>
+</ul>
+
+<h2 id="distributed-computing">
+<a class="anchor" href="#distributed-computing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Distributed computing</h2>
+<ul>
+  <li>share tasks and data long-term across a network of computers</li>
+  <li>offers large benefits in speed when we can parallelize our work</li>
+  <li>challenges:
+    <ul>
+      <li>keeping track of all our data</li>
+      <li>coordinating our work</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>If we distribute our work prematurely, we’ll end up losing performance spending too much time talking between computers and processors. A lot of performance improvements at the high-performance limits of distributed computing revolve around <strong>optimizing communication between machines</strong></p>
+</blockquote>
+
+<h2 id="hadoop-five-modules">
+<a class="anchor" href="#hadoop-five-modules" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hadoop five modules</h2>
+<ol>
+  <li>
+<em>MapReduce</em>: way of dividing work into parallelizable chunks</li>
+  <li>
+<em>YARN</em>: scheduler and resource manager</li>
+  <li>
+<em>HDFS</em>: file system for Hadoop</li>
+  <li>
+<em>Ozone</em>: Hadoop extension for object storage and semantic computing</li>
+  <li>
+<em>Common</em>: set of utilities that are shared across the previous four modules</li>
+</ol>
+
+<h3 id="yarn-for-job-scheduling">
+<a class="anchor" href="#yarn-for-job-scheduling" aria-hidden="true"><span class="octicon octicon-link"></span></a>YARN for job scheduling</h3>
+<ul>
+  <li>Scheduling
+    <ul>
+      <li>Oversees all of the work that is being done</li>
+      <li>Acts as a final decision maker in terms of how resources should be allocated across the cluster</li>
+    </ul>
+  </li>
+  <li>Application management (<em>node managers</em>): work at the node (single-machine) level to determine how resources should be allocated within that machine
+    <ul>
+      <li>
+<em>federation</em>: tie together resource managers in extremely high demand use cases where thousands of nodes are not sufficient</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="the-data-storage-backbone-of-hadoop-hdfs">
+<a class="anchor" href="#the-data-storage-backbone-of-hadoop-hdfs" aria-hidden="true"><span class="octicon octicon-link"></span></a>The data storage backbone of Hadoop: HDFS</h3>
+<p>Hadoop Distributed File System (HDFS) -&gt; reliable, performant foundation for high-performance distributed computing (but with that comes complexity). Use cases:</p>
+<ul>
+  <li>process big datasets</li>
+  <li>be flexible in hardware choice</li>
+  <li>be protected against hardware failure</li>
+</ul>
+
+<blockquote>
+  <p>Moving code is faster than moving data</p>
+</blockquote>
+
+<h3 id="mapreduce-jobs-using-python-and-hadoop-streaming">
+<a class="anchor" href="#mapreduce-jobs-using-python-and-hadoop-streaming" aria-hidden="true"><span class="octicon octicon-link"></span></a>MapReduce jobs using Python and Hadoop Streaming</h3>
+<p>Hadoop MapReduce with Python -&gt; Hadoop Streaming = utility for using Hadoop MapReduce with programming languages besides Java</p>
+
+<p>Hadoop natively supports compression data: .gz, .bz2, and .snappy</p>
+
+<h2 id="spark-for-interactive-workflows">
+<a class="anchor" href="#spark-for-interactive-workflows" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spark for interactive workflows</h2>
+<p>Analytics-oriented data processing framework designed to take advantage of higher-RAM compute clusters. Advantages for Python programmers:</p>
+<ul>
+  <li>direct Python interface - <code class="highlighter-rouge">PySpark</code>: allows for us to interactively explore big data through a PySpark shell REPL</li>
+  <li>can query SQL databases directly (Java Database Connectivity - JDBC)</li>
+  <li>has a <em>DataFrame</em> API: rows-and-columns data structure familiar to <code class="highlighter-rouge">pandas</code> -&gt; provides a convenience layer on top of the core Spark data object: the RDD (Resilient Distributed Dataset)</li>
+  <li>Spark has two high-performance data structures: RDDs, which are excellent for any type of data, and DataFrames, which are optimized for tabular data.</li>
+</ul>
+
+<p>Favor Spark over Hadoop when:</p>
+<ul>
+  <li>processing streaming data</li>
+  <li>need to get the task completed nearly instantaneously</li>
+  <li>willing to pay for high-RAM compute clusters</li>
+</ul>
+
+<h3 id="pyspark-for-mixing-python-and-spark">
+<a class="anchor" href="#pyspark-for-mixing-python-and-spark" aria-hidden="true"><span class="octicon octicon-link"></span></a>PySpark for mixing Python and Spark</h3>
+<p>PySpark: we can call Spark’s Scala methods through Python just like we would a normal Python library</p>
+
+<h1 id="ch8-best-practices-for-large-data-with-apache-streaming-and-mrjob">
+<a class="anchor" href="#ch8-best-practices-for-large-data-with-apache-streaming-and-mrjob" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. Best practices for large data with Apache Streaming and mrjob</h1>
+<p>Use Hadoop to process</p>
+<ul>
+  <li>lots of data fast: distributed parallelization</li>
+  <li>data that’s important: low data loss</li>
+  <li>enormous amounts of data: petabyte scale</li>
+</ul>
+
+<p>Drawbacks</p>
+<ul>
+  <li>To use Hadoop with Python -&gt; Hadoop Streaming utility</li>
+  <li>Repeatedly read in string from <code class="highlighter-rouge">stdin</code>
+</li>
+  <li>Error messages for Java are not helpful</li>
+</ul>
+
+<h2 id="unstructured-data-logs-and-documents">
+<a class="anchor" href="#unstructured-data-logs-and-documents" aria-hidden="true"><span class="octicon octicon-link"></span></a>Unstructured data: Logs and documents</h2>
+<ul>
+  <li>Hadoop creators designed Hadoop to work on <em>unstructured data</em> -&gt; data in the form of documents</li>
+  <li>Unstructured data is notoriously unwieldly =/= tabular data</li>
+  <li>But, is one of the most common forms of data around</li>
+</ul>
+
+<h2 id="json-for-passing-data-between-mapper-and-reducer">
+<a class="anchor" href="#json-for-passing-data-between-mapper-and-reducer" aria-hidden="true"><span class="octicon octicon-link"></span></a>JSON for passing data between mapper and reducer</h2>
+<ul>
+  <li>JavaScript Object Notation (JSON)</li>
+  <li>Data format used for moving data in plain text between one place and another</li>
+  <li>
+<code class="highlighter-rouge">json.dumps()</code> and <code class="highlighter-rouge">json.loads()</code> functions from Python’s json library to achieve the transfer</li>
+  <li>Advantages:
+    <ul>
+      <li>easy for humans and machines to read</li>
+      <li>provides a number of useful basic data types (string, numeric, array)</li>
+      <li>emphasis on key-value pairs that aids the loose coupling of systems</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="mrjob-for-pythonic-hadoop-streaming">
+<a class="anchor" href="#mrjob-for-pythonic-hadoop-streaming" aria-hidden="true"><span class="octicon octicon-link"></span></a>mrjob for pythonic Hadoop streaming</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">mrjob</code>: Python library for Hadoop Streaming that focuses on cloud compatibility for truly scalable analysis</li>
+  <li>keeps the mapper and reducer steps but wraps them up in a single worker class named <code class="highlighter-rouge">mrjob</code>
+</li>
+  <li>
+<code class="highlighter-rouge">mrjob</code> versions of <code class="highlighter-rouge">map</code> and <code class="highlighter-rouge">reduce</code> share the same type signature, taking in keys and values and outputting keys and values</li>
+  <li>
+<code class="highlighter-rouge">mrjob</code> enforces JSON data exchange between the mapper and reducer phases, so we need to ensure that our output data is JSON serializable.</li>
+</ul>
+
+<h1 id="ch9-pagerank-with-map-and-reduce-in-pyspark">
+<a class="anchor" href="#ch9-pagerank-with-map-and-reduce-in-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. PageRank with map and reduce in PySpark</h1>
+<p>PySpark’s RDD class methods:</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">map</code>-like methods: replicate the function of <code class="highlighter-rouge">map</code>
+</li>
+  <li>
+<code class="highlighter-rouge">reduce</code>-like methods: replicate the function of <code class="highlighter-rouge">reduce</code>
+</li>
+  <li>
+<em>Convenience methods</em>: solve common problems</li>
+</ul>
+
+<blockquote>
+  <p><strong>Partitions</strong> are the abstraction that RDDs use to implement parallelization. The data in an RDD is split up across different partitions, and each partition is handled in memory. It is common in large data tasks to partition an RDD by a key</p>
+</blockquote>
+
+<h3 id="map-like-methods-in-pyspark">
+<a class="anchor" href="#map-like-methods-in-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Map-like methods in PySpark</h3>
+<ul>
+  <li><code class="highlighter-rouge">.map</code></li>
+  <li><code class="highlighter-rouge">.flatMap</code></li>
+  <li><code class="highlighter-rouge">.mapValues</code></li>
+  <li><code class="highlighter-rouge">.flatMapValues</code></li>
+  <li><code class="highlighter-rouge">. mapPartitions</code></li>
+  <li><code class="highlighter-rouge">.mapPartitionsWithIndex</code></li>
+</ul>
+
+<h3 id="reduce-like-methods-in-pyspark">
+<a class="anchor" href="#reduce-like-methods-in-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reduce-like methods in PySpark</h3>
+<ul>
+  <li><code class="highlighter-rouge">.reduce</code></li>
+  <li><code class="highlighter-rouge">.fold</code></li>
+  <li>
+<code class="highlighter-rouge">.aggregate</code> -&gt; provides all the functionality of a parallel reduce. We can provide an initializer value, an aggregation function, and a combination function</li>
+</ul>
+
+<h3 id="convenience-methods-in-pyspark">
+<a class="anchor" href="#convenience-methods-in-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convenience methods in PySpark</h3>
+<p>Many of these mirror functions in <code class="highlighter-rouge">functools</code>, <code class="highlighter-rouge">itertools</code> and <code class="highlighter-rouge">toolz</code>. Some examples:</p>
+<ul>
+  <li>.countByKey()</li>
+  <li>.countByValue()</li>
+  <li>.distinct()</li>
+  <li>.countApproxDistinct()</li>
+  <li>.filter()</li>
+  <li>.first()</li>
+  <li>.groupBy()</li>
+  <li>.groupByKey()</li>
+  <li>.saveAsTextFile()</li>
+  <li>.take()</li>
+</ul>
+
+<h4 id="saving-rdds-to-text-files">
+<a class="anchor" href="#saving-rdds-to-text-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving RDDs to text files</h4>
+<p>Excellent for a few reasons:</p>
+<ul>
+  <li>The data is in a human-readable, persistent format.</li>
+  <li>We can easily read this data back into Spark with the <code class="highlighter-rouge">.textFile</code> method of <code class="highlighter-rouge">SparkContext</code>.</li>
+  <li>The data is well structured for other parallel tools, such as Hadoop’s MapReduce.</li>
+  <li>We can specify a compression format for efficient data storage or transfer.</li>
+</ul>
+
+<blockquote>
+  <p>RDD <code class="highlighter-rouge">.aggregate</code> method—returns a dict. We need an RDD so that we can take advantage of Spark’s parallelization. To get an RDD, we’ll need to explicitly convert the items of that dict into an RDD using the <code class="highlighter-rouge">.parallelize</code> method from our SparkContext: <code class="highlighter-rouge">sc</code>.</p>
+</blockquote>
+
+<ul>
+  <li>Spark programs often use \ characters in their method chaining to increase their readability</li>
+  <li>Using the <code class="highlighter-rouge">byKey</code> variations of methods in PySpark often results in significant speed-ups because like data is worked on by the same distributed compute worker</li>
+</ul>
+
+<h1 id="ch10-faster-decision-making-with-machine-learning-and-pyspark">
+<a class="anchor" href="#ch10-faster-decision-making-with-machine-learning-and-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. Faster decision-making with machine learning and PySpark</h1>
+<p>One of the reasons why Spark is so popular = built-in machine learning capabilities</p>
+
+<p>PySpark’s machine learning capabilities live in a package called <code class="highlighter-rouge">ml</code>. This package itself contains a few different modules categorizing some of the core machine learning capabilities, including</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">pyspark.ml.feature</code> — For feature transformation and creation</li>
+  <li>
+<code class="highlighter-rouge">pyspark.ml.classification</code> — Algorithms for judging the category in which a data point belongs</li>
+  <li>
+<code class="highlighter-rouge">pyspark.ml.tuning</code> — Algorithms for improving our machine learners</li>
+  <li>
+<code class="highlighter-rouge">pyspark.ml.evaluation</code> — Algorithms for evaluating machine leaners</li>
+  <li>
+<code class="highlighter-rouge">pyspark.ml.util</code> — Methods of saving and loading machine learners</li>
+</ul>
+
+<blockquote>
+  <p>PySpark’s machine learning features expect us to have our data in a PySpark <code class="highlighter-rouge">DataFrame</code> object - not an <code class="highlighter-rouge">RDD</code>. The <code class="highlighter-rouge">RDD</code> is an abstract parallelizable data structure at the core of Spark, whereas the <code class="highlighter-rouge">DataFrame</code> is a layer on top of the <code class="highlighter-rouge">RDD</code> that provides a notion of rows and columns</p>
+</blockquote>
+
+<h2 id="organizing-the-data-for-learning">
+<a class="anchor" href="#organizing-the-data-for-learning" aria-hidden="true"><span class="octicon octicon-link"></span></a>Organizing the data for learning</h2>
+<p>Spark’s ml classifiers look for two columns in a <code class="highlighter-rouge">DataFrame</code>:</p>
+<ul>
+  <li>A <code class="highlighter-rouge">label</code> column: indicates the correct classification of the data</li>
+  <li>A <code class="highlighter-rouge">features</code> column: contains the features we’re going to use to predict that label</li>
+</ul>
+
+<h2 id="auxiliary-classes">
+<a class="anchor" href="#auxiliary-classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Auxiliary classes</h2>
+<ul>
+  <li>PySpark’s <code class="highlighter-rouge">StringIndexer</code>: transforms categorical data stored as category names (using strings) and indexes the names as numerical variables. <code class="highlighter-rouge">StringIndexer</code> indexes categories in order of frequency — from most common to least common. The most common category will be 0, the second most common category 1, and so on</li>
+  <li>Most data structures in Spark are immutable -&gt; property of Scala (in which Spark is written)</li>
+  <li>Spark’s ml only want one column name <code class="highlighter-rouge">features</code> -&gt; PySpark’s <code class="highlighter-rouge">VectorAssembler</code>: <code class="highlighter-rouge">Transformer</code> like <code class="highlighter-rouge">StringIndexer</code> -&gt; takes some input column names and an output column name and has methods to return a new <code class="highlighter-rouge">DataFrame</code> that has all the columns of the original, plus the new column we want to add</li>
+  <li>The feature creation classes are <code class="highlighter-rouge">Transformer</code>-class objects, and their methods return new <code class="highlighter-rouge">DataFrames</code>, rather than transforming them in place</li>
+</ul>
+
+<h2 id="evaluation">
+<a class="anchor" href="#evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluation</h2>
+<p>PySpark’s <code class="highlighter-rouge">ml.evaluation</code> module:</p>
+<ul>
+  <li><code class="highlighter-rouge">BinaryClassifierEvaluator</code></li>
+  <li><code class="highlighter-rouge">RegressionEvaluator</code></li>
+  <li><code class="highlighter-rouge">MulticlassClassificationEvaluator</code></li>
+</ul>
+
+<h2 id="cross-validation-in-pyspark">
+<a class="anchor" href="#cross-validation-in-pyspark" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cross-validation in PySpark</h2>
+<p><code class="highlighter-rouge">CrossValidator</code> class: k-fold cross-validation, needs to be initialized with:</p>
+<ul>
+  <li>An <em>estimator</em>
+</li>
+  <li>A <em>parameter estimator</em> - <code class="highlighter-rouge">ParamGridBuilder</code> object</li>
+  <li>An <em>evaluator</em>
+</li>
+</ul>
+
+<h1 id="ch11-large-datasets-in-the-cloud-with-amazon-web-services-and-s3">
+<a class="anchor" href="#ch11-large-datasets-in-the-cloud-with-amazon-web-services-and-s3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch11. Large datasets in the cloud with Amazon Web Services and S3</h1>
+<p>S3 is the go-to service for large datasets:</p>
+<ol>
+  <li>
+<em>effectively unlimited storage capacity</em>. We never have to worry about our dataset becoming too large</li>
+  <li>
+<em>cloud-based</em>. We can scale up and down quickly as necessary.</li>
+  <li>
+<em>offers object storage</em>. We can focus on organizing our data with metadata and store many different types of data.</li>
+  <li>
+<em>managed service</em>. Amazon Web Services takes care of a lot of the details for us, such as ensuring data availability and durability. They also take care of security patches and software updates.</li>
+  <li>
+<em>supports versioning and life cycle policies</em>. We can use them to update or archive our data as it ages</li>
+</ol>
+
+<h2 id="objects-for-convenient-heterogenous-storage">
+<a class="anchor" href="#objects-for-convenient-heterogenous-storage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects for convenient heterogenous storage</h2>
+<ul>
+  <li>Object storage: storage pattern that focuses on the <strong>what of the data instead of the where</strong>
+</li>
+  <li>With object storage we recognize objects by a unique identifier (instead of the name and directory)</li>
+  <li>Supports arbitrary metadata -&gt; we can tag our objects flexibly based on our needs (helps us find those objects later when we need to use them)</li>
+  <li>Querying tools are available for S3 that allow SQL-like querying on these metadata tags for metadata analysis</li>
+  <li>Unique identifiers -&gt; we can store heterogenous data in the same way</li>
+</ul>
+
+<h2 id="parquet-a-concise-tabular-data-store">
+<a class="anchor" href="#parquet-a-concise-tabular-data-store" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parquet: A concise tabular data store</h2>
+<ul>
+  <li>CSV is a simple, tabular data store, and JSON is a human-readable document store. Both are common in data interchange and are often used in the storage of distributed large datasets. Parquet is a Hadoop- native tabular data format.</li>
+  <li>Parquet uses clever metadata to improve the performance of map and reduce operations. Running a job on Parquet can take as little as 1/100th the time a comparable job on a CSV or JSON file would take. Additionally, Parquet supports efficient compression. As a result, it can be stored at a fraction of the cost of CSV or JSON.</li>
+  <li>These benefits make Parquet an excellent option for data that primarily needs to be read by a machine, such as for batch analytics operations. JSON and CSV remain good options for smaller data or data that’s likely to need some human inspection.</li>
+</ul>
+
+<blockquote>
+  <p>Boto is a library that provides Pythonic access to many of the AWS APIs. We need the access key and secret key to programmatically access AWS through boto</p>
+</blockquote>
+
+<h1 id="ch12-mapreduce-in-the-cloud-with-amazons-elastic-mapreduce">
+<a class="anchor" href="#ch12-mapreduce-in-the-cloud-with-amazons-elastic-mapreduce" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch12. MapReduce in the cloud with Amazon’s Elastic MapReduce</h1>
+<h2 id="convenient-cloud-clusters-with-emr">
+<a class="anchor" href="#convenient-cloud-clusters-with-emr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convenient cloud clusters with EMR</h2>
+<p>Ways to get access to a compute cluster that support both Hadoop and Spark:</p>
+<ul>
+  <li>AWS: Amazon’s Elastic MapReduce</li>
+  <li>Microsoft’s Azure HDInsight</li>
+  <li>Google’s Cloud Dataproc</li>
+</ul>
+
+<h3 id="aws-emr">
+<a class="anchor" href="#aws-emr" aria-hidden="true"><span class="octicon octicon-link"></span></a>AWS EMR</h3>
+<ul>
+  <li>AWS EMR is a managed data cluster service</li>
+  <li>We specify general properties of the cluster, and AWS runs software that creates the cluster for us</li>
+  <li>When we’re done using the cluster, AWS absorbs the compute resources back into its network</li>
+  <li>Pricing model is a per-compute-unit per-second charge</li>
+  <li><strong>There are no cost savings to doing things slowly. AWS encourages us to parallelize our problems away</strong></li>
+</ul>
+
+<h4 id="starting-emr-clusters-with-mrjob">
+<a class="anchor" href="#starting-emr-clusters-with-mrjob" aria-hidden="true"><span class="octicon octicon-link"></span></a>Starting EMR clusters with mrjob</h4>
+<ul>
+  <li>We can run Hadoop jobs on EMR with the <code class="highlighter-rouge">mrjob</code> library, which allows us to write distributed MapReduce and procure cluster computing in Python.</li>
+  <li>We can use <code class="highlighter-rouge">mrjob</code>’s configuration files to describe what we want our clusters to look like, including which instances we’d like to use, where we’d like those instances to be located, and any tags we may want to add.</li>
+</ul>
+
+<blockquote>
+  <p>Hadoop on EMR is excellent for large data processing workloads, such as batch analytics or extract-transform-load (ETL)</p>
+</blockquote>
+
+<h2 id="machine-learning-in-the-cloud-with-spark-on-emr">
+<a class="anchor" href="#machine-learning-in-the-cloud-with-spark-on-emr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Machine learning in the cloud with Spark on EMR</h2>
+<ul>
+  <li>Hadoop is great for low-memory workloads and massive data.</li>
+  <li>Spark is great for jobs that are harder to break down into map and reduce steps, and situations where we can afford higher memory machines</li>
+</ul>
+
+<h3 id="running-machine-learning-algorithms-on-a-truly-large-dataset">
+<a class="anchor" href="#running-machine-learning-algorithms-on-a-truly-large-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running machine learning algorithms on a truly large dataset</h3>
+<ol>
+  <li>Get a sample of the full dataset.</li>
+  <li>Train and evaluate a few models on that dataset.</li>
+  <li>Select some models to evaluate on the full dataset.</li>
+  <li>Train several models on the full dataset in the cloud.</li>
+</ol>
+
+<blockquote>
+  <p>Run your Spark code with <code class="highlighter-rouge">spark-submit</code> utility instead of Python. The <code class="highlighter-rouge">spark-submit</code> utility queues up a Spark job, which will run in parallel locally and simulate what would happen if you ran the program on an active cluster</p>
+</blockquote>
+
+<h3 id="ec2-instance-types-and-clusters">
+<a class="anchor" href="#ec2-instance-types-and-clusters" aria-hidden="true"><span class="octicon octicon-link"></span></a>EC2 instance types and clusters</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">M-series</code>: use for Hadoop and for testing Spark jobs</li>
+  <li>
+<code class="highlighter-rouge">C-series</code>: compute-heavy workloads such as Spark analytics, Batch Spark jobs</li>
+  <li>
+<code class="highlighter-rouge">R-series</code>: high-memory, use for streaming analytics</li>
+</ul>
+
+<h3 id="software-available-on-emr">
+<a class="anchor" href="#software-available-on-emr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software available on EMR</h3>
+<ul>
+  <li>JupyterHub: cluster-ready version of Jupyter Notebook -&gt; run interactive Spark and Hadoop jobs from a notebook environment</li>
+  <li>Hive: compile SQL code to Hadoop MapReduce jobs</li>
+  <li>Pig: compile <em>Pig-latin</em> (SQL-like) commands to run Hadoop MapReduce jobs</li>
+</ul>
+
+  </div><a class="u-url" href="/blog/book/software%20engineering/python/big%20data/2020/06/23/master-large-data-python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

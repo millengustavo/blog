@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Forecasting at Scale | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Forecasting at Scale" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the paper." />
+<meta property="og:description" content="My notes and highlights on the paper." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/prophet_paper/prophet_paper.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-13T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Forecasting at Scale","dateModified":"2020-01-13T00:00:00-06:00","description":"My notes and highlights on the paper.","datePublished":"2020-01-13T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/prophet_paper/prophet_paper.jpg","url":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Forecasting at Scale | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Forecasting at Scale" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the paper." />
+<meta property="og:description" content="My notes and highlights on the paper." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/prophet_paper/prophet_paper.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-01-13T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Forecasting at Scale","dateModified":"2020-01-13T00:00:00-06:00","description":"My notes and highlights on the paper.","datePublished":"2020-01-13T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/prophet_paper/prophet_paper.jpg","url":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Forecasting at Scale</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-01-13T00:00:00-06:00" itemprop="datePublished">
+        Jan 13, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#time series">time series</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#forecasting">forecasting</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#statistics">statistics</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#1-introduction">1. Introduction</a></li>
+<li class="toc-entry toc-h1"><a href="#2-features-of-business-time-series">2. Features of Business Time Series</a></li>
+<li class="toc-entry toc-h1"><a href="#3-the-prophet-forecasting-model">3. The Prophet Forecasting Model</a></li>
+<li class="toc-entry toc-h1"><a href="#31-trend-model">3.1 Trend Model</a></li>
+<li class="toc-entry toc-h1"><a href="#32-seasonality">3.2 Seasonality</a></li>
+<li class="toc-entry toc-h1"><a href="#33-holidays-and-events">3.3 Holidays and Events</a></li>
+<li class="toc-entry toc-h1"><a href="#34-model-fitting">3.4 Model fitting</a></li>
+<li class="toc-entry toc-h1"><a href="#35-analyist-in-the-loop-modeling">3.5 Analyist-in-the-Loop Modeling</a></li>
+<li class="toc-entry toc-h1"><a href="#4-automating-evaluation-of-forecasts">4. Automating Evaluation of Forecasts</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#simulated-historical-forecasts">Simulated Historical Forecasts</a></li>
+<li class="toc-entry toc-h2"><a href="#identifying-large-forecast-errors">Identifying Large Forecast Errors</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#5-conclusion">5. Conclusion</a></li>
+</ul><p>My notes and highlights on the paper.</p>
+
+<p>Authors: Sean J. Taylor and Benjamin Letham</p>
+
+<p><a href="https://peerj.com/preprints/3190.pdf">Source</a></p>
+
+<h1 id="1-introduction">
+<a class="anchor" href="#1-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Introduction</h1>
+
+<ul>
+  <li>
+    <p>Analysts who can produce high quality forecasts are quite rare because forecasting is a specialized skill requiring substantial experience</p>
+  </li>
+  <li>
+    <p>Time series model flexible enough for a wide range of business time series, yet configurable by people with little knowledge about time series models and methods</p>
+  </li>
+  <li>
+    <p>Automated means of evaluating and comparing forecasts, as well as detecting when they are likely to be performing poorly</p>
+  </li>
+</ul>
+
+<h1 id="2-features-of-business-time-series">
+<a class="anchor" href="#2-features-of-business-time-series" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Features of Business Time Series</h1>
+
+<ul>
+  <li>Auto ARIMA: prone to large trend errors and fail to capture any seasonality</li>
+  <li>Exponential smoothing and seasonal naive: capture weekly seasonality, but miss longer-term seasonality</li>
+</ul>
+
+<blockquote>
+  <p>Tuning these methods requires a thorough understading of how the underlying time series models work</p>
+</blockquote>
+
+<h1 id="3-the-prophet-forecasting-model">
+<a class="anchor" href="#3-the-prophet-forecasting-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. The Prophet Forecasting Model</h1>
+
+<ul>
+  <li>Designed to have intuitive parameters that can be adjusted without knowing the details of the underlying model</li>
+  <li>Decomposable time series model with three main model components: trend, seasonality and holidays</li>
+  <li>Also an error term: any idiosyncratic changes which are not accomodated by the model (assumption: normally distributed)</li>
+  <li>Similar to a generalized additive model (GAM): class of regression models with potentially non-linear smoothers applied to the regressors</li>
+  <li>Frame the forecasting problem as a curve-fitting exercise != time series models that explicitly account for the temporal dependence structure in the data</li>
+</ul>
+
+<p><strong>Practical advantages</strong></p>
+<ul>
+  <li>Flexibility</li>
+  <li>Measurements do not need to be regularly spaced and do not need to interpolate missing values (e.g., remove outliers)</li>
+  <li>Fitting is fast</li>
+  <li>Easily interpretable parameters. Easy to extend the model to include new components</li>
+  <li>Tailored to time series with piecewise trends, multiple seasonality, floating holidays</li>
+</ul>
+
+<h1 id="31-trend-model">
+<a class="anchor" href="#31-trend-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.1 Trend Model</h1>
+<ul>
+  <li>Saturating growth model</li>
+  <li>Piecewise linear model</li>
+</ul>
+
+<p>Changepoints can be specified or may be automatically selected given a set of candidates. A parameter controls the flexibility of the model altering its rate</p>
+
+<p>The uncertainty in the trend is measured assuming the future will se the same average frequency and magnitude of rate changes that were seen in the history</p>
+
+<h1 id="32-seasonality">
+<a class="anchor" href="#32-seasonality" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.2 Seasonality</h1>
+<p>Fourier series to provide a flexible model of periodic effects</p>
+
+<h1 id="33-holidays-and-events">
+<a class="anchor" href="#33-holidays-and-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.3 Holidays and Events</h1>
+<p>Analyst provide a custom list of past and future events, identified by the event or holiday’s unique name</p>
+
+<p>Include additional parameters for the days surrounding the holiday, essentially treating each of the days in the window around the holiday as a holiday itself</p>
+
+<h1 id="34-model-fitting">
+<a class="anchor" href="#34-model-fitting" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.4 Model fitting</h1>
+<p>Benefit of a decomposable model: allow us to look at each component of the forecast separately</p>
+
+<p>Default values are appropriate to most forecast problems</p>
+
+<h1 id="35-analyist-in-the-loop-modeling">
+<a class="anchor" href="#35-analyist-in-the-loop-modeling" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.5 Analyist-in-the-Loop Modeling</h1>
+<ul>
+  <li>Capacities</li>
+  <li>Changepoints</li>
+  <li>Holidays and seasonality</li>
+  <li>Smoothing parameters</li>
+</ul>
+
+<p>Parameters to increase/decrease trend flexibility and strength of the seasonality component</p>
+
+<blockquote>
+  <p>Analyist-in-the-Loop Modeling: blends the advantages of statistical and judgemental forecasts. Lets analysts apply judgement to forecasts through a small set of intuitive model parameters and options, while retaining the ability to fall back on fully automated statistical forecasting when necessary</p>
+</blockquote>
+
+<h1 id="4-automating-evaluation-of-forecasts">
+<a class="anchor" href="#4-automating-evaluation-of-forecasts" aria-hidden="true"><span class="octicon octicon-link"></span></a>4. Automating Evaluation of Forecasts</h1>
+<ul>
+  <li>Use of baseline forecasts</li>
+  <li>Modeling forecast accuracy: mean absolute percentage error (MAPE) -&gt; for interpretability</li>
+</ul>
+
+<h2 id="simulated-historical-forecasts">
+<a class="anchor" href="#simulated-historical-forecasts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simulated Historical Forecasts</h2>
+<ul>
+  <li>Produce <code class="highlighter-rouge">K</code> forecasts at various cutoff points in the history</li>
+  <li>Simulate the errors we would have made hade we used this forecasting method at those points in the past</li>
+  <li>Simple, easy to explain and relatively uncontroversial for generating insight into forecast errors</li>
+</ul>
+
+<p>Issues to be aware:</p>
+<ul>
+  <li>The more simulated forecasts we make, the more correlated their estimates of error are</li>
+  <li>Forecasting methods can perform better or worse with more data</li>
+</ul>
+
+<h2 id="identifying-large-forecast-errors">
+<a class="anchor" href="#identifying-large-forecast-errors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Identifying Large Forecast Errors</h2>
+<ul>
+  <li>When the forecast has large errors relative to the baselines, the model may be misspecified. Analysts can adjust the trend model or the seasonality, as needed</li>
+  <li>Large errors for all methods on a particular date are suggestive of outliers. Analysts can identify outliers and remove them.</li>
+  <li>When the SHF error for a method increases sharply from one cutoff to the next, it could indicate that the data generating process has changed. Adding changepoints or modeling different phases separately may address the issue.</li>
+</ul>
+
+<h1 id="5-conclusion">
+<a class="anchor" href="#5-conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>5. Conclusion</h1>
+<p>Prophet in summary:</p>
+<ul>
+  <li>Simple, modular regression model that often works well with default parameters, and that allows analysts to select the components that are relevant to their forecasting problem and easily make adjustmens as needed</li>
+  <li>Has a system for measuring and tracking forecast accuracy, and flagging forecasted that should be checked manually to help analysts make incremental improvements</li>
+</ul>
+
+  </div><a class="u-url" href="/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/01/13/prophet-paper.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

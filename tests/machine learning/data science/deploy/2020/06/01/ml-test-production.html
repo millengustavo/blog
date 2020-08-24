@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Machine Learning: tests and production | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Machine Learning: tests and production" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction" />
+<meta property="og:description" content="“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction" />
+<link rel="canonical" href="https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/ml_test_production/systems_comparison.PNG" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Machine Learning: tests and production","dateModified":"2020-06-01T00:00:00-05:00","description":"“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction","datePublished":"2020-06-01T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/ml_test_production/systems_comparison.PNG","url":"https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Machine Learning: tests and production | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Machine Learning: tests and production" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction" />
+<meta property="og:description" content="“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction" />
+<link rel="canonical" href="https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/ml_test_production/systems_comparison.PNG" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-01T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Machine Learning: tests and production","dateModified":"2020-06-01T00:00:00-05:00","description":"“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction","datePublished":"2020-06-01T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/ml_test_production/systems_comparison.PNG","url":"https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Machine Learning: tests and production</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-01T00:00:00-05:00" itemprop="datePublished">
+        Jun 1, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#tests">tests</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#deploy">deploy</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction">The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#manually-coded-systems-vs-ml-based-systems">Manually coded systems vs. ML-based systems</a></li>
+<li class="toc-entry toc-h2"><a href="#tests">Tests</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#data">Data</a></li>
+<li class="toc-entry toc-h3"><a href="#model">Model</a></li>
+<li class="toc-entry toc-h3"><a href="#infrastructure">Infrastructure</a></li>
+<li class="toc-entry toc-h3"><a href="#monitoring">Monitoring</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#computing-an-ml-test-score">Computing an ML Test Score</a></li>
+<li class="toc-entry toc-h2"><a href="#insights-from-applying-the-rubric-to-real-systems">Insights from applying the rubric to real systems</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h1"><a href="#further-reading">Further reading</a></li>
+</ul><blockquote>
+  <p>“Creating reliable, production-level machine learning systems brings on a host of concerns not found in small toy examples or even large offline research experiments. Testing and monitoring are key considerations for ensuring the production-readiness of an ML system, and for reducing technical debt of ML systems.” - <a href="https://research.google/pubs/pub46555/">The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction</a></p>
+</blockquote>
+
+<p>I recently read the excellent book written by Emmanuel Ameisen: <a href="http://shop.oreilly.com/product/0636920215912.do">Building Machine Learning Powered Applications Going from Idea to Product</a></p>
+
+<p>I definitely recommend the book to people involved at any stage in the process of developing and implementing products that use Machine Learning.</p>
+
+<h1 id="the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction">
+<a class="anchor" href="#the-ml-test-score-a-rubric-for-ml-production-readiness-and-technical-debt-reduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction</h1>
+<p>A good reference I found in chapter 6 of the book entitled: Debug your ML problems, was the article written by Google engineers: <a href="https://research.google/pubs/pub46555/">The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction</a></p>
+
+<p>In the article, the authors:</p>
+<blockquote>
+  <p>“(…) present 28 specific tests and monitoring needs, drawn from experience with a wide range of production ML systems to help quantify these issues and present an easy to follow road-map to improve production readiness and pay down ML technical debt.”</p>
+</blockquote>
+
+<p>As a good practice presented by Ameisen in his book when referring to reproducing successful results from the past: <strong>“Stand on the shoulders of giants”</strong>, I believe that we can learn from Google’s experience in building applications using Machine Learning.</p>
+
+<h2 id="manually-coded-systems-vs-ml-based-systems">
+<a class="anchor" href="#manually-coded-systems-vs-ml-based-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Manually coded systems vs. ML-based systems</h2>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/systems_comparison.PNG" alt="systems_comparison"></p>
+
+<p>Unlike manually coded systems, the behavior of machine learning systems depends on data and models that are not always possible to specify fully a priori</p>
+
+<blockquote>
+  <p>“(…) training data needs testing like code, and a trained ML model needs production practices like a binary does, such as debuggability, rollbacks and monitoring”</p>
+</blockquote>
+
+<h2 id="tests">
+<a class="anchor" href="#tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tests</h2>
+<h3 id="data">
+<a class="anchor" href="#data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data</h3>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/data.PNG" alt="data"></p>
+
+<h3 id="model">
+<a class="anchor" href="#model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model</h3>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/model.PNG" alt="model"></p>
+
+<h3 id="infrastructure">
+<a class="anchor" href="#infrastructure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Infrastructure</h3>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/infra.PNG" alt="infra"></p>
+
+<h3 id="monitoring">
+<a class="anchor" href="#monitoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitoring</h3>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/monitor.PNG" alt="monitor"></p>
+
+<h2 id="computing-an-ml-test-score">
+<a class="anchor" href="#computing-an-ml-test-score" aria-hidden="true"><span class="octicon octicon-link"></span></a>Computing an ML Test Score</h2>
+<p><img src="https://millengustavo.github.io/blog/images/ml_test_production/score.PNG" alt="score"></p>
+
+<h2 id="insights-from-applying-the-rubric-to-real-systems">
+<a class="anchor" href="#insights-from-applying-the-rubric-to-real-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Insights from applying the rubric to real systems</h2>
+<ul>
+  <li>
+<strong>Checklists</strong> are helpful even for expert teams</li>
+  <li>
+<strong>Data dependencies</strong> can lead to outsourcing responsibility for fully understanding it</li>
+  <li>The importance of <strong>frameworks</strong>: pipeline platforms may allow building generic integration tests</li>
+</ul>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+<p>Deploying a machine learning system with monitoring is a very complex task. This is a problem faced by virtually all players in the market who are starting their journey with data.</p>
+
+<p>A good first step on this journey is to organize your data pipeline and use managed environments in the cloud for the ML tasks:</p>
+<ul>
+  <li>Amazon SageMaker</li>
+  <li>Google Cloud AI Platform</li>
+  <li>Azure Machine Learning Studio</li>
+  <li>Databricks</li>
+</ul>
+
+<p>Even if we do not face the scale of some problems mentioned in the article, it is worth reflecting on how we can improve what we do today to reduce technical debt in the future.</p>
+
+<h1 id="further-reading">
+<a class="anchor" href="#further-reading" aria-hidden="true"><span class="octicon octicon-link"></span></a>Further reading</h1>
+<ul>
+  <li><a href="https://research.google/pubs/pub46555/">The ML Test Score: A Rubric for ML Production Readiness and Technical Debt Reduction</a></li>
+  <li><a href="http://shop.oreilly.com/product/0636920215912.do">Building Machine Learning Powered Applications Going from Idea to Product - Emmanuel Ameisen</a></li>
+  <li><a href="https://mlinproduction.com/">ML in Production blog</a></li>
+  <li><a href="https://speakerdeck.com/trallard/what-is-your-ml-test-score">What is your machine learning test score?</a></li>
+  <li><a href="https://github.com/mlflow/mlflow">MLflow: A Machine Learning Lifecycle Platform</a></li>
+  <li><a href="https://databricks.com/solutions/machine-learning">Databricks for Machine Learning</a></li>
+</ul>
+
+  </div><a class="u-url" href="/blog/tests/machine%20learning/data%20science/deploy/2020/06/01/ml-test-production.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

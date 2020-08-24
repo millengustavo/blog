@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Learning Python Design Patterns | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Learning Python Design Patterns" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/python_design_patterns/python_design_patterns.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-22T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Learning Python Design Patterns","dateModified":"2020-08-22T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-08-22T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/python_design_patterns/python_design_patterns.jpg","url":"https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Learning Python Design Patterns | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Learning Python Design Patterns" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/python_design_patterns/python_design_patterns.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-08-22T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Learning Python Design Patterns","dateModified":"2020-08-22T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-08-22T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/python_design_patterns/python_design_patterns.jpg","url":"https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Learning Python Design Patterns</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-08-22T00:00:00-05:00" itemprop="datePublished">
+        Aug 22, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      20 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#software engineering">software engineering</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#design patterns">design patterns</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#ch1-introduction-to-design-patterns">Ch1. Introduction to design patterns</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#understanding-object-oriented-programming">Understanding object-oriented programming</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#classes">Classes</a></li>
+<li class="toc-entry toc-h3"><a href="#methods">Methods</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#major-aspects-of-oop">Major aspects of OOP</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#encapsulation">Encapsulation</a></li>
+<li class="toc-entry toc-h3"><a href="#polymorphism">Polymorphism</a></li>
+<li class="toc-entry toc-h3"><a href="#inheritance">Inheritance</a></li>
+<li class="toc-entry toc-h3"><a href="#abstraction">Abstraction</a></li>
+<li class="toc-entry toc-h3"><a href="#composition">Composition</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#object-oriented-design-principles">Object-oriented design principles</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-openclose-principle">The open/close principle</a></li>
+<li class="toc-entry toc-h3"><a href="#the-inversion-of-control-principle">The inversion of control principle</a></li>
+<li class="toc-entry toc-h3"><a href="#the-interface-segregation-principle">The interface segregation principle</a></li>
+<li class="toc-entry toc-h3"><a href="#the-single-responsibility-principle">The single responsibility principle</a></li>
+<li class="toc-entry toc-h3"><a href="#the-substitution-principle">The substitution principle</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-concept-of-design-patterns">The concept of design patterns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#advantages-of-design-patterns">Advantages of design patterns</a></li>
+<li class="toc-entry toc-h3"><a href="#patterns-for-dynamic-languages">Patterns for dynamic languages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#classifying-patterns">Classifying patterns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#creational-patterns">Creational patterns</a></li>
+<li class="toc-entry toc-h3"><a href="#structural-patterns">Structural patterns</a></li>
+<li class="toc-entry toc-h3"><a href="#behavioral-patterns">Behavioral patterns</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-the-singleton-design-pattern">Ch2. The singleton design pattern</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#monostate-singleton-pattern">Monostate Singleton pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#singletons-and-metaclasses">Singletons and metaclasses</a></li>
+<li class="toc-entry toc-h2"><a href="#drawbacks">Drawbacks</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch3-the-factory-pattern---building-factories-to-create-objects">Ch3. The factory pattern - building factories to create objects</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#understanding-the-factory-pattern">Understanding the factory pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#the-simple-factory-pattern">The simple factory pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#the-factory-method-pattern">The factory method pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#the-abstract-factory-pattern">The abstract factory pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#factory-method-versus-abstract-factory-method">Factory method versus abstract factory method</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch4-the-façade-pattern---being-adaptive-with-façade">Ch4. The façade pattern - being adaptive with façade</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#understanding-structural-design-patterns">Understanding Structural design patterns</a></li>
+<li class="toc-entry toc-h2"><a href="#understanding-the-façade-design-pattern">Understanding the Façade design pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#main-participants">Main participants</a></li>
+<li class="toc-entry toc-h2"><a href="#the-principle-of-least-knowledge">The principle of least knowledge</a></li>
+<li class="toc-entry toc-h2"><a href="#the-law-of-demeter">The Law of Demeter</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch5-the-proxy-pattern---controlling-object-access">Ch5. The proxy pattern - controlling object access</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#data-structure-components">Data Structure components</a></li>
+<li class="toc-entry toc-h2"><a href="#different-types-of-proxies">Different types of proxies</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#decorator-vs-proxy">Decorator vs Proxy</a></li>
+<li class="toc-entry toc-h3"><a href="#disadvantages">Disadvantages</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-the-observer-pattern---keeping-objects-in-the-know">Ch6. The observer pattern - keeping objects in the know</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#behavioral-patterns-1">Behavioral patterns</a></li>
+<li class="toc-entry toc-h2"><a href="#understanding-the-observer-design-pattern">Understanding the observer design pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#the-pull-model">The pull model</a></li>
+<li class="toc-entry toc-h2"><a href="#the-push-model">The push model</a></li>
+<li class="toc-entry toc-h2"><a href="#loose-coupling-and-the-observer-pattern">Loose coupling and the observer pattern</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch7-the-command-pattern---encapsulating-invocation">Ch7. The command pattern - encapsulating invocation</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#understanding-the-command-design-pattern">Understanding the command design pattern</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#intentions">Intentions</a></li>
+<li class="toc-entry toc-h3"><a href="#scenarios-of-use">Scenarios of use</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#advantages">Advantages</a></li>
+<li class="toc-entry toc-h2"><a href="#disadvantages-1">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch8-the-templated-method-pattern---encapsulating-algorithm">Ch8. The templated method pattern - encapsulating algorithm</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#use-cases">Use cases</a></li>
+<li class="toc-entry toc-h2"><a href="#intentions-1">Intentions</a></li>
+<li class="toc-entry toc-h2"><a href="#terms">Terms</a></li>
+<li class="toc-entry toc-h2"><a href="#hooks">Hooks</a></li>
+<li class="toc-entry toc-h2"><a href="#the-hollywood-principle">The Hollywood principle</a></li>
+<li class="toc-entry toc-h2"><a href="#advantages-1">Advantages</a></li>
+<li class="toc-entry toc-h2"><a href="#disadvantages-2">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch9-model-view-controller---compound-patterns">Ch9. Model-View-Controller - Compound patterns</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-model-view-controller-pattern">The Model-View-Controller pattern</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#terms-1">Terms</a></li>
+<li class="toc-entry toc-h3"><a href="#intention">Intention</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#the-mvc-pattern-in-the-real-world">The MVC pattern in the real world</a></li>
+<li class="toc-entry toc-h2"><a href="#benefits-of-the-mvc-pattern">Benefits of the MVC pattern</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-the-state-design-pattern">Ch10. The state design pattern</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#understanding-the-state-design-pattern">Understanding the state design pattern</a></li>
+<li class="toc-entry toc-h2"><a href="#advantages-2">Advantages</a></li>
+<li class="toc-entry toc-h2"><a href="#disadvantages-3">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch11-antipatterns">Ch11. AntiPatterns</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#software-development-antipatterns">Software development AntiPatterns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#spaghetti-code">Spaghetti code</a></li>
+<li class="toc-entry toc-h3"><a href="#golden-hammer">Golden Hammer</a></li>
+<li class="toc-entry toc-h3"><a href="#lava-flow">Lava Flow</a></li>
+<li class="toc-entry toc-h3"><a href="#copy-and-paste-or-cut-and-paste-programming">Copy-and-paste or cut-and-paste programming</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#software-architecture-antipatterns">Software architecture AntiPatterns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reinventing-the-wheel">Reinventing the wheel</a></li>
+<li class="toc-entry toc-h3"><a href="#vendor-lock-in">Vendor lock-in</a></li>
+<li class="toc-entry toc-h3"><a href="#design-by-committee">Design by committee</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Author: Chetan Giridhar</p>
+
+<p><a href="https://www.amazon.com/Learning-Python-Design-Patterns-Second-ebook/dp/B018XYKNOM">Available here</a></p>
+
+<h1 id="ch1-introduction-to-design-patterns">
+<a class="anchor" href="#ch1-introduction-to-design-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. Introduction to design patterns</h1>
+
+<h2 id="understanding-object-oriented-programming">
+<a class="anchor" href="#understanding-object-oriented-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding object-oriented programming</h2>
+<ul>
+  <li>Concept of <em>objects</em> that have attributes (data members) and procedures (member functions)</li>
+  <li>Procedures are responsible for manipulating the attributes</li>
+  <li>Objects, which are instances of classes, interact among each other to serve the purpose of an application under development</li>
+</ul>
+
+<h3 id="classes">
+<a class="anchor" href="#classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classes</h3>
+<ul>
+  <li>Define objects in attributes and behaviors (methods)</li>
+  <li>Classes consist of constructors that provide the initial state for these objects</li>
+  <li>Are like templates and hence can be easily reused</li>
+</ul>
+
+<h3 id="methods">
+<a class="anchor" href="#methods" aria-hidden="true"><span class="octicon octicon-link"></span></a>Methods</h3>
+<ul>
+  <li>Represent the behavior of the object</li>
+  <li>Work on attributes and also implement the desired functionality</li>
+</ul>
+
+<h2 id="major-aspects-of-oop">
+<a class="anchor" href="#major-aspects-of-oop" aria-hidden="true"><span class="octicon octicon-link"></span></a>Major aspects of OOP</h2>
+
+<h3 id="encapsulation">
+<a class="anchor" href="#encapsulation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Encapsulation</h3>
+<ul>
+  <li>An object’s behavior is kept hidden from the outside world or objects keep their state information private</li>
+  <li>Clients can’t change the object’s internal state by directly acting on them</li>
+  <li>Clients request the object by sending requests. Based on the type, objects may respond by changing their internal state using special member functions such as <code class="highlighter-rouge">get</code> and <code class="highlighter-rouge">set</code>
+</li>
+</ul>
+
+<h3 id="polymorphism">
+<a class="anchor" href="#polymorphism" aria-hidden="true"><span class="octicon octicon-link"></span></a>Polymorphism</h3>
+<ul>
+  <li>Can be of two types:
+    <ul>
+      <li>An object provides different implementations of the method based on input parameters</li>
+      <li>The same interface can be used by objects of different types</li>
+    </ul>
+  </li>
+  <li>In Python polymorphism is a feature built-in for the language (e.g. + operator)</li>
+</ul>
+
+<h3 id="inheritance">
+<a class="anchor" href="#inheritance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inheritance</h3>
+<ul>
+  <li>Indicates that one class derives (most of) its functionality from the parent class</li>
+  <li>An option to reuse functionality defined in the base class and allow independent extensions of the original software implementation</li>
+  <li>Creates hierarchy via the relationships among objects of different classes</li>
+  <li>Python supports multiple inheritance (multiple base classes)</li>
+</ul>
+
+<h3 id="abstraction">
+<a class="anchor" href="#abstraction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abstraction</h3>
+<ul>
+  <li>Provides a simple interface to the clients. Clients can interact with class objects and call methods defined in the interface</li>
+  <li>Abstracts the complexity of internal classes with an interface so that the client need not be aware of internal implementations</li>
+</ul>
+
+<h3 id="composition">
+<a class="anchor" href="#composition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Composition</h3>
+<ul>
+  <li>Combine objects or classes into more complex data structures or software implementations</li>
+  <li>An object is used to call member functions in other modules thereby making base functionality available across modules without inheritance</li>
+</ul>
+
+<h2 id="object-oriented-design-principles">
+<a class="anchor" href="#object-oriented-design-principles" aria-hidden="true"><span class="octicon octicon-link"></span></a>Object-oriented design principles</h2>
+
+<h3 id="the-openclose-principle">
+<a class="anchor" href="#the-openclose-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The open/close principle</h3>
+<blockquote>
+  <p><strong>Classes or objects and methods should be open for extension but closed for modifications</strong></p>
+</blockquote>
+
+<ul>
+  <li>Make sure you write your classes or modules in a generic way</li>
+  <li>Existing classes are not changed reducing the chances of regression</li>
+  <li>Helps maintain backward compatibility</li>
+</ul>
+
+<h3 id="the-inversion-of-control-principle">
+<a class="anchor" href="#the-inversion-of-control-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The inversion of control principle</h3>
+<blockquote>
+  <p><strong>High-level modules shouldn’t be dependent on low-level modules; they should be dependent on abstractions. Details should depend on abstractions and not the other way round</strong></p>
+</blockquote>
+
+<ul>
+  <li>The base module and dependent module should be decoupled with an abstraction layer in between</li>
+  <li>The details of your class should represent the abstractions</li>
+  <li>The tight coupling of modules is no more prevalent and hence no complexity/rigidity in the system</li>
+  <li>Easy to deal with dependencies across modules in a better way</li>
+</ul>
+
+<h3 id="the-interface-segregation-principle">
+<a class="anchor" href="#the-interface-segregation-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The interface segregation principle</h3>
+<blockquote>
+  <p><strong>Clients should not be force to depend on interfaces they don’t use</strong></p>
+</blockquote>
+
+<ul>
+  <li>Forces developers to write thin interfaces and have methods that are specific to the interface</li>
+  <li>Helps you not to populate interfaces by adding unintentional methods</li>
+</ul>
+
+<h3 id="the-single-responsibility-principle">
+<a class="anchor" href="#the-single-responsibility-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The single responsibility principle</h3>
+<blockquote>
+  <p><strong>A class should have only one reason to change</strong></p>
+</blockquote>
+
+<ul>
+  <li>If a class is taking care of two functionalities, it is better to split them</li>
+  <li>Functionality = a reason to change</li>
+  <li>Whenever there is a change in one functionality, this particular class needs to change, and nothing else</li>
+  <li>If a class has multiple functionalities, the dependent classes will have to undergo changes for multiple reasons, which gets avoided</li>
+</ul>
+
+<h3 id="the-substitution-principle">
+<a class="anchor" href="#the-substitution-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The substitution principle</h3>
+<blockquote>
+  <p><strong>Derived classes must be able to completely substitute the base classes</strong></p>
+</blockquote>
+
+<h2 id="the-concept-of-design-patterns">
+<a class="anchor" href="#the-concept-of-design-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>The concept of design patterns</h2>
+<ul>
+  <li>Solutions to given problems</li>
+  <li>Design patterns are discoveries and not a invention in themselves</li>
+  <li>Is about learning from others’ successes rather than your own failures!</li>
+</ul>
+
+<h3 id="advantages-of-design-patterns">
+<a class="anchor" href="#advantages-of-design-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advantages of design patterns</h3>
+<ul>
+  <li>Reusable across multiple projects</li>
+  <li>Architectural level of problems can be solved</li>
+  <li>Time-tested and well-proven, which is the experience of developers and architects</li>
+  <li>They have reliability and dependence</li>
+</ul>
+
+<h3 id="patterns-for-dynamic-languages">
+<a class="anchor" href="#patterns-for-dynamic-languages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Patterns for dynamic languages</h3>
+<p>Python:</p>
+<ul>
+  <li>Types or classes are objects at runtime</li>
+  <li>Variables can have type as a value and can be modified at runtime</li>
+  <li>Dynamic languages have more flexibility in terms of class restrictions</li>
+  <li>Everything is public by default</li>
+  <li>Design patterns can be easily implemented in dynamic languages</li>
+</ul>
+
+<h2 id="classifying-patterns">
+<a class="anchor" href="#classifying-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classifying patterns</h2>
+<ul>
+  <li>Creational</li>
+  <li>Structural</li>
+  <li>Behavioral</li>
+</ul>
+
+<blockquote>
+  <p>Classification of patterns is done based primarily on how the objects get created, how classes and objects are structured in a software application, and also covers the way objects interact among themselves</p>
+</blockquote>
+
+<h3 id="creational-patterns">
+<a class="anchor" href="#creational-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creational patterns</h3>
+<ul>
+  <li>Work on the basis of how objects can be created</li>
+  <li>Isolate the details of object creation</li>
+  <li>Code is independent of the type of object to be created</li>
+</ul>
+
+<h3 id="structural-patterns">
+<a class="anchor" href="#structural-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Structural patterns</h3>
+<ul>
+  <li>Design the structure of objects and classes so that they can compose to achieve larger results</li>
+  <li>Focus on simplifying the structure and identifying the relationship between classes and objects</li>
+  <li>Focus on class inheritance and composition</li>
+</ul>
+
+<h3 id="behavioral-patterns">
+<a class="anchor" href="#behavioral-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behavioral patterns</h3>
+<ul>
+  <li>Concerned with the interaction among objects and responsibilities of objects</li>
+  <li>Objects should be able to interact and still be loosely coupled</li>
+</ul>
+
+<h1 id="ch2-the-singleton-design-pattern">
+<a class="anchor" href="#ch2-the-singleton-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. The singleton design pattern</h1>
+<ul>
+  <li>Typically used in logging or database operations, printer spoolers, thread pools, caches, dialog boxes, registry settings, and so on</li>
+  <li>Ensure that only one object of the class gets created</li>
+  <li>Provide an access point for an object that is global to the program</li>
+  <li>Control concurrent access to resources that are shared</li>
+  <li>Make the constructor private and create a static method that does the object initialization</li>
+  <li>Override the <code class="highlighter-rouge">__new__</code> method (Python’s special method to instantiate objects) to control the object creation</li>
+  <li>Another use case: <strong>lazy instantiation</strong>. Makes sure that the object gets created when it’s actually needed</li>
+  <li>All modules are Singletons by default because of Python’s importing behavior</li>
+</ul>
+
+<h2 id="monostate-singleton-pattern">
+<a class="anchor" href="#monostate-singleton-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monostate Singleton pattern</h2>
+<ul>
+  <li>All objects share the same state</li>
+  <li>Assign the <code class="highlighter-rouge">__dict__</code> variable with the <code class="highlighter-rouge">__shared_state</code> class variable. Python uses <code class="highlighter-rouge">__dict__</code> to store the state of every object of a class</li>
+</ul>
+
+<h2 id="singletons-and-metaclasses">
+<a class="anchor" href="#singletons-and-metaclasses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Singletons and metaclasses</h2>
+<ul>
+  <li>A metaclass is a class of a class</li>
+  <li>The class is an instance of its metaclass</li>
+  <li>Programmers get an opportunity to create classes of their own type from the predefined Python classes</li>
+</ul>
+
+<h2 id="drawbacks">
+<a class="anchor" href="#drawbacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Drawbacks</h2>
+<ul>
+  <li>Singletons have a global point of access</li>
+  <li>Al classes that are dependent on global variables get tightly coupled as a change to the global data by one class can inadvertently impact the other class</li>
+</ul>
+
+<h1 id="ch3-the-factory-pattern---building-factories-to-create-objects">
+<a class="anchor" href="#ch3-the-factory-pattern---building-factories-to-create-objects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. The factory pattern - building factories to create objects</h1>
+
+<h2 id="understanding-the-factory-pattern">
+<a class="anchor" href="#understanding-the-factory-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding the factory pattern</h2>
+<ul>
+  <li>Factory = a class that is responsible for creating objects of other types</li>
+  <li>The class that acts as a factory has an object and methods associated with it</li>
+  <li>The client calls this method with certain parameters; objects of desired types are created in turn and returned to the client by the factory</li>
+</ul>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Loose coupling: object creation can be independent of the class implementation</li>
+  <li>The client only needs to know the interface, methods, and parameters that need to be passed to create objects of the desired type (simplifies implementations for the client)</li>
+  <li>Adding another class to the factory to create objects of another type can be easily done without the client changing the code</li>
+</ul>
+
+<h2 id="the-simple-factory-pattern">
+<a class="anchor" href="#the-simple-factory-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>The simple factory pattern</h2>
+<ul>
+  <li>Not a pattern in itself</li>
+  <li>Helps create objects of different types rather than direct object instantiation</li>
+</ul>
+
+<h2 id="the-factory-method-pattern">
+<a class="anchor" href="#the-factory-method-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>The factory method pattern</h2>
+<ul>
+  <li>We define an interface to create objects, but instead of the factory being responsible for the object creation, the responsibility is deferred to the subclass that decides the class to be instantiated</li>
+  <li>Creation is through inheritance and not through instantiation</li>
+  <li>Makes the design more customizable. It can return the same instance or subclass rather than an object of a certain type</li>
+</ul>
+
+<blockquote>
+  <p>The factory method pattern defines an interface to create an object, but defers the decision ON which class to instantiate to its subclasses</p>
+</blockquote>
+
+<p><strong>Advantages</strong></p>
+<ul>
+  <li>Makes the code generic and flexible, not being tied to a certain class for instantiation. We’re dependent on the interface (Product) and not on the ConcreteProduct class</li>
+  <li>Loose coupling: the code that creates the object is separate from the code that uses it</li>
+  <li>The client don’t need to bother about what argument to pass and which class to instantiate -&gt; the addition of new classes is easy and involves low maintenance</li>
+</ul>
+
+<h2 id="the-abstract-factory-pattern">
+<a class="anchor" href="#the-abstract-factory-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>The abstract factory pattern</h2>
+
+<blockquote>
+  <p>Provide an interface to create families of related objects without specifying the concrete class</p>
+</blockquote>
+
+<ul>
+  <li>Makes sure that the client is isolated from the creation of objects but allowed to use the objects created</li>
+</ul>
+
+<h2 id="factory-method-versus-abstract-factory-method">
+<a class="anchor" href="#factory-method-versus-abstract-factory-method" aria-hidden="true"><span class="octicon octicon-link"></span></a>Factory method versus abstract factory method</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"><strong>Factory method</strong></th>
+      <th style="text-align: center"><strong>Abstract Factory method</strong></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">Exposes a method to the client to create the objects</td>
+      <td style="text-align: center">Contains one or more factory methods of another class</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Uses inheritance and subclass to decide which object to create</td>
+      <td style="text-align: center">Uses composition to delegate responsibility to create objects of another class</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">Is used to create one product</td>
+      <td style="text-align: center">Is about creating families of related products</td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="ch4-the-façade-pattern---being-adaptive-with-façade">
+<a class="anchor" href="#ch4-the-fa%C3%A7ade-pattern---being-adaptive-with-fa%C3%A7ade" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. The façade pattern - being adaptive with façade</h1>
+
+<h2 id="understanding-structural-design-patterns">
+<a class="anchor" href="#understanding-structural-design-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding Structural design patterns</h2>
+<ul>
+  <li>Describe how objects and classes can be combined to form larger structures. Structural patterns are a combination of class and object patterns</li>
+  <li>Ease the design by identifying simpler ways to realize or demonstrate relationships between entities</li>
+  <li>Class patterns: describe abstraction with the help of inheritance and provide a more useful program interface</li>
+  <li>Object patterns: describe how objects can be associated and composed to form larger objects</li>
+</ul>
+
+<h2 id="understanding-the-façade-design-pattern">
+<a class="anchor" href="#understanding-the-fa%C3%A7ade-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding the Façade design pattern</h2>
+<blockquote>
+  <p>Façade hides the complexities of the internal system and provides an interface to the client that can access the system in a very simplified way</p>
+</blockquote>
+
+<ul>
+  <li>Provides an unified interface to a set of interfaces in a subsystem and defines a high-level interface that helps the client use the subsystem in an easy way</li>
+  <li>Discusses representing a complex subsystem with a single interface object -&gt; it doesn’t encapsulate the subsystem, but actually combines the underlying subsystems</li>
+  <li>Promotes the decoupling of the implementation with multiple clients</li>
+</ul>
+
+<h2 id="main-participants">
+<a class="anchor" href="#main-participants" aria-hidden="true"><span class="octicon octicon-link"></span></a>Main participants</h2>
+<ul>
+  <li>
+<strong>Façade</strong>: wrap up a complex group of subsystems so that it can provide a pleasing look to the outside world</li>
+  <li>
+<strong>System</strong>: represents a set of varied subsystems that make the whole system compound and difficult to view or work with</li>
+  <li>
+<strong>Client</strong>: interact with the façade so that it can easily communicate with the subsystem and get the work completed (doesn’t have to bother about the complex nature of the system)</li>
+</ul>
+
+<h2 id="the-principle-of-least-knowledge">
+<a class="anchor" href="#the-principle-of-least-knowledge" aria-hidden="true"><span class="octicon octicon-link"></span></a>The principle of least knowledge</h2>
+<ul>
+  <li>Design principle behind Façade pattern</li>
+  <li>Reduce the interactions between objects to just a few friend that are close enough to you</li>
+</ul>
+
+<h2 id="the-law-of-demeter">
+<a class="anchor" href="#the-law-of-demeter" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Law of Demeter</h2>
+<ul>
+  <li>Design guideline:
+    <ul>
+      <li>Each unit should have only limited knowledge of other units of the system</li>
+      <li>A unit should talk to its friends only</li>
+      <li>A unit should not know about the internal details of the object that it manipulates</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>The principle of least knowledge and Law of Demeter are the same and both point to the philosophy of <em>loose coupling</em></p>
+</blockquote>
+
+<h1 id="ch5-the-proxy-pattern---controlling-object-access">
+<a class="anchor" href="#ch5-the-proxy-pattern---controlling-object-access" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. The proxy pattern - controlling object access</h1>
+<blockquote>
+  <p>Proxy: a system that intermediates between the seeker and provider. Seeker is the one that makes the request, and provider delivers the resources in response to the request</p>
+</blockquote>
+
+<ul>
+  <li>A proxy server encapsulates requests, enables privacy, and works well in distributed architectures</li>
+  <li>Proxy is a wrapper or agent object that wraps the real serving object</li>
+  <li>Provide a surrogate or placeholder for another object in order to control access to a real object</li>
+  <li>Some useful scenarios:
+    <ul>
+      <li>Represents a complex system in a simpler way</li>
+      <li>Acts as a shield against malicious intentions and protect the real object</li>
+      <li>Provides a local interface for remote objects on different servers</li>
+      <li>Provides a light handle for a higher memory-consuming object</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="data-structure-components">
+<a class="anchor" href="#data-structure-components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Structure components</h2>
+<ul>
+  <li><strong>Proxy</strong></li>
+  <li><strong>Subject/RealSubject</strong></li>
+  <li><strong>Client</strong></li>
+</ul>
+
+<h2 id="different-types-of-proxies">
+<a class="anchor" href="#different-types-of-proxies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Different types of proxies</h2>
+<ul>
+  <li>
+<strong>Virtual proxy</strong>: placeholder for objects that are very heavy to instantiate</li>
+  <li>
+<strong>Remote proxy</strong>: provides a local representation of a real object that resides on a remote server or different address space</li>
+  <li>
+<strong>Protective proxy</strong>: controls access to the sensitive matter object of <code class="highlighter-rouge">RealSubject</code>
+</li>
+  <li>
+<strong>Smart proxy</strong>: interposes additional actions when an object is accessed</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th>Proxy</th>
+      <th>Façade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Provides you with a surrogate or placeholder for another object to control access to it</td>
+      <td>Provides you with an interface to large subsystems of classes</td>
+    </tr>
+    <tr>
+      <td>A Proxy object has the same interface as that of the target object and holds references to target objects</td>
+      <td>Minimizes the communication and dependencies between subsystems</td>
+    </tr>
+    <tr>
+      <td>Acts as an intermediary between the client and object that is wrapped</td>
+      <td>Provides a single simplified interface</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="decorator-vs-proxy">
+<a class="anchor" href="#decorator-vs-proxy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decorator vs Proxy</h3>
+<ul>
+  <li>Decorator adds behavior to the object that it decorates at runtime</li>
+  <li>Proxy controls access to an object</li>
+</ul>
+
+<h3 id="disadvantages">
+<a class="anchor" href="#disadvantages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disadvantages</h3>
+<ul>
+  <li>Proxy pattern can increase the response time</li>
+</ul>
+
+<h1 id="ch6-the-observer-pattern---keeping-objects-in-the-know">
+<a class="anchor" href="#ch6-the-observer-pattern---keeping-objects-in-the-know" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. The observer pattern - keeping objects in the know</h1>
+
+<h2 id="behavioral-patterns-1">
+<a class="anchor" href="#behavioral-patterns-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Behavioral patterns</h2>
+<ul>
+  <li>Focus on the responsibilities that an object has</li>
+  <li>Deal with the interaction among objects to achieve larger functionality</li>
+  <li>Objects should be able to interact with each other, <strong>but they should still be loosely coupled</strong>
+</li>
+</ul>
+
+<h2 id="understanding-the-observer-design-pattern">
+<a class="anchor" href="#understanding-the-observer-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding the observer design pattern</h2>
+<blockquote>
+  <p>An object (Subject) maintains a list of dependents (Observers) so that the Subject can notify all the Observers about the changes that it undergoes using any of the methods defined by the Observer</p>
+</blockquote>
+
+<ul>
+  <li>Defines a one-to-many dependency between objects so that any change in one object will be notified to the other dependent objects automatically</li>
+  <li>Encapsulates the core component of the Subject</li>
+</ul>
+
+<h2 id="the-pull-model">
+<a class="anchor" href="#the-pull-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>The pull model</h2>
+<ul>
+  <li>Subject broadcasts to all the registered Observers when there is any change</li>
+  <li>Observer is responsible for getting the changes or pulling data from the subscriber when there is an amendment</li>
+  <li>Pull model is <strong>ineffective</strong>: involves two steps:
+    <ul>
+      <li>Subject notifies the Observer</li>
+      <li>Observer pulls the required data from the Subject</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="the-push-model">
+<a class="anchor" href="#the-push-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>The push model</h2>
+<ul>
+  <li>Changes are pushed by the Subject to the Observer</li>
+  <li>Subject can send detailed information to the Observer (even though it may not be needed) -&gt; can result in sluggish response times when a large amount of data in sent by the Subject but is never actually used by the Observer</li>
+</ul>
+
+<h2 id="loose-coupling-and-the-observer-pattern">
+<a class="anchor" href="#loose-coupling-and-the-observer-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Loose coupling and the observer pattern</h2>
+<ul>
+  <li>Coupling refers to the degree of knowledge that one object has about the other object that it interacts with</li>
+</ul>
+
+<blockquote>
+  <p>Loosely-coupled designs allow us to build flexbile object-oriented systems that can handle changes because they reduce the dependency between multiple objects</p>
+</blockquote>
+
+<ul>
+  <li>Reduces the risk that a change made within one element might create an unanticipated impact on the other elements</li>
+  <li>Simplifies testing, maintenance, and troubleshooting problems</li>
+  <li>System can be easily broken down into definable elements</li>
+</ul>
+
+<h1 id="ch7-the-command-pattern---encapsulating-invocation">
+<a class="anchor" href="#ch7-the-command-pattern---encapsulating-invocation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. The command pattern - encapsulating invocation</h1>
+<blockquote>
+  <p>Behavioral design pattern in which an object is used to encapsulate all the information needed to perform an action or trigger an event at a later time</p>
+</blockquote>
+
+<h2 id="understanding-the-command-design-pattern">
+<a class="anchor" href="#understanding-the-command-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding the command design pattern</h2>
+<ul>
+  <li>A <code class="highlighter-rouge">Command</code> object knows about the <code class="highlighter-rouge">Receiver</code> objects and invokes a method of the <code class="highlighter-rouge">Receiver</code> object</li>
+  <li>Values for parameters of the receiver method are stored in the <code class="highlighter-rouge">Command</code> object</li>
+  <li>The invoker knows how to execute a command</li>
+  <li>The client creates a <code class="highlighter-rouge">Command</code> object and sets its receiver</li>
+</ul>
+
+<h3 id="intentions">
+<a class="anchor" href="#intentions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intentions</h3>
+<ul>
+  <li>Encapsulating a request as an object</li>
+  <li>Allowing the parametrization of clients with different requests</li>
+  <li>Allowing to save the requests in a queue</li>
+  <li>Providing an object-oriented callback</li>
+</ul>
+
+<h3 id="scenarios-of-use">
+<a class="anchor" href="#scenarios-of-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scenarios of use</h3>
+<ul>
+  <li>Parametrizing objects depending on the action to be performed</li>
+  <li>Adding actions to a queue and executing requests at different points</li>
+  <li>Creating a structure for high-level operations that are based on smaller operations</li>
+  <li>E.g.:
+    <ul>
+      <li>Redo or rollback operations</li>
+      <li>Asynchronous task execution</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="advantages">
+<a class="anchor" href="#advantages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advantages</h2>
+<ul>
+  <li>Decouples the classes that invoke the operation from the object that knows how to execute the operation</li>
+  <li>Provide a queue system</li>
+  <li>Extensions to add new commands are easy</li>
+  <li>A rollback system with the command pattern can be defined</li>
+</ul>
+
+<h2 id="disadvantages-1">
+<a class="anchor" href="#disadvantages-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disadvantages</h2>
+<ul>
+  <li>High number of classes and objects working together to achieve a goal</li>
+  <li>Every individual command is a <code class="highlighter-rouge">ConcreteCommand</code> class that increases the volume of classes for implementation and maintenance</li>
+</ul>
+
+<h1 id="ch8-the-templated-method-pattern---encapsulating-algorithm">
+<a class="anchor" href="#ch8-the-templated-method-pattern---encapsulating-algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. The templated method pattern - encapsulating algorithm</h1>
+
+<h2 id="use-cases">
+<a class="anchor" href="#use-cases" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use cases</h2>
+<ul>
+  <li>When multiple algorithms or classes implements similar or identical logic</li>
+  <li>The implementation of algorithms in subclasses helps reduce code duplication</li>
+  <li>Multiple algorithms can be defined by letting the subclasses implement the behavior through overriding</li>
+</ul>
+
+<h2 id="intentions-1">
+<a class="anchor" href="#intentions-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intentions</h2>
+<ul>
+  <li>Define a skeleton of an algorithm with primitive operations</li>
+  <li>Redefine certain operations of the subclass without changing the algorithm’s structure</li>
+  <li>Achieve code reuse and avoid duplicate efforts</li>
+  <li>Leverage common interfaces or implementations</li>
+</ul>
+
+<h2 id="terms">
+<a class="anchor" href="#terms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terms</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">AbstractClass</code>: Declares an interface to define the steps of the algorithm</li>
+  <li>
+<code class="highlighter-rouge">ConcreteClass</code>: Defines subclass-specific step definitions</li>
+  <li>
+<code class="highlighter-rouge">template_method()</code>: Defines the algorithm by calling the step methods</li>
+</ul>
+
+<h2 id="hooks">
+<a class="anchor" href="#hooks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hooks</h2>
+<ul>
+  <li>Hook: a method that is declared in the abstract class</li>
+  <li>Give a subclass the ability to <em>hook into</em> the algorithm whenever needed</li>
+  <li>Not imperative for the subclass to use hooks</li>
+</ul>
+
+<blockquote>
+  <p>We use abstract methods when the subclass must provide the implementation, and hook is used when it is optional for the subclass to implement it</p>
+</blockquote>
+
+<h2 id="the-hollywood-principle">
+<a class="anchor" href="#the-hollywood-principle" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Hollywood principle</h2>
+<ul>
+  <li>Design principle summarized by <strong>Don’t call us, we’ll call you</strong>
+</li>
+  <li>Relates to the template method -&gt; it’s the high-level abstract class that arranges the steps to define the algorithm</li>
+</ul>
+
+<h2 id="advantages-1">
+<a class="anchor" href="#advantages-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advantages</h2>
+<ul>
+  <li>No code duplication</li>
+  <li>Uses inheritance and not composition -&gt; only a few methods need to be overriden</li>
+  <li>Flexibility lets subclasses decide how implement steps in an algorithm</li>
+</ul>
+
+<h2 id="disadvantages-2">
+<a class="anchor" href="#disadvantages-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disadvantages</h2>
+<ul>
+  <li>Confusing debugging and undestanding the sequence of flow</li>
+  <li>Documentation and strict error handling has to be done by the programmer</li>
+  <li>Maintenance can be a problem -&gt; changes to any level can disturb the implementation</li>
+</ul>
+
+<h1 id="ch9-model-view-controller---compound-patterns">
+<a class="anchor" href="#ch9-model-view-controller---compound-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. Model-View-Controller - Compound patterns</h1>
+<blockquote>
+  <p>“A compound pattern combines two or more patterns into a solution that solves a recurring or general problem” - GoF</p>
+</blockquote>
+
+<p>A compound pattern is not a set of patterns working together; it is a general solution to a problem</p>
+
+<h2 id="the-model-view-controller-pattern">
+<a class="anchor" href="#the-model-view-controller-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Model-View-Controller pattern</h2>
+<ul>
+  <li>Model represents the data and business logic: how information is stored and queried</li>
+  <li>View is nothing but the representation: how it is presented</li>
+  <li>Controller is the one that directs the model and view to behave in a certain way: it’s the glue between the two</li>
+  <li>The view and controller are dependent on the model, but not the other way around</li>
+</ul>
+
+<h3 id="terms-1">
+<a class="anchor" href="#terms-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Terms</h3>
+<ul>
+  <li>
+<strong>Model - knowledge of the application</strong>: store and manipulate data (create, modify and delete). Has state and methods to change states, but is not aware of how the data would be seen by the client</li>
+  <li>
+<strong>View - the appearance</strong>: build user interfaces and data displays (it should not contain any logic of its own and just display the data it receives)</li>
+  <li>
+<strong>Controller - the glue</strong>: connects the model and view (it has methods that are used to route requests)</li>
+  <li>
+<strong>User</strong>: requests for certain results based on certain actions</li>
+</ul>
+
+<h3 id="intention">
+<a class="anchor" href="#intention" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intention</h3>
+<ul>
+  <li>Keep the data and presentation of the data separate</li>
+  <li>Easy maintenance of the class and implementation</li>
+  <li>Flexibility to change the way in which data is stored and displayed -&gt; both are independent and hence have the flexibility to change</li>
+</ul>
+
+<h2 id="the-mvc-pattern-in-the-real-world">
+<a class="anchor" href="#the-mvc-pattern-in-the-real-world" aria-hidden="true"><span class="octicon octicon-link"></span></a>The MVC pattern in the real world</h2>
+<ul>
+  <li>Django or Rails</li>
+  <li>
+<strong>MTV (Model, Template, View)</strong>: model is the database, templates are the views, and controllers are the views/routes</li>
+</ul>
+
+<h2 id="benefits-of-the-mvc-pattern">
+<a class="anchor" href="#benefits-of-the-mvc-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benefits of the MVC pattern</h2>
+<ul>
+  <li>Easy maintenance</li>
+  <li>Loose coupling</li>
+  <li>Decrease complexity</li>
+  <li>Development efforts can run independently</li>
+</ul>
+
+<h1 id="ch10-the-state-design-pattern">
+<a class="anchor" href="#ch10-the-state-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. The state design pattern</h1>
+<ul>
+  <li>Behavioral design pattern</li>
+  <li>Sometimes referred to as an <strong>objects for states</strong> pattern</li>
+  <li>Used to develop Finite State Machines and helps to accommodate State Transaction Actions</li>
+</ul>
+
+<h2 id="understanding-the-state-design-pattern">
+<a class="anchor" href="#understanding-the-state-design-pattern" aria-hidden="true"><span class="octicon octicon-link"></span></a>Understanding the state design pattern</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">State</code>: an interface that encapsulates the object’s behavior. This behavior is associated with the state of the object</li>
+  <li>
+<code class="highlighter-rouge">ConcreteState</code>: a subclass that implements the <code class="highlighter-rouge">State</code> interface -&gt; implements the actual behavior associated with the object’s particular state</li>
+  <li>
+<code class="highlighter-rouge">Context</code>: the interface of interest to clients. Also maintains an instance of the <code class="highlighter-rouge">ConcreteState</code> subclass that internally defines the implementation of the object’s particular state</li>
+</ul>
+
+<h2 id="advantages-2">
+<a class="anchor" href="#advantages-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advantages</h2>
+<ul>
+  <li>Removes the dependency on the if/else or switch/else conditional logic</li>
+  <li>Benefits of implementing polymorphic behavior, also easier to add states to support additional behavior</li>
+  <li>Improves cohesion: state-specific behaviors are aggregated into the <code class="highlighter-rouge">ConcreteState</code> classes, which are placed in one location in the code</li>
+  <li>Improves the flexibility to extend the behavior of the application and overall improves code maintenance</li>
+</ul>
+
+<h2 id="disadvantages-3">
+<a class="anchor" href="#disadvantages-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disadvantages</h2>
+<ul>
+  <li>Class explosion: every state needs to be defined with the help of <code class="highlighter-rouge">ConcreteState</code> -&gt; might end up writing many more classes with a small functionality</li>
+  <li>
+<code class="highlighter-rouge">Context</code> class needs to be updated to deal with each behavior</li>
+</ul>
+
+<h1 id="ch11-antipatterns">
+<a class="anchor" href="#ch11-antipatterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch11. AntiPatterns</h1>
+<p>Four aspects of a bad design:</p>
+<ul>
+  <li>
+<strong>Immobile</strong>: hard to reuse</li>
+  <li>
+<strong>Rigid</strong>: any small change may in turn result in moving too many parts of the software</li>
+  <li>
+<strong>Fragile</strong>: any change results in breaking the existing system fairly easy</li>
+  <li>
+<strong>Viscose</strong>: changes are done in the code or envinronment itself to avoid difficult architectural level changes</li>
+</ul>
+
+<blockquote>
+  <p>An AntiPattern is an outcome of a solution to recurring problems so that the outcome is innefective and becomes counterproductive</p>
+</blockquote>
+
+<p>AntiPatterns may be the result of:</p>
+<ul>
+  <li>A developer not knowing the software development practices</li>
+  <li>A developer not applying design patterns in the correct context</li>
+</ul>
+
+<h2 id="software-development-antipatterns">
+<a class="anchor" href="#software-development-antipatterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software development AntiPatterns</h2>
+<p>Software deviates from the original code structure due to:</p>
+<ul>
+  <li>The tought process of the developer evolves with development</li>
+  <li>Use cases change based on customer feedback</li>
+  <li>Data structures designed initially may undergo change with functionality or scalability considerations</li>
+</ul>
+
+<blockquote>
+  <p>Refactoring is one of the critical parts of the software development journey, which provides developers an opportunity to relook the data structures and think about scalability and ever-evolving customer’s needs</p>
+</blockquote>
+
+<h3 id="spaghetti-code">
+<a class="anchor" href="#spaghetti-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Spaghetti code</h3>
+<ul>
+  <li>Minimum reuse of structures is possible</li>
+  <li>Maintenance efforts are too high</li>
+  <li>Extension and flexibility to change is reduced</li>
+</ul>
+
+<h3 id="golden-hammer">
+<a class="anchor" href="#golden-hammer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Golden Hammer</h3>
+<ul>
+  <li>One solution is obsessively applied to all software projects</li>
+  <li>The product is describe, not by the features, but the technology used in development</li>
+  <li>In the company corridors, you hear developers talking, “That could have been better than using this”</li>
+  <li>Requirements are not completed and not in sync with user expectations</li>
+</ul>
+
+<h3 id="lava-flow">
+<a class="anchor" href="#lava-flow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lava Flow</h3>
+<ul>
+  <li>Low code coverage for developed tests</li>
+  <li>Commented code without reasons</li>
+  <li>Obsolete interfaces, or developers try to work around existing code</li>
+</ul>
+
+<h3 id="copy-and-paste-or-cut-and-paste-programming">
+<a class="anchor" href="#copy-and-paste-or-cut-and-paste-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Copy-and-paste or cut-and-paste programming</h3>
+<ul>
+  <li>Similar type of issues across software application</li>
+  <li>Higher maintenance costs and increased bug life cycle</li>
+  <li>Less modular code base with the same code running into a number of lines</li>
+  <li>Inheriting issues that existed in the first place</li>
+</ul>
+
+<h2 id="software-architecture-antipatterns">
+<a class="anchor" href="#software-architecture-antipatterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software architecture AntiPatterns</h2>
+<blockquote>
+  <p>Software architecture looks at modeling the software that is well understood by the development and test teams, product managers, and other stakeholders</p>
+</blockquote>
+
+<h3 id="reinventing-the-wheel">
+<a class="anchor" href="#reinventing-the-wheel" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reinventing the wheel</h3>
+<ul>
+  <li>Too many solutions to solve one standard problem, with many of them not being well thought out</li>
+  <li>More time and resource utilization for the engineering team leading overbudgeting and more time to market</li>
+  <li>A closed system architecture (useful for only one product), duplication of efforts, and poor risk management</li>
+</ul>
+
+<h3 id="vendor-lock-in">
+<a class="anchor" href="#vendor-lock-in" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vendor lock-in</h3>
+<ul>
+  <li>Release cycles and product maintenance cycles of a company’s product releases are directly dependent on the vendor’s release time frame</li>
+  <li>The product is developed around the technology rather than on the customer’s requirements</li>
+  <li>The product’s time to market is unreliable and doesn’t meet customer’s expectations</li>
+</ul>
+
+<h3 id="design-by-committee">
+<a class="anchor" href="#design-by-committee" aria-hidden="true"><span class="octicon octicon-link"></span></a>Design by committee</h3>
+<ul>
+  <li>Conflicting viewpoints between developers and architects even after the design is finalized</li>
+  <li>Overly complex design that is very difficult to document</li>
+  <li>Any change in the specification or design undergoes review by many, resulting in implementation delays</li>
+</ul>
+
+  </div><a class="u-url" href="/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

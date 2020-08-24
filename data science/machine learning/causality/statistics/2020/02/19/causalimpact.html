@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Causal Impact: state-space models in settings where a randomized experiment is unavailable | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Causal Impact: state-space models in settings where a randomized experiment is unavailable" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others." />
+<meta property="og:description" content="TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-19T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Causal Impact: state-space models in settings where a randomized experiment is unavailable","dateModified":"2020-02-19T00:00:00-06:00","description":"TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.","datePublished":"2020-02-19T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png","url":"https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Causal Impact: state-space models in settings where a randomized experiment is unavailable | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Causal Impact: state-space models in settings where a randomized experiment is unavailable" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others." />
+<meta property="og:description" content="TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-02-19T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Causal Impact: state-space models in settings where a randomized experiment is unavailable","dateModified":"2020-02-19T00:00:00-06:00","description":"TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.","datePublished":"2020-02-19T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png","url":"https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Causal Impact: state-space models in settings where a randomized experiment is unavailable</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-02-19T00:00:00-06:00" itemprop="datePublished">
+        Feb 19, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#causality">causality</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#statistics">statistics</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#motivation">Motivation</a></li>
+<li class="toc-entry toc-h2"><a href="#causal-impact-by-google">Causal Impact by Google</a></li>
+<li class="toc-entry toc-h2"><a href="#measuring-the-causal-impact-of-mentioning-an-unusual-term-on-a-popular-brazilian-tv-show">Measuring the causal impact of mentioning an unusual term on a popular brazilian TV show</a></li>
+<li class="toc-entry toc-h2"><a href="#context">Context</a></li>
+<li class="toc-entry toc-h2"><a href="#1-gathering-the-data">1. Gathering the data</a></li>
+<li class="toc-entry toc-h2"><a href="#2-organizing-the-data">2. Organizing the data</a></li>
+<li class="toc-entry toc-h2"><a href="#3-causal-impact">3. Causal Impact</a></li>
+<li class="toc-entry toc-h1"><a href="#another-example---amazon-rainforest-burns">Another example - Amazon rainforest burns</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#context-1">Context</a></li>
+<li class="toc-entry toc-h2"><a href="#causal-impact">Causal Impact</a></li>
+<li class="toc-entry toc-h2"><a href="#final-thoughts">Final thoughts</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#references">References</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><p><strong>TL;DR</strong>: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.</p>
+
+<p><a href="https://github.com/millengustavo/trends-causal-impact/blob/master/causal-searches.ipynb">Jupyter notebook with the code for this post</a></p>
+
+<h2 id="motivation">
+<a class="anchor" href="#motivation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Motivation</h2>
+
+<p>At work, you are responsible for making many decisions that can impact aspects of your business in different ways. Most of the time, there are simple approaches to measure the impact of these decisions.</p>
+
+<p>You launched an advertising campaign and, looking at sales that increased by 5% a month later, concluded that your campaign was a success. Right? Well, did you do a random experiment? Did you consider other factors such as seasonality or sales trend?</p>
+
+<p>Similar to this scenario, there are a plethora of other cases in which we may be interested in measuring the causal impact of the action.</p>
+
+<h2 id="causal-impact-by-google">
+<a class="anchor" href="#causal-impact-by-google" aria-hidden="true"><span class="octicon octicon-link"></span></a>Causal Impact by Google</h2>
+
+<p>There are some complex aspects of infering the causality of an intervention. In 2015 some awesome researchers from Google, published a paper entitled: “<em>INFERRING CAUSAL IMPACT USING BAYESIAN STRUCTURAL TIME-SERIES MODELS</em>”.</p>
+
+<p>Along with the paper they also introduced <a href="https://google.github.io/CausalImpact/CausalImpact.html">CausalImpact</a>, an R package (there is also a <a href="https://github.com/dafiti/causalimpact">Python port by Dafiti</a>) that implements their approach. In this tutorial we are going to use the Python version.</p>
+
+<p>Quoting directly from the abstract of the paper:</p>
+<blockquote>
+  <p>This paper proposes to infer causal impact on the basis of a diffusion-regression state-space model that <strong>predicts the counterfactual market response in a synthetic control that would have occurred had no intervention taken place</strong>. In contrast to classical difference-in-differences schemes, state-space models make it possible to (i) infer the temporal evolution of attributable impact, (ii) incorporate empirical priors on the parameters in a fully Bayesian treatment, and (iii) flexibly accommodate multiple sources of variation, including local trends, seasonality and the time-varying influence of contemporaneous covariates</p>
+</blockquote>
+
+<h2 id="measuring-the-causal-impact-of-mentioning-an-unusual-term-on-a-popular-brazilian-tv-show">
+<a class="anchor" href="#measuring-the-causal-impact-of-mentioning-an-unusual-term-on-a-popular-brazilian-tv-show" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring the causal impact of mentioning an unusual term on a popular brazilian TV show</h2>
+
+<h2 id="context">
+<a class="anchor" href="#context" aria-hidden="true"><span class="octicon octicon-link"></span></a>Context</h2>
+<p>Big Brother Brasil (BBB) is an international TV show that is popular in Brazil and broadcast on prime time open television. One of the participants suggested, live, that another participant search Google for an unusual term that she had spoken. The unusual word was “sororidade” (“sorority”).</p>
+
+<p><a href="https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm">Many</a> <a href="https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88">media</a> <a href="https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892">outlets</a> later reported that the episode caused searches for the term to increase 250%.</p>
+
+<p>The episode took place on February 9, 2020 between 9 pm and 10 pm Brazilian time.</p>
+
+<p>Let’s investigate the causality of the intervention in increasing interest in the term based on Google trends.</p>
+
+<h2 id="1-gathering-the-data">
+<a class="anchor" href="#1-gathering-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Gathering the data</h2>
+
+<p>We are going to download the data from Google Trends.</p>
+
+<p>There are two main ways of doing this:</p>
+<ul>
+  <li>We can navigate to the <a href="https://trends.google.com/trends/?geo=BR">website</a> and specify which term we are looking for, the region and timeframe</li>
+  <li>We can do this directly in Python, using a third-party library such as <a href="https://github.com/GeneralMills/pytrends">pytrends</a>
+</li>
+</ul>
+
+<p>To install <code class="highlighter-rouge">pytrends</code>, switch to your preferred environment and run the command:</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>pytrends
+</code></pre></div></div>
+
+<p>From the presentation of the causal impact, the author of the package suggests that we use between 5 and 10 related time series that can help to model the behavior of our time series of interest.</p>
+
+<p>Therefore, we are going to download some common Brazilian terms in the same period that may help our Bayesian structural time series model to understand the search behavior of our target term.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pytrends.request</span> <span class="kn">import</span> <span class="n">TrendReq</span>
+
+<span class="n">pytrends</span> <span class="o">=</span> <span class="n">TrendReq</span><span class="p">(</span><span class="n">hl</span><span class="o">=</span><span class="s">'pt-BR'</span><span class="p">,</span> <span class="n">tz</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="n">kw_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">"sororidade"</span><span class="p">,</span> <span class="s">"futebol"</span><span class="p">,</span> <span class="s">"carro"</span><span class="p">,</span> <span class="s">"temperatura"</span><span class="p">,</span> <span class="s">"restaurante"</span><span class="p">]</span>
+<span class="n">pytrends</span><span class="o">.</span><span class="n">build_payload</span><span class="p">(</span><span class="n">kw_list</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">=</span><span class="s">"2020-02-06T08 2020-02-13T07"</span><span class="p">)</span>
+
+<span class="c1"># the interest_over_time() method returns a pandas DataFrame
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">pytrends</span><span class="o">.</span><span class="n">interest_over_time</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">date</th>
+      <th style="text-align: right">sororidade</th>
+      <th style="text-align: right">futebol</th>
+      <th style="text-align: right">carro</th>
+      <th style="text-align: right">temperatura</th>
+      <th style="text-align: right">restaurante</th>
+      <th style="text-align: left">isPartial</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">2020-02-06 08:00:00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">1</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">9</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2020-02-06 09:00:00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">11</td>
+      <td style="text-align: right">6</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2020-02-06 10:00:00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">7</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2020-02-06 11:00:00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">8</td>
+      <td style="text-align: right">17</td>
+      <td style="text-align: right">10</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2020-02-06 12:00:00</td>
+      <td style="text-align: right">0</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">10</td>
+      <td style="text-align: right">22</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: left">False</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="2-organizing-the-data">
+<a class="anchor" href="#2-organizing-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>2. Organizing the data</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"isPartial"</span><span class="p">])</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">[</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">despine</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">"Interest over time (Google Trends)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/interest_over_time.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># changing the zeros to 0.1 so the model converge
+</span><span class="n">df</span><span class="p">[</span><span class="s">"sororidade"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"sororidade"</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mf">0.1</span> <span class="k">if</span> <span class="n">x</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="3-causal-impact">
+<a class="anchor" href="#3-causal-impact" aria-hidden="true"><span class="octicon octicon-link"></span></a>3. Causal Impact</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pre_period</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">min</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s">"2020-02-09T22:00:00.000000000"</span><span class="p">)),</span>
+<span class="p">]</span>
+<span class="n">post_period</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s">"2020-02-09T23:00:00.000000000"</span><span class="p">)),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span>
+<span class="p">]</span>
+
+<span class="n">ci</span> <span class="o">=</span> <span class="n">CausalImpact</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pre_period</span><span class="p">,</span> <span class="n">post_period</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p>Calling the summary method on the CausalImpact object we obtain a numerical summary of the analysis.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/ci_summary.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s">'report'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>For additional guidance about the correct interpretation of the summary table, the package provides a verbal interpretation, printed using the same method but with <code class="highlighter-rouge">output="report"</code>.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/ci_report.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ci</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Explaining the plots, in the package documentation:</p>
+<blockquote>
+  <p>“By default, the plot contains three panels. The first panel shows the data and a counterfactual prediction for the post-treatment period. The second panel shows the difference between observed data and counterfactual predictions. This is the pointwise causal effect, as estimated by the model. The third panel adds up the pointwise contributions from the second panel, resulting in a plot of the cumulative effect of the intervention.”</p>
+</blockquote>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/sororidade_plots.png" alt="visual"></p>
+
+<p>Just by looking at the <em>sorority</em> interest over time plot we may have concluded that it was obvious the causal effect.</p>
+
+<p>In addition, the CausalImpact report is somewhat misleading: our series had a lot of zeros, as it is an unusual term and we have counted the metrics of interest from Google trends over time. Because of this, all changes are greatly expanded, and this reflects the increase of <code class="highlighter-rouge">+6735.8%</code> in the response variable.</p>
+
+<p>Let’s look at another example to consolidate our understanding.</p>
+
+<h1 id="another-example---amazon-rainforest-burns">
+<a class="anchor" href="#another-example---amazon-rainforest-burns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Another example - Amazon rainforest burns</h1>
+
+<h2 id="context-1">
+<a class="anchor" href="#context-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Context</h2>
+<p>From <a href="https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019">wikipedia</a>:</p>
+<blockquote>
+  <p>“The forest fires in the Amazon in 2019 were a series of forest fires that affected South America, mainly Brazil. At least 161.236 fires were recorded in the country from January to October 2019, 45% more compared to the same period in 2018, which reached 84% in August”</p>
+</blockquote>
+
+<p>Also from the same article:</p>
+<blockquote>
+  <p>“<strong>On August 11, Amazonas declared a state of emergency</strong>. NASA images showed that on August 13, smoke from fires was visible from space […]”</p>
+</blockquote>
+
+<p>We will set August 11, 2019 as the intervention period for our causality study.</p>
+
+<h2 id="causal-impact">
+<a class="anchor" href="#causal-impact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Causal Impact</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kw_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">"Amazônia"</span><span class="p">,</span> <span class="s">"Pantanal"</span><span class="p">,</span> <span class="s">"Cerrado"</span><span class="p">,</span> <span class="s">"Caatinga"</span><span class="p">,</span> <span class="s">"Pampas"</span><span class="p">]</span>
+<span class="n">pytrends</span><span class="o">.</span><span class="n">build_payload</span><span class="p">(</span><span class="n">kw_list</span><span class="p">,</span> <span class="n">cat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">timeframe</span><span class="o">=</span><span class="s">'2019-03-01 2020-01-01'</span><span class="p">)</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pytrends</span><span class="o">.</span><span class="n">interest_over_time</span><span class="p">()</span>
+</code></pre></div></div>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">date</th>
+      <th style="text-align: right">Amazônia</th>
+      <th style="text-align: right">Pantanal</th>
+      <th style="text-align: right">Cerrado</th>
+      <th style="text-align: right">Caatinga</th>
+      <th style="text-align: right">Pampas</th>
+      <th style="text-align: left">isPartial</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">2019-03-03 00:00:00</td>
+      <td style="text-align: right">3</td>
+      <td style="text-align: right">12</td>
+      <td style="text-align: right">39</td>
+      <td style="text-align: right">2</td>
+      <td style="text-align: right">14</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2019-03-10 00:00:00</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">12</td>
+      <td style="text-align: right">42</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2019-03-17 00:00:00</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: right">43</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">14</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2019-03-24 00:00:00</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: right">42</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">15</td>
+      <td style="text-align: left">False</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">2019-03-31 00:00:00</td>
+      <td style="text-align: right">5</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: right">42</td>
+      <td style="text-align: right">4</td>
+      <td style="text-align: right">13</td>
+      <td style="text-align: left">False</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/iot_amazon.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"isPartial"</span><span class="p">])</span>
+
+<span class="n">pre_period</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">min</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s">"2019-08-11"</span><span class="p">)),</span>
+<span class="p">]</span>
+<span class="n">post_period</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="s">"2019-09-22"</span><span class="p">)),</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span>
+<span class="p">]</span>
+
+<span class="n">ci</span> <span class="o">=</span> <span class="n">CausalImpact</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pre_period</span><span class="p">,</span> <span class="n">post_period</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/amazon_summary.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">ci</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="n">output</span><span class="o">=</span><span class="s">'report'</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/amazon_report.png" alt="visual"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ci</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png" alt="visual"></p>
+
+<p>Here we have something closer to what we find on a daily basis, but still a little exaggerated.</p>
+
+<p>We see that the percentage increase in the response variable after the intervention was <code class="highlighter-rouge">+51.24%</code> and this change was statistically significant.</p>
+
+<h2 id="final-thoughts">
+<a class="anchor" href="#final-thoughts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Final thoughts</h2>
+
+<p>The examples shown here help to illustrate the concept and API of the package.</p>
+
+<p>I invite you to go further and try to create business scenarios in which this type of report can be useful. At work, I had no trouble finding these scenarios and it is your duty, as a data scientist, to provide data-driven value where you deem it appropriate.</p>
+
+<h4 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h4>
+<ul>
+  <li><a href="https://google.github.io/CausalImpact/CausalImpact.html">https://google.github.io/CausalImpact/CausalImpact.html</a></li>
+  <li><a href="https://github.com/dafiti/causalimpact">https://github.com/dafiti/causalimpact</a></li>
+  <li><a href="https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm">https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm</a></li>
+  <li><a href="https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88">https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88</a></li>
+  <li><a href="https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892">https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892</a></li>
+  <li><a href="https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019">https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019</a></li>
+</ul>
+
+  </div><a class="u-url" href="/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

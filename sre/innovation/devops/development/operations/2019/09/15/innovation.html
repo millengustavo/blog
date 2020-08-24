@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Innovation and Operations | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Innovation and Operations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering)." />
+<meta property="og:description" content="I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering)." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/innovation/slide1.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Innovation and Operations","dateModified":"2019-09-15T00:00:00-05:00","description":"I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering).","datePublished":"2019-09-15T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/innovation/slide1.jpeg","url":"https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Innovation and Operations | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Innovation and Operations" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering)." />
+<meta property="og:description" content="I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering)." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/innovation/slide1.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-09-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Innovation and Operations","dateModified":"2019-09-15T00:00:00-05:00","description":"I was at Google’s meetup a few weeks ago about DevOps and SRE (Site Reliability Engineering).","datePublished":"2019-09-15T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/innovation/slide1.jpeg","url":"https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Innovation and Operations</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-09-15T00:00:00-05:00" itemprop="datePublished">
+        Sep 15, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      2 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#sre">sre</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#innovation">innovation</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#devops">devops</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#development">development</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#operations">operations</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#error-budget">Error Budget</a></li>
+<li class="toc-entry toc-h1"><a href="#key-insights-from-google">Key Insights from Google</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#references">References</a></li>
+</ul>
+</li>
+</ul><p>I was at Google’s meetup a few weeks ago about DevOps and SRE (<em>Site Reliability Engineering</em>).</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/innovation/selfie.jpeg" alt="meetup"></p>
+
+<p>While these themes are not part of the essence of Data Science such as statistics, math, and programming, it is possible to draw relevant insights to technology in general.</p>
+
+<p>In the term <strong>DevOps</strong>, there are morphologically two sectors:</p>
+<ul>
+  <li>
+<strong>Developers</strong> looking to implement new features quickly, which can mean innovation.</li>
+  <li>
+<strong>Operations</strong>, which ensure customers will be served consistently.</li>
+</ul>
+
+<p>While some (dev) want to create new features as quick as possible, others (ops) like what is there working, and have an aversion to uncertainty.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/innovation/devops.jpeg" alt="devops"></p>
+
+<p>Both views are extremely valid, and neither is more correct than the other. It is like a balance. For sectors to generate value consistently, the balance should not weigh heavily on either side.</p>
+
+<h1 id="error-budget">
+<a class="anchor" href="#error-budget" aria-hidden="true"><span class="octicon octicon-link"></span></a>Error Budget</h1>
+
+<p>Most technology service provision agreements have an SLA. An acceptable maximum delay for delivery of the service or product is set.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/innovation/glossario.jpeg" alt="glossario"></p>
+
+<p>This concept, in addition to guiding the quality of operations, provides an interesting insight into freedom of innovation.</p>
+
+<p>Imagine that the service is being delivered at a consistency far above that agreed upon. For operations this is the perfect scenario, nothing fails, we have no errors.</p>
+
+<p>But this view is not 100% correct if you think about business in the medium and long term. If there is room to make more mistakes, the business must be free to innovate. This is where developers come in and can spend their error budget on new products or enhancements.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/innovation/sre.jpeg" alt="sre"></p>
+
+<p>The <strong>error budget</strong> provides a metric that determines how unreliable the service is allowed to be. This metric removes the politics from negotiations when deciding how much risk to allow.</p>
+
+<p>The main benefit of an error budget is that it provides a common incentive that allows both product development and SRE to focus on finding the right balance between innovation and reliability.</p>
+
+<h1 id="key-insights-from-google">
+<a class="anchor" href="#key-insights-from-google" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key Insights from Google</h1>
+
+<ul>
+  <li>Managing service reliability is largely about managing risk, and managing risk can be costly.</li>
+  <li>100% is probably never the right reliability target: not only is it impossible to achieve, it’s typically more reliability than a service’s users want or notice. Match the profile of the service to the risk the business is willing to take.</li>
+  <li>An error budget aligns incentives and emphasizes joint ownership between SRE and product development. Error budgets make it easier to decide the rate of releases and to effectively defuse discussions about outages with stakeholders, and allows multiple teams to reach the same conclusion about production risk without rancor.</li>
+</ul>
+
+<h2 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h2>
+<ul>
+  <li>SRE Book by Google - https://landing.google.com/sre/sre-book/chapters/embracing-risk/</li>
+</ul>
+
+  </div><a class="u-url" href="/blog/sre/innovation/devops/development/operations/2019/09/15/innovation.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>High performance Python: Practical Performant Programming for Humans | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="High performance Python: Practical Performant Programming for Humans" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"High performance Python: Practical Performant Programming for Humans","dateModified":"2020-06-10T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-06-10T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg","url":"https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>High performance Python: Practical Performant Programming for Humans | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="High performance Python: Practical Performant Programming for Humans" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-06-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"High performance Python: Practical Performant Programming for Humans","dateModified":"2020-06-10T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-06-10T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/high_performance_python/high_performance_python.jpg","url":"https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">High performance Python: Practical Performant Programming for Humans</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-06-10T00:00:00-05:00" itemprop="datePublished">
+        Jun 10, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      26 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#software engineering">software engineering</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#ch1-understanding-performant-python">Ch1. Understanding Performant Python</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#why-use-python">Why use Python?</a></li>
+<li class="toc-entry toc-h2"><a href="#how-to-be-a-highly-performant-programmer">How to be a highly performant programmer</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-profiling-to-find-bottlenecks">Ch2. Profiling to Find Bottlenecks</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#cprofile-module">cProfile module</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#visualizing-cprofile-output-with-snakeviz">Visualizing cProfile output with Snakeviz</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#using-line_profiler-for-line-by-line-measurements">Using line_profiler for line-by-line measurements</a></li>
+<li class="toc-entry toc-h2"><a href="#using-memory_profiler-to-diagnose-memory-usage">Using memory_profiler to diagnose memory usage</a></li>
+<li class="toc-entry toc-h2"><a href="#introspecting-an-existing-process-with-pyspy">Introspecting an existing process with PySpy</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch3-lists-and-tuples">Ch3. Lists and Tuples</a></li>
+<li class="toc-entry toc-h1"><a href="#ch4-dictionaries-and-sets">Ch4. Dictionaries and Sets</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#complexity-and-speed">Complexity and speed</a></li>
+<li class="toc-entry toc-h2"><a href="#how-do-dictionaries-and-sets-work">How do dictionaries and sets work?</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch5-iterators-and-generators">Ch5. Iterators and Generators</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#python-for-loop-deconstructed">Python for loop deconstructed</a></li>
+<li class="toc-entry toc-h2"><a href="#lazy-generator-evaluation">Lazy generator evaluation</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-matrix-and-vector-computation">Ch6. Matrix and Vector Computation</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#memory-fragmentation">Memory fragmentation</a></li>
+<li class="toc-entry toc-h2"><a href="#numpy">numpy</a></li>
+<li class="toc-entry toc-h2"><a href="#numexpr-making-in-place-operations-faster-and-easier">numexpr: making in-place operations faster and easier</a></li>
+<li class="toc-entry toc-h2"><a href="#lessons-from-matrix-optimizations">Lessons from matrix optimizations</a></li>
+<li class="toc-entry toc-h2"><a href="#pandas">Pandas</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#pandass-internal-model">Pandas’s internal model</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#building-dataframes-and-series-from-partial-results-rather-than-concatenating">Building DataFrames and Series from partial results rather than concatenating</a></li>
+<li class="toc-entry toc-h2"><a href="#advice-for-effective-pandas-development">Advice for effective pandas development</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch7-compiling-to-c">Ch7. Compiling to C</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#python-offers">Python offers</a></li>
+<li class="toc-entry toc-h2"><a href="#what-sort-of-speed-gains-are-possible">What sort of speed gains are possible?</a></li>
+<li class="toc-entry toc-h2"><a href="#jit-versus-aot-compilers">JIT versus AOT compilers</a></li>
+<li class="toc-entry toc-h2"><a href="#why-does-type-information-help-the-code-run-faster">Why does type information help the code run faster?</a></li>
+<li class="toc-entry toc-h2"><a href="#using-a-c-compiler">Using a C compiler</a></li>
+<li class="toc-entry toc-h2"><a href="#cython">Cython</a></li>
+<li class="toc-entry toc-h2"><a href="#numba">Numba</a></li>
+<li class="toc-entry toc-h2"><a href="#pypy">PyPy</a></li>
+<li class="toc-entry toc-h2"><a href="#when-to-use-each-technology">When to use each technology</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#other-upcoming-projects">Other upcoming projects</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#graphics-processing-units-gpus">Graphics Processing Units (GPUs)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dynamic-graphs-pytorch">Dynamic graphs: PyTorch</a></li>
+<li class="toc-entry toc-h3"><a href="#basic-gpu-profiling">Basic GPU profiling</a></li>
+<li class="toc-entry toc-h3"><a href="#when-to-use-gpus">When to use GPUs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch8-asynchronous-io">Ch8. Asynchronous I/O</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#introduction-to-asynchronous-programming">Introduction to asynchronous programming</a></li>
+<li class="toc-entry toc-h2"><a href="#how-does-asyncawait-work">How does async/await work?</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#gevent">Gevent</a></li>
+<li class="toc-entry toc-h3"><a href="#tornado">tornado</a></li>
+<li class="toc-entry toc-h3"><a href="#aiohttp">aiohttp</a></li>
+<li class="toc-entry toc-h3"><a href="#batched-results">Batched results</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch9-the-multiprocessing-module">Ch9. The multiprocessing module</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#replacing-multiprocessing-with-joblib">Replacing multiprocessing with Joblib</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#intelligent-caching-of-function-call-results">Intelligent caching of function call results</a></li>
+<li class="toc-entry toc-h3"><a href="#using-numpy">Using numpy</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#asynchronous-systems">Asynchronous systems</a></li>
+<li class="toc-entry toc-h2"><a href="#interprocess-communication-ipc">Interprocess Communication (IPC)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#multiprocessingmanager">multiprocessing.Manager()</a></li>
+<li class="toc-entry toc-h3"><a href="#redis">Redis</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#mmap">mmap</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-clusters-and-job-queues">Ch10. Clusters and Job Queues</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#benefits-of-clustering">Benefits of clustering</a></li>
+<li class="toc-entry toc-h2"><a href="#drawbacks-of-clustering">Drawbacks of clustering</a></li>
+<li class="toc-entry toc-h2"><a href="#parallel-pandas-with-dask">Parallel Pandas with Dask</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#dask">Dask</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#swifter">Swifter</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#vaex">Vaex</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#nsq-for-robust-production-clustering">NSQ for robust production clustering</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch11-using-less-ram">Ch11. Using less RAM</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#objects-for-primitives-are-expensive">Objects for primitives are expensive</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#the-array-module-stores-many-primitive-objects-cheaply">The array module stores many primitive objects cheaply</a></li>
+<li class="toc-entry toc-h3"><a href="#using-less-ram-in-numpy-with-numexpr">Using less RAM in NumPy with NumExpr</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#bytes-versus-unicode">Bytes versus Unicode</a></li>
+<li class="toc-entry toc-h2"><a href="#more-efficient-tree-structures-to-represent-strings">More efficient tree structures to represent strings</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#directed-acyclic-word-graph-dawg">Directed Acyclic Word Graph (DAWG)</a></li>
+<li class="toc-entry toc-h3"><a href="#marisa-trie">Marisa Trie</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#scikit-learns-dictvectorizer-and-featurehasher">Scikit-learn’s DictVectorizer and FeatureHasher</a></li>
+<li class="toc-entry toc-h2"><a href="#scypys-sparse-matrices">ScyPy’s Sparse Matrices</a></li>
+<li class="toc-entry toc-h2"><a href="#tips-for-using-less-ram">Tips for using less RAM</a></li>
+<li class="toc-entry toc-h2"><a href="#probabilistic-data-structures">Probabilistic Data Structures</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#morris-counter">Morris counter</a></li>
+<li class="toc-entry toc-h3"><a href="#k-minimum-values">K-Minimum values</a></li>
+<li class="toc-entry toc-h3"><a href="#bloom-filters">Bloom filters</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch12-lessons-from-the-field">Ch12. Lessons from the field</a></li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Authors: Micha Gorelick, Ian Ozsvald</p>
+
+<blockquote>
+  <p>“Every programmer can benefit from understanding how to build performant systems (…) When something becomes ten times cheaper in time or compute costs, suddenly the set of applications you can address is wider than you imagined”</p>
+</blockquote>
+
+<p>Supplemental material for the book (code examples, exercises, etc.) is available for download at https://github.com/mynameisfiber/high_performance_python_2e.</p>
+
+<h1 id="ch1-understanding-performant-python">
+<a class="anchor" href="#ch1-understanding-performant-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. Understanding Performant Python</h1>
+
+<h2 id="why-use-python">
+<a class="anchor" href="#why-use-python" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why use Python?</h2>
+<ul>
+  <li>highly expressive and easy to learn</li>
+  <li>
+<code class="highlighter-rouge">scikit-learn</code> wraps LIBLINEAR and LIBSVM (written in C)</li>
+  <li>
+<code class="highlighter-rouge">numpy</code> includes BLAS and other C and Fortran libraries</li>
+  <li>python code that properly utilizes these modules can be as fast as comparable C code</li>
+  <li>“batteries included”</li>
+  <li>enable fast prototyping of an idea</li>
+</ul>
+
+<h2 id="how-to-be-a-highly-performant-programmer">
+<a class="anchor" href="#how-to-be-a-highly-performant-programmer" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to be a highly performant programmer</h2>
+<p>Overall team velocity is far more important than speedups and complicated solutions. Several factors are key to this:</p>
+<ul>
+  <li>Good structure</li>
+  <li>Documentation</li>
+  <li>Debuggability</li>
+  <li>Shared standards</li>
+</ul>
+
+<h1 id="ch2-profiling-to-find-bottlenecks">
+<a class="anchor" href="#ch2-profiling-to-find-bottlenecks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. Profiling to Find Bottlenecks</h1>
+
+<p>Profiling let you make the most pragmatic decisions for the least overall effort: Code run “fast enough” and “lean enough”</p>
+
+<blockquote>
+  <p>“If you avoid profiling and jump to optmization, you’ll quite likely do more work in the long run. Always be driven by the results of profiling”</p>
+</blockquote>
+
+<p><em>“Embarrassingly parallel problem”</em>: no data is shared between points</p>
+
+<p><code class="highlighter-rouge">timeit</code> module temporarily disables the garbage collector</p>
+
+<h2 id="cprofile-module">
+<a class="anchor" href="#cprofile-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>cProfile module</h2>
+<p>Built-in profiling tool in the standard library</p>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">profile</code>: original and slower pure Python profiler</li>
+  <li>
+<code class="highlighter-rouge">cProfile</code>: same interface as <code class="highlighter-rouge">profile</code> and is written in <code class="highlighter-rouge">C</code> for a lower overhead</li>
+</ul>
+
+<ol>
+  <li>Generate a <em>hypothesis</em> about the speed of parts of your code</li>
+  <li>Measure how wrong you are</li>
+  <li>Improve your intuition about certain coding styles</li>
+</ol>
+
+<h3 id="visualizing-cprofile-output-with-snakeviz">
+<a class="anchor" href="#visualizing-cprofile-output-with-snakeviz" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualizing cProfile output with Snakeviz</h3>
+<p><code class="highlighter-rouge">snakeviz</code>: visualizer that draws the output of <code class="highlighter-rouge">cProfile</code> as a diagram -&gt; larger boxes are areas of code that take longer to run</p>
+
+<h2 id="using-line_profiler-for-line-by-line-measurements">
+<a class="anchor" href="#using-line_profiler-for-line-by-line-measurements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using line_profiler for line-by-line measurements</h2>
+<p><code class="highlighter-rouge">line_profilier</code>: strongest tool for identifying the cause of CPU-bound problems in Python code: profile individual functions on a line-by-line basis</p>
+
+<p>Be aware of the complexity of <strong>Python’s dynamic machinery</strong></p>
+
+<p>The order of evaluation for Python statements is both <strong>left to right and opportunistic</strong>: put the cheapest test on the left side of the equation</p>
+
+<h2 id="using-memory_profiler-to-diagnose-memory-usage">
+<a class="anchor" href="#using-memory_profiler-to-diagnose-memory-usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using memory_profiler to diagnose memory usage</h2>
+<p><code class="highlighter-rouge">memory_profiler</code> measures memory usage on a line-by-line basis:</p>
+<ul>
+  <li>Could we use less RAM by rewriting this function to work more efficiently?</li>
+  <li>Could we use more RAM and save CPU cycles by caching?</li>
+</ul>
+
+<p><strong>Tips</strong></p>
+<ul>
+  <li>Memory profiling make your code run 10-100x slower</li>
+  <li>Install <code class="highlighter-rouge">psutil</code> to <code class="highlighter-rouge">memory_profiler</code> run faster</li>
+  <li>Use <code class="highlighter-rouge">memory_profiler</code> occasionally and <code class="highlighter-rouge">line_profiler</code> more frequently</li>
+  <li>
+<code class="highlighter-rouge">--pdb-mmem=XXX</code> flag: <code class="highlighter-rouge">pdb</code> debugger is activate after the process exceeds XXX MB -&gt; drop you in directly at the point in your code where too many allocations are occurring</li>
+</ul>
+
+<h2 id="introspecting-an-existing-process-with-pyspy">
+<a class="anchor" href="#introspecting-an-existing-process-with-pyspy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introspecting an existing process with PySpy</h2>
+<p><code class="highlighter-rouge">py-spy</code>: sampling profiler, don’t require any code changes -&gt; it introspects an already-running Python process and reports in the console with a <em>top-like</em> display</p>
+
+<h1 id="ch3-lists-and-tuples">
+<a class="anchor" href="#ch3-lists-and-tuples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. Lists and Tuples</h1>
+<ul>
+  <li>
+<strong>Lists</strong>: dynamic arrays; mutable and allow for resizing</li>
+  <li>
+<strong>Tuples</strong>: static arrays; immutable and the data within them cannot be changed aftey they have been created</li>
+  <li>Tuples are cached by the Python runtime which means that we don’t need to talk to the kernel to reserve memory every time we want to use one</li>
+</ul>
+
+<p>Python lists have a built-in sorting algorithm that uses Tim sort -&gt; O(n) in the best case and O(nlogn) in the worst case</p>
+
+<p>Once sorted, we can find our desired element using a binary search -&gt; average case of complexity of O(logn)</p>
+
+<p>Dictionary lookup takes only O(1), but:</p>
+<ul>
+  <li>converting the data to a dictionary takes O(n)</li>
+  <li>no repeating keys may be undesirable</li>
+</ul>
+
+<p><code class="highlighter-rouge">bisect</code> module: provide alternative functions, heavily optimized</p>
+
+<blockquote>
+  <p>“<strong>Pick the right data structure and stick with it!</strong> Although there may be more efficient data structures for particular operations, the cost of converting to those data structures may negate any efficiency boost”</p>
+</blockquote>
+
+<ul>
+  <li>Tuples are for describing multiple properties of one unchanging thing</li>
+  <li>List can be used to store collections of data about completely disparate objects</li>
+  <li>Both can take mixed types</li>
+</ul>
+
+<blockquote>
+  <p>“Generic code will be much slower than code specifically designed to solve a particular problem”</p>
+</blockquote>
+
+<ul>
+  <li>Tuple (immutable): lightweight data structure</li>
+  <li>List (mutable): extra memory needed to store them and extra computations needed when using them</li>
+</ul>
+
+<h1 id="ch4-dictionaries-and-sets">
+<a class="anchor" href="#ch4-dictionaries-and-sets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. Dictionaries and Sets</h1>
+<p>Ideal data structures to use when your data has no intrinsic order (except for insertion order), but does have a unique object that can be used to reference it</p>
+<ul>
+  <li>
+<em>key</em>: reference object</li>
+  <li>
+<em>value</em>: data</li>
+</ul>
+
+<p>Sets do not actually contain values: is a collection of unique keys -&gt; useful for doing set operations</p>
+
+<p><strong>hashable</strong> type: implements <code class="highlighter-rouge">__hash__</code> and either <code class="highlighter-rouge">__eq__</code> or <code class="highlighter-rouge">__cmp__</code></p>
+
+<h2 id="complexity-and-speed">
+<a class="anchor" href="#complexity-and-speed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Complexity and speed</h2>
+<ul>
+  <li>O(1) lookups based on the arbitrary index</li>
+  <li>O(1) insertion time</li>
+  <li>Larger footprint in memory</li>
+  <li>Actual speed depends on the hashing function</li>
+</ul>
+
+<h2 id="how-do-dictionaries-and-sets-work">
+<a class="anchor" href="#how-do-dictionaries-and-sets-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>How do dictionaries and sets work?</h2>
+<p>Use <em>hash tables</em> to achieve O(1) lookups and insertions -&gt; clever usage of a hash function to turn an arbitrary key (i.e., a string or object) into an index for a list</p>
+
+<blockquote>
+  <p><em>load factor</em>: how well distributed the data is throughout the hash table -&gt; related to the entropy of the hash function</p>
+</blockquote>
+
+<p>Hash functions must return integers</p>
+
+<ul>
+  <li>Numerical types (<code class="highlighter-rouge">int</code> and <code class="highlighter-rouge">float</code>): hash is based on the bit value of the number they represent</li>
+  <li>Tuples and strings: hash value based on their contents</li>
+  <li>Lists: do not support hashing because their values can change</li>
+</ul>
+
+<blockquote>
+  <p>A custom-selected hash function should be careful to evenly distribute hash values in order to avoid collisions (will degrade the performance of a hash table) -&gt; constantly “probe” the other values -&gt; worst case O(n) = searching through a list</p>
+</blockquote>
+
+<p><strong>Entropy</strong>: “how well distributed my hash function is” -&gt; max entropy = <em>ideal</em> hash function = minimal number of collisions</p>
+
+<h1 id="ch5-iterators-and-generators">
+<a class="anchor" href="#ch5-iterators-and-generators" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. Iterators and Generators</h1>
+
+<h2 id="python-for-loop-deconstructed">
+<a class="anchor" href="#python-for-loop-deconstructed" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python <code class="highlighter-rouge">for</code> loop deconstructed</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># The Python loop
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">object</span><span class="p">:</span>
+    <span class="n">do_work</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+<span class="c1"># Is equivalent to
+</span><span class="n">object_iterator</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="nb">object</span><span class="p">)</span>
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">object_iterator</span><span class="p">)</span>
+    <span class="k">except</span> <span class="nb">StopIteration</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">do_work</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Changing to generators instead of precomputed arrays may require algorithmic changes (sometimes not so easy to understand)</li>
+</ul>
+
+<blockquote>
+  <p>“Many of Python’s built-in functions that operate on sequences are generators themselves. <code class="highlighter-rouge">range</code> returns a generator of values as opposed to the actual list of numbers within the specified range. Similarly, <code class="highlighter-rouge">map</code>, <code class="highlighter-rouge">zip</code>, <code class="highlighter-rouge">filter</code>, <code class="highlighter-rouge">reversed</code>, and <code class="highlighter-rouge">enumerate</code> all perform the calculation as needed and don’t store the full result”</p>
+</blockquote>
+
+<ul>
+  <li>Generators have less memory impact than list comprehension</li>
+  <li>Generators are really a way of organizing your code and having smarter loops</li>
+</ul>
+
+<h2 id="lazy-generator-evaluation">
+<a class="anchor" href="#lazy-generator-evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lazy generator evaluation</h2>
+<p><em>Single pass</em> or <em>online</em> algorithms: at any point in our calculation with a generator, we have only the current value and cannot reference any other items in the sequence</p>
+
+<p><code class="highlighter-rouge">itertools</code> from the standard library provides useful functions to make generators easier to use:</p>
+<ul>
+  <li>
+<code class="highlighter-rouge">islice</code>: slicing a potentially infinite generator</li>
+  <li>
+<code class="highlighter-rouge">chain</code>: chain together multiple generators</li>
+  <li>
+<code class="highlighter-rouge">takewhile</code>: adds a condition that will end a generator</li>
+  <li>
+<code class="highlighter-rouge">cycle</code>: makes a finite generator infinite by constantly repeating it</li>
+</ul>
+
+<h1 id="ch6-matrix-and-vector-computation">
+<a class="anchor" href="#ch6-matrix-and-vector-computation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. Matrix and Vector Computation</h1>
+<blockquote>
+  <p>Understanding the motivation behind your code and the intricacies of the algorithm will give you deeper insight about possible methods of optimization</p>
+</blockquote>
+
+<h2 id="memory-fragmentation">
+<a class="anchor" href="#memory-fragmentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Memory fragmentation</h2>
+<p>Python doesn’t natively support vectorization</p>
+<ul>
+  <li>Python lists store pointers to the actual data -&gt; good because it allows us to store whatever type of data inside a list, however when it comes to vector and matrix operations, this is a source of performance degradation</li>
+  <li>Python bytecode is not optimized for vectorization -&gt; <code class="highlighter-rouge">for</code> loops cannot predict when using vectorization would be benefical</li>
+</ul>
+
+<p><em>von Neumann bottleneck</em>: limited bandwidth between memory and CPU as a result of the tiered memory architecture that modern computers use</p>
+
+<p><code class="highlighter-rouge">perf</code> Linux tool: insights into how the CPU is dealing with the program being run</p>
+
+<p><code class="highlighter-rouge">array</code> object is less suitable for math and more suitable for storing fixed-type data more efficiently in memory</p>
+
+<h2 id="numpy">
+<a class="anchor" href="#numpy" aria-hidden="true"><span class="octicon octicon-link"></span></a>numpy</h2>
+<p><code class="highlighter-rouge">numpy</code> has all of the features we need—it stores data in contiguous chunks of memory and supports vectorized operations on its data. As a result, any arithmetic we do on <code class="highlighter-rouge">numpy</code> arrays happens in chunks without us having to explicitly loop over each element. Not only is it much easier to do matrix arithmetic this way, but it is also faster</p>
+
+<p>Vectorization from <code class="highlighter-rouge">numpy</code>: may run fewer instructions per cycle, but each instruction does much more work</p>
+
+<h2 id="numexpr-making-in-place-operations-faster-and-easier">
+<a class="anchor" href="#numexpr-making-in-place-operations-faster-and-easier" aria-hidden="true"><span class="octicon octicon-link"></span></a>numexpr: making in-place operations faster and easier</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">numpy</code>’s optimization of vector operations: occurs on only one operation at a time</li>
+  <li>
+<code class="highlighter-rouge">numexpr</code> is a module that can take an entire vector expression and compile it into very efficient code that is optimized to minimize cache misses and temporary space used. Expressions can utilize multiple CPU cores</li>
+  <li>Easy to change code to use <code class="highlighter-rouge">numexpr</code>: rewrite the expressions as strings with references to local variables</li>
+</ul>
+
+<h2 id="lessons-from-matrix-optimizations">
+<a class="anchor" href="#lessons-from-matrix-optimizations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lessons from matrix optimizations</h2>
+<p>Always take care of any administrative things the code must do during initialization</p>
+<ul>
+  <li>allocating memory</li>
+  <li>reading a configuration from a file</li>
+  <li>precomputing values that will be needed throughout the lifetime of a program</li>
+</ul>
+
+<h2 id="pandas">
+<a class="anchor" href="#pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas</h2>
+<h3 id="pandass-internal-model">
+<a class="anchor" href="#pandass-internal-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pandas’s internal model</h3>
+<ul>
+  <li>Operations on columns often generate temporary intermediate arrays which consume RAM: expect a temporary memory usage of up to 3-5x your current usage</li>
+  <li>Operations can be single-threaded and limited by Python’s global interpreter lock (GIL)</li>
+  <li>Columns of the same <code class="highlighter-rouge">dtype</code> are grouped together by a <code class="highlighter-rouge">BlockManager</code> -&gt; make row-wise operations on columns of the same datatype faster</li>
+  <li>Operations on data of a single common block -&gt; <em>view</em>; different <code class="highlighter-rouge">dtypes</code> -&gt; can cause a <em>copy</em> (slower)</li>
+  <li>Pandas uses a mix of NumPy datatypes and its own extension datatypes</li>
+  <li>numpy <code class="highlighter-rouge">int64</code> isn’t NaN aware -&gt; Pandas <code class="highlighter-rouge">Int64</code> uses two columns of data: integers and NaN bit mask</li>
+  <li>numpy <code class="highlighter-rouge">bool</code> isn’t NaN aware -&gt; Pandas <code class="highlighter-rouge">boolean</code>
+</li>
+</ul>
+
+<blockquote>
+  <p>More safety makes things run slower (checking passing appropriate data) -&gt; <strong>Developer time (and sanity) x Execution time</strong>. Checks enabled: avoid painful debugging sessions, which kill developer productivity. If we know that our data is of the correct form for our chosen algorithm, these checks will add a penalty</p>
+</blockquote>
+
+<h2 id="building-dataframes-and-series-from-partial-results-rather-than-concatenating">
+<a class="anchor" href="#building-dataframes-and-series-from-partial-results-rather-than-concatenating" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building DataFrames and Series from partial results rather than concatenating</h2>
+<ul>
+  <li>Avoid repeated calls to <code class="highlighter-rouge">concat</code> in Pandas (and to the equivalent <code class="highlighter-rouge">concatenate</code> in NumPy)</li>
+  <li>Build lists of intermediate results and then construct a Series or DataFrame from this list, rather than concatenating to an existing object</li>
+</ul>
+
+<h2 id="advice-for-effective-pandas-development">
+<a class="anchor" href="#advice-for-effective-pandas-development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advice for effective pandas development</h2>
+<ul>
+  <li>Install the optional dependencies <code class="highlighter-rouge">numexpr</code> and <code class="highlighter-rouge">bottleneck</code> for additional performance improvements</li>
+  <li>Caution against chaining too many rows of pandas operations in sequence: difficult to debug, chain only a couple of operations together to simplify your maintenance</li>
+  <li>
+<strong>Filter your data before calculating</strong> on the remaining rows rather than filtering after calculating</li>
+  <li>Check the schema of your DataFrames as they evolve -&gt; tool like <code class="highlighter-rouge">bulwark</code>, you can visualize confirm that your expectations are being met</li>
+  <li>Large Series with low cardinality: <code class="highlighter-rouge">df['series_of_strings'].astype('category')</code> -&gt; <code class="highlighter-rouge">value_counts</code> and <code class="highlighter-rouge">groupby</code> run faster and the Series consume less RAM</li>
+  <li>Convert 8-byte <code class="highlighter-rouge">float64</code> and <code class="highlighter-rouge">int64</code> to smaller datatypes -&gt; 2-byte <code class="highlighter-rouge">float16</code> or 1-byte <code class="highlighter-rouge">int8</code> -&gt; smaller range to further save RAM</li>
+  <li>Use the <code class="highlighter-rouge">del</code> keyword to delete earlier references and clear them from memory</li>
+  <li>Pandas <code class="highlighter-rouge">drop</code> method to delete unused columns</li>
+  <li>Persist the prepared DataFrame version to disk by using <code class="highlighter-rouge">to_pickle</code>
+</li>
+  <li>Avoid <code class="highlighter-rouge">inplace=True</code> -&gt; are scheduled to be removed from the library over time</li>
+  <li>
+<code class="highlighter-rouge">Modin</code>, <code class="highlighter-rouge">cuDF</code>
+</li>
+  <li>
+<code class="highlighter-rouge">Vaex</code>: work on very large datasets that exceed RAM by using lazy evaluation while retaining a similar interface to Pandas -&gt; large datasets and string-heavy operations</li>
+</ul>
+
+<h1 id="ch7-compiling-to-c">
+<a class="anchor" href="#ch7-compiling-to-c" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. Compiling to C</h1>
+<p>To make code run faster:</p>
+<ul>
+  <li>Make it do less work</li>
+  <li>Choose good algorithms</li>
+  <li>Reduce the amount of data you’re processing</li>
+  <li>Execute fewer instructions -&gt; compile your code down to machine code</li>
+</ul>
+
+<h2 id="python-offers">
+<a class="anchor" href="#python-offers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python offers</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">Cython</code>: pure C-based compiling</li>
+  <li>
+<code class="highlighter-rouge">Numba</code>: LLVM-based compiling</li>
+  <li>
+<code class="highlighter-rouge">PyPy</code>: replacement virtual machine which includes a built-in just-in-time (JIT) compiler</li>
+</ul>
+
+<h2 id="what-sort-of-speed-gains-are-possible">
+<a class="anchor" href="#what-sort-of-speed-gains-are-possible" aria-hidden="true"><span class="octicon octicon-link"></span></a>What sort of speed gains are possible?</h2>
+<p>Compiling generate more gains when the code:</p>
+<ul>
+  <li>is mathematical</li>
+  <li>has lots of loops that repeat the same operations many times</li>
+</ul>
+
+<p>Unlikely to show speed up:</p>
+<ul>
+  <li>calls to external libraries (regexp, string operations, calls to database)</li>
+  <li>programs that are I/O-bound</li>
+</ul>
+
+<h2 id="jit-versus-aot-compilers">
+<a class="anchor" href="#jit-versus-aot-compilers" aria-hidden="true"><span class="octicon octicon-link"></span></a>JIT versus AOT compilers</h2>
+<ul>
+  <li>
+<strong>AOT (ahead of time)</strong>: <code class="highlighter-rouge">Cython</code> -&gt; you’ll have a library that can instantly be used -&gt; best speedups, but requires the most manual effort</li>
+  <li>
+<strong>JIT (just in time)</strong>: <code class="highlighter-rouge">Numba</code>, <code class="highlighter-rouge">PyPy</code> -&gt; you don’t have to do much work up front, but you have a “cold start” problem -&gt; impressive speedups with little manual intervention</li>
+</ul>
+
+<h2 id="why-does-type-information-help-the-code-run-faster">
+<a class="anchor" href="#why-does-type-information-help-the-code-run-faster" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why does type information help the code run faster?</h2>
+<p>Python is dynamically typed -&gt; keeping the code generic makes it run more slowly</p>
+
+<blockquote>
+  <p>“Inside a section of code that is CPU-bound, it is often the case that the types of variables do not change. This gives us an opportunity for <strong>static compilation and faster code execution</strong>”</p>
+</blockquote>
+
+<h2 id="using-a-c-compiler">
+<a class="anchor" href="#using-a-c-compiler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using a C compiler</h2>
+<p><code class="highlighter-rouge">Cython</code> uses <code class="highlighter-rouge">gcc</code>: good choice for most platforms; well supported and quite advanced</p>
+
+<h2 id="cython">
+<a class="anchor" href="#cython" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cython</h2>
+<ul>
+  <li>Compiler that converts type-annotaded (C-like) Python into a compiled extension module</li>
+  <li>Wide used and mature</li>
+  <li>
+<code class="highlighter-rouge">OpenMP</code> support: possible to convert parallel problems into multiprocessing-aware modules</li>
+  <li>
+<code class="highlighter-rouge">pyximport</code>: simplified build system</li>
+  <li>Annotation option that output an HTML file -&gt; more yellow = more calls into the Python virtual machine; more white = more non-Python C code</li>
+</ul>
+
+<p>Lines that cost the most CPU time:</p>
+<ul>
+  <li>inside tight inner loops</li>
+  <li>dereferencing <code class="highlighter-rouge">list</code>, <code class="highlighter-rouge">array</code> or <code class="highlighter-rouge">np.array</code> items</li>
+  <li>mathematical operations</li>
+</ul>
+
+<p><code class="highlighter-rouge">cdef</code> keyword: declare variables inside the function body. These must be declared at the top of the function, as that’s a requirement from the C language specification</p>
+
+<blockquote>
+  <p><strong>Strength reduction</strong>: writing equivalent but more specialized code to solve the same problem. Trade worse flexibility (and possibly worse readability) for faster execution</p>
+</blockquote>
+
+<p><code class="highlighter-rouge">memoryview</code>: allows the same low-level access to any object that implements the buffer interface, including <code class="highlighter-rouge">numpy</code> arrays and Python arrays</p>
+
+<h2 id="numba">
+<a class="anchor" href="#numba" aria-hidden="true"><span class="octicon octicon-link"></span></a>Numba</h2>
+<ul>
+  <li>JIT compiler that specializes in <code class="highlighter-rouge">numpy</code> code, which it compiles via LLVM compiler at runtime</li>
+  <li>You provide a decorator telling it which functions to focus on and then you let Numba take over</li>
+  <li>
+<code class="highlighter-rouge">numpy</code> arrays and nonvectorized code that iterates over many items: Numba should give you a quick and very painless win.</li>
+  <li>Numba does not bind to external C libraries (which Cython can do), but it can automatically generate code for GPUs (which Cython cannot).</li>
+  <li>OpenMP parallelization support with <code class="highlighter-rouge">prange</code>
+</li>
+  <li>Break your code into small (&lt;10 line) and discrete functions and tackle these one at a time</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>from numba import jit
+
+@jit()
+def my_fn():
+</code></pre></div></div>
+
+<h2 id="pypy">
+<a class="anchor" href="#pypy" aria-hidden="true"><span class="octicon octicon-link"></span></a>PyPy</h2>
+<ul>
+  <li>Alternative implementation of the Python language that includes a tracing just-in-time compiler</li>
+  <li>Offers a faster experience than CPython</li>
+  <li>Uses a different type of garbage collector (modified mark-and-sweep) than CPython (reference counting) = may clean up an unused object much later</li>
+  <li>PyPy can use a lot of RAM</li>
+  <li>
+<code class="highlighter-rouge">vmprof</code>: lightweight sampling profiler</li>
+</ul>
+
+<h2 id="when-to-use-each-technology">
+<a class="anchor" href="#when-to-use-each-technology" aria-hidden="true"><span class="octicon octicon-link"></span></a>When to use each technology</h2>
+<p><img src="./compiler_options.png" alt="compiler_options"></p>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">Numba</code>: quick wins for little effort; young project</li>
+  <li>
+<code class="highlighter-rouge">Cython</code>: best results for the widest set of prolbmes; requires more effort; mix Python and C annotations</li>
+  <li>
+<code class="highlighter-rouge">PyPy</code>: strong option if you’re not using <code class="highlighter-rouge">numpy</code> or other hard-to-port C extensions</li>
+</ul>
+
+<h3 id="other-upcoming-projects">
+<a class="anchor" href="#other-upcoming-projects" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other upcoming projects</h3>
+<ul>
+  <li>Pythran</li>
+  <li>Transonic</li>
+  <li>ShedSkin</li>
+  <li>PyCUDA</li>
+  <li>PyOpenCL</li>
+  <li>Nuitka</li>
+</ul>
+
+<h2 id="graphics-processing-units-gpus">
+<a class="anchor" href="#graphics-processing-units-gpus" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graphics Processing Units (GPUs)</h2>
+<p>Easy-to-use GPU mathematics libraries:</p>
+<ul>
+  <li>TensorFlow</li>
+  <li>PyTorch</li>
+</ul>
+
+<h3 id="dynamic-graphs-pytorch">
+<a class="anchor" href="#dynamic-graphs-pytorch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dynamic graphs: PyTorch</h3>
+<p>Static computational graph tensor library that is particularly user-friendly and has a very intuitive API for anyone familiar with <code class="highlighter-rouge">numpy</code></p>
+
+<blockquote>
+  <p><em>Static computational graph</em>: performing operations on <code class="highlighter-rouge">PyTorch</code> objects creates a dynamic definition of a program that gets compiled to GPU code in the background when it is executed -&gt; changes to the Python code automatically get reflected in changes in the GPU code without an explicit compilation step needed</p>
+</blockquote>
+
+<h3 id="basic-gpu-profiling">
+<a class="anchor" href="#basic-gpu-profiling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic GPU profiling</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">nvidia-smi</code>: inspect the resource utilization of the GPU</li>
+  <li>Power usage is a good proxy for judging how much of the GPU’s compute power is being used -&gt; more power the GPU is drawing = more compute it is currently doing</li>
+</ul>
+
+<h3 id="when-to-use-gpus">
+<a class="anchor" href="#when-to-use-gpus" aria-hidden="true"><span class="octicon octicon-link"></span></a>When to use GPUs</h3>
+<ul>
+  <li>Task requires mainly linear algebra and matrix manipulations (multiplication, addition, Fourier transforms)</li>
+  <li>Particularly true if the calculation can happen on the GPU uninterrupted for a period of time before being copied back into system memory</li>
+  <li>GPU can run many more tasks at once than the CPU can, but each of those tasks run more slowly on the GPU than on the CPU</li>
+  <li>Not a good tool for tasks that require exceedingly large amounts of data, many conditional manipulations of the data, or changing data</li>
+</ul>
+
+<ol>
+  <li>Ensure that the memory use of the problem will fit withing the GPU</li>
+  <li>Evaluate whether the algorithm requires a lot of branching conditions versus vectorized operations</li>
+  <li>Evaluate how much data needs to be moved between the GPU and the CPU</li>
+</ol>
+
+<h1 id="ch8-asynchronous-io">
+<a class="anchor" href="#ch8-asynchronous-io" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. Asynchronous I/O</h1>
+<p><em>I/O bound program</em>: the speed is bounded by the efficiency of the input/output</p>
+
+<p>Asynchronous I/O helps utilize the wasted <em>I/O wait</em> time by allowing us to perform other operations while we are in that state</p>
+
+<h2 id="introduction-to-asynchronous-programming">
+<a class="anchor" href="#introduction-to-asynchronous-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction to asynchronous programming</h2>
+<ul>
+  <li>
+<em>Context switch</em>: when a program enters I/O wait, the execution is paused so that the kernel can perform the low-level operations associated with the I/O request</li>
+  <li>
+<strong>Callback paradigm</strong>: functions are called with an argument that is generally called the callback -&gt; instead of the function returing its value, it call the callback function with the value instead -&gt; long chains = “callback hell”</li>
+  <li>
+<strong>Future paradigm</strong>: an asynchronous function returns a <code class="highlighter-rouge">Future</code> object, which is a promise of a future result</li>
+  <li>
+<code class="highlighter-rouge">asyncio</code> standard library module and PEP 492 made the future’s mechanism native to Python</li>
+</ul>
+
+<h2 id="how-does-asyncawait-work">
+<a class="anchor" href="#how-does-asyncawait-work" aria-hidden="true"><span class="octicon octicon-link"></span></a>How does async/await work?</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">async</code> function (defined with <code class="highlighter-rouge">async def</code>) is called a <em>coroutine</em>
+</li>
+  <li>Coroutines are implemented with the same philosophies as generators</li>
+  <li>
+<code class="highlighter-rouge">await</code> is similar in function to a <code class="highlighter-rouge">yield</code> -&gt; the execution of the current function gets paused while other code is run</li>
+</ul>
+
+<h3 id="gevent">
+<a class="anchor" href="#gevent" aria-hidden="true"><span class="octicon octicon-link"></span></a>Gevent</h3>
+<ul>
+  <li>Patches the standard library with asynchronous I/O functions,</li>
+  <li>Has a <code class="highlighter-rouge">Greenlets</code> object that can be used for concurrent execution</li>
+  <li>Ideal solution for mainly CPU-based problems that sometimes involve heavy I/O</li>
+</ul>
+
+<h3 id="tornado">
+<a class="anchor" href="#tornado" aria-hidden="true"><span class="octicon octicon-link"></span></a>tornado</h3>
+<ul>
+  <li>Frequently used package for asynchronous I/O in Python</li>
+  <li>Originally developed by Facebook primarily for HTTP clients and servers</li>
+  <li>Ideal for any application that is mostly I/O-bound and where most of the application should be asynchronous</li>
+  <li>Performant web server</li>
+</ul>
+
+<h3 id="aiohttp">
+<a class="anchor" href="#aiohttp" aria-hidden="true"><span class="octicon octicon-link"></span></a>aiohttp</h3>
+<ul>
+  <li>Built entirely on the <code class="highlighter-rouge">asyncio</code> library</li>
+  <li>Provides both HTTP client and server functionality</li>
+  <li>Uses a similar API to <code class="highlighter-rouge">tornado</code>
+</li>
+</ul>
+
+<h3 id="batched-results">
+<a class="anchor" href="#batched-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Batched results</h3>
+<ul>
+  <li>
+<em>Pipelining</em>: batching results -&gt; can help lower the burden of an I/O task</li>
+  <li>Good compromise between the speeds of asynchronous I/O and the ease of writing serial programs</li>
+</ul>
+
+<h1 id="ch9-the-multiprocessing-module">
+<a class="anchor" href="#ch9-the-multiprocessing-module" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. The multiprocessing module</h1>
+<ul>
+  <li>Additional process = more communication overhead = decrease available RAM -&gt; rarely get a full <em>n</em>-times speedup</li>
+  <li>If you run out of RAM and the system reverts to using the disk’s swap space, any parallelization advantage will be massively lost to the slow paging of RAM back and forth to disk</li>
+  <li>Using hyperthreads: CPython uses a lot of RAM -&gt; hyperthreading is not cache friendly. Hyperthreads = added bonus and not a resource to be optimized against -&gt; adding more CPUs is more economical than tuning your code</li>
+  <li>
+<strong>Amdahl’s law</strong>: if only a small part of your code can be parallelized, it doesn’t matter how many CPUs you throw at it; it still won’t run much faster overall</li>
+  <li>
+<code class="highlighter-rouge">multiprocessing</code> module: process and thread-based parallel processing, share work over queues, and share data among processes -&gt; focus: single-machine multicore parallelism</li>
+  <li>
+<code class="highlighter-rouge">multiprocessing</code>: higher level, sharing Python data structures</li>
+  <li>
+<code class="highlighter-rouge">OpenMP</code>: works with C primitive objects once you’ve compiled to C</li>
+</ul>
+
+<blockquote>
+  <p>Keep the parallelism as simple as possible so that your development velocity is kept high</p>
+</blockquote>
+
+<ul>
+  <li>
+<em>Embarrassingly parallel</em>: multiple Python processes all solving the same problem without communicating with one another -&gt; not much penalty will be incurred as we add more and more Python processes</li>
+</ul>
+
+<p>Typical jobs for the <code class="highlighter-rouge">multiprocessing</code> module:</p>
+<ul>
+  <li>Parallelize a CPU-bound task with <code class="highlighter-rouge">Process</code> or <code class="highlighter-rouge">Pool</code> objects</li>
+  <li>Parallelize an I/O-bound task in a <code class="highlighter-rouge">Pool</code> with threads using the <code class="highlighter-rouge">dummy</code> module</li>
+  <li>Share pickled work via a <code class="highlighter-rouge">Queue</code>
+</li>
+  <li>Share state between parallelized workers, including bytes, primitive datatypes, dictionaries, and lists</li>
+</ul>
+
+<blockquote>
+  <p><code class="highlighter-rouge">Joblib</code>: stronger cross-platform support than <code class="highlighter-rouge">multiprocessing</code></p>
+</blockquote>
+
+<h2 id="replacing-multiprocessing-with-joblib">
+<a class="anchor" href="#replacing-multiprocessing-with-joblib" aria-hidden="true"><span class="octicon octicon-link"></span></a>Replacing multiprocessing with Joblib</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">Joblib</code> is an improvement on <code class="highlighter-rouge">multiprocessing</code>
+</li>
+  <li>Enables lightweight pipelining with a focus on:
+    <ul>
+      <li>easy parallel computing</li>
+      <li>transparent disk-based caching of results</li>
+    </ul>
+  </li>
+  <li>It focuses on NumPy arrays for scientific computing</li>
+  <li>Quick wins:
+    <ul>
+      <li>process a loop that could be embarrassingly parallel</li>
+      <li>expensive functions that have no side effect</li>
+      <li>able to share <code class="highlighter-rouge">numpy</code> data between processes</li>
+    </ul>
+  </li>
+  <li>
+<code class="highlighter-rouge">Parallel</code> class: sets up the process pool</li>
+  <li>
+<code class="highlighter-rouge">delayed</code> decorator: wraps our target function so it can be applied to the instantiated <code class="highlighter-rouge">Parallel</code> object via an iterator</li>
+</ul>
+
+<h3 id="intelligent-caching-of-function-call-results">
+<a class="anchor" href="#intelligent-caching-of-function-call-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intelligent caching of function call results</h3>
+<p><code class="highlighter-rouge">Memory</code> cache: decorator that caches functions results based on the input arguments to a disk cache</p>
+
+<h3 id="using-numpy">
+<a class="anchor" href="#using-numpy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using numpy</h3>
+<ul>
+  <li>
+<code class="highlighter-rouge">numpy</code> is more cache friendly</li>
+  <li>
+<code class="highlighter-rouge">numpy</code> can achieve some level of additional speedup around threads by working outside the GIL</li>
+</ul>
+
+<h2 id="asynchronous-systems">
+<a class="anchor" href="#asynchronous-systems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Asynchronous systems</h2>
+<p>Require a special level of patience. Suggestions:</p>
+<ul>
+  <li>K.I.S.S.</li>
+  <li>Avoiding asynchronous self-contained systems if possible, as they will grow in complexity and quickly become hard to maintain</li>
+  <li>Using mature libraries like <code class="highlighter-rouge">gevent</code> that give you tried-and-tested approaches to dealing with certain problem sets</li>
+</ul>
+
+<h2 id="interprocess-communication-ipc">
+<a class="anchor" href="#interprocess-communication-ipc" aria-hidden="true"><span class="octicon octicon-link"></span></a>Interprocess Communication (IPC)</h2>
+<ul>
+  <li>Cooperation cost can be high: synchronizing data and checking the shared data</li>
+  <li>Sharing state tends to make things complicated</li>
+  <li>IPC is fairly easy but generally comes with a cost</li>
+</ul>
+
+<h3 id="multiprocessingmanager">
+<a class="anchor" href="#multiprocessingmanager" aria-hidden="true"><span class="octicon octicon-link"></span></a>multiprocessing.Manager()</h3>
+<ul>
+  <li>Lets us share higher-level Python objects between processes as managed shared objects; the lower-level objects are wrapped in proxy objects</li>
+  <li>The wrapping and safety have a speed cost but also offer great flexibility.</li>
+  <li>You can share both lower-level objects (e.g., integers and floats) and lists and dictionaries.</li>
+</ul>
+
+<h3 id="redis">
+<a class="anchor" href="#redis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Redis</h3>
+<ul>
+  <li>
+<strong>Key/value in-memory storage engine</strong>. It provides its own locking and each operation is atomic, so we don’t have to worry about using locks from inside Python (or from any other interfacing language).</li>
+  <li>Lets you share state not just with other Python processes but also other tools and other machines, and even to expose that state over a web-browser interface</li>
+  <li>Redis lets you store: Lists of strings; Sets of strings; Sorted sets of strings; Hashes of strings</li>
+  <li>Stores everything in RAM and snapshots to disk</li>
+  <li>Supports master/slave replication to a cluster of instances</li>
+  <li>Widely used in industry and is mature and well trusted</li>
+</ul>
+
+<h2 id="mmap">
+<a class="anchor" href="#mmap" aria-hidden="true"><span class="octicon octicon-link"></span></a>mmap</h2>
+<ul>
+  <li>Memory-mapped (shared memory) solution</li>
+  <li>The bytes in a shared memory block are not synchronized and they come with very little overhead</li>
+  <li>Bytes act like a file -&gt; block of memory with a file-like interface</li>
+</ul>
+
+<h1 id="ch10-clusters-and-job-queues">
+<a class="anchor" href="#ch10-clusters-and-job-queues" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. Clusters and Job Queues</h1>
+<p><em>Cluster</em>: collection of computers working together to solve a common task</p>
+
+<p>Before moving to a clustered solution:</p>
+<ul>
+  <li>Profile your system to understand the bottlenecks</li>
+  <li>Exploit compile solutions (Numba, Cython)</li>
+  <li>Exploit multiple cores on a single machine (Joblib, multiprocessing)</li>
+  <li>Exploit techniques for using less RAM</li>
+  <li>Really need a lot of CPUs, high resiliency, rapid speed of response, ability to process data from disks in parallel</li>
+</ul>
+
+<h2 id="benefits-of-clustering">
+<a class="anchor" href="#benefits-of-clustering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benefits of clustering</h2>
+<ul>
+  <li>Easily scale computing requirements</li>
+  <li>Improve reliability</li>
+  <li>Dynamic scaling</li>
+</ul>
+
+<h2 id="drawbacks-of-clustering">
+<a class="anchor" href="#drawbacks-of-clustering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Drawbacks of clustering</h2>
+<ul>
+  <li>Change in thinking</li>
+  <li>Latency between machines</li>
+  <li>Sysadmin problems: software versions between machines, are other machines working?</li>
+  <li>Moving parts that need to be in sync</li>
+  <li>“If you don’t have a documented restart plan, you should assume you’ll have to write one at the worst possible time”</li>
+</ul>
+
+<blockquote>
+  <p>Using a cloud-based cluster can mitigate a lot of these problems, and some cloud providers also offer a spot-priced market for cheap but temporary computing resources.</p>
+</blockquote>
+
+<ul>
+  <li>A system that’s easy to debug <em>probably</em> beats having a faster system</li>
+  <li>Engineering time and the cost of downtime are <em>probably</em> your largest expenses</li>
+</ul>
+
+<h2 id="parallel-pandas-with-dask">
+<a class="anchor" href="#parallel-pandas-with-dask" aria-hidden="true"><span class="octicon octicon-link"></span></a>Parallel Pandas with Dask</h2>
+<ul>
+  <li>Provide a suite of parallelization solutions that scales from a single core on a laptop to multicore machines to thousands of cores in a cluster.</li>
+  <li>“Apache Spark lite”</li>
+  <li>For <code class="highlighter-rouge">Pandas</code> users: larger-than-RAM datasets and desire for multicore parallelization</li>
+</ul>
+
+<h3 id="dask">
+<a class="anchor" href="#dask" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dask</h3>
+<ul>
+  <li>
+<em>Bag</em>: enables parallelized computation on unstructured and semistructured data</li>
+  <li>
+<em>Array</em>: enables distributed and larger-than-RAM <code class="highlighter-rouge">numpy</code> operations</li>
+  <li>
+<em>Distributed DataFrame</em>: enables distributed and larger-than-RAM <code class="highlighter-rouge">Pandas</code> operations</li>
+  <li>
+<em>Delayed</em>: parallelize chains of arbitrary Python functions in a lazy fashion</li>
+  <li>
+<em>Futures</em>: interface that includes <code class="highlighter-rouge">Queue</code> and <code class="highlighter-rouge">Lock</code> to support task collaboration</li>
+  <li>
+<em>Dask-ML</em>: scikit-learn-like interface for scalable machine learning</li>
+</ul>
+
+<blockquote>
+  <p>You can use Dask (and Swifter) to parallelize any side-effect-free function that you’d usually use in an <code class="highlighter-rouge">apply</code> call</p>
+</blockquote>
+
+<ul>
+  <li>
+<code class="highlighter-rouge">npartitions</code> = # cores</li>
+</ul>
+
+<h4 id="swifter">
+<a class="anchor" href="#swifter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Swifter</h4>
+<p>Builds on Dask to provide three parallelized options with very simple calls: <code class="highlighter-rouge">apply</code>, <code class="highlighter-rouge">resample</code> and <code class="highlighter-rouge">rolling</code></p>
+
+<h3 id="vaex">
+<a class="anchor" href="#vaex" aria-hidden="true"><span class="octicon octicon-link"></span></a>Vaex</h3>
+<ul>
+  <li>String-heavy DataFrames</li>
+  <li>Larger-than-RAM datasets</li>
+  <li>Subsets of a DataFrame -&gt; Implicit lazy evaluation</li>
+</ul>
+
+<h2 id="nsq-for-robust-production-clustering">
+<a class="anchor" href="#nsq-for-robust-production-clustering" aria-hidden="true"><span class="octicon octicon-link"></span></a>NSQ for robust production clustering</h2>
+<ul>
+  <li>Highly performant distributed messaging platform</li>
+  <li>
+<em>Queues</em>: type of buffer for messages</li>
+  <li>
+<em>Pub/subs</em>: describes who gets what messages (<em>publisher/subscriber</em>)</li>
+</ul>
+
+<h1 id="ch11-using-less-ram">
+<a class="anchor" href="#ch11-using-less-ram" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch11. Using less RAM</h1>
+<ul>
+  <li>Counting the amount of RAM used by Python object is tricky -&gt; if we ask the OS for a count of bytes used, it will tell us the total amount allocated to the process</li>
+  <li>Each unique object has a memory cost</li>
+</ul>
+
+<h2 id="objects-for-primitives-are-expensive">
+<a class="anchor" href="#objects-for-primitives-are-expensive" aria-hidden="true"><span class="octicon octicon-link"></span></a>Objects for primitives are expensive</h2>
+<p><code class="highlighter-rouge">memory_profiler</code></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>%load_ext memory_profiler
+
+%memit &lt;operation&gt;
+</code></pre></div></div>
+
+<h3 id="the-array-module-stores-many-primitive-objects-cheaply">
+<a class="anchor" href="#the-array-module-stores-many-primitive-objects-cheaply" aria-hidden="true"><span class="octicon octicon-link"></span></a>The <code class="highlighter-rouge">array</code> module stores many primitive objects cheaply</h3>
+<ul>
+  <li>Creates a contiguos block of RAM to hold the underlying data. Which data structures:
+    <ul>
+      <li>integers, floats and characters</li>
+      <li>
+<em>not</em> complex numbers or classes</li>
+    </ul>
+  </li>
+  <li>Good to pass the array to an external process or use only some of the data (not to compute on them)</li>
+  <li>Using a regular <code class="highlighter-rouge">list</code> to store many numbers is much less efficient in RAM than using an <code class="highlighter-rouge">array</code> object</li>
+  <li>
+<code class="highlighter-rouge">numpy</code> arrays are almost certainly a better choice if you are doing anything heavily numeric:
+    <ul>
+      <li>more datatype options</li>
+      <li>many specialized and fast functions</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="using-less-ram-in-numpy-with-numexpr">
+<a class="anchor" href="#using-less-ram-in-numpy-with-numexpr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using less RAM in NumPy with NumExpr</h3>
+<p><code class="highlighter-rouge">NumExpr</code> is a tool that both speeds up and reduces the size of intermediate operations</p>
+
+<blockquote>
+  <p>Install the optional NumExpr when using Pandas (Pandas does not tell you if you haven’t installed NumExpr) -&gt; calls to <code class="highlighter-rouge">eval</code> will run more quickly -&gt; import numpexpr: if this fails, install it!</p>
+</blockquote>
+
+<ul>
+  <li>NumExpr breaks the long vectors into shorter, cache-friendly chunks and processes each in series, so local chunks of results are calculated in a cache-friendly way</li>
+</ul>
+
+<h2 id="bytes-versus-unicode">
+<a class="anchor" href="#bytes-versus-unicode" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bytes versus Unicode</h2>
+<ul>
+  <li>Python 3.x, all strings are Unicode by default, and if you want to deal in bytes, you’ll explicitly create a <code class="highlighter-rouge">byte</code> sequence</li>
+  <li>
+<strong>UTF-8 encoding</strong> of a Unicode object uses 1 byte per ASCII character and more bytes for less frequently seen characters</li>
+</ul>
+
+<h2 id="more-efficient-tree-structures-to-represent-strings">
+<a class="anchor" href="#more-efficient-tree-structures-to-represent-strings" aria-hidden="true"><span class="octicon octicon-link"></span></a>More efficient tree structures to represent strings</h2>
+<ul>
+  <li>
+<strong>Tries</strong>: share common prefixes</li>
+  <li>
+<strong>DAWG</strong>: share common prefixes and suffixes</li>
+  <li>Overlapping sequences in your strings -&gt; you’ll likely see a RAM improvement</li>
+  <li>Save RAM and time in exchange for a little additional effort in preparation</li>
+  <li>Unfamiliar data structures to many developers -&gt; isolate in a module to simplify maintenance</li>
+</ul>
+
+<h3 id="directed-acyclic-word-graph-dawg">
+<a class="anchor" href="#directed-acyclic-word-graph-dawg" aria-hidden="true"><span class="octicon octicon-link"></span></a>Directed Acyclic Word Graph (DAWG)</h3>
+<p>Attemps to efficiently represent strings that share common prefixes and suffixes</p>
+
+<h3 id="marisa-trie">
+<a class="anchor" href="#marisa-trie" aria-hidden="true"><span class="octicon octicon-link"></span></a>Marisa Trie</h3>
+<p><em>Static trie</em> using Cython bindings to an external library -&gt; it cannot be modified after construction</p>
+
+<h2 id="scikit-learns-dictvectorizer-and-featurehasher">
+<a class="anchor" href="#scikit-learns-dictvectorizer-and-featurehasher" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scikit-learn’s DictVectorizer and FeatureHasher</h2>
+<ul>
+  <li>
+<code class="highlighter-rouge">DictVectorizer</code>: takes a dictionary of terms and their frequences and converts them into a variable-width sparse matrix -&gt; it is possible to revert the process</li>
+  <li>
+<code class="highlighter-rouge">FeatureHasher</code>: converts the same dictionary of terms and frequencies into a fixed-width sparse matrix -&gt; it doesn’t store a vocabulary and instead employs a hashing algorithm to assign token frequencies to columns -&gt; can’t convert it back to the original token from hash</li>
+</ul>
+
+<h2 id="scypys-sparse-matrices">
+<a class="anchor" href="#scypys-sparse-matrices" aria-hidden="true"><span class="octicon octicon-link"></span></a>ScyPy’s Sparse Matrices</h2>
+<ul>
+  <li>Matrix in which most matrix elements are 0</li>
+  <li>
+<code class="highlighter-rouge">C00</code> matrices: simplest implementation: each non-zero element we store the value in addition to the location of the value -&gt; each non-zero value = 3 numbers stored -&gt; used only to contruct sparse matrices and not for actual computation</li>
+  <li>
+<code class="highlighter-rouge">CSR/CSC</code> is preferred for computation</li>
+</ul>
+
+<blockquote>
+  <p>Push and pull of speedups with sparse arrays: balance between losing the use of efficient caching and vectorization versus not having to do a lot of the calculations associated with the zero values of the matrix</p>
+</blockquote>
+
+<p>Limitations:</p>
+<ul>
+  <li>Low amount of support</li>
+  <li>Multiple implementations with benefits and drawbacks</li>
+  <li>May require expert knowledge</li>
+</ul>
+
+<h2 id="tips-for-using-less-ram">
+<a class="anchor" href="#tips-for-using-less-ram" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tips for using less RAM</h2>
+<blockquote>
+  <p>“If you can avoid putting it into RAM, do. Everything you load costs you RAM”</p>
+</blockquote>
+
+<ul>
+  <li>Numeric data: switch to using <code class="highlighter-rouge">numpy</code> arrays</li>
+  <li>Very sparse arrays: SciPy’s sparse array functionality</li>
+  <li>Strings: stick to <code class="highlighter-rouge">str</code> rather than <code class="highlighter-rouge">bytes</code>
+</li>
+  <li>Many Unicode objects in a static structure: DAWG and trie structures</li>
+  <li>Lots of bit strings: <code class="highlighter-rouge">numpy</code> and the <code class="highlighter-rouge">bitarray</code> package</li>
+</ul>
+
+<h2 id="probabilistic-data-structures">
+<a class="anchor" href="#probabilistic-data-structures" aria-hidden="true"><span class="octicon octicon-link"></span></a>Probabilistic Data Structures</h2>
+<ul>
+  <li>Make trade-offs in accuracy for immense decrease in memory usage</li>
+  <li>The number of operations you can do on them is much more restricted</li>
+</ul>
+
+<blockquote>
+  <p>“Probabilistic data structures are fantastic when you have taken the time to understand the problem and need to put something into production that can answer a very small set of questions about a very large set of data”</p>
+</blockquote>
+
+<ul>
+  <li>“lossy compression”: find an alternative representation for the data that is more compact and contains the relevant information for answering a certain set of questions</li>
+</ul>
+
+<h3 id="morris-counter">
+<a class="anchor" href="#morris-counter" aria-hidden="true"><span class="octicon octicon-link"></span></a>Morris counter</h3>
+<p>Keeps track of an exponent and models the counted state as <code class="highlighter-rouge">2^exponent</code> -&gt; provides an <em>order of magnitude</em> estimate</p>
+
+<h3 id="k-minimum-values">
+<a class="anchor" href="#k-minimum-values" aria-hidden="true"><span class="octicon octicon-link"></span></a>K-Minimum values</h3>
+<p>If we keep the <code class="highlighter-rouge">k</code> smallest unique hash values we have seen, we can <strong>approximate the overall spacing between hash values</strong> and infer the total number of items</p>
+<ul>
+  <li>
+<em>idempotence</em>: if we do the same operation, with the same inputs, on the structure multiple times, the state will not be changed</li>
+</ul>
+
+<h3 id="bloom-filters">
+<a class="anchor" href="#bloom-filters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bloom filters</h3>
+<ul>
+  <li>Answer the question of <strong>whether we’ve seen an item before</strong>
+</li>
+  <li>Work by having multiple hash values in order to represent a value as multiple integers. If we later see something with the same set of integers, we can be reasonably confident that it is the same value</li>
+  <li><strong>No false negatives and a controllable rate of false positives</strong></li>
+  <li>Set to have error rates below 0.5%</li>
+</ul>
+
+<h1 id="ch12-lessons-from-the-field">
+<a class="anchor" href="#ch12-lessons-from-the-field" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch12. Lessons from the field</h1>
+
+  </div><a class="u-url" href="/blog/book/python/software%20engineering/2020/06/10/high-performance-python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

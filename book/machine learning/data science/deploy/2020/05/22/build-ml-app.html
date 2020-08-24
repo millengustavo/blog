@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Building Machine Learning Powered Applications: Going from Idea to Product | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Building Machine Learning Powered Applications: Going from Idea to Product" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/build_ml_app/build_ml_app.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-22T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Building Machine Learning Powered Applications: Going from Idea to Product","dateModified":"2020-05-22T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-05-22T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/build_ml_app/build_ml_app.jpg","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Building Machine Learning Powered Applications: Going from Idea to Product | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Building Machine Learning Powered Applications: Going from Idea to Product" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/build_ml_app/build_ml_app.jpg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-05-22T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Building Machine Learning Powered Applications: Going from Idea to Product","dateModified":"2020-05-22T00:00:00-05:00","description":"My notes and highlights on the book.","datePublished":"2020-05-22T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/build_ml_app/build_ml_app.jpg","url":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Building Machine Learning Powered Applications: Going from Idea to Product</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-05-22T00:00:00-05:00" itemprop="datePublished">
+        May 22, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      21 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#deploy">deploy</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#part-i-find-the-correct-ml-approach">Part I. Find the Correct ML Approach</a></li>
+<li class="toc-entry toc-h1"><a href="#ch1-from-product-goal-to-ml-framing">Ch1. From Product Goal to ML Framing</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#data-availability-scenarios">Data availability scenarios</a></li>
+<li class="toc-entry toc-h2"><a href="#the-simplest-approach-being-the-algorithm">The Simplest Approach: being the algorithm</a></li>
+<li class="toc-entry toc-h2"><a href="#what-to-focus-on-in-an-ml-project">What to focus on in an ML project</a></li>
+<li class="toc-entry toc-h2"><a href="#which-modeling-techniques-to-use">Which modeling techniques to use</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-create-a-plan">Ch2. Create a Plan</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#measuring-success">Measuring Success</a></li>
+<li class="toc-entry toc-h2"><a href="#business-performance">Business Performance</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#updating-an-app-to-make-a-modeling-task-easier">Updating an app to make a modeling task easier</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#freshness-and-distribution-shift">Freshness and Distribution Shift</a></li>
+<li class="toc-entry toc-h2"><a href="#leverage-domain-expertise">Leverage Domain Expertise</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#examining-the-data">Examining the data</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#stand-on-the-shoulders-of-giants">Stand on the Shoulders of giants</a></li>
+<li class="toc-entry toc-h2"><a href="#to-make-regular-progress-start-simple">To make regular progress: start simple</a></li>
+<li class="toc-entry toc-h2"><a href="#diagnose-problems">Diagnose Problems</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#part-ii-build-a-working-pipeline">Part II. Build a Working Pipeline</a></li>
+<li class="toc-entry toc-h1"><a href="#ch3-build-your-first-end-to-end-pipeline">Ch3. Build your first end-to-end pipeline</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#test-your-workflow">Test your workflow</a></li>
+<li class="toc-entry toc-h2"><a href="#finding-the-impact-bottleneck">Finding the impact bottleneck</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch4-acquire-an-initial-dataset">Ch4. Acquire an initial dataset</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#iterate-on-datasets">Iterate on datasets</a></li>
+<li class="toc-entry toc-h2"><a href="#data-quality-rubric">Data quality rubric</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#format">Format</a></li>
+<li class="toc-entry toc-h3"><a href="#quality">Quality</a></li>
+<li class="toc-entry toc-h3"><a href="#quantity-and-distribution">Quantity and distribution</a></li>
+<li class="toc-entry toc-h3"><a href="#summary-statistics">Summary statistics</a></li>
+<li class="toc-entry toc-h3"><a href="#data-leakage">Data leakage</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#clustering">Clustering</a></li>
+<li class="toc-entry toc-h2"><a href="#let-data-inform-features-and-models">Let data inform features and models</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#feature-crosses">Feature crosses</a></li>
+<li class="toc-entry toc-h3"><a href="#giving-your-model-the-answer">Giving your model the answer</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#robert-munro-how-do-you-find-label-and-leverage-data">Robert Munro: how do you find, label and leverage data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#uncertainty-sampling">Uncertainty sampling</a></li>
+<li class="toc-entry toc-h3"><a href="#error-model">“Error model”</a></li>
+<li class="toc-entry toc-h3"><a href="#labeling-model">“Labeling model”</a></li>
+<li class="toc-entry toc-h3"><a href="#validation">Validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#part-iii-iterate-on-models">Part III. Iterate on Models</a></li>
+<li class="toc-entry toc-h1"><a href="#ch5-train-and-evaluate-your-model">Ch5. Train and evaluate your model</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#the-simplest-appropriate-model">The simplest appropriate model</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#simple-model">Simple model</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#test-set">Test set</a></li>
+<li class="toc-entry toc-h2"><a href="#data-leakage-1">Data leakage</a></li>
+<li class="toc-entry toc-h2"><a href="#bias-variance-trade-off">Bias variance trade-off</a></li>
+<li class="toc-entry toc-h2"><a href="#evaluate-your-model-look-beyond-accuracy">Evaluate your model: look beyond accuracy</a></li>
+<li class="toc-entry toc-h2"><a href="#evaluate-feature-importance">Evaluate Feature Importance</a></li>
+<li class="toc-entry toc-h2"><a href="#black-box-explainers">Black-box explainers</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-debug-your-ml-problems">Ch6. Debug your ML problems</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#software-best-practices">Software Best Practices</a></li>
+<li class="toc-entry toc-h2"><a href="#visualization-steps">Visualization steps</a></li>
+<li class="toc-entry toc-h2"><a href="#separate-your-concerns">Separate your concerns</a></li>
+<li class="toc-entry toc-h2"><a href="#test-your-ml-code">Test your ML code</a></li>
+<li class="toc-entry toc-h2"><a href="#debug-training-make-your-model-learn">Debug training: make your model learn</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#task-difficulty">Task difficulty</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#debug-generalization-make-your-model-useful">Debug generalization: make your model useful</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch7-using-classifiers-for-writing-recommendations">Ch7. Using classifiers for writing recommendations</a></li>
+<li class="toc-entry toc-h1"><a href="#part-iv-deploy-and-monitor">Part IV. Deploy and Monitor</a></li>
+<li class="toc-entry toc-h1"><a href="#ch8-considerations-when-deploying-models">Ch8. Considerations when deploying models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#data-concerns">Data Concerns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#data-ownership">Data ownership</a></li>
+<li class="toc-entry toc-h3"><a href="#data-bias">Data bias</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#test-sets">Test sets</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#modeling-concerns">Modeling Concerns</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#feedback-loops">Feedback loops</a></li>
+<li class="toc-entry toc-h3"><a href="#inclusive-model-performance">Inclusive model performance</a></li>
+<li class="toc-entry toc-h3"><a href="#adversaries">Adversaries</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#chris-harland-shipping-experiments">Chris Harland: Shipping Experiments</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch9-choose-your-deployment-option">Ch9. Choose Your Deployment Option</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#server-side-deployment">Server-side deployment</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#streaming-api-workflow">Streaming API workflow</a></li>
+<li class="toc-entry toc-h3"><a href="#batch-predictions">Batch Predictions</a></li>
+<li class="toc-entry toc-h3"><a href="#hybrid-approach">Hybrid Approach</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#client-side-deployment">Client-side deployment</a></li>
+<li class="toc-entry toc-h2"><a href="#browser-side">Browser side</a></li>
+<li class="toc-entry toc-h2"><a href="#federated-learning-a-hybrid-apporach">Federated Learning: a hybrid apporach</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-build-safeguards-for-models">Ch10. Build Safeguards for Models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#check-inputs">Check inputs</a></li>
+<li class="toc-entry toc-h2"><a href="#model-outputs">Model outputs</a></li>
+<li class="toc-entry toc-h2"><a href="#model-failure-fallbacks">Model failure fallbacks</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#filtering-model">Filtering model</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#engineer-for-performance">Engineer for Performance</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#scale-to-multiple-users">Scale to multiple users</a></li>
+<li class="toc-entry toc-h3"><a href="#caching-fo-ml">Caching fo ML</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#caching-inference-results">Caching inference results</a></li>
+<li class="toc-entry toc-h4"><a href="#caching-by-indexing">Caching by indexing</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#model-and-data-life-cycle-management">Model and data life cycle management</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reproducibility">Reproducibility</a></li>
+<li class="toc-entry toc-h3"><a href="#resilience">Resilience</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#data-processing-and-dags">Data Processing and DAGs</a></li>
+<li class="toc-entry toc-h2"><a href="#ask-for-feedback">Ask for feedback</a></li>
+<li class="toc-entry toc-h2"><a href="#chris-moody-empowering-data-scientist-to-deploy-models">Chris Moody: Empowering Data Scientist to Deploy Models</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch11-monitor-and-update-models">Ch11. Monitor and update models</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#monitoring-saves-lives">Monitoring saves lives</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#monitor-to-inform-refresh-rate">Monitor to inform refresh rate</a></li>
+<li class="toc-entry toc-h3"><a href="#monitor-to-detect-abuse">Monitor to detect abuse</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#choose-what-to-monitor">Choose what to monitor</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#performance-metrics">Performance Metrics</a></li>
+<li class="toc-entry toc-h3"><a href="#business-metrics">Business metrics</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#cicd-for-ml">CI/CD for ML</a></li>
+<li class="toc-entry toc-h2"><a href="#ab-testing-and-experimentation">A/B Testing and Experimentation</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#choosing-groups-and-duration">Choosing groups and duration</a></li>
+<li class="toc-entry toc-h3"><a href="#estimating-the-better-variant">Estimating the better variant</a></li>
+<li class="toc-entry toc-h3"><a href="#building-the-infrastructure">Building the infrastructure</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#other-approaches">Other approaches</a></li>
+</ul>
+</li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Author: Emmanuel Ameisen</p>
+
+<h1 id="part-i-find-the-correct-ml-approach">
+<a class="anchor" href="#part-i-find-the-correct-ml-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part I. Find the Correct ML Approach</h1>
+
+<h1 id="ch1-from-product-goal-to-ml-framing">
+<a class="anchor" href="#ch1-from-product-goal-to-ml-framing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. From Product Goal to ML Framing</h1>
+
+<blockquote>
+  <p>ML is particularly useful to build systems for which we are unable to define a heuristic solution</p>
+</blockquote>
+
+<p>Start from a concrete business problem, determine whether it requires ML, then work on finding the ML approach that will allow you to iterate as rapidly as possible</p>
+
+<ol>
+  <li>Framing your product goal in an ML paradigm</li>
+  <li>Evaluating the feasibility of that ML task</li>
+</ol>
+
+<p>Estimating the challenge of data acquisition ahead of time is crucial in order to succeed</p>
+
+<h2 id="data-availability-scenarios">
+<a class="anchor" href="#data-availability-scenarios" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data availability scenarios</h2>
+<ul>
+  <li>Labeled data exists</li>
+  <li>Weakly labeled data exists</li>
+  <li>Unlabeled data exists</li>
+  <li>We need to acquire data</li>
+</ul>
+
+<blockquote>
+  <p>“Having an imperfect dataset is entirely fine and shouldn’t stop you. The ML process is iterative in nature, so starting with a dataset and getting some initial results is the best way forward, regardless of the data quality.”</p>
+</blockquote>
+
+<h2 id="the-simplest-approach-being-the-algorithm">
+<a class="anchor" href="#the-simplest-approach-being-the-algorithm" aria-hidden="true"><span class="octicon octicon-link"></span></a>The Simplest Approach: being the algorithm</h2>
+<p>Start with a human heuristic and then build a simple model: initial baseline = first step toward a solution -&gt; Great way to inform what to build next</p>
+
+<h2 id="what-to-focus-on-in-an-ml-project">
+<a class="anchor" href="#what-to-focus-on-in-an-ml-project" aria-hidden="true"><span class="octicon octicon-link"></span></a>What to focus on in an ML project</h2>
+<p>Find the <em>impact bottleneck</em>: piece of the pipeline that could provide the most value if improved</p>
+
+<p>Imagine that the impact bottleneck is solved: it was worth the effort you estimate it would take?</p>
+
+<h2 id="which-modeling-techniques-to-use">
+<a class="anchor" href="#which-modeling-techniques-to-use" aria-hidden="true"><span class="octicon octicon-link"></span></a>Which modeling techniques to use</h2>
+<p>Spend the manual effort to look at inputs and outputs of your model: see if anything looks weird. Looking at your data helps you think of good heuristics, models and ways to reframe the product</p>
+
+<h1 id="ch2-create-a-plan">
+<a class="anchor" href="#ch2-create-a-plan" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. Create a Plan</h1>
+
+<h2 id="measuring-success">
+<a class="anchor" href="#measuring-success" aria-hidden="true"><span class="octicon octicon-link"></span></a>Measuring Success</h2>
+<p>First model: simplest model that could address a product’s needs -&gt; generating and analyzing results is the fastest way to make progress in ML</p>
+
+<ul>
+  <li>Baseline: heuristics based on domain knowledge</li>
+  <li>Simple model</li>
+  <li>Complex model</li>
+</ul>
+
+<blockquote>
+  <p>You don’t always need ML: even features that could benefit from ML can often simply use a heuristic for their first version (you may realize that you don’t need ML at all)</p>
+</blockquote>
+
+<h2 id="business-performance">
+<a class="anchor" href="#business-performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Business Performance</h2>
+<p>Product metrics: goals of your product or feature. Ultimately the only ones that matter, all other metrics should be used as tools to improve product metrics</p>
+
+<h3 id="updating-an-app-to-make-a-modeling-task-easier">
+<a class="anchor" href="#updating-an-app-to-make-a-modeling-task-easier" aria-hidden="true"><span class="octicon octicon-link"></span></a>Updating an app to make a modeling task easier</h3>
+<ul>
+  <li>Change an interface so that a model’s results can be omitted if they are below a confidence threshold</li>
+  <li>Present a few other predictions or heuristics in addition to model’s top prediction</li>
+  <li>Communicate to users that model is still in an experimental phase and giving them opportunities to provide feedback</li>
+</ul>
+
+<blockquote>
+  <p>“A product should be designed with reasonable assumptions of model performance in mind. If a product relies on a model being perfect to be useful, it is very likely to produce innacurate or even dangerous results”</p>
+</blockquote>
+
+<h2 id="freshness-and-distribution-shift">
+<a class="anchor" href="#freshness-and-distribution-shift" aria-hidden="true"><span class="octicon octicon-link"></span></a>Freshness and Distribution Shift</h2>
+<p>Distribution of the data shifts -&gt; model often needs to change in order to maintain the same level of performance</p>
+
+<h2 id="leverage-domain-expertise">
+<a class="anchor" href="#leverage-domain-expertise" aria-hidden="true"><span class="octicon octicon-link"></span></a>Leverage Domain Expertise</h2>
+<p>Best way to devise heuristics -&gt; see what experts are currently doing. Most practical applications are not entirely novel. How do people currently solve the problem you are trying to solve?</p>
+
+<p>Second best way -&gt; look at your data. Based on your dataset, how would you solve this task if you were doing it manually?</p>
+
+<h3 id="examining-the-data">
+<a class="anchor" href="#examining-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examining the data</h3>
+<p>EDA: process of visualizing and exploring a dataset -&gt; to get an intuition to a given business problem. Crucial part of building any data product</p>
+
+<h2 id="stand-on-the-shoulders-of-giants">
+<a class="anchor" href="#stand-on-the-shoulders-of-giants" aria-hidden="true"><span class="octicon octicon-link"></span></a>Stand on the Shoulders of giants</h2>
+<ol>
+  <li>Reproduce existing results</li>
+  <li>Build on top of them</li>
+</ol>
+
+<h2 id="to-make-regular-progress-start-simple">
+<a class="anchor" href="#to-make-regular-progress-start-simple" aria-hidden="true"><span class="octicon octicon-link"></span></a>To make regular progress: start simple</h2>
+<ol>
+  <li>Start with the simplest model that could address your requirements</li>
+  <li>Build an end-to-end prototype including this model</li>
+  <li>Judge its performance: optimization metrics and product goal</li>
+</ol>
+
+<p>Looking at the performance of a simple model on an initial dataset is the best way to decide what task should be tackled next</p>
+
+<h2 id="diagnose-problems">
+<a class="anchor" href="#diagnose-problems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Diagnose Problems</h2>
+<p>Write analysis and exploration functions:</p>
+<ul>
+  <li>Visualize examples the model performs the best and worst on</li>
+  <li>Explore data</li>
+  <li>Explore model results</li>
+</ul>
+
+<h1 id="part-ii-build-a-working-pipeline">
+<a class="anchor" href="#part-ii-build-a-working-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part II. Build a Working Pipeline</h1>
+
+<h1 id="ch3-build-your-first-end-to-end-pipeline">
+<a class="anchor" href="#ch3-build-your-first-end-to-end-pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. Build your first end-to-end pipeline</h1>
+<p>First iteration: lackluster by design. Goal: allow us to have all the pieces of a pipeline in place:</p>
+<ul>
+  <li>prioritize which ones to improve next</li>
+  <li>identify the impact bottleneck</li>
+</ul>
+
+<blockquote>
+  <p>“Frequently, your product is dead even if your model is successful” - Monica Rogati</p>
+</blockquote>
+
+<h2 id="test-your-workflow">
+<a class="anchor" href="#test-your-workflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test your workflow</h2>
+<p>Evaluate:</p>
+<ul>
+  <li>usefulness of the current user experience</li>
+  <li>results of your handcrafted model</li>
+</ul>
+
+<h2 id="finding-the-impact-bottleneck">
+<a class="anchor" href="#finding-the-impact-bottleneck" aria-hidden="true"><span class="octicon octicon-link"></span></a>Finding the impact bottleneck</h2>
+<p>Next challenge to tackle next:</p>
+<ul>
+  <li>iterating on the way we present results to the users or;</li>
+  <li>improving model performance by identifying key failure points</li>
+</ul>
+
+<h1 id="ch4-acquire-an-initial-dataset">
+<a class="anchor" href="#ch4-acquire-an-initial-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. Acquire an initial dataset</h1>
+<p>Understanding your data well leads to the biggest performance improvements</p>
+
+<h2 id="iterate-on-datasets">
+<a class="anchor" href="#iterate-on-datasets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Iterate on datasets</h2>
+<p>Data gathering, preparation and labeling should be seen as an iterative process, just like modeling</p>
+
+<p><strong>ML engineering</strong>: engineering + ML = products</p>
+
+<p>Choosing an initial dataset, regularly updating it, and augmenting it is the majority of the work</p>
+
+<p><strong>Data</strong>: best source of inspiration to develop new models and the first place to look for answers when things go wrong</p>
+
+<blockquote>
+  <p>Models only serve as a way to extract trends and patterns from existing data. Don’t overestimate the impact of working on the model and underestimate the value of working on the data</p>
+</blockquote>
+
+<p>Before noticing predictive trends, start by examining <strong>quality</strong></p>
+
+<h2 id="data-quality-rubric">
+<a class="anchor" href="#data-quality-rubric" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data quality rubric</h2>
+
+<h3 id="format">
+<a class="anchor" href="#format" aria-hidden="true"><span class="octicon octicon-link"></span></a>Format</h3>
+<p>Validate that you understand the way in which the data was processed</p>
+
+<h3 id="quality">
+<a class="anchor" href="#quality" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quality</h3>
+<p>Notice the quality <strong>ahead of time</strong> -&gt; missing labels, weak labels</p>
+
+<h3 id="quantity-and-distribution">
+<a class="anchor" href="#quantity-and-distribution" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quantity and distribution</h3>
+<p>Estimate:</p>
+<ul>
+  <li>enough data?</li>
+  <li>feature values are within reasonable range?</li>
+</ul>
+
+<h3 id="summary-statistics">
+<a class="anchor" href="#summary-statistics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Summary statistics</h3>
+<blockquote>
+  <p>Identifying differences in distributions between classes of data early: will either make our modeling task easier or prevent us from overestimating the performance of a model that may just be leveraging one particularly informative feature.</p>
+</blockquote>
+
+<h3 id="data-leakage">
+<a class="anchor" href="#data-leakage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data leakage</h3>
+<p>Using training and validation data for vectorizing/preprocessing can cause data leakage -&gt; leveraging info from outside the training set to create training features</p>
+
+<h2 id="clustering">
+<a class="anchor" href="#clustering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clustering</h2>
+<p>As with dimensionality reduction: additional way to surface issues and interesting data points</p>
+
+<h2 id="let-data-inform-features-and-models">
+<a class="anchor" href="#let-data-inform-features-and-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Let data inform features and models</h2>
+<p>The more data you have and the less noisy your data is, the less feature engineering work you usually have to do</p>
+
+<h3 id="feature-crosses">
+<a class="anchor" href="#feature-crosses" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature crosses</h3>
+<p>Feature generated by multiplying (crossing) two or more features -&gt; nonlinear combination of features -&gt; allows our model to discriminate more easily</p>
+
+<h3 id="giving-your-model-the-answer">
+<a class="anchor" href="#giving-your-model-the-answer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Giving your model the answer</h3>
+<p>New binary feature that takes a nonzero value only when relevant combination of values appear</p>
+
+<h2 id="robert-munro-how-do-you-find-label-and-leverage-data">
+<a class="anchor" href="#robert-munro-how-do-you-find-label-and-leverage-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Robert Munro: how do you find, label and leverage data</h2>
+
+<h3 id="uncertainty-sampling">
+<a class="anchor" href="#uncertainty-sampling" aria-hidden="true"><span class="octicon octicon-link"></span></a>Uncertainty sampling</h3>
+<p>Identify examples that your model is most uncertain about and find similar examples to add to the training set</p>
+
+<h3 id="error-model">
+<a class="anchor" href="#error-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>“Error model”</h3>
+<p>Use the mistakes your model makes as labels: “predicted correctly” or “predicted incorrectly”. Use the trained error model on unlabeled data and label the examples that it predicts your model will fail on</p>
+
+<h3 id="labeling-model">
+<a class="anchor" href="#labeling-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>“Labeling model”</h3>
+<p>To find the best examples to label next. Identify data points that are most different from what you’ve already labeled and label those</p>
+
+<h3 id="validation">
+<a class="anchor" href="#validation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Validation</h3>
+<p>While you should use strategies to gather data, you should always randomly sample from your test set to validate your model</p>
+
+<h1 id="part-iii-iterate-on-models">
+<a class="anchor" href="#part-iii-iterate-on-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part III. Iterate on Models</h1>
+
+<h1 id="ch5-train-and-evaluate-your-model">
+<a class="anchor" href="#ch5-train-and-evaluate-your-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. Train and evaluate your model</h1>
+
+<h2 id="the-simplest-appropriate-model">
+<a class="anchor" href="#the-simplest-appropriate-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>The simplest appropriate model</h2>
+<p>Not the best approach: try every possible model, benchmark and pick the one with the best results on a test set</p>
+
+<h3 id="simple-model">
+<a class="anchor" href="#simple-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Simple model</h3>
+<ul>
+  <li>Quick to implement: won’t be your last</li>
+  <li>Understandable: debug easily</li>
+  <li>Deployable: fundamental requirement for a ML-powered application</li>
+</ul>
+
+<blockquote>
+  <p>Model explainability and interpretability: ability for a model to expose reasons that caused it to make predictions</p>
+</blockquote>
+
+<h2 id="test-set">
+<a class="anchor" href="#test-set" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test set</h2>
+<p>“While using a test set is a best practice, practitioners sometimes use the validation set as a test set. This increases the risk of biasing a model toward the validation set but can be appropriate when running only a few experiments”</p>
+
+<h2 id="data-leakage-1">
+<a class="anchor" href="#data-leakage-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data leakage</h2>
+<ul>
+  <li>Temporal data leakage</li>
+  <li>Sample contamination</li>
+</ul>
+
+<p>Always investigate the results of a model, especially if it shows surprisingly strong performance</p>
+
+<h2 id="bias-variance-trade-off">
+<a class="anchor" href="#bias-variance-trade-off" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bias variance trade-off</h2>
+<ul>
+  <li>Underfitting: weak performance on the training set = high bias</li>
+  <li>Overfitting: strong performance on the training set, but weak performance on the validation set = high variance</li>
+</ul>
+
+<h2 id="evaluate-your-model-look-beyond-accuracy">
+<a class="anchor" href="#evaluate-your-model-look-beyond-accuracy" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluate your model: look beyond accuracy</h2>
+<ul>
+  <li><strong>Contrast data and predictions</strong></li>
+  <li>
+<strong>Confusion matrix</strong>: see whether our model is particularly successful on certain classes and struggles on some others</li>
+  <li>
+<strong>ROC Curve</strong>: plot a threshold on it to have a more concrete goal than simply getting the largest AUC score</li>
+  <li>
+<strong>Calibration Curve</strong>: whether our model’s outputed probability represents its confidence well. Shows the fraction of true positive examples as a function of the confidence of our classifier</li>
+  <li>
+<strong>Dimensionality reduction for errors</strong>: identify a region in which a model performs poorly and visualize a few data points in it</li>
+  <li>
+<strong>The top-k method</strong>
+    <ul>
+      <li>
+<strong>k best performing examples</strong>: identify features that are successfully leveraged by a model</li>
+      <li>
+<strong>k worst performing examples</strong>: on train: identify trends in data the model fails on, identify additional features that would make them easier for a model. On validation: identify examples that significantly differ from the train data</li>
+      <li>
+<strong>k most uncertain examples</strong>: on train: often a symptom of conflicting labels. On validation: can help find gaps in your training data</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>Top-k implementation: <a href="https://github.com/hundredblocks/ml-powered-applications/blob/master/ml_editor/model_evaluation.py#L250-L295">book’s Github repository</a></p>
+</blockquote>
+
+<h2 id="evaluate-feature-importance">
+<a class="anchor" href="#evaluate-feature-importance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluate Feature Importance</h2>
+<ul>
+  <li>Eliminate or iterate on features that are currently not helping the model</li>
+  <li>Identify features that are suspiciously predictive, which is often a sign of data leakage</li>
+</ul>
+
+<h2 id="black-box-explainers">
+<a class="anchor" href="#black-box-explainers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Black-box explainers</h2>
+<p>Attempt to explain a model’s predictions independently of its inner workings, i.e. LIME and SHAP</p>
+
+<h1 id="ch6-debug-your-ml-problems">
+<a class="anchor" href="#ch6-debug-your-ml-problems" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. Debug your ML problems</h1>
+
+<h2 id="software-best-practices">
+<a class="anchor" href="#software-best-practices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Software Best Practices</h2>
+<p><strong>KISS principle</strong>: building only what you need</p>
+
+<blockquote>
+  <p>Most software applications: strong test coverage = high confidence app is functioning well. ML pipelines can pass many tests, but still give entirely incorrect results. Doesn’t have just to run, it should produce accurate predictive outputs</p>
+</blockquote>
+
+<p>Progressive approach, validate:</p>
+<ol>
+  <li>Data flow</li>
+  <li>Learning capacity</li>
+  <li>Generalization and inference</li>
+</ol>
+
+<p>Make sure your pipeline works for a few examples, then write tests to make sure it keeps functioning as you make changes</p>
+
+<h2 id="visualization-steps">
+<a class="anchor" href="#visualization-steps" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualization steps</h2>
+<p>Inspect changes at regular intervals</p>
+
+<ul>
+  <li>
+<strong>Data loading</strong>: Verify data is formatted correctly</li>
+  <li>
+<strong>Cleaning and feature selection</strong>: remove any unnecessary information</li>
+  <li>
+<strong>Feature generation</strong>: check that the feature values are populated and that the values seem reasonable</li>
+  <li>
+<strong>Data formatting</strong>: shapes, vectors</li>
+  <li>
+<strong>Model output</strong>: first look if the predictions are the right type or shape, then check if the model is actually leveraging the input data</li>
+</ul>
+
+<h2 id="separate-your-concerns">
+<a class="anchor" href="#separate-your-concerns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Separate your concerns</h2>
+<p>Modular organization: separate each function so that you can check that it individually works before looking at the broader pipeline. Once broken down, you’ll be able to write tests</p>
+
+<h2 id="test-your-ml-code">
+<a class="anchor" href="#test-your-ml-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test your ML code</h2>
+<p><a href="https://github.com/hundredblocks/ml-powered-applications/tree/master/tests">Source code on book’s Github repository</a></p>
+
+<ul>
+  <li>Test data ingestion</li>
+  <li>Test data processing</li>
+  <li>Test model outputs</li>
+</ul>
+
+<h2 id="debug-training-make-your-model-learn">
+<a class="anchor" href="#debug-training-make-your-model-learn" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug training: make your model learn</h2>
+<p>Contextualize model performance: generate an estimate of what an acceptable error for the taks is by labeling a few examples yourself</p>
+
+<h3 id="task-difficulty">
+<a class="anchor" href="#task-difficulty" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task difficulty</h3>
+<ul>
+  <li>
+<strong>The quantity and diversity of data you have</strong>: more diverse/complex the problem = more data for the model to learn from it</li>
+  <li>
+<strong>How predictive the features are</strong>: make the data more expressive to help the model learn better</li>
+  <li>
+<strong>The complexity of your model</strong>: simplest model is good to quickly iterate, but some tasks are entirely out of reach of some models</li>
+</ul>
+
+<h2 id="debug-generalization-make-your-model-useful">
+<a class="anchor" href="#debug-generalization-make-your-model-useful" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug generalization: make your model useful</h2>
+<ul>
+  <li>
+<strong>Data Leakage</strong>: if you are surprised by validation performance, inspect the features; fixing a leakage issue will lead to lower validation performance, but a better model</li>
+  <li>
+<strong>Overfitting</strong>: model performs drastically better on the training set than on the test set. Add regularization or data augmentation</li>
+  <li>
+<strong>Dataset redesign</strong>: use k-fold cross validation to alleviate concerns that data splits may be of unequal quality</li>
+</ul>
+
+<blockquote>
+  <p>“If your models aren’t generalizing, your task may be too hard. There may not be enough information in your training examples to learn meaningful features that will be informative for future data points. If that is the case, then the problem you have is not well suited for ML”</p>
+</blockquote>
+
+<h1 id="ch7-using-classifiers-for-writing-recommendations">
+<a class="anchor" href="#ch7-using-classifiers-for-writing-recommendations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. Using classifiers for writing recommendations</h1>
+
+<h1 id="part-iv-deploy-and-monitor">
+<a class="anchor" href="#part-iv-deploy-and-monitor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Part IV. Deploy and Monitor</h1>
+<p>Production ML pipelines need to be able to detect data and model failures and handle them with grace -&gt; <strong>proactively</strong></p>
+
+<h1 id="ch8-considerations-when-deploying-models">
+<a class="anchor" href="#ch8-considerations-when-deploying-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. Considerations when deploying models</h1>
+<ul>
+  <li>How was the data you are using collected?</li>
+  <li>What assumptions is your model making by learning from this dataset?</li>
+  <li>Is this dataset representative enough to produce a useful model?</li>
+  <li>How could the results of your work be misused?</li>
+  <li>What is the intended use and scope of your model?</li>
+</ul>
+
+<h2 id="data-concerns">
+<a class="anchor" href="#data-concerns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Concerns</h2>
+
+<h3 id="data-ownership">
+<a class="anchor" href="#data-ownership" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data ownership</h3>
+<ul>
+  <li>Collection</li>
+  <li>Usage and permission</li>
+  <li>Storage</li>
+</ul>
+
+<h3 id="data-bias">
+<a class="anchor" href="#data-bias" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data bias</h3>
+<p>Datasets: results of specific data collection decisions -&gt; lead to datasets presenting a biased view of the world. ML models learn from datasets -&gt; will reproduce these biases</p>
+
+<ul>
+  <li>Measurement errors or corrupted data</li>
+  <li>Representation</li>
+  <li>Access</li>
+</ul>
+
+<h4 id="test-sets">
+<a class="anchor" href="#test-sets" aria-hidden="true"><span class="octicon octicon-link"></span></a>Test sets</h4>
+<p>Build a test set that is inclusive, representative, and realistic -&gt; proxy for performance in production -&gt; improve the chances that every user has an equally positive experience</p>
+
+<blockquote>
+  <p>Models are trained on historical data -&gt; state of the world in the past. Bias most often affects populations that are already disenfranchised. Working to eliminate bias -&gt; help make systems fairer for the people who need it most</p>
+</blockquote>
+
+<h2 id="modeling-concerns">
+<a class="anchor" href="#modeling-concerns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Modeling Concerns</h2>
+
+<h3 id="feedback-loops">
+<a class="anchor" href="#feedback-loops" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feedback loops</h3>
+<p>User follow a model’s recommendation -&gt; future models make the same recommendation -&gt; models enter a self-reinforcing feedback loop</p>
+
+<p>To limit negative effects of feedback loops -&gt; choose a label that is less prone to creating such a loop</p>
+
+<h3 id="inclusive-model-performance">
+<a class="anchor" href="#inclusive-model-performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Inclusive model performance</h3>
+<p>Look for performance on a segment of the data, instead of only comparing aggregate performance</p>
+
+<h3 id="adversaries">
+<a class="anchor" href="#adversaries" aria-hidden="true"><span class="octicon octicon-link"></span></a>Adversaries</h3>
+<p>Regularly update models</p>
+
+<p>Some types of attacks:</p>
+<ul>
+  <li>Fool models into a wrong prediction (most common)</li>
+  <li>Use a trained model to learn about the data it was trained on</li>
+</ul>
+
+<h2 id="chris-harland-shipping-experiments">
+<a class="anchor" href="#chris-harland-shipping-experiments" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chris Harland: Shipping Experiments</h2>
+<blockquote>
+  <p>When giving advice, the cost of being wrong is very high, so precision is the most useful</p>
+</blockquote>
+
+<h1 id="ch9-choose-your-deployment-option">
+<a class="anchor" href="#ch9-choose-your-deployment-option" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. Choose Your Deployment Option</h1>
+
+<h2 id="server-side-deployment">
+<a class="anchor" href="#server-side-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Server-side deployment</h2>
+<p>Setting up a web server that can accept requests from clients, run them through an inference pipeline, and return the results. The servers represents a central failure point for the application and can be costly if the product becomes popular</p>
+
+<h3 id="streaming-api-workflow">
+<a class="anchor" href="#streaming-api-workflow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Streaming API workflow</h3>
+<p><strong>Endpoint approach</strong></p>
+
+<ul>
+  <li>Quick to implement</li>
+  <li>Requires infrastructure to scale linearly with the current number of users (1 user = 1 separate inference call)</li>
+  <li>Required when strong latency constraints exist (info the model needs is available only at prediction time and model’s prediction is required immediately)</li>
+</ul>
+
+<h3 id="batch-predictions">
+<a class="anchor" href="#batch-predictions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Batch Predictions</h3>
+<p>Inference pipeline as a job that can be run on multiple examples at once. Store predictions so they can be used when needed</p>
+
+<ul>
+  <li>Appropriate when you have access to the features need for a model before the model’s prediction is required</li>
+  <li>Easier to allocate and parallelize resources</li>
+  <li>Faster at inference time since results have been precomputed and only need to be retrieved (similar gains to caching)</li>
+</ul>
+
+<h3 id="hybrid-approach">
+<a class="anchor" href="#hybrid-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Hybrid Approach</h3>
+<ul>
+  <li>Precompute as many cases as possible</li>
+  <li>At inference either retrieve precomputed results or compute them on the spot if they are not available or are outdated</li>
+  <li>Have to maintain both a batch and streaming pipeline (more complexity of the system)</li>
+</ul>
+
+<h2 id="client-side-deployment">
+<a class="anchor" href="#client-side-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Client-side deployment</h2>
+<p>Run all computations on the client, eliminating the need for a server to run models. Models are still trained in the same manner and are sent to the device for inference</p>
+
+<ul>
+  <li>Reduces the need to build infra</li>
+  <li>Reduces the quantity of data that needs to be transferred between the device and the server
+    <ul>
+      <li>Reduces network latency (app may even run without internet)</li>
+      <li>Removes the need for sensitive information to be transferred to a remote server</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>If the time it would take to run inference on device is larger than the time it would take to transmit data to the server to be processed, consider running your model in the cloud</p>
+</blockquote>
+
+<p>On-device deployment is only worthwhile if the latency, infrastructure, and privacy benefits are valuable enough to invest the engineering effort (simplifying a model)</p>
+
+<h2 id="browser-side">
+<a class="anchor" href="#browser-side" aria-hidden="true"><span class="octicon octicon-link"></span></a>Browser side</h2>
+<p>Some libraries use browsers to have the client perform ML tasks</p>
+
+<p><code class="highlighter-rouge">Tensorflow.js</code>: train and run inference in JavaScript in the browser for most differentiable models, even trained in different languages such as Python</p>
+
+<h2 id="federated-learning-a-hybrid-apporach">
+<a class="anchor" href="#federated-learning-a-hybrid-apporach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Federated Learning: a hybrid apporach</h2>
+<p>Each client has their own model. Each model learns from their user’s data and send aggregated (and potentially anonymized) updates to the server. The server leverages all updates to improve its model and distills this new model back to individual clients. Each user receives a model personalized to their needs, while still benefiting from aggregate information about other users</p>
+
+<h1 id="ch10-build-safeguards-for-models">
+<a class="anchor" href="#ch10-build-safeguards-for-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. Build Safeguards for Models</h1>
+<p>No matter how good a model is, it will fail on some examples -&gt; engineer a system that can gracefully handle such features</p>
+
+<h2 id="check-inputs">
+<a class="anchor" href="#check-inputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Check inputs</h2>
+<ul>
+  <li>Very different data from train</li>
+  <li>Some features missing</li>
+  <li>Unexpected types</li>
+</ul>
+
+<p>Input checks are part of the pipeline -&gt; change the control flow of a program based on the quality of inputs</p>
+
+<h2 id="model-outputs">
+<a class="anchor" href="#model-outputs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model outputs</h2>
+<p>Prediction falls outside an acceptable range -&gt; consider not displaying it</p>
+
+<blockquote>
+  <p>Acceptable outcome: not only if the outcome is plausible -&gt; also depends if the outcome would be <strong>useful for the user</strong></p>
+</blockquote>
+
+<h2 id="model-failure-fallbacks">
+<a class="anchor" href="#model-failure-fallbacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model failure fallbacks</h2>
+<p>Flag cases that are too hard and encourage user to provide an easier input (e.g. well-lit photo)</p>
+
+<p>Detecting errors:</p>
+<ul>
+  <li>Track the confidence of a model</li>
+  <li>Build an additional model tasked with detecting examples a main model is likely to fail on</li>
+</ul>
+
+<h3 id="filtering-model">
+<a class="anchor" href="#filtering-model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering model</h3>
+<ul>
+  <li>ML version of input tests</li>
+  <li>Binary classifier</li>
+  <li>Estimate how well a model will perform on an example without running the model on it</li>
+  <li>Decrease the likelihood of poor results and improve resource usage</li>
+  <li>Catch:
+    <ul>
+      <li>qualitatively different inputs</li>
+      <li>inputs the model struggled</li>
+      <li>adversarial inputs meant to fool the model</li>
+    </ul>
+  </li>
+  <li>Minimum criteria:
+    <ul>
+      <li>should be fast (reduce the computational burden)</li>
+      <li>should be good at eliminating hard cases</li>
+    </ul>
+  </li>
+</ul>
+
+<blockquote>
+  <p>The faster your filtering model is, the less effective it needs to be</p>
+</blockquote>
+
+<h2 id="engineer-for-performance">
+<a class="anchor" href="#engineer-for-performance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Engineer for Performance</h2>
+<h3 id="scale-to-multiple-users">
+<a class="anchor" href="#scale-to-multiple-users" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scale to multiple users</h3>
+<p>ML is horizontally scalable = more servers = keep response time reasonable when the number of requests increases</p>
+
+<h3 id="caching-fo-ml">
+<a class="anchor" href="#caching-fo-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching fo ML</h3>
+<p>Storing results to function calls -&gt; future calls with same parameters simply retrieve the stored results</p>
+
+<h4 id="caching-inference-results">
+<a class="anchor" href="#caching-inference-results" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching inference results</h4>
+<p><strong>Least recently used (LRU) cache</strong>: keep track the most recent inputs to a model and their corresponding outputs</p>
+
+<ul>
+  <li>not appropriate if each input is unique</li>
+  <li>
+<code class="highlighter-rouge">functools</code> Python module proposes a default implementation of an LRU cache that you can use with a simple decorator</li>
+</ul>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+from functools import lru_cache
+
+@lru_cache(maxsize=128)
+def run_model(data):
+  # Insert slow model inference below
+  pass
+
+</code></pre></div></div>
+
+<h4 id="caching-by-indexing">
+<a class="anchor" href="#caching-by-indexing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Caching by indexing</h4>
+<p>Cache other aspects of the pipeline that can be precomputed. Easy if a model does not only rely on user inputs</p>
+
+<blockquote>
+  <p>“Caching can improve performance, but it adds a layer of complexity. The size of the cache becomes an additional hyperparameter to tune depending on your application’s workload. In addition, any time a model or the underlying data is updated, the cache needs to be cleared in order to prevent it from serving outdated results”</p>
+</blockquote>
+
+<h2 id="model-and-data-life-cycle-management">
+<a class="anchor" href="#model-and-data-life-cycle-management" aria-hidden="true"><span class="octicon octicon-link"></span></a>Model and data life cycle management</h2>
+<p>ML application:</p>
+
+<ul>
+  <li>produces reproducible results</li>
+  <li>is resilient to model updates</li>
+  <li>is flexible enough to handle significant modelling and data processing changes</li>
+</ul>
+
+<h3 id="reproducibility">
+<a class="anchor" href="#reproducibility" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reproducibility</h3>
+<p>Each model/dataset pair should be assigned an unique identifier -&gt; should be logged each time a model is used in production</p>
+
+<h3 id="resilience">
+<a class="anchor" href="#resilience" aria-hidden="true"><span class="octicon octicon-link"></span></a>Resilience</h3>
+<ul>
+  <li>production pipeline should aim to update models without significant downtime</li>
+  <li>if a new model performs poorly, we’d like to be able to roll back to the previous one</li>
+</ul>
+
+<h2 id="data-processing-and-dags">
+<a class="anchor" href="#data-processing-and-dags" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Processing and DAGs</h2>
+<p>Directed acyclic graph (DAG): can be used to represent our process of going from raw data to trained model -&gt; each node represent a processing step and each step represent a dependency between two nodes</p>
+
+<p>DAGs helps systematize, debug, and version a pipeline -&gt; can become a crucial time saver</p>
+
+<h2 id="ask-for-feedback">
+<a class="anchor" href="#ask-for-feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ask for feedback</h2>
+<ul>
+  <li>Explicity asking for feedback (display model’s prediction accompanying it with a way for users to judge and correct a prediction)</li>
+  <li>Measuring implicit signals</li>
+</ul>
+
+<p>User feedback is a good source of training data and can be the first way to notice a degradation in performance</p>
+
+<h2 id="chris-moody-empowering-data-scientist-to-deploy-models">
+<a class="anchor" href="#chris-moody-empowering-data-scientist-to-deploy-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Chris Moody: Empowering Data Scientist to Deploy Models</h2>
+<ul>
+  <li>Make humans and algorithms work together: spend time thinking about the right way to present information</li>
+  <li>Canary development -&gt; start deploying the new version to one instance and progressively update instances while monitoring performance</li>
+</ul>
+
+<blockquote>
+  <p>“Ownership of the entire pipeline leads individuals to optimize for impact and reliability, rather than model complexity”</p>
+</blockquote>
+
+<h1 id="ch11-monitor-and-update-models">
+<a class="anchor" href="#ch11-monitor-and-update-models" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch11. Monitor and update models</h1>
+<h2 id="monitoring-saves-lives">
+<a class="anchor" href="#monitoring-saves-lives" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitoring saves lives</h2>
+<p>Monitoring: track the health of a system. For models: performance and quality of their predictions</p>
+
+<h3 id="monitor-to-inform-refresh-rate">
+<a class="anchor" href="#monitor-to-inform-refresh-rate" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitor to inform refresh rate</h3>
+<p>Detect when a model is not fresh anymore and needs to be retrained. Retraining events happen when accuracy dips below a threshold.</p>
+
+<h3 id="monitor-to-detect-abuse">
+<a class="anchor" href="#monitor-to-detect-abuse" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitor to detect abuse</h3>
+<p>Anomaly detection to detect attacks</p>
+
+<h2 id="choose-what-to-monitor">
+<a class="anchor" href="#choose-what-to-monitor" aria-hidden="true"><span class="octicon octicon-link"></span></a>Choose what to monitor</h2>
+<p>Commonly monitor metrics such as the average time it takes to process a request, the proportion of requests that fail to be processed, and the amount of available resources</p>
+
+<h3 id="performance-metrics">
+<a class="anchor" href="#performance-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Performance Metrics</h3>
+<ul>
+  <li>Track changes in the input distribution (<em>feature drift</em>)</li>
+  <li>Monitor the input distribution (summary statistics)</li>
+  <li>Monitor distribution shifts</li>
+</ul>
+
+<blockquote>
+  <p><strong>Conterfactual evaluation</strong>: aims to evaluate what would have happened if we hadn’t actioned a model -&gt; Not acting on a random subset of examples allow us to observe an unbiased distribution of the positive class. Comparing model predictions to true outcomes for the random data, we can begin to estimate a model’s precision and recall</p>
+</blockquote>
+
+<h3 id="business-metrics">
+<a class="anchor" href="#business-metrics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Business metrics</h3>
+<p>Product metrics should be closely monitored</p>
+
+<h2 id="cicd-for-ml">
+<a class="anchor" href="#cicd-for-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>CI/CD for ML</h2>
+<ul>
+  <li>
+<strong>CI</strong>: letting multiple developers regularly merge their code back into a central codebase</li>
+  <li>
+<strong>CD</strong>: improving the speed at which new versions of software can be released</li>
+</ul>
+
+<p>CI/CD for ML: make it easier to deploy new models or update existing ones</p>
+
+<blockquote>
+  <p>“Releasing updates quickly is easy; the challenge comes in guaranteeing their quality (…) There is no substitute for live performance to judge the quality of a model”</p>
+</blockquote>
+
+<p><strong>Shadow mode</strong>: deploying a new model in parallel to an existing one. When running inference, both models’ predictions are computed and stored, but the application only uses the prediction of the existing model</p>
+
+<ul>
+  <li>estimate a new models’ performance in a production environment without changing the user experience</li>
+  <li>test the infrastructure required to run inference for a new model (may be more complex)</li>
+  <li>but can’t observe the user’s response to the new model</li>
+</ul>
+
+<h2 id="ab-testing-and-experimentation">
+<a class="anchor" href="#ab-testing-and-experimentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>A/B Testing and Experimentation</h2>
+<p>Goal: maximize chances of using the best model, while minimizing the cost of trying out suboptimal models</p>
+
+<p>Expose a sample of users to a new model, and the rest to another. Larger control group (current model) and a smaller treatment group (new version we want to test). Run for a sufficient amount of time -&gt; compare the results for both groups and choose the better model</p>
+
+<h3 id="choosing-groups-and-duration">
+<a class="anchor" href="#choosing-groups-and-duration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Choosing groups and duration</h3>
+<ul>
+  <li>Users in both groups should be as similar as possible -&gt; any difference in outcome = our model and not difference in cohorts</li>
+  <li>Treatment group should be:
+    <ul>
+      <li>large enough: statistically meaningful conclusion</li>
+      <li>small as possible: limit exposure to a potentially worse model</li>
+    </ul>
+  </li>
+  <li>Duration of the test:
+    <ul>
+      <li>too short: not enough information</li>
+      <li>too long: risk losing users</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="estimating-the-better-variant">
+<a class="anchor" href="#estimating-the-better-variant" aria-hidden="true"><span class="octicon octicon-link"></span></a>Estimating the better variant</h3>
+<p>Decide on the size of each group and the length of the experiment before running it</p>
+
+<h3 id="building-the-infrastructure">
+<a class="anchor" href="#building-the-infrastructure" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building the infrastructure</h3>
+<p>Branching logic: decides which model to run depending on a given field’s value (harder if a model is accessible to logged-out users)</p>
+
+<h2 id="other-approaches">
+<a class="anchor" href="#other-approaches" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other approaches</h2>
+<p><strong>Multiarmed bandits</strong>: more flexible approach, can test variants continually and on more than two alternatives. Dynamically update which model to serve based on how well each option in performing</p>
+
+<p><strong>Contextual multiarmed bandits</strong>: go even further, by learning which model is a better option for each particular user</p>
+
+<blockquote>
+  <p>“The majority of work involved with building ML products consists of data and engineering work”</p>
+</blockquote>
+
+  </div><a class="u-url" href="/blog/book/machine%20learning/data%20science/deploy/2020/05/22/build-ml-app.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

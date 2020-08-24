@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>DataSUS death records and Streamlit | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="DataSUS death records and Streamlit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde)." />
+<meta property="og:description" content="In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde)." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/demo_datasus_streamlit/datasus_app_pt.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-17T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"DataSUS death records and Streamlit","dateModified":"2019-12-17T00:00:00-06:00","description":"In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde).","datePublished":"2019-12-17T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/demo_datasus_streamlit/datasus_app_pt.png","url":"https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>DataSUS death records and Streamlit | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="DataSUS death records and Streamlit" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde)." />
+<meta property="og:description" content="In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde)." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/demo_datasus_streamlit/datasus_app_pt.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-12-17T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"DataSUS death records and Streamlit","dateModified":"2019-12-17T00:00:00-06:00","description":"In Brazil, more than 70% of the population depends only on the medical assistance provided by the government. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde).","datePublished":"2019-12-17T00:00:00-06:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/demo_datasus_streamlit/datasus_app_pt.png","url":"https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">DataSUS death records and Streamlit</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-12-17T00:00:00-06:00" itemprop="datePublished">
+        Dec 17, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#health">health</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data driven">data driven</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#downloading-the-data-from-datasus">Downloading the data from DataSUS</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#sim">SIM</a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#downloading-the-data-from-the-ftp">Downloading the data from the ftp</a></li>
+<li class="toc-entry toc-h4"><a href="#renaming-the-files-which-the-extension-is-capitalized">Renaming the files which the extension is capitalized</a></li>
+<li class="toc-entry toc-h4"><a href="#converting-from-dbc-to-csv">Converting from .dbc to .csv</a>
+<ul>
+<li class="toc-entry toc-h5"><a href="#build-the-docker-image">Build the docker image</a></li>
+<li class="toc-entry toc-h5"><a href="#convert-the-files">Convert the files</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#cnes">CNES</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#processing-the-data">Processing the data</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#reading-the-facilities-table-with-pandas">Reading the facilities table with pandas</a></li>
+<li class="toc-entry toc-h3"><a href="#filtering-the-data-for-the-são-paulo-state">Filtering the data for the São Paulo state.</a></li>
+<li class="toc-entry toc-h3"><a href="#merging-with-the-death-records">Merging with the death records</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#enriching-the-data-from-datasus-with-latitude-and-longitude-cep_to_coords">Enriching the data from DataSUS with latitude and longitude (cep_to_coords)</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#install-geocode-from-source">Install geocode from source</a></li>
+<li class="toc-entry toc-h3"><a href="#fill-the-coordinates">Fill the coordinates</a></li>
+<li class="toc-entry toc-h3"><a href="#compiling-the-final-cep-table">Compiling the final CEP table</a></li>
+<li class="toc-entry toc-h3"><a href="#merging-the-facilities-back-to-the-death-records-dataframe-and-cleaning-the-data">Merging the facilities back to the death records dataframe and cleaning the data</a></li>
+<li class="toc-entry toc-h3"><a href="#saving-to-a-parquet-file">Saving to a .parquet file</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#creating-the-app-using-the-uber-pickups-example">Creating the app using the Uber pickups example</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#clone-the-repository">Clone the repository</a></li>
+<li class="toc-entry toc-h3"><a href="#open-apppy-on-your-favorite-text-editor-and-change-the-following-lines-commented-here">Open app.py on your favorite text editor and change the following lines (commented here)</a></li>
+<li class="toc-entry toc-h3"><a href="#install-streamlit">Install streamlit</a></li>
+<li class="toc-entry toc-h3"><a href="#run-the-app">Run the app</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+</ul><p>In Brazil, <a href="http://bvsms.saude.gov.br/bvs/pacsaude/diretrizes.php">more than 70% of the population depends only on the medical assistance provided by the government</a>. The Brazilian public healthcare system is called SUS (Sistema Único de Saúde).</p>
+
+<p>There is a public SUS data repository available online (DataSUS). Although the data is not always clean and complete, we can derive many insights from DataSUS.</p>
+
+<p>In this post we are going to build and deploy a Streamlit application inspired on the <a href="https://github.com/streamlit/demo-uber-nyc-pickups">Uber pickups example</a>, but using DataSUS death records (2006-2017) and geographic coordinates from health facilities.</p>
+
+<p>The code for this application is available <a href="https://github.com/millengustavo/demo-datasus-streamlit">here</a>.</p>
+
+<h2 id="downloading-the-data-from-datasus">
+<a class="anchor" href="#downloading-the-data-from-datasus" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading the data from DataSUS</h2>
+
+<h3 id="sim">
+<a class="anchor" href="#sim" aria-hidden="true"><span class="octicon octicon-link"></span></a>SIM</h3>
+
+<p>From the <a href="http://www2.datasus.gov.br/DATASUS/index.php?area=060701">DataSUS website</a> we have the definition of SIM:</p>
+<blockquote>
+  <p>The Mortality Information System (SIM) was created by DATASUS for the regular collection of mortality data in the country. From the creation of the SIM it was possible to comprehensively capture mortality data to subsidize the various management spheres in public health. Based on this information it is possible to perform situation analysis, planning and evaluation of actions and programs in the area.</p>
+</blockquote>
+
+<p>Let’s download the SIM data for the São Paulo state. The prefixes of the files are “DOSP”.</p>
+
+<h4 id="downloading-the-data-from-the-ftp">
+<a class="anchor" href="#downloading-the-data-from-the-ftp" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading the data from the ftp</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">ftplib</span> <span class="kn">import</span> <span class="n">FTP</span>
+
+<span class="n">ftp</span> <span class="o">=</span> <span class="n">FTP</span><span class="p">(</span><span class="s">"ftp.datasus.gov.br"</span><span class="p">)</span>
+<span class="n">ftp</span><span class="o">.</span><span class="n">login</span><span class="p">()</span>
+<span class="n">ftp</span><span class="o">.</span><span class="n">cwd</span><span class="p">(</span><span class="s">"dissemin/publicos/SIM/CID10/DORES/"</span><span class="p">)</span>
+<span class="n">all_files</span> <span class="o">=</span> <span class="n">ftp</span><span class="o">.</span><span class="n">nlst</span><span class="p">(</span><span class="s">"."</span><span class="p">)</span>
+<span class="n">state_prefix</span> <span class="o">=</span> <span class="s">"DOSP"</span>
+<span class="c1"># We sort the list and keep only the last 12 records
+# This is because they share the same layout of the current data (2006-2017)
+</span><span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">([</span><span class="nb">file</span> <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">all_files</span> <span class="k">if</span> <span class="n">state_prefix</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">])[</span><span class="o">-</span><span class="mi">12</span><span class="p">:]</span>
+
+<span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"Downloading {}..."</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">file</span><span class="p">))</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="s">"wb"</span><span class="p">)</span> <span class="k">as</span> <span class="n">fp</span><span class="p">:</span>
+        <span class="n">ftp</span><span class="o">.</span><span class="n">retrbinary</span><span class="p">(</span><span class="s">"RETR {}"</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="nb">file</span><span class="p">),</span> <span class="n">fp</span><span class="o">.</span><span class="n">write</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="renaming-the-files-which-the-extension-is-capitalized">
+<a class="anchor" href="#renaming-the-files-which-the-extension-is-capitalized" aria-hidden="true"><span class="octicon octicon-link"></span></a>Renaming the files which the extension is capitalized</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="nb">file</span> <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">()</span> <span class="k">if</span> <span class="s">"DOSP"</span> <span class="ow">in</span> <span class="nb">file</span> <span class="ow">and</span> <span class="s">".DBC"</span> <span class="ow">in</span> <span class="nb">file</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="nb">file</span><span class="p">,</span> <span class="nb">file</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="s">".dbc"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h4 id="converting-from-dbc-to-csv">
+<a class="anchor" href="#converting-from-dbc-to-csv" aria-hidden="true"><span class="octicon octicon-link"></span></a>Converting from .dbc to .csv</h4>
+<p>As you may have noticed, the files are in a <code class="highlighter-rouge">.dbc</code> format. This is a proprietary format of the SUS Department of Informatics (DATASUS).</p>
+
+<p>A kind developer provided a <a href="https://github.com/greatjapa/dbc2csv">tool</a> to convert files from <code class="highlighter-rouge">.dbc</code> to <code class="highlighter-rouge">.csv</code>. To use this tool we will need to have <code class="highlighter-rouge">git</code> and <code class="highlighter-rouge">docker</code> installed.</p>
+
+<h5 id="build-the-docker-image">
+<a class="anchor" href="#build-the-docker-image" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build the docker image</h5>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/greatjapa/dbc2csv.git
+<span class="nb">cd </span>dbc2csv
+docker build <span class="nt">-t</span> dbc2csv <span class="nb">.</span>
+</code></pre></div></div>
+
+<h5 id="convert-the-files">
+<a class="anchor" href="#convert-the-files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Convert the files</h5>
+<ol>
+  <li>Navigate to the folder where you download the <code class="highlighter-rouge">.dbc</code> files. Copy the full path to the directory, you can get this path by running:
+    <div class="language-bash highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="nb">pwd</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Run:
+    <div class="language-bash highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code>docker run <span class="nt">-it</span> <span class="nt">-v</span> &lt;full_path_to_the_directory&gt;:/usr/src/app/data dbc2csv make
+</code></pre></div>    </div>
+  </li>
+  <li>A <code class="highlighter-rouge">/csv</code> folder will be populated with the converted files.</li>
+</ol>
+
+<p><img src="https://millengustavo.github.io/blog/images/demo_datasus_streamlit/dbc2csv.png" alt="visual"></p>
+
+<h3 id="cnes">
+<a class="anchor" href="#cnes" aria-hidden="true"><span class="octicon octicon-link"></span></a>CNES</h3>
+<p>From their <a href="http://cnes.datasus.gov.br/">website</a>:</p>
+<blockquote>
+  <p>The National Register of Health Facilities (CNES) is a public document and official information system for registering information about all health facilities in the country, regardless of their legal nature or integration with the Unified Health System (SUS).</p>
+</blockquote>
+
+<p>The process to download the data is simpler this time, they are already in a <code class="highlighter-rouge">.zip</code> file you can download from this link:</p>
+
+<p><a href="ftp://ftp.datasus.gov.br/cnes/BASE_DE_DADOS_CNES_201910.ZIP">ftp://ftp.datasus.gov.br/cnes/BASE_DE_DADOS_CNES_201910.ZIP</a></p>
+
+<p>We are going to use only one <code class="highlighter-rouge">.csv</code> file from this data: <code class="highlighter-rouge">tbEstabelecimento201910.csv</code></p>
+
+<h2 id="processing-the-data">
+<a class="anchor" href="#processing-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Processing the data</h2>
+
+<h3 id="reading-the-facilities-table-with-pandas">
+<a class="anchor" href="#reading-the-facilities-table-with-pandas" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reading the facilities table with pandas</h3>
+
+<p>To be efficient, we will pass only the columns that matter to our application.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">cnes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+    <span class="s">"tbEstabelecimento201910.csv"</span><span class="p">,</span>
+    <span class="n">sep</span><span class="o">=</span><span class="s">";"</span><span class="p">,</span>
+    <span class="n">usecols</span><span class="o">=</span><span class="p">[</span>
+        <span class="s">"CO_CNES"</span><span class="p">,</span>
+        <span class="s">"CO_CEP"</span><span class="p">,</span>
+        <span class="s">"NO_FANTASIA"</span><span class="p">,</span>
+        <span class="s">"NO_LOGRADOURO"</span><span class="p">,</span>
+        <span class="s">"CO_ESTADO_GESTOR"</span><span class="p">,</span>
+        <span class="s">"NU_LATITUDE"</span><span class="p">,</span>
+        <span class="s">"NU_LONGITUDE"</span><span class="p">,</span>
+    <span class="p">],</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="filtering-the-data-for-the-são-paulo-state">
+<a class="anchor" href="#filtering-the-data-for-the-s%C3%A3o-paulo-state" aria-hidden="true"><span class="octicon octicon-link"></span></a>Filtering the data for the São Paulo state.</h3>
+<p>From the dictionary available on the DataSUS website we know that ‘35’ is the code for São Paulo. For this application we are only going to keep this data</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnes</span> <span class="o">=</span> <span class="n">cnes</span><span class="p">[</span><span class="n">cnes</span><span class="p">[</span><span class="s">"CO_ESTADO_GESTOR"</span><span class="p">]</span><span class="o">==</span><span class="mi">35</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="merging-with-the-death-records">
+<a class="anchor" href="#merging-with-the-death-records" aria-hidden="true"><span class="octicon octicon-link"></span></a>Merging with the death records</h3>
+<p>My converted <code class="highlighter-rouge">.csv</code> SIM files are in the path <code class="highlighter-rouge">../data/SIM/csv/</code>, make sure you modify the path accordingly</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="s">"../data/SIM/csv/"</span><span class="p">))</span>
+
+<span class="n">dfs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="s">"../data/SIM/csv/"</span> <span class="o">+</span> <span class="nb">file</span><span class="p">,</span>
+        <span class="n">usecols</span><span class="o">=</span><span class="p">[</span><span class="s">"NUMERODO"</span><span class="p">,</span> <span class="s">"DTOBITO"</span><span class="p">,</span> <span class="s">"HORAOBITO"</span><span class="p">,</span> <span class="s">"CODESTAB"</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="nb">file</span> <span class="ow">in</span> <span class="n">files</span>
+<span class="p">]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfs</span><span class="p">)</span>
+
+<span class="c1"># We will drop the null CODESTABs (data without CNES code)
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Before proceeding to fill the missing coordinates, join the CODESTAB with the CO_CNES, so we have fewer facilities to fill.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cnes</span> <span class="o">=</span> <span class="n">cnes</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">"CO_CNES"</span><span class="p">:</span> <span class="s">"CODESTAB"</span><span class="p">})</span>
+<span class="n">merged</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">cnes</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">"CODESTAB"</span><span class="p">)</span>
+
+<span class="c1"># Since we merged with the death records file, we have many duplicates, 
+# let's drop it to see which facilities have coordinates missing
+</span><span class="n">unique_merged</span> <span class="o">=</span> <span class="n">merged</span><span class="p">[</span>
+    <span class="p">[</span><span class="s">"CODESTAB"</span><span class="p">,</span> <span class="s">"CO_CEP"</span><span class="p">,</span> <span class="s">"NU_LATITUDE"</span><span class="p">,</span> <span class="s">"NU_LONGITUDE"</span><span class="p">]</span>
+<span class="p">]</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
+<span class="c1"># Filtering the data for only the records where the coordinates are missing
+</span><span class="n">missing_coords</span> <span class="o">=</span> <span class="n">unique_merged</span><span class="p">[</span><span class="n">unique_merged</span><span class="p">[</span><span class="s">"NU_LATITUDE"</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+<span class="c1"># The CEP was automatically converted to int and we have lost the first zero digit.
+# This line converts to string and pad with zero so we have a valid CEP
+</span><span class="n">missing_coords</span><span class="p">[</span><span class="s">"CO_CEP"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">missing_coords</span><span class="p">[</span><span class="s">"CO_CEP"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>We have 697 CEPs without coordinates, let’s try to fill them up.</p>
+
+<h2 id="enriching-the-data-from-datasus-with-latitude-and-longitude-cep_to_coords">
+<a class="anchor" href="#enriching-the-data-from-datasus-with-latitude-and-longitude-cep_to_coords" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enriching the data from DataSUS with latitude and longitude (cep_to_coords)</h2>
+
+<p>The data we downloaded from DataSUS is not complete. Geographic coordinates of various health facilities are missing. While latitude and longitude are not present in all cases, we do have the Brazilian zip code (CEP) for some.</p>
+
+<p>A quick search on Google for converting from CEP to latitude and longitude has shown that we had some scripts that mixed R and Python to achieve this task.</p>
+
+<p>Investigating the scripts further, it became clear that it was simple and valuable to implement this in Python. So, I removed the dependency of R to achieve the same result with just Python <a href="https://github.com/millengustavo/cep_to_coords">https://github.com/millengustavo/cep_to_coords</a>.</p>
+
+<h3 id="install-geocode-from-source">
+<a class="anchor" href="#install-geocode-from-source" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install geocode from source</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/millengustavo/cep_to_coords.git
+<span class="nb">cd </span>cep_to_coords
+git checkout master
+pip <span class="nb">install</span> <span class="nt">-e</span> <span class="nb">.</span>
+</code></pre></div></div>
+
+<p>The package usage is simple. Call the <code class="highlighter-rouge">cep_to_coords</code> function with a valid CEP string, it will search the correios API for an address, concatenate it with the city and country and hit an <a href="http://photon.komoot.de/">API</a> to get the coordinates.</p>
+
+<p>If you find it useful, please leave a star on <a href="https://github.com/millengustavo/cep_to_coords">Github</a>. The project is still in its infancy, so it is a great opportunity to <a href="https://medium.com/@austintackaberry/why-you-should-contribute-to-open-source-software-right-now-bec8bd83cfc0">contribute to your first open source project</a> adding features or refactoring the code!</p>
+
+<h3 id="fill-the-coordinates">
+<a class="anchor" href="#fill-the-coordinates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fill the coordinates</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">cep_to_coords.geocode</span> <span class="kn">import</span> <span class="n">cep_to_coords</span>
+
+<span class="n">cep_column</span> <span class="o">=</span> <span class="s">"CO_CEP"</span>
+
+<span class="n">unique_ceps</span> <span class="o">=</span> <span class="n">missing_coords</span><span class="p">[</span><span class="n">cep_column</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="c1"># cep_to_coords returns a [lat, lon] list if it finds the coordinates
+# else it returns [NaN, NaN]
+</span><span class="n">missing_coords</span><span class="p">[</span><span class="s">"lat"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">"nan"</span><span class="p">)</span>
+<span class="n">missing_coords</span><span class="p">[</span><span class="s">"lon"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s">"nan"</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unique_ceps</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">cep_to_coords</span><span class="p">(</span><span class="n">elem</span><span class="p">)</span>
+        <span class="n">missing_coords</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="s">"lat"</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">missing_coords</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ind</span><span class="p">,</span> <span class="s">"lon"</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">except</span> <span class="nb">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">elem</span><span class="p">,</span> <span class="n">coords</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="s">"{}</span><span class="si">%</span><span class="s">..."</span><span class="o">.</span><span class="nb">format</span><span class="p">(</span><span class="n">ind</span> <span class="o">*</span> <span class="mi">100</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_ceps</span><span class="p">)))</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Using the cep_to_coords function we were able to fill <strong>78%</strong> of the missing coordinates!</p>
+</blockquote>
+
+<h3 id="compiling-the-final-cep-table">
+<a class="anchor" href="#compiling-the-final-cep-table" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiling the final CEP table</h3>
+
+<p>To complete the data preparation, we need to take our filled coordinates and replace the NaNs on the death records table.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">unique_merged</span><span class="p">[</span><span class="s">"CO_CEP"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">unique_merged</span><span class="p">[</span><span class="s">"CO_CEP"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># unfortunately we didn't fill all coordinates, let's drop them
+</span><span class="n">missing_coords</span> <span class="o">=</span> <span class="n">missing_coords</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"NU_LATITUDE"</span><span class="p">,</span> <span class="s">"NU_LONGITUDE"</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="c1"># joining the datasets
+</span><span class="n">full_table</span> <span class="o">=</span> <span class="n">unique_merged</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">missing_coords</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">"CO_CEP"</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="s">"left"</span><span class="p">)</span>
+<span class="c1"># filling the missing data
+</span><span class="n">full_table</span><span class="p">[</span><span class="s">"lat"</span><span class="p">]</span> <span class="o">=</span> <span class="n">full_table</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">"lat"</span><span class="p">]</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">"NU_LATITUDE"</span><span class="p">])</span> <span class="k">else</span> <span class="n">x</span><span class="p">[</span><span class="s">"NU_LATITUDE"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="n">full_table</span><span class="p">[</span><span class="s">"lon"</span><span class="p">]</span> <span class="o">=</span> <span class="n">full_table</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span>
+    <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="s">"lon"</span><span class="p">]</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="s">"NU_LONGITUDE"</span><span class="p">])</span> <span class="k">else</span> <span class="n">x</span><span class="p">[</span><span class="s">"NU_LONGITUDE"</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="c1"># compiling the CEP final table
+</span><span class="n">full_table</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">full_table</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"NU_LATITUDE"</span><span class="p">,</span> <span class="s">"NU_LONGITUDE"</span><span class="p">,</span> <span class="s">"CODESTAB_y"</span><span class="p">])</span>
+    <span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+    <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s">"CODESTAB_x"</span><span class="p">:</span> <span class="s">"CODESTAB"</span><span class="p">})</span>
+    <span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="merging-the-facilities-back-to-the-death-records-dataframe-and-cleaning-the-data">
+<a class="anchor" href="#merging-the-facilities-back-to-the-death-records-dataframe-and-cleaning-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Merging the facilities back to the death records dataframe and cleaning the data</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_enriched</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">full_table</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s">"CODESTAB"</span><span class="p">)</span>
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"HORAOBITO"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_numeric</span><span class="p">(</span>
+    <span class="n">df_enriched</span><span class="p">[</span><span class="s">"HORAOBITO"</span><span class="p">],</span> <span class="n">downcast</span><span class="o">=</span><span class="s">"integer"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">"coerce"</span>
+<span class="p">)</span>
+<span class="n">df_enriched</span> <span class="o">=</span> <span class="n">df_enriched</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"DTOBITO"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_enriched</span><span class="p">[</span><span class="s">"DTOBITO"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">8</span><span class="p">))</span>
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"HORAOBITO"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_enriched</span><span class="p">[</span><span class="s">"HORAOBITO"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">zfill</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span>
+<span class="p">)</span>
+<span class="c1"># Creating a timestamp column with both date and hour of death
+</span><span class="n">df_enriched</span><span class="p">[</span><span class="s">"DATA"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_enriched</span><span class="p">[</span><span class="s">"DTOBITO"</span><span class="p">]</span> <span class="o">+</span> <span class="s">" "</span> <span class="o">+</span> <span class="n">df_enriched</span><span class="p">[</span><span class="s">"HORAOBITO"</span><span class="p">]</span>
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"DATA"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span>
+    <span class="n">df_enriched</span><span class="p">[</span><span class="s">"DATA"</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s">"</span><span class="si">%</span><span class="s">d</span><span class="si">%</span><span class="s">m</span><span class="si">%</span><span class="s">Y </span><span class="si">%</span><span class="s">H</span><span class="si">%</span><span class="s">M"</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="s">"coerce"</span>
+<span class="p">)</span>
+<span class="n">df_enriched</span> <span class="o">=</span> <span class="n">df_enriched</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"NUMERODO"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_enriched</span><span class="p">[</span><span class="s">"NUMERODO"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span>
+
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"lat"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_enriched</span><span class="p">[</span><span class="s">"lat"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">","</span><span class="p">,</span> <span class="s">"."</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">df_enriched</span><span class="p">[</span><span class="s">"lon"</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+    <span class="n">df_enriched</span><span class="p">[</span><span class="s">"lon"</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">","</span><span class="p">,</span> <span class="s">"."</span><span class="p">,</span> <span class="n">regex</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="saving-to-a-parquet-file">
+<a class="anchor" href="#saving-to-a-parquet-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Saving to a .parquet file</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_enriched</span><span class="o">.</span><span class="n">to_parquet</span><span class="p">(</span><span class="s">"../data/clean/dataset.parquet.gzip"</span><span class="p">,</span> <span class="n">compression</span><span class="o">=</span><span class="s">"gzip"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="creating-the-app-using-the-uber-pickups-example">
+<a class="anchor" href="#creating-the-app-using-the-uber-pickups-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating the app using the Uber pickups example</h2>
+
+<p>Streamlit according to the <a href="https://streamlit.io/">website</a> is</p>
+<blockquote>
+  <p>“The fastest way to build custom ML tools”.</p>
+</blockquote>
+
+<p>It is indeed a bold statement, but what sold me on it was the sentence on the subtitle:</p>
+<blockquote>
+  <p>“So you can stop spending time on frontend development and get back to what you do best.”.</p>
+</blockquote>
+
+<p>For this experiment, we are going to spend even less time on frontend development by using an example gently posted by the Streamlit team <a href="https://github.com/streamlit/demo-uber-nyc-pickups">https://github.com/streamlit/demo-uber-nyc-pickups</a>. The demo presents the Uber pickups on New York City by hour. Our goal here is to replace pickups with deaths registered on SIM and New York City with the state of São Paulo.</p>
+
+<p>There are only a few things we need to change in the code to adapt the application to our use.</p>
+
+<h3 id="clone-the-repository">
+<a class="anchor" href="#clone-the-repository" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clone the repository</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/streamlit/demo-uber-nyc-pickups.git
+<span class="nb">cd </span>demo-uber-nyc-pickups
+</code></pre></div></div>
+
+<h3 id="open-apppy-on-your-favorite-text-editor-and-change-the-following-lines-commented-here">
+<a class="anchor" href="#open-apppy-on-your-favorite-text-editor-and-change-the-following-lines-commented-here" aria-hidden="true"><span class="octicon octicon-link"></span></a>Open app.py on your favorite text editor and change the following lines (commented here)</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># OLD -&gt; DATE_TIME = "date/time"
+# NEW -&gt; DATE_TIME = "data"
+</span>
+<span class="c1"># OLD -&gt; data = pd.read_csv(DATA_URL, nrows=nrows)
+# NEW -&gt; data = pd.read_parquet("../data/clean/dataset.parquet.gzip")
+</span></code></pre></div></div>
+
+<p>For cosmetic purposes you may also change the title and other specific references</p>
+
+<h3 id="install-streamlit">
+<a class="anchor" href="#install-streamlit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install streamlit</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>streamlit
+</code></pre></div></div>
+
+<h3 id="run-the-app">
+<a class="anchor" href="#run-the-app" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run the app</h3>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>streamlit run app.py
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/demo_datasus_streamlit/terminal_streamlit.png" alt="visual"></p>
+
+<p>Voilà! This command will automatically open the app on your browser (port 8051 by default).</p>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+<p>This is a very simple project that shows some amazing libraries that are being developed lately for Machine Learning applications. Although we didn’t used any complex techniques here, we covered an interesting part of what a data scientist do. Data ingestion, cleaning, enriching and finally visualization.</p>
+
+<p>I hope you learned something from this and I encourage you to play around with Streamlit, it’s definitely amazing!</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/demo_datasus_streamlit/datasus_streamlit.gif" alt="visual"></p>
+
+  </div><a class="u-url" href="/blog/data%20science/machine%20learning/health/data%20driven/2019/12/17/demo-datasus-streamlit.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
