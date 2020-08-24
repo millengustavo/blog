@@ -3,7 +3,7 @@ title: "DataSUS death records and Streamlit"
 toc: true
 layout: post
 categories: [data science, machine learning, health, data driven]
-image: "/images/demo_datasus_streamlit/datasus_app_pt.png"
+image: "/images/demo_datasus_streamlit/datasus_app_pt_cover.png"
 ---
 
 In Brazil, [more than 70% of the population depends only on the medical assistance provided by the government](http://bvsms.saude.gov.br/bvs/pacsaude/diretrizes.php). The Brazilian public healthcare system is called SUS (Sistema Único de Saúde). 

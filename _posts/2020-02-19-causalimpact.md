@@ -3,7 +3,7 @@ title: "Causal Impact: state-space models in settings where a randomized experim
 toc: true
 layout: post
 categories: [data science, machine learning, causality, statistics]
-image: "/images/causal_impact/amazon_plots.png"
+image: "/images/causal_impact/amazon_plots_cover.png"
 ---
 
 **TL;DR**: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.
