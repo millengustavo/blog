@@ -3,7 +3,7 @@ title: "Mastering Large Datasets with Python: Parallelize and Distribute Your Py
 toc: true
 layout: post
 categories: [book, software engineering, python, big data]
-image: "/images/high_performance_python/high_performance_python.jpg"
+image: "/images/master_large_data_python/master_large_data_python.png"
 ---
 
 My notes and highlights on the book.
