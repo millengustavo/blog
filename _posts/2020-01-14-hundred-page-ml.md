@@ -3,7 +3,7 @@ title: "The Hundred-Page Machine Learning Book"
 toc: true
 layout: post
 categories: [book, machine learning, data science]
-image: "/images/100_page_ml/100_page_ml.png"
+image: "/images/hundred_page_ml/hundred_page_ml.png"
 ---
 
 My notes and highlights on the book.
