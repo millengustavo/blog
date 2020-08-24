@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data." />
+<meta property="og:description" content="New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/digitalblindness/header_db.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python","dateModified":"2019-03-15T00:00:00-05:00","description":"New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data.","datePublished":"2019-03-15T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/digitalblindness/header_db.png","url":"https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data." />
+<meta property="og:description" content="New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/digitalblindness/header_db.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-03-15T00:00:00-05:00" />
+<script type="application/ld+json">
+{"headline":"Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python","dateModified":"2019-03-15T00:00:00-05:00","description":"New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating data.","datePublished":"2019-03-15T00:00:00-05:00","@type":"BlogPosting","image":"https://millengustavo.github.io/blog/images/digitalblindness/header_db.png","url":"https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html"},"@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Digital blindness: Learning to look at the digital conversation between two major bank brands and their audience using Python</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-03-15T00:00:00-05:00" itemprop="datePublished">
+        Mar 15, 2019
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#data visualization">data visualization</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#cleaning-the-data">Cleaning the data</a></li>
+<li class="toc-entry toc-h2"><a href="#scattertext">Scattertext</a></li>
+<li class="toc-entry toc-h2"><a href="#exploring-the-scattertext-html-file">Exploring the Scattertext html file</a></li>
+<li class="toc-entry toc-h2"><a href="#searching-for-specific-terms">Searching for specific terms</a></li>
+<li class="toc-entry toc-h2"><a href="#emoji-analysis">Emoji analysis</a></li>
+<li class="toc-entry toc-h2"><a href="#wrapping-up">Wrapping up</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#disclaimer">Disclaimer</a></li>
+<li class="toc-entry toc-h3"><a href="#citation-for-the-scattertext-library">Citation for the Scattertext library:</a></li>
+</ul>
+</li>
+</ul><p>New “digital” banks are rising in popularity in Brazil. It is hard to pinpoint the exact reasons for this, we may gain some insight on the subject by investigating <strong>data</strong>.</p>
+
+<p>In this article we are going to dive deeper on tweets from two Brazilian banks: Itaú and Nubank. We will use <strong>Python</strong> to help us on this mission.</p>
+
+<h2 id="cleaning-the-data">
+<a class="anchor" href="#cleaning-the-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cleaning the data</h2>
+
+<p>The Jupyter Notebook with the code is available <a href="https://github.com/millengustavo/medium_itau_nubank">here</a>.</p>
+
+<p>We start our journey with two datasets in JSON format. The data consists of tweets from both banks between 2014 and 2019 (February).</p>
+
+<p>Let’s import one of the datasets and manipulate it with Pandas.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span><span class="p">,</span> <span class="n">STOPWORDS</span>
+<span class="n">df_nubank</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="err">‘</span><span class="n">nubank_tweets</span><span class="o">.</span><span class="n">json</span><span class="err">’</span><span class="p">)</span>
+<span class="n">df_nubank</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/tb1.png" alt="table1"></p>
+
+<p>We can see that these are tweets from the bank itself, some are replies to other users. We have some interesting columns: ‘created_at’, ‘favorite_count’ and ‘retweet_count’.</p>
+
+<p>Let’s sort the tweets by ‘favorite_count’ and keep tweets created after January 2018. We’ll need to clean the text, but first we duplicate it and save to a new ‘original_tweet’ column to help us later.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_nubank</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="err">‘</span><span class="n">favorite_count</span><span class="err">’</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_nubank</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df_nubank</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">created_at</span><span class="err">’</span><span class="p">]</span> <span class="o">&gt;</span> <span class="err">‘</span><span class="mi">2018</span><span class="err">–</span><span class="mi">01</span><span class="err">–</span><span class="mi">01</span><span class="err">’</span><span class="p">]</span>
+<span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">original_tweet</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span>
+<span class="n">df_nubank</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/tb2.png" alt="table2"></p>
+
+<p>Every <strong>NLP</strong> (Natural Language Processing) pipeline starts with cleaning the text. Let’s do it now!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># Lower case
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+<span class="c1"># Removing usernames
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="o">@</span><span class="p">[</span><span class="o">^</span>\<span class="n">s</span><span class="p">]</span><span class="o">+</span><span class="err">’</span><span class="p">,</span><span class="err">””</span><span class="p">)</span>
+
+<span class="c1"># Removing urls
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="n">https</span><span class="err">?</span><span class="p">:</span>\<span class="o">/</span>\<span class="o">/.*</span><span class="p">[</span>\<span class="n">r</span>\<span class="n">n</span><span class="p">]</span><span class="o">*</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+
+<span class="c1"># Removing punctuation
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="p">[</span><span class="o">^</span>\<span class="n">w</span>\<span class="n">s</span><span class="p">]</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+
+<span class="c1"># Removing stopwords
+</span><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="err">‘</span><span class="n">portuguese</span><span class="err">’</span><span class="p">)</span>
+<span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop</span><span class="p">))</span>
+
+<span class="c1"># Removing common brazilian names -&gt; you will need a .txt with these, it is easy to find it online
+</span><span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="err">‘</span><span class="n">nomes</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="err">’</span><span class="n">latin</span><span class="err">’</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">name_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name_list</span><span class="p">))</span>
+
+<span class="c1"># Removing numbers
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span>\<span class="n">d</span><span class="o">+</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+
+<span class="c1"># Removing small words -&gt; e.g.: é, tá, lá, pra, etc
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">r</span><span class="err">’</span>\<span class="n">b</span><span class="p">(</span>\<span class="n">w</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">})</span>\<span class="n">b</span><span class="err">’</span><span class="p">,</span> <span class="err">‘’</span><span class="p">)</span>
+
+<span class="c1"># Normalizing it
+</span><span class="n">df_nubank</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="err">‘</span><span class="n">NFKD</span><span class="err">’</span><span class="p">)</span>\
+ <span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="err">‘</span><span class="nb">ascii</span><span class="err">’</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="err">’</span><span class="n">ignore</span><span class="err">’</span><span class="p">)</span>\
+ <span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="err">‘</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="err">’</span><span class="p">)</span>
+
+<span class="c1"># Removing empty rows
+</span><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘’</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df_nubank</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c1"># Let’s keep only the first 10k tweets from our dataframe
+</span><span class="n">df_nubank</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
+<span class="n">df_nubank</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/tb3.png" alt="table3"></p>
+
+<p>By now you can see how different our ‘text’ column looks in comparison with the ‘original_tweet’.</p>
+
+<p>Let’s proceed to our first visualization: <strong>Word Clouds</strong>! We are going to use the <a href="https://github.com/amueller/word_cloud">wordcloud</a> library.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">text</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">review</span> <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="o">%</span><span class="n">matplotlib</span> <span class="n">inline</span>
+<span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">STOPWORDS</span><span class="p">)</span>
+<span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span>
+                      <span class="n">height</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span>
+                      <span class="n">background_color</span> <span class="o">=</span> <span class="err">‘</span><span class="n">black</span><span class="err">’</span><span class="p">,</span>
+                      <span class="n">stopwords</span> <span class="o">=</span> <span class="n">stopwords</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+                 <span class="n">facecolor</span> <span class="o">=</span> <span class="err">‘</span><span class="n">k</span><span class="err">’</span><span class="p">,</span>
+                 <span class="n">edgecolor</span> <span class="o">=</span> <span class="err">‘</span><span class="n">k</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="err">‘</span><span class="n">bilinear</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="err">‘</span><span class="n">off</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/wc_nubank.png" alt="WordCloud Nubank"></p>
+
+<p>Awesome right?! Let’s do the same for Itaú and proceed to the scattertext!</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_itau</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_json</span><span class="p">(</span><span class="err">‘</span><span class="n">itau_tweets</span><span class="o">.</span><span class="n">json</span><span class="err">’</span><span class="p">)</span>
+<span class="c1"># sorting by fav count
+</span><span class="n">df_itau</span> <span class="o">=</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="err">‘</span><span class="n">favorite_count</span><span class="err">’</span><span class="p">],</span><span class="n">ascending</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_itau</span> <span class="o">=</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df_itau</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">created_at</span><span class="err">’</span><span class="p">]</span> <span class="o">&gt;</span> <span class="err">‘</span><span class="mi">2018</span><span class="err">–</span><span class="mi">01</span><span class="err">–</span><span class="mi">01</span><span class="err">’</span><span class="p">]</span>
+<span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">original_tweet</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span>
+<span class="c1"># Data Cleaning
+# Lower case
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+<span class="c1"># Removing usernames
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="o">@</span><span class="p">[</span><span class="o">^</span>\<span class="n">s</span><span class="p">]</span><span class="o">+</span><span class="err">’</span><span class="p">,</span><span class="err">””</span><span class="p">)</span>
+<span class="c1"># Removing urls
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="n">https</span><span class="err">?</span><span class="p">:</span>\<span class="o">/</span>\<span class="o">/.*</span><span class="p">[</span>\<span class="n">r</span>\<span class="n">n</span><span class="p">]</span><span class="o">*</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+<span class="c1"># Removing punctuation
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span><span class="p">[</span><span class="o">^</span>\<span class="n">w</span>\<span class="n">s</span><span class="p">]</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+<span class="c1"># Removing stopwords
+</span><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>
+<span class="n">stop</span> <span class="o">=</span> <span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="err">‘</span><span class="n">portuguese</span><span class="err">’</span><span class="p">)</span>
+<span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop</span><span class="p">))</span>
+<span class="c1"># Removing common brazilian names -&gt; you will need a .txt with these, it is easy to find it online
+</span><span class="n">names</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="err">‘</span><span class="n">nomes</span><span class="o">.</span><span class="n">txt</span><span class="err">’</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="err">’</span><span class="n">latin</span><span class="err">’</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">name_list</span> <span class="o">=</span> <span class="p">(</span><span class="n">names</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">name_list</span><span class="p">))</span>
+<span class="c1"># Removing numbers
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘</span>\<span class="n">d</span><span class="o">+</span><span class="err">’</span><span class="p">,</span><span class="err">’’</span><span class="p">)</span>
+<span class="c1"># Removing small words -&gt; e.g.: é, tá, lá, pra, etc
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">r</span><span class="err">’</span>\<span class="n">b</span><span class="p">(</span>\<span class="n">w</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">})</span>\<span class="n">b</span><span class="err">’</span><span class="p">,</span> <span class="err">‘’</span><span class="p">)</span>
+<span class="c1"># Normalizing it
+</span><span class="n">df_itau</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">text</span><span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="err">‘</span><span class="n">NFKD</span><span class="err">’</span><span class="p">)</span>\
+ <span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="err">‘</span><span class="nb">ascii</span><span class="err">’</span><span class="p">,</span> <span class="n">errors</span><span class="o">=</span><span class="err">’</span><span class="n">ignore</span><span class="err">’</span><span class="p">)</span>\
+ <span class="o">.</span><span class="nb">str</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="err">‘</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="err">’</span><span class="p">)</span>
+<span class="c1"># Removing empty rows
+</span><span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="err">‘’</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">df_itau</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="c1"># Using only the first 10k tweets
+</span><span class="n">df_itau</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[:</span><span class="mi">10000</span><span class="p">]</span>
+<span class="n">text_itau</span> <span class="o">=</span> <span class="err">“</span> <span class="err">“</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">review</span> <span class="k">for</span> <span class="n">review</span> <span class="ow">in</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="c1"># Wordcloud
+</span><span class="n">stopwords</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">STOPWORDS</span><span class="p">)</span>
+<span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span> <span class="o">=</span> <span class="mi">3000</span><span class="p">,</span>
+                      <span class="n">height</span> <span class="o">=</span> <span class="mi">2000</span><span class="p">,</span>
+                      <span class="n">background_color</span> <span class="o">=</span> <span class="err">‘</span><span class="n">black</span><span class="err">’</span><span class="p">,</span>
+                      <span class="n">stopwords</span> <span class="o">=</span> <span class="n">stopwords</span><span class="p">)</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span><span class="n">text_itau</span><span class="p">)</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">40</span><span class="p">,</span> <span class="mi">30</span><span class="p">),</span>
+                 <span class="n">facecolor</span> <span class="o">=</span> <span class="err">‘</span><span class="n">k</span><span class="err">’</span><span class="p">,</span>
+                 <span class="n">edgecolor</span> <span class="o">=</span> <span class="err">‘</span><span class="n">k</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">,</span> <span class="n">interpolation</span> <span class="o">=</span> <span class="err">‘</span><span class="n">bilinear</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="err">‘</span><span class="n">off</span><span class="err">’</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">pad</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/wc_itau.png" alt="WordCloud Itaú"></p>
+
+<p>Word clouds are not the best way of interpreting the data. Comparing sizes and intensities of colors is not straight forward.</p>
+
+<h2 id="scattertext">
+<a class="anchor" href="#scattertext" aria-hidden="true"><span class="octicon octicon-link"></span></a>Scattertext</h2>
+<p>From the <a href="https://github.com/JasonKessler/scattertext">github repository</a>:</p>
+<blockquote>
+  <p>“A tool for finding distinguishing terms in small-to-medium-sized corpora, and presenting them in a sexy, interactive scatter plot with non-overlapping term labels. Exploratory data analysis just got more fun.”</p>
+</blockquote>
+
+<p>We will use it to create a scatter plot of the words based on the frequency and <strong>without overlapping the labels</strong>.</p>
+
+<p>Let’s combine both categories and use the ‘created_at’ and ‘original_tweet’ columns as metadata.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">bank</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="err">‘</span><span class="n">nubank</span><span class="err">’</span>
+<span class="n">df_nubank</span><span class="p">[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="err">“</span> <span class="o">|</span> <span class="err">“</span> <span class="o">+</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">original_tweet</span>
+<span class="n">df_nubank</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="p">[[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">bank</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]]</span>
+<span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">bank</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="err">‘</span><span class="n">itau</span><span class="err">’</span>
+<span class="n">df_itau</span><span class="p">[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="nb">map</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span> <span class="o">+</span> <span class="err">“</span> <span class="o">|</span> <span class="err">“</span> <span class="o">+</span> <span class="n">df_itau</span><span class="o">.</span><span class="n">original_tweet</span>
+<span class="n">df_itau</span> <span class="o">=</span> <span class="n">df_itau</span><span class="p">[[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">bank</span><span class="err">’</span><span class="p">,</span> <span class="err">‘</span><span class="n">text</span><span class="err">’</span><span class="p">]]</span>
+<span class="n">df_scatter</span> <span class="o">=</span> <span class="n">df_nubank</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_itau</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Creating the scatter plot</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">scattertext</span> <span class="k">as</span> <span class="n">st</span>
+<span class="kn">import</span> <span class="nn">spacy</span>
+<span class="n">nlp</span> <span class="o">=</span> <span class="n">spacy</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="err">‘</span><span class="n">pt</span><span class="err">’</span><span class="p">)</span>
+<span class="n">corpus</span> <span class="o">=</span> <span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">CorpusFromPandas</span><span class="p">(</span><span class="n">df_scatter</span><span class="p">,</span>
+          <span class="n">category_col</span><span class="o">=</span><span class="err">’</span><span class="n">bank</span><span class="err">’</span><span class="p">,</span>
+          <span class="n">text_col</span><span class="o">=</span><span class="err">’</span><span class="n">text</span><span class="err">’</span><span class="p">,</span>
+          <span class="n">nlp</span><span class="o">=</span><span class="n">nlp</span><span class="p">)</span>
+          <span class="o">.</span><span class="n">build</span><span class="p">()</span>
+          <span class="o">.</span><span class="n">get_unigram_corpus</span><span class="p">()</span>
+          <span class="o">.</span><span class="n">compact</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">ClassPercentageCompactor</span><span class="p">(</span><span class="n">term_count</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                               <span class="n">term_ranker</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">OncePerDocFrequencyRanker</span><span class="p">)))</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">produce_scattertext_explorer</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span>
+                                       <span class="n">category</span><span class="o">=</span><span class="err">’</span><span class="n">nubank</span><span class="err">’</span><span class="p">,</span>
+                                       <span class="n">category_name</span><span class="o">=</span><span class="err">’</span><span class="n">Nubank</span><span class="err">’</span><span class="p">,</span>
+                                       <span class="n">not_category_name</span><span class="o">=</span><span class="err">’</span><span class="n">Ita</span><span class="err">ú’</span><span class="p">,</span>
+                                       <span class="n">width_in_pixels</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                                       <span class="n">metadata</span><span class="o">=</span><span class="n">corpus</span><span class="o">.</span><span class="n">get_df</span><span class="p">()[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">])</span>
+<span class="nb">open</span><span class="p">(</span><span class="err">“</span><span class="n">visualization_nubank_itau</span><span class="o">.</span><span class="n">html</span><span class="err">”</span><span class="p">,</span> <span class="err">‘</span><span class="n">wb</span><span class="err">’</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="err">‘</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="err">’</span><span class="p">))</span>
+</code></pre></div></div>
+
+<h2 id="exploring-the-scattertext-html-file">
+<a class="anchor" href="#exploring-the-scattertext-html-file" aria-hidden="true"><span class="octicon octicon-link"></span></a>Exploring the Scattertext html file</h2>
+
+<p>The code above generates an .html file. You can access a live version on this <a href="https://s3.amazonaws.com/scatter-nubank-itau/visualization_nubank_itau.html">link</a>, but I will post some screenshots to illustrate.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/scatter1.png" alt="Scattertext Nubank vs Itau"></p>
+
+<p>On the top-left corner you can see the words used more by Nubank and less by Itaú. On the bottom-right corner you see the words used more by Itaú and less by Nubank.</p>
+
+<p>Bottom-left corner shows the least frequent terms and top-right corner the most frequent ones.</p>
+
+<h2 id="searching-for-specific-terms">
+<a class="anchor" href="#searching-for-specific-terms" aria-hidden="true"><span class="octicon octicon-link"></span></a>Searching for specific terms</h2>
+<p>We can see that ‘<strong>ajudar</strong>’ (help in Portuguese) is the most characteristic word of this corpus. You can click on the word or type it on the search box and see the frequency it appears in each category.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/ajudar.png" alt="Ajudar word"></p>
+
+<p>The term ‘<strong>agência</strong>’ (agency in Portuguese) is the top term from Itaú, appearing 586 times. It appears only 4 times in the Nubank category.</p>
+
+<p>Itaú was founded in January 2, 1945, while Nubank was founded in May 6, 2013. It is reasonable that we find contrasts like this.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/agencia.png" alt="Agencia word"></p>
+
+<p>The term ‘<strong>roxinho</strong>’ (a cute way of saying purple in Portuguese) is the top term from Nubank. The bank uses this word as a nickname for their flagship product: their credit card.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/roxinho.png" alt="Roxinho word"></p>
+
+<h2 id="emoji-analysis">
+<a class="anchor" href="#emoji-analysis" aria-hidden="true"><span class="octicon octicon-link"></span></a>Emoji analysis</h2>
+
+<p>Scattertext introducing text says:</p>
+<blockquote>
+  <p>“Exploratory data analysis just got more fun.”</p>
+</blockquote>
+
+<p>Let’s take fun to the next level, we will compare the emoji on the tweets from both banks! Play with the live version on this <a href="https://s3.amazonaws.com/scatter-nubank-itau/emoji_nubank_itau.html">link</a>.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">corpus</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">CorpusFromParsedDocuments</span><span class="p">(</span><span class="n">df_scatter</span><span class="p">,</span>
+                                      <span class="n">parsed_col</span><span class="o">=</span><span class="err">’</span><span class="n">metadata</span><span class="err">’</span><span class="p">,</span>
+                                      <span class="n">category_col</span><span class="o">=</span><span class="err">’</span><span class="n">bank</span><span class="err">’</span><span class="p">,</span>
+                                      <span class="n">feats_from_spacy_doc</span><span class="o">=</span><span class="n">st</span><span class="o">.</span><span class="n">FeatsFromSpacyDocOnlyEmoji</span><span class="p">())</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">produce_scattertext_explorer</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span>
+                                       <span class="n">category</span><span class="o">=</span><span class="err">’</span><span class="n">nubank</span><span class="err">’</span><span class="p">,</span>
+                                       <span class="n">category_name</span><span class="o">=</span><span class="err">’</span><span class="n">Nubank</span><span class="err">’</span><span class="p">,</span>
+                                       <span class="n">not_category_name</span><span class="o">=</span><span class="err">’</span><span class="n">Ita</span><span class="err">ú’</span><span class="p">,</span>
+                                       <span class="n">metadata</span><span class="o">=</span><span class="p">(</span><span class="n">corpus</span><span class="o">.</span><span class="n">get_df</span><span class="p">()[</span><span class="err">‘</span><span class="n">metadata</span><span class="err">’</span><span class="p">]),</span>
+                                       <span class="n">width_in_pixels</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="nb">open</span><span class="p">(</span><span class="err">“</span><span class="n">emoji_nubank_itau</span><span class="o">.</span><span class="n">html</span><span class="err">”</span><span class="p">,</span> <span class="err">‘</span><span class="n">wb</span><span class="err">’</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="err">‘</span><span class="n">utf</span><span class="o">-</span><span class="mi">8</span><span class="err">’</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/scatter2.png" alt="Emoji Scatter plot"></p>
+
+<p>A scatter plot of emoji based on their frequency of use. How awesome is that?!</p>
+
+<p>We see <strong>hearts</strong> everywhere, but a clear distinction between their color. Keep in mind that we filtered the tweets only for those starting from January 2018, and 2018 was a World Cup year.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/heart1.png" alt="Yellow heart"></p>
+
+<p>The color of the hearts from Itaú were most from the Brazilian flag and the bank’s main color: orange. The bank is an official sponsor of the Brazilian Soccer Team.</p>
+
+<p><img src="https://millengustavo.github.io/blog/images/digitalblindness/heart2.png" alt="Purple heart"></p>
+
+<p>The hearts from Nubank followed the signature color of the brand: purple.</p>
+
+<h2 id="wrapping-up">
+<a class="anchor" href="#wrapping-up" aria-hidden="true"><span class="octicon octicon-link"></span></a>Wrapping up</h2>
+<p>Play around with the plots to see how powerful they are. If you liked this article, recommend it and share it with your friends.</p>
+
+<h3 id="disclaimer">
+<a class="anchor" href="#disclaimer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Disclaimer</h3>
+<p>This analysis was done based on public available data from the brand’s social media channels to illustrate the application of an algorithm developed by our engineers. We don’t have any affiliation with those brands.</p>
+
+<h3 id="citation-for-the-scattertext-library">
+<a class="anchor" href="#citation-for-the-scattertext-library" aria-hidden="true"><span class="octicon octicon-link"></span></a>Citation for the Scattertext library:</h3>
+
+<p>Jason S. Kessler. Scattertext: a Browser-Based Tool for Visualizing how Corpora Differ. ACL System Demonstrations. 2017.</p>
+
+  </div><a class="u-url" href="/blog/data%20visualization/data%20science/machine%20learning/2019/03/15/digitalblindness.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
