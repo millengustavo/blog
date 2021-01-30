@@ -1,4 +1,396 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2020-12-26T08:33:21-06:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Learning Python Design Patterns</title><link href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" rel="alternate" type="text/html" title="Learning Python Design Patterns" /><published>2020-08-22T00:00:00-05:00</published><updated>2020-08-22T00:00:00-05:00</updated><id>https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-01-30T09:06:01-06:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Machine Learning Engineering</title><link href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" rel="alternate" type="text/html" title="Machine Learning Engineering" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
+
+&lt;p&gt;Author: Andriy Burkov&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.mlebook.com/&quot;&gt;Available here&lt;/a&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch1-introduction&quot;&gt;Ch1. Introduction&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#when-to-use-ml&quot;&gt;When to use ML&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#when-not-to-use-ml&quot;&gt;When not to use ML&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ml-project-life-cycle&quot;&gt;ML Project Life Cycle&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch2-before-the-project-starts&quot;&gt;Ch2. Before the Project Starts&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#impact-of-ml&quot;&gt;Impact of ML&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#cost-of-ml&quot;&gt;Cost of ML&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#nonlinear-progress&quot;&gt;Nonlinear progress&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#why-ml-projects-fail&quot;&gt;Why ML projects fail&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch3-data-collections-and-preparation&quot;&gt;Ch3. Data Collections and Preparation&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#train-validation-and-test-sets-partition&quot;&gt;Train, Validation and Test sets partition&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#data-sampling-strategies&quot;&gt;Data Sampling strategies&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#dataset-documentation&quot;&gt;Dataset Documentation&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch4-feature-engineering&quot;&gt;Ch4. Feature Engineering&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#good-features&quot;&gt;Good features&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#feature-selection-techniques&quot;&gt;Feature selection techniques&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#best-practices&quot;&gt;Best practices&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch5-supervised-model-training-part-1&quot;&gt;Ch5. Supervised Model Training (Part 1)&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#baseline&quot;&gt;Baseline&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#in-memory-vs-out-of-memory&quot;&gt;In-memory vs. out-of-memory&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#precision-and-recall&quot;&gt;Precision and Recall&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#f-measure&quot;&gt;F-measure&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#precision-recall-and-bias-variance-tradeoffs&quot;&gt;Precision-recall and bias-variance tradeoffs&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch6-supervised-model-training-part-2&quot;&gt;Ch6. Supervised Model Training (Part 2)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch7-model-evaluation&quot;&gt;Ch7. Model Evaluation&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#tasks&quot;&gt;Tasks&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ab-testing&quot;&gt;A/B Testing&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#multi-armed-bandit&quot;&gt;Multi-armed bandit&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#bootstrapping&quot;&gt;Bootstrapping&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch8-model-deployment&quot;&gt;Ch8. Model Deployment&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#deployment-patterns&quot;&gt;Deployment patterns&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#deployment-strategies&quot;&gt;Deployment strategies&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#algorithmic-efficiency&quot;&gt;Algorithmic efficiency&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch9-model-serving-monitoring-and-maintenance&quot;&gt;Ch9. Model Serving, Monitoring, and Maintenance&lt;/a&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#effective-runtime&quot;&gt;Effective runtime&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#serving-modes&quot;&gt;Serving modes&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#what-can-go-wrong-with-the-model-in-production&quot;&gt;What can go wrong with the model in production&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#monitoring&quot;&gt;Monitoring&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#maintenance&quot;&gt;Maintenance&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ch10-conclusion&quot;&gt;Ch10. Conclusion&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch1-introduction&quot;&gt;Ch1. Introduction&lt;/h1&gt;
+
+&lt;p&gt;When we deploy a model in production, we usually deploy an entire pipeline&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Machine learning engineering (MLE)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;encompasses data collection, model training, making the model available for use&lt;/li&gt;
+  &lt;li&gt;includes any activity that lets ML algorithms be implemented as a part of an effective production system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;ML Engineer&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;concerned with sourcing the data (from multiple locations), preprocessing it, programming features, training an effective model that will coexist in production with other processes&lt;/li&gt;
+  &lt;li&gt;stable, maintanable and easily accessible&lt;/li&gt;
+  &lt;li&gt;ML systems “fail silently” -&amp;gt; must be capable of preventing such failures or to know how to detect and handle them&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;when-to-use-ml&quot;&gt;When to use ML&lt;/h2&gt;
+&lt;p&gt;Your problem:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;too complex for coding&lt;/li&gt;
+  &lt;li&gt;constantly changing&lt;/li&gt;
+  &lt;li&gt;perceptive (image, text, etc)&lt;/li&gt;
+  &lt;li&gt;unstudied phenomenon&lt;/li&gt;
+  &lt;li&gt;has a simple objective&lt;/li&gt;
+  &lt;li&gt;it is cost-effective&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;when-not-to-use-ml&quot;&gt;When not to use ML&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;explainability is needed&lt;/li&gt;
+  &lt;li&gt;errors are intolerable&lt;/li&gt;
+  &lt;li&gt;traditional SWE is a less expensive option&lt;/li&gt;
+  &lt;li&gt;all inputs and outputs can be enumerated and saved in a DB&lt;/li&gt;
+  &lt;li&gt;data is hard to get or too expensive&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ml-project-life-cycle&quot;&gt;ML Project Life Cycle&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb0ab34d2-0b33-4814-bc70-07c1bed10d42_2056x1068.png&quot; title=&quot;diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;ch2-before-the-project-starts&quot;&gt;Ch2. Before the Project Starts&lt;/h1&gt;
+
+&lt;h2 id=&quot;impact-of-ml&quot;&gt;Impact of ML&lt;/h2&gt;
+&lt;p&gt;High when:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;ML can replace a complex part of your engineering project&lt;/li&gt;
+  &lt;li&gt;there’s great benefit in getting inexpensive (but probably imperfect) predictions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;cost-of-ml&quot;&gt;Cost of ML&lt;/h2&gt;
+&lt;p&gt;Factors:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;difficulty of the problem&lt;/li&gt;
+  &lt;li&gt;cost of data&lt;/li&gt;
+  &lt;li&gt;need for accuracy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;nonlinear-progress&quot;&gt;Nonlinear progress&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Progress in ML is nonlinear. Prediction error decreases fast in the beginning, but then gradually slows down&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Make sure the PO (or client) understands the constraints and risks&lt;/li&gt;
+  &lt;li&gt;Log every activity and track the time it took (helps with reporting and estimations of complexity in the future)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;why-ml-projects-fail&quot;&gt;Why ML projects fail&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;lack of experienced talent&lt;/li&gt;
+  &lt;li&gt;lack of support by the leadership&lt;/li&gt;
+  &lt;li&gt;missing data infrastructure&lt;/li&gt;
+  &lt;li&gt;data labeling challenge&lt;/li&gt;
+  &lt;li&gt;siloed organizations and lack of collaboration&lt;/li&gt;
+  &lt;li&gt;technically infeasible projects&lt;/li&gt;
+  &lt;li&gt;lack of alignment between technical and business teams&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch3-data-collections-and-preparation&quot;&gt;Ch3. Data Collections and Preparation&lt;/h1&gt;
+
+&lt;h2 id=&quot;train-validation-and-test-sets-partition&quot;&gt;Train, Validation and Test sets partition&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Data was randomized before the split&lt;/li&gt;
+  &lt;li&gt;Split was applied to raw data&lt;/li&gt;
+  &lt;li&gt;Validation and test sets follow the same distribution&lt;/li&gt;
+  &lt;li&gt;Leakage was avoided&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;data-sampling-strategies&quot;&gt;Data Sampling strategies&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;random sampling&lt;/li&gt;
+  &lt;li&gt;systematic sampling&lt;/li&gt;
+  &lt;li&gt;stratified sampling&lt;/li&gt;
+  &lt;li&gt;cluster sampling&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Data versioning is a critical element in supervised learning when the labeling is done by multiple labelers&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;dataset-documentation&quot;&gt;Dataset Documentation&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;what the data means&lt;/li&gt;
+  &lt;li&gt;how it was collected&lt;/li&gt;
+  &lt;li&gt;methods used to creat it&lt;/li&gt;
+  &lt;li&gt;details of train-validation-test splits&lt;/li&gt;
+  &lt;li&gt;details of all pre-processing steps&lt;/li&gt;
+  &lt;li&gt;explanation of any data that were excluded&lt;/li&gt;
+  &lt;li&gt;format used to store it&lt;/li&gt;
+  &lt;li&gt;types of attributes/features&lt;/li&gt;
+  &lt;li&gt;number of examples&lt;/li&gt;
+  &lt;li&gt;possible values for labels / allowable range for a numerical target&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch4-feature-engineering&quot;&gt;Ch4. Feature Engineering&lt;/h1&gt;
+
+&lt;h2 id=&quot;good-features&quot;&gt;Good features&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;high predictive power&lt;/li&gt;
+  &lt;li&gt;can be computed fast&lt;/li&gt;
+  &lt;li&gt;reliable&lt;/li&gt;
+  &lt;li&gt;uncorrelated&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The distribution of feature values in the training set should be similar to the distribution of values the production model will receive&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;feature-selection-techniques&quot;&gt;Feature selection techniques&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Cutting the long tail&lt;/li&gt;
+  &lt;li&gt;Boruta&lt;/li&gt;
+  &lt;li&gt;L1 regularization&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;best-practices&quot;&gt;Best practices&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;scale features&lt;/li&gt;
+  &lt;li&gt;store and document in schema files or feature stores&lt;/li&gt;
+  &lt;li&gt;keep code, model and training data in sync&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Feature extraction code is one of the most important parts of a machine learning system. It must be extensively and systematically tested”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;ch5-supervised-model-training-part-1&quot;&gt;Ch5. Supervised Model Training (Part 1)&lt;/h1&gt;
+
+&lt;h2 id=&quot;baseline&quot;&gt;Baseline&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;Baseline&lt;/strong&gt;: a model or algorithm that provides a reference point for comparison. Establish a baseline performance on your problem before start working on a predictive model.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;simple learning algorithm or&lt;/li&gt;
+  &lt;li&gt;rule-based or heuristic algorithm (simple statistic)
+    &lt;ul&gt;
+      &lt;li&gt;random prediction&lt;/li&gt;
+      &lt;li&gt;zero rule algorithm (e.g., always predict the most common class in the training set / average if regression)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;human baseline: Amazon Mechanical Turk (MT) service -&amp;gt; web-platform where people solve simple tasks for a reward&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;in-memory-vs-out-of-memory&quot;&gt;In-memory vs. out-of-memory&lt;/h2&gt;
+
+&lt;p&gt;If the dataset can’t be fully loaded in RAM -&amp;gt; &lt;strong&gt;incremental learning algorithms&lt;/strong&gt;: can improve the model by reading data gradually (Naive Bayes, neural networks)&lt;/p&gt;
+
+&lt;h2 id=&quot;precision-and-recall&quot;&gt;Precision and Recall&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Precision&lt;/strong&gt;: ratio of true positive predictions to the overall number of positive PREDICTIONS&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Recall&lt;/strong&gt;: ratio of true positive predictions to the overall number of positive EXAMPLES&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;f-measure&quot;&gt;F-measure&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;positive real &lt;em&gt;beta&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;beta = 2&lt;/strong&gt; -&amp;gt; weighs recall twice as high as precision&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;beta = 0.5&lt;/strong&gt; -&amp;gt; weighs recall twice as low as precision&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;precision-recall-and-bias-variance-tradeoffs&quot;&gt;Precision-recall and bias-variance tradeoffs&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;By varying the complexity of the model, we can reach the so-called “zone of solutions”, a situation in which both bias and variance of the model are relatively low. The solution that optimizes the performance metric is usually found inside that zone&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h1 id=&quot;ch6-supervised-model-training-part-2&quot;&gt;Ch6. Supervised Model Training (Part 2)&lt;/h1&gt;
+
+&lt;p&gt;-&lt;/p&gt;
+
+&lt;h1 id=&quot;ch7-model-evaluation&quot;&gt;Ch7. Model Evaluation&lt;/h1&gt;
+
+&lt;h2 id=&quot;tasks&quot;&gt;Tasks&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;estimate legal &lt;strong&gt;risks&lt;/strong&gt; of putting the model in production&lt;/li&gt;
+  &lt;li&gt;understand the &lt;strong&gt;distribution of the data&lt;/strong&gt; used to train the model&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;evaluate&lt;/strong&gt; the performance of the model prior to deployment&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;monitor&lt;/strong&gt; the performance of the deployed model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;ab-testing&quot;&gt;A/B Testing&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;A: served the old model&lt;/li&gt;
+  &lt;li&gt;B: served the new model&lt;/li&gt;
+  &lt;li&gt;apply a statistical significance test to decide whether the new model is statistically different from the old model&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;multi-armed-bandit&quot;&gt;Multi-armed bandit&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;start by randomly exposing all models to the users&lt;/li&gt;
+  &lt;li&gt;gradually reduce the exposure of the least-performing models until only one (the best performing) gets served most of the time&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;bootstrapping&quot;&gt;Bootstrapping&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;technique (statistical procedure) to compute a statistical interval for any metric&lt;/li&gt;
+  &lt;li&gt;consists of building N samples of a dataset&lt;/li&gt;
+  &lt;li&gt;then training a model&lt;/li&gt;
+  &lt;li&gt;and computing some statistic using each of those N samples&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch8-model-deployment&quot;&gt;Ch8. Model Deployment&lt;/h1&gt;
+
+&lt;h2 id=&quot;deployment-patterns&quot;&gt;Deployment patterns&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;statically
+    &lt;ul&gt;
+      &lt;li&gt;installable binary of the entire software&lt;/li&gt;
+      &lt;li&gt;positive: fast execution time for the user; don’t have to upload user data to server (user privacy); can be called when the user is offline; keeping the model operation is user’s responsibility&lt;/li&gt;
+      &lt;li&gt;negative: hard to upgrade model without upgrading whole app; may have messy computational requirements; difficult to monitor the model performance&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;dynamically on the user’s device
+    &lt;ul&gt;
+      &lt;li&gt;similar to static (user runs part of the system on their device), but the model is not a part of the binary code of the app&lt;/li&gt;
+      &lt;li&gt;positive: better separation of concerns (easier to update); fast for the user (cheaper for the org’s servers)&lt;/li&gt;
+      &lt;li&gt;negative: varies depending on strategy; difficult to monitor the model performance&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;dynamically on a server:
+    &lt;ul&gt;
+      &lt;li&gt;place the model on servers and make it available as REST API or gRPC service&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;model streaming&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;deployment-strategies&quot;&gt;Deployment strategies&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;single: simplest -&amp;gt; serialize new model to file, replace the old one&lt;/li&gt;
+  &lt;li&gt;silent: new and old version runs in parallel during the switch&lt;/li&gt;
+  &lt;li&gt;canary: pushes new version to a small fraction of users, while keep the old one running for most&lt;/li&gt;
+  &lt;li&gt;multi-armed bandit (MAB): way to compare one or more versions of the model in the production env, and select the best performing one&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“The model must be applied to the end-to-end and confidence test data by simulating a regular call from the outside”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;algorithmic-efficiency&quot;&gt;Algorithmic efficiency&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;important consideration in model deployment&lt;/li&gt;
+  &lt;li&gt;you should only write your own code when it’s absolutely necessary&lt;/li&gt;
+  &lt;li&gt;caching speeds up the application when it contains resource-consuming functions frequently called with the same parameter values&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch9-model-serving-monitoring-and-maintenance&quot;&gt;Ch9. Model Serving, Monitoring, and Maintenance&lt;/h1&gt;
+
+&lt;h2 id=&quot;effective-runtime&quot;&gt;Effective runtime&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;secure&lt;/li&gt;
+  &lt;li&gt;correct&lt;/li&gt;
+  &lt;li&gt;ensures ease of deployment and recovery&lt;/li&gt;
+  &lt;li&gt;provides guarantees of model validity&lt;/li&gt;
+  &lt;li&gt;avoids training/serving skew and hidden feedback loops&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;serving-modes&quot;&gt;Serving modes&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;batch: when applied to big data and some latency is tolerable&lt;/li&gt;
+  &lt;li&gt;on-demand: wrapped into a REST API&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-can-go-wrong-with-the-model-in-production&quot;&gt;What can go wrong with the model in production&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;more training data made the model worse&lt;/li&gt;
+  &lt;li&gt;properties of the production data changed&lt;/li&gt;
+  &lt;li&gt;updated feature extraction code&lt;/li&gt;
+  &lt;li&gt;resource needed for feature changed/unavailable&lt;/li&gt;
+  &lt;li&gt;model is abused or under an adversarial attack&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;monitoring&quot;&gt;Monitoring&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;automated value calculation for the performance metrics -&amp;gt; send alert if change significantly&lt;/li&gt;
+  &lt;li&gt;distribution shift&lt;/li&gt;
+  &lt;li&gt;numerical instability&lt;/li&gt;
+  &lt;li&gt;decreasing computational performance&lt;/li&gt;
+  &lt;li&gt;logs&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;maintenance&quot;&gt;Maintenance&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“Most ML models must be regularly or occasionally updated”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;how often?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;error rate / how critical&lt;/li&gt;
+  &lt;li&gt;only useful if fresh&lt;/li&gt;
+  &lt;li&gt;new training data available fast&lt;/li&gt;
+  &lt;li&gt;time it takes to retrain&lt;/li&gt;
+  &lt;li&gt;cost to train / deploy the model&lt;/li&gt;
+  &lt;li&gt;importance of update for improving the metrics&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;ch10-conclusion&quot;&gt;Ch10. Conclusion&lt;/h1&gt;
+
+&lt;p&gt;-&lt;/p&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Learning Python Design Patterns</title><link href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" rel="alternate" type="text/html" title="Learning Python Design Patterns" /><published>2020-08-22T00:00:00-05:00</published><updated>2020-08-22T00:00:00-05:00</updated><id>https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
 
 &lt;p&gt;Author: Chetan Giridhar&lt;/p&gt;
 
@@ -4856,519 +5248,4 @@ multiples of the seasonal period (s):
   &lt;li&gt;Neither overstate nor understate the accuracy of your forecast, and do not merely give a point value. Always report standard errors and/or confidence intervals.&lt;/li&gt;
   &lt;li&gt;If different forecasting approaches lead to different results, focus on differences in their underlying assumptions, their sources of data, their intrinsic biases, and their respective margins for error.  Don’t just argue over the outputs.  Look for opportunities to combine independent viewpoints and information.&lt;/li&gt;
   &lt;li&gt;After all has been said, if you believe your model is more useful and better supported than the alternatives, stand up for it.  The future may still be very uncertain, but decisions ought to be based on the best understanding of that uncertainty. If you don’t have confidence in your model (or anyone else’s), admit it, and keep digging.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Introduction to Machine Learning with Python: A Guide for Data Scientists</title><link href="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html" rel="alternate" type="text/html" title="Introduction to Machine Learning with Python: A Guide for Data Scientists" /><published>2020-01-22T00:00:00-06:00</published><updated>2020-01-22T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning/data%20science/2020/01/22/intro-ml-python.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
-
-&lt;p&gt;Authors: Andreas C. Müller and Sarah Guido&lt;/p&gt;
-
-&lt;h1 id=&quot;1-introduction&quot;&gt;1. Introduction&lt;/h1&gt;
-&lt;h2 id=&quot;why-ml&quot;&gt;Why ML?&lt;/h2&gt;
-&lt;p&gt;Using handcoded rules to make decisions has two disadvantages:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;logic is specific to a domain and task. Change the task slightly -&amp;gt; rewrite the whole system&lt;/li&gt;
-  &lt;li&gt;designing rules requires a deep understanding of how a decision should be made by a human expert&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;knowing-your-task-and-knowing-your-data&quot;&gt;Knowing your task and knowing your data&lt;/h2&gt;
-&lt;p&gt;When building a ML solution:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;What question(s) am I trying to answer? Do I think the data collected can answer that question?&lt;/li&gt;
-  &lt;li&gt;What is the best way to phrase my question(s) as a machine learning problem?&lt;/li&gt;
-  &lt;li&gt;Have I collected enough data to represent the problem I want to solve?&lt;/li&gt;
-  &lt;li&gt;What features of the data did I extract, and will these enable the right predictions?&lt;/li&gt;
-  &lt;li&gt;How will I measure success in my application?&lt;/li&gt;
-  &lt;li&gt;How will the machine learning solution interact with other parts of my research or business product?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Many spend a lot of time building complex ML solutions, only to find out they don’t solve the right problem. When going deep into the technical aspects of ML, it is easy to lose sight of the ultimate goals&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;jupyter-notebook&quot;&gt;Jupyter notebook&lt;/h3&gt;
-&lt;p&gt;Interactive environment for running code in the browser&lt;/p&gt;
-
-&lt;h3 id=&quot;numpy&quot;&gt;NumPy&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ndarray&lt;/code&gt;: multidimensional (&lt;em&gt;n&lt;/em&gt;) array with elements of the same type&lt;/li&gt;
-  &lt;li&gt;high-level mathematical functions, such as linear algebra, Fourier transform, pseudorandom number generators&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;scipy&quot;&gt;SciPy&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;scipy.sparse&lt;/code&gt;: provides sparse matrices&lt;/li&gt;
-  &lt;li&gt;advanced linear algebra routines, mathematical function optimization, signal processing, statistical distributions&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;matplotlib&quot;&gt;Matplotlib&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;On jupyter: &lt;code class=&quot;highlighter-rouge&quot;&gt;%matplotlib inline&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;Primary scientific plotting library in Python&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;pandas&quot;&gt;Pandas&lt;/h3&gt;
-&lt;p&gt;Library for data wrangling and analysis&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;DataFrame&lt;/code&gt;: allows each column to have a separate type&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;mglearn&quot;&gt;mglearn&lt;/h3&gt;
-&lt;p&gt;Library of utility functions wrote for this specific book. Avoid boilerplate with plotting and loading data&lt;/p&gt;
-
-&lt;h2 id=&quot;first-things-first-look-at-your-data&quot;&gt;First things first: look at your data&lt;/h2&gt;
-&lt;p&gt;Before building a ML model, inspect the data:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;task easily solvable without ML&lt;/li&gt;
-  &lt;li&gt;desired information may not be contained in the data&lt;/li&gt;
-  &lt;li&gt;find abnormalities and peculiarities&lt;/li&gt;
-  &lt;li&gt;real world: inconsistencies in the data and unexpected measurements are very common&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;scatter plot&lt;/em&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;pd.scatter_matrix&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;2-supervised-learning&quot;&gt;2. Supervised Learning&lt;/h1&gt;
-
-&lt;h1 id=&quot;3-unsupervised-learning-and-preprocessing&quot;&gt;3. Unsupervised Learning and Preprocessing&lt;/h1&gt;
-
-&lt;h1 id=&quot;4-representing-data-and-engineering-features&quot;&gt;4. Representing Data and Engineering Features&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;Feature engineering&lt;/strong&gt;: how to represent your data best for a particular application -&amp;gt; can have a bigger influence on the performance of a model than the exact parameters you choose&lt;/p&gt;
-
-&lt;h2 id=&quot;categorical-variables&quot;&gt;Categorical Variables&lt;/h2&gt;
-&lt;h3 id=&quot;one-hot-encoding-dummy-variables&quot;&gt;One-Hot Encoding (Dummy Variables)&lt;/h3&gt;
-&lt;p&gt;Replace a categorical variable with one or more features that can have the values 0 and 1 -&amp;gt; introduce a new feature per category&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In pandas &lt;code class=&quot;highlighter-rouge&quot;&gt;pd.get_dummies(data)&lt;/code&gt; automatically transform all columns that have object type or are categorical&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;numbers-can-encode-categoricals&quot;&gt;Numbers Can Encode Categoricals&lt;/h3&gt;
-&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;get_dummies&lt;/code&gt; function in pandas treats all numbers as continuous and will not create dummy variables for them. To get around this, use scikit-learn’s &lt;code class=&quot;highlighter-rouge&quot;&gt;OneHotEncoder&lt;/code&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;binning-discretization-linear-models-and-trees&quot;&gt;Binning, Discretization, Linear Models and Trees&lt;/h3&gt;
-&lt;p&gt;One way to make linear models more powerful on continuous data is to use &lt;em&gt;binning&lt;/em&gt; (aka &lt;em&gt;discretization&lt;/em&gt;) of the feature to split it up into multiple features&lt;/p&gt;
-
-&lt;p&gt;Binning features generally has no beneficial effect for tree-based models, as these models can learn to split up the data anywhere&lt;/p&gt;
-
-&lt;h3 id=&quot;interactions-and-polynomials&quot;&gt;Interactions and Polynomials&lt;/h3&gt;
-&lt;p&gt;Enrich a feature representation, particularly for linear models, is adding &lt;em&gt;interaction features&lt;/em&gt; and &lt;em&gt;polynomial features&lt;/em&gt; of the original data&lt;/p&gt;
-
-&lt;h3 id=&quot;univariate-nonlinear-transformations&quot;&gt;Univariate Nonlinear Transformations&lt;/h3&gt;
-&lt;p&gt;Applying mathematical functions like:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;log&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;exp&lt;/code&gt;: help adjusting the relative scales in the data&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sin&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;cos&lt;/code&gt;: dealing with data that encodes periodic patterns&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Most models work best when each feature (and in regression also the target) is loosely Gaussian distributed -&amp;gt; histogram should have something resembling the familiar “bell curve” shape. Using &lt;code class=&quot;highlighter-rouge&quot;&gt;log&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;exp&lt;/code&gt; is a hacky but simple and efficient way to achieve this -&amp;gt; helpful when dealing with integer count data&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;These kind of transformations are irrelevant for tree-based models, but might be essential for linear models. Sometimes it’s also a good idea to transform the target variable in regression&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;automatic-feature-selection&quot;&gt;Automatic Feature Selection&lt;/h2&gt;
-&lt;p&gt;Adding more features makes all models more complex, and so increases the chance of overfitting&lt;/p&gt;
-
-&lt;p&gt;It can be good idea to reduce the number of features to only the most useful ones, and discard the rest&lt;/p&gt;
-
-&lt;h3 id=&quot;univariate-statistics&quot;&gt;Univariate Statistics&lt;/h3&gt;
-&lt;p&gt;Compute whether there is a statistically significant relationship between each feature and the target -&amp;gt; the features with highest confidence are selected. Also know as &lt;em&gt;analysis of variance&lt;/em&gt; (ANOVA) for classification&lt;/p&gt;
-
-&lt;p&gt;Only consider each feature individually. &lt;em&gt;f_classify&lt;/em&gt; or &lt;em&gt;f_regression&lt;/em&gt; tests in scikit-learn and then &lt;em&gt;SelectKBest&lt;/em&gt; or &lt;em&gt;SelectPercentile&lt;/em&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;model-based-feature-selection&quot;&gt;Model-Based Feature Selection&lt;/h3&gt;
-&lt;p&gt;Uses a supervised ML model to judge the importance of each feature, and keeps only the most important ones&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Decision tree-based models: &lt;em&gt;feature_importances_&lt;/em&gt; attribute&lt;/li&gt;
-  &lt;li&gt;Linear models: coefficients can capture feature importances&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Model-based considers all features at once, so can capture interactions. &lt;em&gt;SelectFromModel&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.feature_selection&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SelectFromModel&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.ensemble&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RandomForestClassifier&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;select&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SelectFromModel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;RandomForestClassifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_estimators&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;42&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;threshold&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;median&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;iterative-feature-selection&quot;&gt;Iterative Feature Selection&lt;/h3&gt;
-&lt;p&gt;A series of models are built, with varying numbers of features. Two methods:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;starting with no features and adding one by one&lt;/li&gt;
-  &lt;li&gt;starting with all features and removing one by one&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;More computationally expensive&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;recursive feature elimination&lt;/em&gt; (RFE): starts with all features, builds a model, and discards the least important feature according to the model -&amp;gt; repeat&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Feature Selection&lt;/strong&gt;: Can speed up prediction, allow for more interpretable model. In most real-world cases, is unlikely to provide large gains in performance&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;utilizing-expert-knowledge&quot;&gt;Utilizing Expert Knowledge&lt;/h2&gt;
-&lt;p&gt;Prior knowledge about the nature of the task can be encoded in the features to aid a ML algorithm&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Adding a feature does not force a machine learning algorithm to use it, and even if the holiday information turns out to be noninformative for flight prices, augmenting the data with this information doesn’t hurt.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;COOL example with bike rental on the book -&amp;gt; check to see the coefficients learned by the linear model&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;5-model-evaluation-and-improvement&quot;&gt;5. Model Evaluation and Improvement&lt;/h1&gt;
-&lt;h2 id=&quot;cross-validation&quot;&gt;Cross-Validation&lt;/h2&gt;
-&lt;p&gt;Data is split repeatedly and multiple models are trained. Most common: &lt;em&gt;k-fold cross-validation&lt;/em&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Scikit-learn: &lt;code class=&quot;highlighter-rouge&quot;&gt;cross_val_score&lt;/code&gt; from the &lt;em&gt;model_seleciton&lt;/em&gt; module&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;High variance in the metric (e.g., accuracy) between folds -&amp;gt; model is very dependent on the particular folds for train, or it could also be consequence of the small size of the dataset&lt;/p&gt;
-
-&lt;h3 id=&quot;benefits-of-cross-validation&quot;&gt;Benefits of Cross-Validation&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;avoid “lucky”/”unlucky” random train_test_split&lt;/li&gt;
-  &lt;li&gt;in cross-validation each example will be in the training set exactly once: each example is in one of the folds, and each fold is the test set once -&amp;gt; the model needs to generalize well to all of the samples in the dataset for all of the cross-validation scores to be high&lt;/li&gt;
-  &lt;li&gt;multiple splits provides information about how sensitive the model is to the selection of the training set -&amp;gt; idea of the best/worst case scenarios&lt;/li&gt;
-  &lt;li&gt;use data more effectively: more data usually leads to more accurate models&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Disadvantage: increased computational cost -&amp;gt; train &lt;em&gt;k&lt;/em&gt; models instead of one&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Cross-validation does not return a model, its purpose is only to evaluate how well a given algorithm will generalize when trained on a specific dataset&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;stratified-k-fold-cross-validation&quot;&gt;Stratified k-Fold Cross-Validation&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;Stratified k-fold cross-validation&lt;/em&gt;: split the data such that the proportions between classes are the same in each fold as they are in the whole dataset&lt;/p&gt;
-
-&lt;p&gt;Results in more reliable estimates of generalization performance&lt;/p&gt;
-
-&lt;p&gt;For regression scikit-learn uses the standard &lt;em&gt;k-fold cross-validation&lt;/em&gt; by default&lt;/p&gt;
-
-&lt;h3 id=&quot;leave-one-out-cross-validation&quot;&gt;Leave-one-out cross-validation&lt;/h3&gt;
-&lt;p&gt;&lt;em&gt;k-fold cross-validation&lt;/em&gt; where each fold is a single sample. &lt;code class=&quot;highlighter-rouge&quot;&gt;LeaveOneOut&lt;/code&gt; on sklearn.model_selection&lt;/p&gt;
-
-&lt;p&gt;Can be very time consuming for large datasets, but sometimes provides better estimates on small datasets&lt;/p&gt;
-
-&lt;h3 id=&quot;shuffle-split-cross-validation&quot;&gt;Shuffle-split cross-validation&lt;/h3&gt;
-&lt;p&gt;Each split samples train_size many points for the training set and test_size many (disjoint) points for the test set. This splitting is repeated n_iter times&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;allows for control over the number of iterations independently of the training and test sizes&lt;/li&gt;
-  &lt;li&gt;allows for using only part of the data in each iteration by providing train_size and test_size that don’t add up to one -&amp;gt; subsampling like that can be useful for experimenting with large datasets&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ShuffleSplit&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;StratifiedShuffleSplit&lt;/code&gt; on sklearn&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;cross-validation-with-groups&quot;&gt;Cross-validation with groups&lt;/h3&gt;
-&lt;p&gt;When there are groups in the data that are highly related&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GroupKFold&lt;/code&gt;: takes an array of groups as arguments -&amp;gt; indicates groups in the data that should not be split when creating the training and test sets, and should not be confused with the class label&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;GroupKFold: important for medical applications (multiple samples for same patient), also speech recognition&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;grid-search&quot;&gt;Grid Search&lt;/h2&gt;
-&lt;p&gt;Trying all possible combinations of the parameters of interest&lt;/p&gt;
-
-&lt;h3 id=&quot;the-danger-of-overfitting-the-parameters-and-the-validation-set&quot;&gt;The danger of overfitting the parameters and the validation set&lt;/h3&gt;
-&lt;p&gt;To avoid this split the data in three sets: the training set to build the model, the validation (or development) set to select the parameters of the model, and the test set to evaluate the performance of the selected parameters&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;After selecting the best parameters using the validation set, rebuild the model using the parameter settings found, but now training on both the training data and the validation data&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Important to keep the distinction of training, validation and test sets clear!&lt;/strong&gt; Evaluating more than one model on the test set and choosing the better of the two will result in an overly optimistic estimate of how accurate the model is -&amp;gt; “Leak” information from the test set into the model&lt;/p&gt;
-
-&lt;h3 id=&quot;grid-search-with-cross-validation&quot;&gt;Grid Search with Cross-Validation&lt;/h3&gt;
-&lt;p&gt;Beautiful plot from &lt;code class=&quot;highlighter-rouge&quot;&gt;mglearn&lt;/code&gt;:&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;mglearn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot_cross_val_selection&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;GridSearchCV&lt;/code&gt; on sklearn: implemented in the form of an estimator -&amp;gt; not only searchs for the best parameters, but also automatically fits a new model on the whole training dataset with the parameters that yielded the best CV performance&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;best_score_&lt;/code&gt; != &lt;code class=&quot;highlighter-rouge&quot;&gt;score&lt;/code&gt;: first stores the mean CV accuracy performed in the training set, second evaluate the output of the predict method of the model trained on the whole training set!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;analyzing-the-result-of-cross-validation&quot;&gt;Analyzing the result of cross-validation&lt;/h2&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# cool example of a heatmap using SVM
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mglearn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tools&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;heatmap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xlabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'gamma'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;xticklabels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'gamma'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-                      &lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'C'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;yticklabels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'C'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmap&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;viridis&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Optimum values for each parameter on the edges of the plot: parameters not large enough!&lt;/p&gt;
-
-&lt;h2 id=&quot;nested-cross-validation&quot;&gt;Nested cross-validation&lt;/h2&gt;
-&lt;p&gt;An outer loop over splits of the data into training and test sets. For each of them, a grid search is run (which might result in different best parameters for each split in the outer loop). Then, for each outer split, the test set score using the best settings is reported&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Rarely used in practice&lt;/li&gt;
-  &lt;li&gt;Useful for evaluating how well a given model works on a particular dataset&lt;/li&gt;
-  &lt;li&gt;Computationally expensive procedure&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# example of nested CV
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scores&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cross_val_score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SVC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
-                         &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;iris&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;evaluation-metrics-and-scoring&quot;&gt;Evaluation Metrics and Scoring&lt;/h2&gt;
-&lt;h3 id=&quot;keep-the-end-goal-in-mind&quot;&gt;Keep the end goal in mind&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;em&gt;Business metric&lt;/em&gt;: We are interested in using the predictions as part of a larger decision-making process, you should think about the high-level goal of the application&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;Business impact&lt;/em&gt;: consequences of choosing a particular algorithm for a ML application&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;When choosing a model or adjusting parameters, you should pick the model or parameter values that have the most positive influence on the business metric&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Sometimes infeasible to put models in production just for testing purposes (high business risk): find some surrogate evaluation procedure (as close as possible to the business goal), using an evaluation metric that is easier to compute&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;metrics-for-binary-classification&quot;&gt;Metrics for binary classification&lt;/h2&gt;
-&lt;h3 id=&quot;kinds-of-errors&quot;&gt;Kinds of errors&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;false positive&lt;/strong&gt;: incorrect positive prediction, &lt;strong&gt;type I error&lt;/strong&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;false negative&lt;/strong&gt;: incorrect negative prediction, &lt;strong&gt;type II error&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;imbalanced-datasets&quot;&gt;Imbalanced datasets&lt;/h3&gt;
-&lt;p&gt;Accuracy is an inadequate measure for quantifying predictive performance in most imbalanced settings&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pred_most_frequent&lt;/code&gt;: model that make predictions to the most frequent class&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;pred_dummy&lt;/code&gt;: random predictions&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;confusion-matrices&quot;&gt;Confusion matrices&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;confusion_matrix&lt;/code&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;rows: true classes&lt;/li&gt;
-  &lt;li&gt;columns: predicted classes&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;negative class&lt;/td&gt;
-      &lt;td&gt;TN&lt;/td&gt;
-      &lt;td&gt;FP&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;positive class&lt;/td&gt;
-      &lt;td&gt;FN&lt;/td&gt;
-      &lt;td&gt;TP&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;-&lt;/td&gt;
-      &lt;td&gt;predicted negative&lt;/td&gt;
-      &lt;td&gt;predicted positive&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Accuracy = (TP+TN)/(TP+TN+FP+FN)&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Precision = (TP)/(TP+FP)&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Precision is used when the goal is to limit the number of false positives. AKA &lt;em&gt;positive predictive value (PPV)&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Recall = (TP)/(TP+FN)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Recall is used when we need to identify all positive samples; that is, when it is important to avoid false negatives. AKA &lt;em&gt;sensitivity&lt;/em&gt;, &lt;em&gt;hit rate&lt;/em&gt;, or &lt;em&gt;true positive rate (TPR)&lt;/em&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;F-score or f-measure or f1-score -&amp;gt; F = 2&lt;em&gt;(precision&lt;/em&gt;recall)/(precision+recall)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Harmonic mean of precision and recall&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.metrics&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;classification_report&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;taking-uncertainty-into-account&quot;&gt;Taking uncertainty into account&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;You can change the decision threshold depending on the problem&lt;/li&gt;
-  &lt;li&gt;&lt;em&gt;calibration&lt;/em&gt;: a calibrated model is a model that provides an accurate measure of its uncertainty&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;precision-recall-curves-and-roc-curves&quot;&gt;Precision-recall curves and ROC curves&lt;/h3&gt;
-&lt;p&gt;Setting a requirement on a classifier like 90% recall is often called setting the &lt;em&gt;operation point&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Precision-recall curve: look at all possible thresholds, or all possible trade-offs of precision and recalls at once. &lt;code class=&quot;highlighter-rouge&quot;&gt;precision_recall_curve&lt;/code&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;em&gt;Average precision&lt;/em&gt;: Area under the precision-recall curve. &lt;code class=&quot;highlighter-rouge&quot;&gt;average_precision_score&lt;/code&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Receiver operating characteristics (ROC) curve: consider all possible thresholds for a given classifier, shows the &lt;em&gt;false positive rate (FPR)&lt;/em&gt; against the &lt;em&gt;true positive rate (TPR)&lt;/em&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;roc_curve&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;TPR = recall = (TP)/(TP+FN)&lt;/li&gt;
-  &lt;li&gt;FPR = (FP)/(FP+TN)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Average precision always returns a value between 0 (worst) and 1 (best). Predicting randomly always produces an AUC of 0.5 -&amp;gt; AUC is much better than accuracy as a metric for imbalanced datasets&lt;/p&gt;
-
-&lt;p&gt;AUC: evaluating the ranking of positive samples. Probability that a randomly picked point of the positive class will have a higher score according to the classifier than a randomly picked point from the negative class&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;AUC does not make use of the default threshold, so adjusting the decision threshold might be necessary to obtain useful classification results from a model with a high AUC&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;metrics-for-multiclass-classification&quot;&gt;Metrics for Multiclass Classification&lt;/h2&gt;
-&lt;p&gt;Metrics for multiclass classification are derived from binary, but averaged over all classes&lt;/p&gt;
-
-&lt;p&gt;For imbalanced datasets: multiclass f-score -&amp;gt; one binary f-score per class (that being the positive) and others being the negative -&amp;gt; then average these per-class f-scores&lt;/p&gt;
-
-&lt;h2 id=&quot;regression-metrics&quot;&gt;Regression metrics&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Rˆ2 is enough for most applications&lt;/li&gt;
-  &lt;li&gt;Mean squared error (MSE)&lt;/li&gt;
-  &lt;li&gt;Mean absolute error (MAE)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;using-evaluation-metrics-in-model-selection&quot;&gt;Using evaluation metrics in model selection&lt;/h2&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;scoring&lt;/code&gt; parameters for classification:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;accuracy&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;roc_auc&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;average_precision&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;f1&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;f1_macro&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;f1_micro&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;f1_weighted&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;for regression:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;r2&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mean_squared_error&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mean_absolute_error&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;for more, see: &lt;code class=&quot;highlighter-rouge&quot;&gt;sklearn.metrics.scores&lt;/code&gt;&lt;/p&gt;
-
-&lt;h1 id=&quot;6-algorithm-chains-and-pipelines&quot;&gt;6. Algorithm Chains and Pipelines&lt;/h1&gt;
-&lt;p&gt;ML algorithms requires chaining together many different processing steps and ML models. &lt;code class=&quot;highlighter-rouge&quot;&gt;Pipeline&lt;/code&gt; class simplify the process of building chains of transformations and models&lt;/p&gt;
-
-&lt;h2 id=&quot;parameter-selection-with-preprocessing&quot;&gt;Parameter selection with preprocessing&lt;/h2&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;mglearn&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plots&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot_improper_processing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Splitting the dataset during cross-validation should be done &lt;em&gt;before doing any preprocessing&lt;/em&gt;. Any process that extracts knowledge from the dataset should only ever be applied to the training portion of the dataset, so any CV should be the “outermost loop” in your processing&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;building-pipelines&quot;&gt;Building Pipelines&lt;/h2&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.pipeline&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pipeline&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;scaler&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lr&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())])&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;score&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;reduce the code needed for “preprocessing + classification”&lt;/li&gt;
-  &lt;li&gt;main benefit: now you can use this single estimator in &lt;code class=&quot;highlighter-rouge&quot;&gt;cross_val_score&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;GridSearchCV&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_score_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_params_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;For each split in the CV, the Scaler is refit with only the training splits and no information is leaked from the test split in to the parameter search&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;information-leakage&quot;&gt;Information Leakage&lt;/h2&gt;
-&lt;p&gt;The impact varies depending on the preprocessing step:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;estimating the scale of the data using the test fold usually doesn’t have a terrible impact&lt;/li&gt;
-  &lt;li&gt;using the test fold in feature extraction and feature selection can lead to &lt;strong&gt;substantial differences&lt;/strong&gt; in outcomes&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;the-general-pipeline-interface&quot;&gt;The General Pipeline Interface&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;not restricted to preprocessing and classification&lt;/li&gt;
-  &lt;li&gt;only requirement: all estimators but the last step need to have a transform method&lt;/li&gt;
-  &lt;li&gt;during &lt;code class=&quot;highlighter-rouge&quot;&gt;Pipeline.fit&lt;/code&gt;, the pipeline calls fit and then transform on each step; for the last step, just fit is called&lt;/li&gt;
-  &lt;li&gt;when predicting, we similarly transform the data using all but the last step, and then call predict on the last step&lt;/li&gt;
-  &lt;li&gt;there is no requirement to have predict in the last step; the last step is only required to have a fit method&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;convenient-pipeline-creation-with-make_pipeline&quot;&gt;Convenient pipeline creation with make_pipeline&lt;/h3&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.pipeline&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;make_pipeline&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pipe_short&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;make_pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LogisticRegression&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;accessing-step-attributes&quot;&gt;Accessing step attributes&lt;/h3&gt;
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;named_steps&lt;/code&gt; attribute -&amp;gt; dictionary from the step names to estimators&lt;/p&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;components&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;named_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pca&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;components_&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_estimator_&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;named_steps&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;logisticregression&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;coef_&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;grid-searching-which-model-to-use&quot;&gt;Grid-Searching Which Model to Use&lt;/h3&gt;
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Pipeline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;preprocessing&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()),&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;classifier&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SVC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())])&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.ensemble&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RandomForestClassifier&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'classifier'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;SVC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()],&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'preprocessing'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StandardScaler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(),&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-     &lt;span class=&quot;s&quot;&gt;'classifier__gamma'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
-     &lt;span class=&quot;s&quot;&gt;'classifier__C'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.01&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]},&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'classifier'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RandomForestClassifier&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n_estimators&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)],&lt;/span&gt;
-     &lt;span class=&quot;s&quot;&gt;'preprocessing'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;None&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'classifier__max_features'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]}]&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;X_test&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_test&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;train_test_split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;cancer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cancer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;random_state&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;GridSearchCV&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pipe&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;param_grid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cv&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;grid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;X_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;y_train&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h1 id=&quot;7-working-with-text-data&quot;&gt;7. Working with Text Data&lt;/h1&gt;
-
-&lt;h1 id=&quot;8-wrapping-up&quot;&gt;8. Wrapping Up&lt;/h1&gt;
-&lt;h2 id=&quot;approaching-a-ml-problem&quot;&gt;Approaching a ML problem&lt;/h2&gt;
-&lt;p&gt;It may be tempting to jump in and starting solving you data-related problem by running your favorite algorithm&lt;/p&gt;
-
-&lt;p&gt;To make effective use of ML, we need to take a step back and consider the problem at large. First, you should think what kind of question you want to answer&lt;/p&gt;
-
-&lt;p&gt;It is best if you can measure the performance of your algorithm directly using a business metric&lt;/p&gt;
-
-&lt;p&gt;Collecting more or different data or changing the task formulation slightly might provide a much higher payoff than running endless grid searches to tune parameters&lt;/p&gt;
-
-&lt;h3 id=&quot;humans-in-the-loop&quot;&gt;Humans in the loop&lt;/h3&gt;
-&lt;p&gt;Many applications are dominated by “simple cases”, for which an algorithm can make a decision, with relatively few “complicated cases”, which can be rerouted to a human&lt;/p&gt;
-
-&lt;h2 id=&quot;from-prototype-to-production&quot;&gt;From prototype to production&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Production systems have differente requirements from one-off analysis scripts&lt;/li&gt;
-  &lt;li&gt;reliability, predictability, runtime, and memory requirements gain relevance&lt;/li&gt;
-  &lt;li&gt;simplicity is key&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;testing-production-systems&quot;&gt;Testing production systems&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;offline evaluation: test set collected beforehand&lt;/li&gt;
-  &lt;li&gt;online/live testing: consequences of employing the algorithm in the overall system are evaluated&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;A/B testing&lt;/strong&gt;: enables us to evaluate the algorithms “in the wild”, which might help us to discover unexpected consequences when users are interacting with our model&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Bandit algorithms&lt;/strong&gt;: more elaborate mechanisms for online testing that go beyond A/B testing&lt;/p&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/intro_ml_python/intro_ml_python.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>

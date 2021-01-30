@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Machine Learning Engineering | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Machine Learning Engineering" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-30T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Machine Learning Engineering","dateModified":"2021-01-30T00:00:00-06:00","datePublished":"2021-01-30T00:00:00-06:00","description":"My notes and highlights on the book.","image":"https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html"},"url":"https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Machine Learning Engineering | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Machine Learning Engineering" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="My notes and highlights on the book." />
+<meta property="og:description" content="My notes and highlights on the book." />
+<link rel="canonical" href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-01-30T00:00:00-06:00" />
+<script type="application/ld+json">
+{"headline":"Machine Learning Engineering","dateModified":"2021-01-30T00:00:00-06:00","datePublished":"2021-01-30T00:00:00-06:00","description":"My notes and highlights on the book.","image":"https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html"},"url":"https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Machine Learning Engineering</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-01-30T00:00:00-06:00" itemprop="datePublished">
+        Jan 30, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#book">book</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning engineering">machine learning engineering</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#ch1-introduction">Ch1. Introduction</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#when-to-use-ml">When to use ML</a></li>
+<li class="toc-entry toc-h2"><a href="#when-not-to-use-ml">When not to use ML</a></li>
+<li class="toc-entry toc-h2"><a href="#ml-project-life-cycle">ML Project Life Cycle</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch2-before-the-project-starts">Ch2. Before the Project Starts</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#impact-of-ml">Impact of ML</a></li>
+<li class="toc-entry toc-h2"><a href="#cost-of-ml">Cost of ML</a></li>
+<li class="toc-entry toc-h2"><a href="#nonlinear-progress">Nonlinear progress</a></li>
+<li class="toc-entry toc-h2"><a href="#why-ml-projects-fail">Why ML projects fail</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch3-data-collections-and-preparation">Ch3. Data Collections and Preparation</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#train-validation-and-test-sets-partition">Train, Validation and Test sets partition</a></li>
+<li class="toc-entry toc-h2"><a href="#data-sampling-strategies">Data Sampling strategies</a></li>
+<li class="toc-entry toc-h2"><a href="#dataset-documentation">Dataset Documentation</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch4-feature-engineering">Ch4. Feature Engineering</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#good-features">Good features</a></li>
+<li class="toc-entry toc-h2"><a href="#feature-selection-techniques">Feature selection techniques</a></li>
+<li class="toc-entry toc-h2"><a href="#best-practices">Best practices</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch5-supervised-model-training-part-1">Ch5. Supervised Model Training (Part 1)</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#baseline">Baseline</a></li>
+<li class="toc-entry toc-h2"><a href="#in-memory-vs-out-of-memory">In-memory vs. out-of-memory</a></li>
+<li class="toc-entry toc-h2"><a href="#precision-and-recall">Precision and Recall</a></li>
+<li class="toc-entry toc-h2"><a href="#f-measure">F-measure</a></li>
+<li class="toc-entry toc-h2"><a href="#precision-recall-and-bias-variance-tradeoffs">Precision-recall and bias-variance tradeoffs</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch6-supervised-model-training-part-2">Ch6. Supervised Model Training (Part 2)</a></li>
+<li class="toc-entry toc-h1"><a href="#ch7-model-evaluation">Ch7. Model Evaluation</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#tasks">Tasks</a></li>
+<li class="toc-entry toc-h2"><a href="#ab-testing">A/B Testing</a></li>
+<li class="toc-entry toc-h2"><a href="#multi-armed-bandit">Multi-armed bandit</a></li>
+<li class="toc-entry toc-h2"><a href="#bootstrapping">Bootstrapping</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch8-model-deployment">Ch8. Model Deployment</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#deployment-patterns">Deployment patterns</a></li>
+<li class="toc-entry toc-h2"><a href="#deployment-strategies">Deployment strategies</a></li>
+<li class="toc-entry toc-h2"><a href="#algorithmic-efficiency">Algorithmic efficiency</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch9-model-serving-monitoring-and-maintenance">Ch9. Model Serving, Monitoring, and Maintenance</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#effective-runtime">Effective runtime</a></li>
+<li class="toc-entry toc-h2"><a href="#serving-modes">Serving modes</a></li>
+<li class="toc-entry toc-h2"><a href="#what-can-go-wrong-with-the-model-in-production">What can go wrong with the model in production</a></li>
+<li class="toc-entry toc-h2"><a href="#monitoring">Monitoring</a></li>
+<li class="toc-entry toc-h2"><a href="#maintenance">Maintenance</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#ch10-conclusion">Ch10. Conclusion</a></li>
+</ul><p>My notes and highlights on the book.</p>
+
+<p>Author: Andriy Burkov</p>
+
+<p><a href="http://www.mlebook.com/">Available here</a></p>
+
+<ul>
+  <li>
+<a href="#ch1-introduction">Ch1. Introduction</a>
+    <ul>
+      <li><a href="#when-to-use-ml">When to use ML</a></li>
+      <li><a href="#when-not-to-use-ml">When not to use ML</a></li>
+      <li><a href="#ml-project-life-cycle">ML Project Life Cycle</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch2-before-the-project-starts">Ch2. Before the Project Starts</a>
+    <ul>
+      <li><a href="#impact-of-ml">Impact of ML</a></li>
+      <li><a href="#cost-of-ml">Cost of ML</a></li>
+      <li><a href="#nonlinear-progress">Nonlinear progress</a></li>
+      <li><a href="#why-ml-projects-fail">Why ML projects fail</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch3-data-collections-and-preparation">Ch3. Data Collections and Preparation</a>
+    <ul>
+      <li><a href="#train-validation-and-test-sets-partition">Train, Validation and Test sets partition</a></li>
+      <li><a href="#data-sampling-strategies">Data Sampling strategies</a></li>
+      <li><a href="#dataset-documentation">Dataset Documentation</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch4-feature-engineering">Ch4. Feature Engineering</a>
+    <ul>
+      <li><a href="#good-features">Good features</a></li>
+      <li><a href="#feature-selection-techniques">Feature selection techniques</a></li>
+      <li><a href="#best-practices">Best practices</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch5-supervised-model-training-part-1">Ch5. Supervised Model Training (Part 1)</a>
+    <ul>
+      <li><a href="#baseline">Baseline</a></li>
+      <li><a href="#in-memory-vs-out-of-memory">In-memory vs. out-of-memory</a></li>
+      <li><a href="#precision-and-recall">Precision and Recall</a></li>
+      <li><a href="#f-measure">F-measure</a></li>
+      <li><a href="#precision-recall-and-bias-variance-tradeoffs">Precision-recall and bias-variance tradeoffs</a></li>
+    </ul>
+  </li>
+  <li><a href="#ch6-supervised-model-training-part-2">Ch6. Supervised Model Training (Part 2)</a></li>
+  <li>
+<a href="#ch7-model-evaluation">Ch7. Model Evaluation</a>
+    <ul>
+      <li><a href="#tasks">Tasks</a></li>
+      <li><a href="#ab-testing">A/B Testing</a></li>
+      <li><a href="#multi-armed-bandit">Multi-armed bandit</a></li>
+      <li><a href="#bootstrapping">Bootstrapping</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch8-model-deployment">Ch8. Model Deployment</a>
+    <ul>
+      <li><a href="#deployment-patterns">Deployment patterns</a></li>
+      <li><a href="#deployment-strategies">Deployment strategies</a></li>
+      <li><a href="#algorithmic-efficiency">Algorithmic efficiency</a></li>
+    </ul>
+  </li>
+  <li>
+<a href="#ch9-model-serving-monitoring-and-maintenance">Ch9. Model Serving, Monitoring, and Maintenance</a>
+    <ul>
+      <li><a href="#effective-runtime">Effective runtime</a></li>
+      <li><a href="#serving-modes">Serving modes</a></li>
+      <li><a href="#what-can-go-wrong-with-the-model-in-production">What can go wrong with the model in production</a></li>
+      <li><a href="#monitoring">Monitoring</a></li>
+      <li><a href="#maintenance">Maintenance</a></li>
+    </ul>
+  </li>
+  <li><a href="#ch10-conclusion">Ch10. Conclusion</a></li>
+</ul>
+
+<h1 id="ch1-introduction">
+<a class="anchor" href="#ch1-introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch1. Introduction</h1>
+
+<p>When we deploy a model in production, we usually deploy an entire pipeline</p>
+
+<p><strong>Machine learning engineering (MLE)</strong>:</p>
+<ul>
+  <li>encompasses data collection, model training, making the model available for use</li>
+  <li>includes any activity that lets ML algorithms be implemented as a part of an effective production system</li>
+</ul>
+
+<p><strong>ML Engineer</strong>:</p>
+<ul>
+  <li>concerned with sourcing the data (from multiple locations), preprocessing it, programming features, training an effective model that will coexist in production with other processes</li>
+  <li>stable, maintanable and easily accessible</li>
+  <li>ML systems “fail silently” -&gt; must be capable of preventing such failures or to know how to detect and handle them</li>
+</ul>
+
+<h2 id="when-to-use-ml">
+<a class="anchor" href="#when-to-use-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>When to use ML</h2>
+<p>Your problem:</p>
+<ul>
+  <li>too complex for coding</li>
+  <li>constantly changing</li>
+  <li>perceptive (image, text, etc)</li>
+  <li>unstudied phenomenon</li>
+  <li>has a simple objective</li>
+  <li>it is cost-effective</li>
+</ul>
+
+<h2 id="when-not-to-use-ml">
+<a class="anchor" href="#when-not-to-use-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>When not to use ML</h2>
+<ul>
+  <li>explainability is needed</li>
+  <li>errors are intolerable</li>
+  <li>traditional SWE is a less expensive option</li>
+  <li>all inputs and outputs can be enumerated and saved in a DB</li>
+  <li>data is hard to get or too expensive</li>
+</ul>
+
+<h2 id="ml-project-life-cycle">
+<a class="anchor" href="#ml-project-life-cycle" aria-hidden="true"><span class="octicon octicon-link"></span></a>ML Project Life Cycle</h2>
+<p><img src="https://cdn.substack.com/image/fetch/f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com%2Fpublic%2Fimages%2Fb0ab34d2-0b33-4814-bc70-07c1bed10d42_2056x1068.png" title="diagram"></p>
+
+<h1 id="ch2-before-the-project-starts">
+<a class="anchor" href="#ch2-before-the-project-starts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch2. Before the Project Starts</h1>
+
+<h2 id="impact-of-ml">
+<a class="anchor" href="#impact-of-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Impact of ML</h2>
+<p>High when:</p>
+<ul>
+  <li>ML can replace a complex part of your engineering project</li>
+  <li>there’s great benefit in getting inexpensive (but probably imperfect) predictions</li>
+</ul>
+
+<h2 id="cost-of-ml">
+<a class="anchor" href="#cost-of-ml" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cost of ML</h2>
+<p>Factors:</p>
+<ul>
+  <li>difficulty of the problem</li>
+  <li>cost of data</li>
+  <li>need for accuracy</li>
+</ul>
+
+<h2 id="nonlinear-progress">
+<a class="anchor" href="#nonlinear-progress" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nonlinear progress</h2>
+<blockquote>
+  <p>Progress in ML is nonlinear. Prediction error decreases fast in the beginning, but then gradually slows down</p>
+</blockquote>
+
+<ul>
+  <li>Make sure the PO (or client) understands the constraints and risks</li>
+  <li>Log every activity and track the time it took (helps with reporting and estimations of complexity in the future)</li>
+</ul>
+
+<h2 id="why-ml-projects-fail">
+<a class="anchor" href="#why-ml-projects-fail" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why ML projects fail</h2>
+<ul>
+  <li>lack of experienced talent</li>
+  <li>lack of support by the leadership</li>
+  <li>missing data infrastructure</li>
+  <li>data labeling challenge</li>
+  <li>siloed organizations and lack of collaboration</li>
+  <li>technically infeasible projects</li>
+  <li>lack of alignment between technical and business teams</li>
+</ul>
+
+<h1 id="ch3-data-collections-and-preparation">
+<a class="anchor" href="#ch3-data-collections-and-preparation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch3. Data Collections and Preparation</h1>
+
+<h2 id="train-validation-and-test-sets-partition">
+<a class="anchor" href="#train-validation-and-test-sets-partition" aria-hidden="true"><span class="octicon octicon-link"></span></a>Train, Validation and Test sets partition</h2>
+<ul>
+  <li>Data was randomized before the split</li>
+  <li>Split was applied to raw data</li>
+  <li>Validation and test sets follow the same distribution</li>
+  <li>Leakage was avoided</li>
+</ul>
+
+<h2 id="data-sampling-strategies">
+<a class="anchor" href="#data-sampling-strategies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Sampling strategies</h2>
+<ul>
+  <li>random sampling</li>
+  <li>systematic sampling</li>
+  <li>stratified sampling</li>
+  <li>cluster sampling</li>
+</ul>
+
+<blockquote>
+  <p>Data versioning is a critical element in supervised learning when the labeling is done by multiple labelers</p>
+</blockquote>
+
+<h2 id="dataset-documentation">
+<a class="anchor" href="#dataset-documentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Dataset Documentation</h2>
+<ul>
+  <li>what the data means</li>
+  <li>how it was collected</li>
+  <li>methods used to creat it</li>
+  <li>details of train-validation-test splits</li>
+  <li>details of all pre-processing steps</li>
+  <li>explanation of any data that were excluded</li>
+  <li>format used to store it</li>
+  <li>types of attributes/features</li>
+  <li>number of examples</li>
+  <li>possible values for labels / allowable range for a numerical target</li>
+</ul>
+
+<h1 id="ch4-feature-engineering">
+<a class="anchor" href="#ch4-feature-engineering" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch4. Feature Engineering</h1>
+
+<h2 id="good-features">
+<a class="anchor" href="#good-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Good features</h2>
+<ul>
+  <li>high predictive power</li>
+  <li>can be computed fast</li>
+  <li>reliable</li>
+  <li>uncorrelated</li>
+</ul>
+
+<blockquote>
+  <p>The distribution of feature values in the training set should be similar to the distribution of values the production model will receive</p>
+</blockquote>
+
+<h2 id="feature-selection-techniques">
+<a class="anchor" href="#feature-selection-techniques" aria-hidden="true"><span class="octicon octicon-link"></span></a>Feature selection techniques</h2>
+<ul>
+  <li>Cutting the long tail</li>
+  <li>Boruta</li>
+  <li>L1 regularization</li>
+</ul>
+
+<h2 id="best-practices">
+<a class="anchor" href="#best-practices" aria-hidden="true"><span class="octicon octicon-link"></span></a>Best practices</h2>
+<ul>
+  <li>scale features</li>
+  <li>store and document in schema files or feature stores</li>
+  <li>keep code, model and training data in sync</li>
+</ul>
+
+<blockquote>
+  <p>“Feature extraction code is one of the most important parts of a machine learning system. It must be extensively and systematically tested”</p>
+</blockquote>
+
+<h1 id="ch5-supervised-model-training-part-1">
+<a class="anchor" href="#ch5-supervised-model-training-part-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch5. Supervised Model Training (Part 1)</h1>
+
+<h2 id="baseline">
+<a class="anchor" href="#baseline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Baseline</h2>
+<blockquote>
+  <p><strong>Baseline</strong>: a model or algorithm that provides a reference point for comparison. Establish a baseline performance on your problem before start working on a predictive model.</p>
+</blockquote>
+
+<ul>
+  <li>simple learning algorithm or</li>
+  <li>rule-based or heuristic algorithm (simple statistic)
+    <ul>
+      <li>random prediction</li>
+      <li>zero rule algorithm (e.g., always predict the most common class in the training set / average if regression)</li>
+    </ul>
+  </li>
+  <li>human baseline: Amazon Mechanical Turk (MT) service -&gt; web-platform where people solve simple tasks for a reward</li>
+</ul>
+
+<h2 id="in-memory-vs-out-of-memory">
+<a class="anchor" href="#in-memory-vs-out-of-memory" aria-hidden="true"><span class="octicon octicon-link"></span></a>In-memory vs. out-of-memory</h2>
+
+<p>If the dataset can’t be fully loaded in RAM -&gt; <strong>incremental learning algorithms</strong>: can improve the model by reading data gradually (Naive Bayes, neural networks)</p>
+
+<h2 id="precision-and-recall">
+<a class="anchor" href="#precision-and-recall" aria-hidden="true"><span class="octicon octicon-link"></span></a>Precision and Recall</h2>
+<ul>
+  <li>
+<strong>Precision</strong>: ratio of true positive predictions to the overall number of positive PREDICTIONS</li>
+  <li>
+<strong>Recall</strong>: ratio of true positive predictions to the overall number of positive EXAMPLES</li>
+</ul>
+
+<h2 id="f-measure">
+<a class="anchor" href="#f-measure" aria-hidden="true"><span class="octicon octicon-link"></span></a>F-measure</h2>
+<ul>
+  <li>positive real <em>beta</em>
+</li>
+  <li>
+<strong>beta = 2</strong> -&gt; weighs recall twice as high as precision</li>
+  <li>
+<strong>beta = 0.5</strong> -&gt; weighs recall twice as low as precision</li>
+</ul>
+
+<h2 id="precision-recall-and-bias-variance-tradeoffs">
+<a class="anchor" href="#precision-recall-and-bias-variance-tradeoffs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Precision-recall and bias-variance tradeoffs</h2>
+
+<blockquote>
+  <p>By varying the complexity of the model, we can reach the so-called “zone of solutions”, a situation in which both bias and variance of the model are relatively low. The solution that optimizes the performance metric is usually found inside that zone</p>
+</blockquote>
+
+<h1 id="ch6-supervised-model-training-part-2">
+<a class="anchor" href="#ch6-supervised-model-training-part-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch6. Supervised Model Training (Part 2)</h1>
+
+<p>-</p>
+
+<h1 id="ch7-model-evaluation">
+<a class="anchor" href="#ch7-model-evaluation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch7. Model Evaluation</h1>
+
+<h2 id="tasks">
+<a class="anchor" href="#tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Tasks</h2>
+<ul>
+  <li>estimate legal <strong>risks</strong> of putting the model in production</li>
+  <li>understand the <strong>distribution of the data</strong> used to train the model</li>
+  <li>
+<strong>evaluate</strong> the performance of the model prior to deployment</li>
+  <li>
+<strong>monitor</strong> the performance of the deployed model</li>
+</ul>
+
+<h2 id="ab-testing">
+<a class="anchor" href="#ab-testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>A/B Testing</h2>
+<ul>
+  <li>A: served the old model</li>
+  <li>B: served the new model</li>
+  <li>apply a statistical significance test to decide whether the new model is statistically different from the old model</li>
+</ul>
+
+<h2 id="multi-armed-bandit">
+<a class="anchor" href="#multi-armed-bandit" aria-hidden="true"><span class="octicon octicon-link"></span></a>Multi-armed bandit</h2>
+<ul>
+  <li>start by randomly exposing all models to the users</li>
+  <li>gradually reduce the exposure of the least-performing models until only one (the best performing) gets served most of the time</li>
+</ul>
+
+<h2 id="bootstrapping">
+<a class="anchor" href="#bootstrapping" aria-hidden="true"><span class="octicon octicon-link"></span></a>Bootstrapping</h2>
+<ul>
+  <li>technique (statistical procedure) to compute a statistical interval for any metric</li>
+  <li>consists of building N samples of a dataset</li>
+  <li>then training a model</li>
+  <li>and computing some statistic using each of those N samples</li>
+</ul>
+
+<h1 id="ch8-model-deployment">
+<a class="anchor" href="#ch8-model-deployment" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch8. Model Deployment</h1>
+
+<h2 id="deployment-patterns">
+<a class="anchor" href="#deployment-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deployment patterns</h2>
+<ul>
+  <li>statically
+    <ul>
+      <li>installable binary of the entire software</li>
+      <li>positive: fast execution time for the user; don’t have to upload user data to server (user privacy); can be called when the user is offline; keeping the model operation is user’s responsibility</li>
+      <li>negative: hard to upgrade model without upgrading whole app; may have messy computational requirements; difficult to monitor the model performance</li>
+    </ul>
+  </li>
+  <li>dynamically on the user’s device
+    <ul>
+      <li>similar to static (user runs part of the system on their device), but the model is not a part of the binary code of the app</li>
+      <li>positive: better separation of concerns (easier to update); fast for the user (cheaper for the org’s servers)</li>
+      <li>negative: varies depending on strategy; difficult to monitor the model performance</li>
+    </ul>
+  </li>
+  <li>dynamically on a server:
+    <ul>
+      <li>place the model on servers and make it available as REST API or gRPC service</li>
+    </ul>
+  </li>
+  <li>model streaming</li>
+</ul>
+
+<h2 id="deployment-strategies">
+<a class="anchor" href="#deployment-strategies" aria-hidden="true"><span class="octicon octicon-link"></span></a>Deployment strategies</h2>
+<ul>
+  <li>single: simplest -&gt; serialize new model to file, replace the old one</li>
+  <li>silent: new and old version runs in parallel during the switch</li>
+  <li>canary: pushes new version to a small fraction of users, while keep the old one running for most</li>
+  <li>multi-armed bandit (MAB): way to compare one or more versions of the model in the production env, and select the best performing one</li>
+</ul>
+
+<blockquote>
+  <p>“The model must be applied to the end-to-end and confidence test data by simulating a regular call from the outside”</p>
+</blockquote>
+
+<h2 id="algorithmic-efficiency">
+<a class="anchor" href="#algorithmic-efficiency" aria-hidden="true"><span class="octicon octicon-link"></span></a>Algorithmic efficiency</h2>
+<ul>
+  <li>important consideration in model deployment</li>
+  <li>you should only write your own code when it’s absolutely necessary</li>
+  <li>caching speeds up the application when it contains resource-consuming functions frequently called with the same parameter values</li>
+</ul>
+
+<h1 id="ch9-model-serving-monitoring-and-maintenance">
+<a class="anchor" href="#ch9-model-serving-monitoring-and-maintenance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch9. Model Serving, Monitoring, and Maintenance</h1>
+
+<h2 id="effective-runtime">
+<a class="anchor" href="#effective-runtime" aria-hidden="true"><span class="octicon octicon-link"></span></a>Effective runtime</h2>
+<ul>
+  <li>secure</li>
+  <li>correct</li>
+  <li>ensures ease of deployment and recovery</li>
+  <li>provides guarantees of model validity</li>
+  <li>avoids training/serving skew and hidden feedback loops</li>
+</ul>
+
+<h2 id="serving-modes">
+<a class="anchor" href="#serving-modes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Serving modes</h2>
+<ul>
+  <li>batch: when applied to big data and some latency is tolerable</li>
+  <li>on-demand: wrapped into a REST API</li>
+</ul>
+
+<h2 id="what-can-go-wrong-with-the-model-in-production">
+<a class="anchor" href="#what-can-go-wrong-with-the-model-in-production" aria-hidden="true"><span class="octicon octicon-link"></span></a>What can go wrong with the model in production</h2>
+<ul>
+  <li>more training data made the model worse</li>
+  <li>properties of the production data changed</li>
+  <li>updated feature extraction code</li>
+  <li>resource needed for feature changed/unavailable</li>
+  <li>model is abused or under an adversarial attack</li>
+</ul>
+
+<h2 id="monitoring">
+<a class="anchor" href="#monitoring" aria-hidden="true"><span class="octicon octicon-link"></span></a>Monitoring</h2>
+<ul>
+  <li>automated value calculation for the performance metrics -&gt; send alert if change significantly</li>
+  <li>distribution shift</li>
+  <li>numerical instability</li>
+  <li>decreasing computational performance</li>
+  <li>logs</li>
+</ul>
+
+<h2 id="maintenance">
+<a class="anchor" href="#maintenance" aria-hidden="true"><span class="octicon octicon-link"></span></a>Maintenance</h2>
+<blockquote>
+  <p>“Most ML models must be regularly or occasionally updated”</p>
+</blockquote>
+
+<p>how often?</p>
+<ul>
+  <li>error rate / how critical</li>
+  <li>only useful if fresh</li>
+  <li>new training data available fast</li>
+  <li>time it takes to retrain</li>
+  <li>cost to train / deploy the model</li>
+  <li>importance of update for improving the metrics</li>
+</ul>
+
+<h1 id="ch10-conclusion">
+<a class="anchor" href="#ch10-conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ch10. Conclusion</h1>
+
+<p>-</p>
+
+  </div><a class="u-url" href="/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
