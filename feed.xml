@@ -1,75 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-01-30T09:06:01-06:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Machine Learning Engineering</title><link href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" rel="alternate" type="text/html" title="Machine Learning Engineering" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-01-30T09:13:22-06:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Machine Learning Engineering</title><link href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" rel="alternate" type="text/html" title="Machine Learning Engineering" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
 
 &lt;p&gt;Author: Andriy Burkov&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.mlebook.com/&quot;&gt;Available here&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch1-introduction&quot;&gt;Ch1. Introduction&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#when-to-use-ml&quot;&gt;When to use ML&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#when-not-to-use-ml&quot;&gt;When not to use ML&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#ml-project-life-cycle&quot;&gt;ML Project Life Cycle&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch2-before-the-project-starts&quot;&gt;Ch2. Before the Project Starts&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#impact-of-ml&quot;&gt;Impact of ML&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#cost-of-ml&quot;&gt;Cost of ML&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#nonlinear-progress&quot;&gt;Nonlinear progress&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#why-ml-projects-fail&quot;&gt;Why ML projects fail&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch3-data-collections-and-preparation&quot;&gt;Ch3. Data Collections and Preparation&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#train-validation-and-test-sets-partition&quot;&gt;Train, Validation and Test sets partition&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#data-sampling-strategies&quot;&gt;Data Sampling strategies&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#dataset-documentation&quot;&gt;Dataset Documentation&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch4-feature-engineering&quot;&gt;Ch4. Feature Engineering&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#good-features&quot;&gt;Good features&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#feature-selection-techniques&quot;&gt;Feature selection techniques&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#best-practices&quot;&gt;Best practices&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch5-supervised-model-training-part-1&quot;&gt;Ch5. Supervised Model Training (Part 1)&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#baseline&quot;&gt;Baseline&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#in-memory-vs-out-of-memory&quot;&gt;In-memory vs. out-of-memory&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#precision-and-recall&quot;&gt;Precision and Recall&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#f-measure&quot;&gt;F-measure&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#precision-recall-and-bias-variance-tradeoffs&quot;&gt;Precision-recall and bias-variance tradeoffs&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch6-supervised-model-training-part-2&quot;&gt;Ch6. Supervised Model Training (Part 2)&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch7-model-evaluation&quot;&gt;Ch7. Model Evaluation&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#tasks&quot;&gt;Tasks&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#ab-testing&quot;&gt;A/B Testing&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#multi-armed-bandit&quot;&gt;Multi-armed bandit&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#bootstrapping&quot;&gt;Bootstrapping&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch8-model-deployment&quot;&gt;Ch8. Model Deployment&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#deployment-patterns&quot;&gt;Deployment patterns&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#deployment-strategies&quot;&gt;Deployment strategies&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#algorithmic-efficiency&quot;&gt;Algorithmic efficiency&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch9-model-serving-monitoring-and-maintenance&quot;&gt;Ch9. Model Serving, Monitoring, and Maintenance&lt;/a&gt;
-    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#effective-runtime&quot;&gt;Effective runtime&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#serving-modes&quot;&gt;Serving modes&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#what-can-go-wrong-with-the-model-in-production&quot;&gt;What can go wrong with the model in production&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#monitoring&quot;&gt;Monitoring&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#maintenance&quot;&gt;Maintenance&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#ch10-conclusion&quot;&gt;Ch10. Conclusion&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
 
 &lt;h1 id=&quot;ch1-introduction&quot;&gt;Ch1. Introduction&lt;/h1&gt;
 
@@ -390,7 +323,7 @@
 
 &lt;h1 id=&quot;ch10-conclusion&quot;&gt;Ch10. Conclusion&lt;/h1&gt;
 
-&lt;p&gt;-&lt;/p&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.jpeg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Learning Python Design Patterns</title><link href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" rel="alternate" type="text/html" title="Learning Python Design Patterns" /><published>2020-08-22T00:00:00-05:00</published><updated>2020-08-22T00:00:00-05:00</updated><id>https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
+&lt;p&gt;-&lt;/p&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/ml_engineering/ml_eng_cover.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Learning Python Design Patterns</title><link href="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html" rel="alternate" type="text/html" title="Learning Python Design Patterns" /><published>2020-08-22T00:00:00-05:00</published><updated>2020-08-22T00:00:00-05:00</updated><id>https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/software%20engineering/python/design%20patterns/2020/08/22/python-design-patterns.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
 
 &lt;p&gt;Author: Chetan Giridhar&lt;/p&gt;
 
