@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-14T10:21:09-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;Photo by &lt;a href=&quot;https://unsplash.com/@foodess?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Food Photographer | Jennifer Pallian&lt;/a&gt; on &lt;a href=&quot;/s/photos/cookie?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-14T10:27:03-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;Photo by &lt;a href=&quot;https://unsplash.com/@foodess?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Food Photographer | Jennifer Pallian&lt;/a&gt; on &lt;a href=&quot;/s/photos/cookie?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;The code is available here &lt;a href=&quot;https://github.com/millengustavo/floc-experiment&quot;&gt;https://github.com/millengustavo/floc-experiment&lt;/a&gt;&lt;/p&gt;
 
@@ -20,7 +20,9 @@
 
 &lt;p&gt;In this post you will learn a little more about &lt;strong&gt;FLoC&lt;/strong&gt;, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.&lt;/p&gt;
 
-&lt;h1 id=&quot;flocs-goal&quot;&gt;FLoC’s Goal&lt;/h1&gt;
+&lt;h1 id=&quot;floc&quot;&gt;FLoC&lt;/h1&gt;
+
+&lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;blockquote&gt;
   &lt;p&gt;&lt;strong&gt;“Preserve interest based advertising, but in a privacy-preserving manner”&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -129,7 +131,7 @@
     &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;off&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;cluster-1&quot;&gt;Cluster 1&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-1&quot;&gt;Cluster 1&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Action, Adventure, Western, IMAX&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -137,9 +139,9 @@
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_1.png&quot; alt=&quot;cluster_1&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_1.png&quot; alt=&quot;cluster_1&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;cluster-2&quot;&gt;Cluster 2&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-2&quot;&gt;Cluster 2&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Drama, Romance&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -147,9 +149,9 @@
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_2.png&quot; alt=&quot;cluster_2&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_2.png&quot; alt=&quot;cluster_2&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;cluster-3&quot;&gt;Cluster 3&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-3&quot;&gt;Cluster 3&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Crime, Documentary, Mistery, Film-Noir&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -157,9 +159,9 @@
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_3.png&quot; alt=&quot;cluster_3&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_3.png&quot; alt=&quot;cluster_3&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;cluster-4&quot;&gt;Cluster 4&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-4&quot;&gt;Cluster 4&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Horror, Sci-Fi, Thriller&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -167,9 +169,9 @@
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_4.png&quot; alt=&quot;cluster_4&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_4.png&quot; alt=&quot;cluster_4&quot; /&gt;&lt;/p&gt;
 
-&lt;h2 id=&quot;cluster-5&quot;&gt;Cluster 5&lt;/h2&gt;
+&lt;h3 id=&quot;cluster-5&quot;&gt;Cluster 5&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Animation, Children, Comedy, Fantasy, Musical&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -177,7 +179,7 @@
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_5.png&quot; alt=&quot;cluster_5&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_5.png&quot; alt=&quot;cluster_5&quot; /&gt;&lt;/p&gt;
 
 &lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
 

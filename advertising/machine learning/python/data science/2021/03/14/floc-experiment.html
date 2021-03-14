@@ -122,8 +122,9 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h1"><a href="#the-end-of-third-party-cookies-for-advertisers">The end of third-party cookies for advertisers</a></li>
-<li class="toc-entry toc-h1"><a href="#flocs-goal">FLoC’s Goal</a>
+<li class="toc-entry toc-h1"><a href="#floc">FLoC</a>
 <ul>
+<li class="toc-entry toc-h2"><a href="#goal">Goal</a></li>
 <li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
 <li class="toc-entry toc-h2"><a href="#privacy-x-utility">Privacy x Utility</a></li>
 <li class="toc-entry toc-h2"><a href="#intersections-with-data-science">Intersections with Data Science</a></li>
@@ -135,12 +136,15 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#downloading-movielens-25m">Downloading MovieLens 25m</a></li>
 <li class="toc-entry toc-h2"><a href="#simhash">SimHash</a></li>
 <li class="toc-entry toc-h2"><a href="#defining-a-limited-number-of-clusters-for-demonstration-purposes">Defining a limited number of clusters for demonstration purposes</a></li>
-<li class="toc-entry toc-h2"><a href="#visualizing-the-clusters">Visualizing the clusters</a></li>
-<li class="toc-entry toc-h2"><a href="#cluster-1">Cluster 1</a></li>
-<li class="toc-entry toc-h2"><a href="#cluster-2">Cluster 2</a></li>
-<li class="toc-entry toc-h2"><a href="#cluster-3">Cluster 3</a></li>
-<li class="toc-entry toc-h2"><a href="#cluster-4">Cluster 4</a></li>
-<li class="toc-entry toc-h2"><a href="#cluster-5">Cluster 5</a></li>
+<li class="toc-entry toc-h2"><a href="#visualizing-the-clusters">Visualizing the clusters</a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#cluster-1">Cluster 1</a></li>
+<li class="toc-entry toc-h3"><a href="#cluster-2">Cluster 2</a></li>
+<li class="toc-entry toc-h3"><a href="#cluster-3">Cluster 3</a></li>
+<li class="toc-entry toc-h3"><a href="#cluster-4">Cluster 4</a></li>
+<li class="toc-entry toc-h3"><a href="#cluster-5">Cluster 5</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
@@ -168,8 +172,11 @@ window.onload = wrap_img;
 
 <p>In this post you will learn a little more about <strong>FLoC</strong>, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.</p>
 
-<h1 id="flocs-goal">
-<a class="anchor" href="#flocs-goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>FLoC’s Goal</h1>
+<h1 id="floc">
+<a class="anchor" href="#floc" aria-hidden="true"><span class="octicon octicon-link"></span></a>FLoC</h1>
+
+<h2 id="goal">
+<a class="anchor" href="#goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>Goal</h2>
 <blockquote>
   <p><strong>“Preserve interest based advertising, but in a privacy-preserving manner”</strong></p>
 </blockquote>
@@ -291,8 +298,8 @@ window.onload = wrap_img;
     <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">);</span>
 </code></pre></div></div>
 
-<h2 id="cluster-1">
-<a class="anchor" href="#cluster-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 1</h2>
+<h3 id="cluster-1">
+<a class="anchor" href="#cluster-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 1</h3>
 <blockquote>
   <p>Action, Adventure, Western, IMAX</p>
 </blockquote>
@@ -300,10 +307,10 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="../images/floc_experiment/cluster_1.png" alt="cluster_1"></p>
+<p><img src="https://millengustavo.github.io/blog/images/floc_experiment/cluster_1.png" alt="cluster_1"></p>
 
-<h2 id="cluster-2">
-<a class="anchor" href="#cluster-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 2</h2>
+<h3 id="cluster-2">
+<a class="anchor" href="#cluster-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 2</h3>
 <blockquote>
   <p>Drama, Romance</p>
 </blockquote>
@@ -311,10 +318,10 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="../images/floc_experiment/cluster_2.png" alt="cluster_2"></p>
+<p><img src="https://millengustavo.github.io/blog/images/floc_experiment/cluster_2.png" alt="cluster_2"></p>
 
-<h2 id="cluster-3">
-<a class="anchor" href="#cluster-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 3</h2>
+<h3 id="cluster-3">
+<a class="anchor" href="#cluster-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 3</h3>
 <blockquote>
   <p>Crime, Documentary, Mistery, Film-Noir</p>
 </blockquote>
@@ -322,10 +329,10 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="../images/floc_experiment/cluster_3.png" alt="cluster_3"></p>
+<p><img src="https://millengustavo.github.io/blog/images/floc_experiment/cluster_3.png" alt="cluster_3"></p>
 
-<h2 id="cluster-4">
-<a class="anchor" href="#cluster-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 4</h2>
+<h3 id="cluster-4">
+<a class="anchor" href="#cluster-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 4</h3>
 <blockquote>
   <p>Horror, Sci-Fi, Thriller</p>
 </blockquote>
@@ -333,10 +340,10 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="../images/floc_experiment/cluster_4.png" alt="cluster_4"></p>
+<p><img src="https://millengustavo.github.io/blog/images/floc_experiment/cluster_4.png" alt="cluster_4"></p>
 
-<h2 id="cluster-5">
-<a class="anchor" href="#cluster-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 5</h2>
+<h3 id="cluster-5">
+<a class="anchor" href="#cluster-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 5</h3>
 <blockquote>
   <p>Animation, Children, Comedy, Fantasy, Musical</p>
 </blockquote>
@@ -344,7 +351,7 @@ window.onload = wrap_img;
 <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </code></pre></div></div>
 
-<p><img src="../images/floc_experiment/cluster_5.png" alt="cluster_5"></p>
+<p><img src="https://millengustavo.github.io/blog/images/floc_experiment/cluster_5.png" alt="cluster_5"></p>
 
 <h1 id="conclusion">
 <a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
