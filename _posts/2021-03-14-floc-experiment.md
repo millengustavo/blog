@@ -16,7 +16,7 @@ The code is available here [https://github.com/millengustavo/floc-experiment](ht
 
 Third-party cookies have (since 1994) been a key enabler of the commercial Internet and **fine-grained digital ad targeting**
 
-They helped achieve **unprecedented audience segmentation and attribution** - helping to connect marketing tactics with results in ways that were virtually impossible in the most traditional forms of media.
+They have helped achieve **unprecedented audience segmentation and attribution** - helping to connect marketing tactics with results in ways that were virtually impossible in the most traditional forms of media.
 
 To bring users more transparency and better consent management, most browsers are ending support for third-party cookies.
 
@@ -121,12 +121,13 @@ transformed_df['hash'] = transformed_df.apply(simhash, axis=1)
 ```python
 transformed_df["cluster"] = pd.cut(transformed_df["hash"], bins=5, labels=["1", "2", "3", "4", "5"])
 results = transformed_df.drop(columns='hash').groupby('cluster').mean()
+weighted_results = results / results.mean()
 ```
 
 ## Visualizing the clusters
 ```python
 def plot_cluster_wordcloud(cluster_name):
-    cluster_text = results.loc[results.index == str(cluster_name)].to_dict(orient='records')[0]
+    cluster_text = weighted_results.loc[weighted_results.index == str(cluster_name)].to_dict(orient='records')[0]
     wordcloud = WordCloud(width=800, height=450, background_color="white").generate_from_frequencies(cluster_text)
     plt.figure(figsize=(16,9))
     plt.imshow(wordcloud)
