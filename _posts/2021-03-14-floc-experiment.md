@@ -91,13 +91,13 @@ transformed_df = df.join(
     )
 )
 
-# multiply user rating to each genre to give us an idea of an weighted genre vector for each user
+# multiply user rating to each genre to give us an idea of a weighted genre vector for each user
 my_genres = [col for col in transformed_df.columns if col not in ["userId", "movieId", "rating"]]
 for genre in my_genres:
     transformed_df[genre] = transformed_df["rating"] * transformed_df[genre]
     transformed_df[genre] = np.asarray(transformed_df[genre]).astype("int8")
 
-# compute each user's mean genre vector
+# compute each users' mean genre vector
 transformed_df = transformed_df.drop(columns=["rating", "movieId"])
 transformed_df = transformed_df.groupby(by="userId").mean()
 ```
@@ -185,11 +185,11 @@ With the growing concern for users' privacy, some machine learning techniques ha
 I recommend that you read more about [Privacy Sandbox](https://blog.google/products/ads-commerce/2021-01-privacy-sandbox), Chrome's initiative to, according to Google, "help publishers and advertisers succeed, while protecting people's privacy."
 
 # References
-- https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html
-- https://venturebeat.com/2020/08/04/mozilla-firefox-79/
-- https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020
-- https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html
-- https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf
-- https://blog.google/products/ads-commerce/2021-01-privacy-sandbox
-- https://github.com/scrapinghub/python-simhash
-- https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173
+- [https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html](https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html)
+- [https://venturebeat.com/2020/08/04/mozilla-firefox-79/](https://venturebeat.com/2020/08/04/mozilla-firefox-79/)
+- [https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020](https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020)
+- [https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html](https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html)
+- [https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf](https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf)
+- [https://blog.google/products/ads-commerce/2021-01-privacy-sandbox](https://blog.google/products/ads-commerce/2021-01-privacy-sandbox)
+- [https://github.com/scrapinghub/python-simhash](https://github.com/scrapinghub/python-simhash)
+- [https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173](https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173)
