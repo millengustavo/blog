@@ -256,13 +256,13 @@ window.onload = wrap_img;
     <span class="p">)</span>
 <span class="p">)</span>
 
-<span class="c1"># multiply user rating to each genre to give us an idea of an weighted genre vector for each user
+<span class="c1"># multiply user rating to each genre to give us an idea of a weighted genre vector for each user
 </span><span class="n">my_genres</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"userId"</span><span class="p">,</span> <span class="s">"movieId"</span><span class="p">,</span> <span class="s">"rating"</span><span class="p">]]</span>
 <span class="k">for</span> <span class="n">genre</span> <span class="ow">in</span> <span class="n">my_genres</span><span class="p">:</span>
     <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="p">[</span><span class="s">"rating"</span><span class="p">]</span> <span class="o">*</span> <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span>
     <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">"int8"</span><span class="p">)</span>
 
-<span class="c1"># compute each user's mean genre vector
+<span class="c1"># compute each users' mean genre vector
 </span><span class="n">transformed_df</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"rating"</span><span class="p">,</span> <span class="s">"movieId"</span><span class="p">])</span>
 <span class="n">transformed_df</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">"userId"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
 </code></pre></div></div>
@@ -365,14 +365,14 @@ window.onload = wrap_img;
 <h1 id="references">
 <a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h1>
 <ul>
-  <li>https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html</li>
-  <li>https://venturebeat.com/2020/08/04/mozilla-firefox-79/</li>
-  <li>https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020</li>
-  <li>https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html</li>
-  <li>https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf</li>
-  <li>https://blog.google/products/ads-commerce/2021-01-privacy-sandbox</li>
-  <li>https://github.com/scrapinghub/python-simhash</li>
-  <li>https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173</li>
+  <li><a href="https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html">https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html</a></li>
+  <li><a href="https://venturebeat.com/2020/08/04/mozilla-firefox-79/">https://venturebeat.com/2020/08/04/mozilla-firefox-79/</a></li>
+  <li><a href="https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020">https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020</a></li>
+  <li><a href="https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html">https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html</a></li>
+  <li><a href="https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf">https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf</a></li>
+  <li><a href="https://blog.google/products/ads-commerce/2021-01-privacy-sandbox">https://blog.google/products/ads-commerce/2021-01-privacy-sandbox</a></li>
+  <li><a href="https://github.com/scrapinghub/python-simhash">https://github.com/scrapinghub/python-simhash</a></li>
+  <li><a href="https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173">https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173</a></li>
 </ul>
 
   </div><a class="u-url" href="/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" hidden></a>
