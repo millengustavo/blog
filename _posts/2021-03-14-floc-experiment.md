@@ -6,6 +6,8 @@ categories: [advertising, machine learning, python, data science]
 image: "/images/floc_experiment/cookie.png"
 ---
 
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/food-photographer-jennifer-pallian-OfdDiqx8Cz8-unsplash.jpg" alt="cookie_photo">
+
 Photo by <a href="https://unsplash.com/@foodess?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Food Photographer | Jennifer Pallian</a> on <a href="/s/photos/cookie?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>
 
 The code is available here [https://github.com/millengustavo/floc-experiment](https://github.com/millengustavo/floc-experiment)
