@@ -26,7 +26,9 @@ Some alternatives are being proposed to replace the need for third-party cookies
 
 In this post you will learn a little more about **FLoC**, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.
 
-# FLoC's Goal
+# FLoC
+
+## Goal
 > **"Preserve interest based advertising, but in a privacy-preserving manner"**
 
 ## Overview
@@ -129,50 +131,50 @@ def plot_cluster_wordcloud(cluster_name):
     plt.axis("off");
 ```
 
-## Cluster 1
+### Cluster 1
 > Action, Adventure, Western, IMAX
 
 ```python
 plot_cluster_wordcloud(1)
 ```
 
-![cluster_1](../images/floc_experiment/cluster_1.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_1.png" alt="cluster_1">
 
-## Cluster 2
+### Cluster 2
 > Drama, Romance
 
 ```python
 plot_cluster_wordcloud(2)
 ```
 
-![cluster_2](../images/floc_experiment/cluster_2.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_2.png" alt="cluster_2">
 
-## Cluster 3
+### Cluster 3
 > Crime, Documentary, Mistery, Film-Noir
 
 ```python
 plot_cluster_wordcloud(3)
 ```
 
-![cluster_3](../images/floc_experiment/cluster_3.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_3.png" alt="cluster_3">
 
-## Cluster 4
+### Cluster 4
 > Horror, Sci-Fi, Thriller
 
 ```python
 plot_cluster_wordcloud(4)
 ```
 
-![cluster_4](../images/floc_experiment/cluster_4.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_4.png" alt="cluster_4">
 
-## Cluster 5
+### Cluster 5
 > Animation, Children, Comedy, Fantasy, Musical
 
 ```python
 plot_cluster_wordcloud(5)
 ```
 
-![cluster_5](../images/floc_experiment/cluster_5.png)
+<img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_5.png" alt="cluster_5">
 
 # Conclusion
 
