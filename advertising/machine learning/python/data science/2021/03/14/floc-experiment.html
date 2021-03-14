@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Photo by Food Photographer | Jennifer Pallian on Unsplash" />
+<meta property="og:description" content="Photo by Food Photographer | Jennifer Pallian on Unsplash" />
+<link rel="canonical" href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/floc_experiment/cookie.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html"},"description":"Photo by Food Photographer | Jennifer Pallian on Unsplash","@type":"BlogPosting","url":"https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html","headline":"Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies","dateModified":"2021-03-14T00:00:00-06:00","datePublished":"2021-03-14T00:00:00-06:00","image":"https://millengustavo.github.io/blog/images/floc_experiment/cookie.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies | Gustavo Millen</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Photo by Food Photographer | Jennifer Pallian on Unsplash" />
+<meta property="og:description" content="Photo by Food Photographer | Jennifer Pallian on Unsplash" />
+<link rel="canonical" href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" />
+<meta property="og:url" content="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" />
+<meta property="og:site_name" content="Gustavo Millen" />
+<meta property="og:image" content="https://millengustavo.github.io/blog/images/floc_experiment/cookie.png" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"mainEntityOfPage":{"@type":"WebPage","@id":"https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html"},"description":"Photo by Food Photographer | Jennifer Pallian on Unsplash","@type":"BlogPosting","url":"https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html","headline":"Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies","dateModified":"2021-03-14T00:00:00-06:00","datePublished":"2021-03-14T00:00:00-06:00","image":"https://millengustavo.github.io/blog/images/floc_experiment/cookie.png","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://millengustavo.github.io/blog/feed.xml" title="Gustavo Millen" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">Gustavo Millen</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Federated Learning of Cohorts (FLoC) - Google&#39;s solution for interest based advertising in a world without third-party cookies</h1><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-14T00:00:00-06:00" itemprop="datePublished">
+        Mar 14, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      4 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#advertising">advertising</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#machine learning">machine learning</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#data science">data science</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#the-end-of-third-party-cookies-for-advertisers">The end of third-party cookies for advertisers</a></li>
+<li class="toc-entry toc-h1"><a href="#flocs-goal">FLoC’s Goal</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#overview">Overview</a></li>
+<li class="toc-entry toc-h2"><a href="#privacy-x-utility">Privacy x Utility</a></li>
+<li class="toc-entry toc-h2"><a href="#intersections-with-data-science">Intersections with Data Science</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#evaluating-googles-approach-on-a-public-dataset">Evaluating Google’s approach on a public dataset</a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#installing-the-simhash-python-package">Installing the SimHash Python package</a></li>
+<li class="toc-entry toc-h2"><a href="#downloading-movielens-25m">Downloading MovieLens 25m</a></li>
+<li class="toc-entry toc-h2"><a href="#simhash">SimHash</a></li>
+<li class="toc-entry toc-h2"><a href="#defining-a-limited-number-of-clusters-for-demonstration-purposes">Defining a limited number of clusters for demonstration purposes</a></li>
+<li class="toc-entry toc-h2"><a href="#visualizing-the-clusters">Visualizing the clusters</a></li>
+<li class="toc-entry toc-h2"><a href="#cluster-1">Cluster 1</a></li>
+<li class="toc-entry toc-h2"><a href="#cluster-2">Cluster 2</a></li>
+<li class="toc-entry toc-h2"><a href="#cluster-3">Cluster 3</a></li>
+<li class="toc-entry toc-h2"><a href="#cluster-4">Cluster 4</a></li>
+<li class="toc-entry toc-h2"><a href="#cluster-5">Cluster 5</a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1"><a href="#conclusion">Conclusion</a></li>
+<li class="toc-entry toc-h1"><a href="#references">References</a></li>
+</ul><p>Photo by <a href="https://unsplash.com/@foodess?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Food Photographer | Jennifer Pallian</a> on <a href="/s/photos/cookie?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
+
+<p>The code is available here <a href="https://github.com/millengustavo/floc-experiment">https://github.com/millengustavo/floc-experiment</a></p>
+
+<h1 id="the-end-of-third-party-cookies-for-advertisers">
+<a class="anchor" href="#the-end-of-third-party-cookies-for-advertisers" aria-hidden="true"><span class="octicon octicon-link"></span></a>The end of third-party cookies for advertisers</h1>
+
+<p>Third-party cookies have (since 1994) been a key enabler of the commercial Internet and <strong>fine-grained digital ad targeting</strong></p>
+
+<p>They helped achieve <strong>unprecedented audience segmentation and attribution</strong> - helping to connect marketing tactics with results in ways that were virtually impossible in the most traditional forms of media.</p>
+
+<p>To bring users more transparency and better consent management, most browsers are ending support for third-party cookies.</p>
+
+<ul>
+  <li><a href="https://venturebeat.com/2020/08/04/mozilla-firefox-79/">Firefox 79 clears redirect tracking cookies every 24 hours</a></li>
+  <li><a href="https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020">Apple teases new tracking protections and an approximate location feature in iOS 14</a></li>
+  <li><a href="https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html">Google has announced plans to stop supporting third-party cookies on its Chrome browser in 2021</a></li>
+</ul>
+
+<p>Some alternatives are being proposed to replace the need for third-party cookies, ensuring users’ privacy, but without loss of performance for advertisers.</p>
+
+<p>In this post you will learn a little more about <strong>FLoC</strong>, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.</p>
+
+<h1 id="flocs-goal">
+<a class="anchor" href="#flocs-goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>FLoC’s Goal</h1>
+<blockquote>
+  <p><strong>“Preserve interest based advertising, but in a privacy-preserving manner”</strong></p>
+</blockquote>
+
+<h2 id="overview">
+<a class="anchor" href="#overview" aria-hidden="true"><span class="octicon octicon-link"></span></a>Overview</h2>
+<ul>
+  <li>Relies on a <strong>cohort</strong> assigning mechanism: a function that allocates a cohort id to a user based on their <strong>browsing history</strong>
+</li>
+  <li>This cohort id <strong>must be shared by at least k distinct users</strong> for privacy</li>
+</ul>
+
+<h2 id="privacy-x-utility">
+<a class="anchor" href="#privacy-x-utility" aria-hidden="true"><span class="octicon octicon-link"></span></a>Privacy x Utility</h2>
+<blockquote>
+  <p>“The more users share a cohort id, the <strong>harder it is to derive individual</strong> user’s behavior from across the web. On the other hand, a large cohort is more likely to have a diverse set of users, thus making it harder to use this information for <strong>fine-grained ads personalization</strong> purposes.”</p>
+</blockquote>
+
+<p><strong>Ideal cohort assignment</strong>: group together a large number of users interested in similar things</p>
+
+<h2 id="intersections-with-data-science">
+<a class="anchor" href="#intersections-with-data-science" aria-hidden="true"><span class="octicon octicon-link"></span></a>Intersections with Data Science</h2>
+<ul>
+  <li>
+<a href="https://federated.withgoogle.com/">Federated Learning</a>: machine learning technique that trains an algorithm across multiple decentralized edge devices or servers holding local data samples, <strong>without exchanging them</strong>
+</li>
+  <li>Cohort assignment algorithm should be <strong>unsupervised</strong>, since each provider has their own optimization function</li>
+</ul>
+
+<h1 id="evaluating-googles-approach-on-a-public-dataset">
+<a class="anchor" href="#evaluating-googles-approach-on-a-public-dataset" aria-hidden="true"><span class="octicon octicon-link"></span></a>Evaluating Google’s approach on a public dataset</h1>
+<ul>
+  <li>Let’s evaluate <a href="https://static.googleusercontent.com/media/research.google.com/pt-BR//pubs/archive/33026.pdf">SimHash</a> (originally developed to identify near duplicate documents quickly) proposed in the FLoC whitepaper as a cohort assignment mechanism using the dataset <strong>MovieLens 25M</strong>
+</li>
+</ul>
+
+<blockquote>
+  <p>“MovieLens 25M movie ratings. Stable benchmark dataset. 25 million ratings and one million tag applications applied to 62,000 movies by 162,000 users.”</p>
+</blockquote>
+
+<h2 id="installing-the-simhash-python-package">
+<a class="anchor" href="#installing-the-simhash-python-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing the SimHash Python package</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">scrapinghub</span><span class="o">/</span><span class="n">python</span><span class="o">-</span><span class="n">simhash</span>
+<span class="err">!</span><span class="n">cd</span> <span class="n">python</span><span class="o">-</span><span class="n">simhash</span> <span class="o">&amp;&amp;</span> <span class="n">python</span> <span class="n">setup</span><span class="o">.</span><span class="n">py</span> <span class="n">install</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="n">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">MultiLabelBinarizer</span>
+<span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
+<span class="kn">from</span> <span class="nn">simhash</span> <span class="kn">import</span> <span class="n">weighted_fingerprint</span><span class="p">,</span> <span class="n">fnvhash</span>
+</code></pre></div></div>
+
+<h2 id="downloading-movielens-25m">
+<a class="anchor" href="#downloading-movielens-25m" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading MovieLens 25m</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">files</span><span class="o">.</span><span class="n">grouplens</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">movielens</span><span class="o">/</span><span class="n">ml</span><span class="o">-</span><span class="mi">25</span><span class="n">m</span><span class="o">.</span><span class="nb">zip</span> <span class="o">--</span><span class="n">no</span><span class="o">-</span><span class="n">check</span><span class="o">-</span><span class="n">certificate</span>
+<span class="err">!</span><span class="n">unzip</span> <span class="n">ml</span><span class="o">-</span><span class="mi">25</span><span class="n">m</span><span class="o">.</span><span class="nb">zip</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">movies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"ml-25m/movies.csv"</span><span class="p">)</span>
+<span class="n">ratings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"ml-25m/ratings.csv"</span><span class="p">)</span>
+
+<span class="c1"># join movie genres with user ratings
+</span><span class="n">df</span> <span class="o">=</span> <span class="n">ratings</span><span class="p">[[</span><span class="s">"userId"</span><span class="p">,</span> <span class="s">"movieId"</span><span class="p">,</span> <span class="s">"rating"</span><span class="p">]]</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">movies</span><span class="p">[[</span><span class="s">"movieId"</span><span class="p">,</span> <span class="s">"genres"</span><span class="p">]],</span> <span class="n">on</span><span class="o">=</span><span class="s">"movieId"</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s">"genres"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s">"genres"</span><span class="p">]</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"|"</span><span class="p">))</span>
+
+<span class="c1"># create a genre per column dataset
+</span><span class="n">mlb</span> <span class="o">=</span> <span class="n">MultiLabelBinarizer</span><span class="p">(</span><span class="n">sparse_output</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+    <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="o">.</span><span class="n">sparse</span><span class="o">.</span><span class="n">from_spmatrix</span><span class="p">(</span>
+        <span class="n">mlb</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">"genres"</span><span class="p">)),</span>
+        <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">,</span>
+        <span class="n">columns</span><span class="o">=</span><span class="n">mlb</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+
+<span class="c1"># multiply user rating to each genre to give us an idea of an weighted genre vector for each user
+</span><span class="n">my_genres</span> <span class="o">=</span> <span class="p">[</span><span class="n">col</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">col</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s">"userId"</span><span class="p">,</span> <span class="s">"movieId"</span><span class="p">,</span> <span class="s">"rating"</span><span class="p">]]</span>
+<span class="k">for</span> <span class="n">genre</span> <span class="ow">in</span> <span class="n">my_genres</span><span class="p">:</span>
+    <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="p">[</span><span class="s">"rating"</span><span class="p">]</span> <span class="o">*</span> <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span>
+    <span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">transformed_df</span><span class="p">[</span><span class="n">genre</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">"int8"</span><span class="p">)</span>
+
+<span class="c1"># compute each user's mean genre vector
+</span><span class="n">transformed_df</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s">"rating"</span><span class="p">,</span> <span class="s">"movieId"</span><span class="p">])</span>
+<span class="n">transformed_df</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s">"userId"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="simhash">
+<a class="anchor" href="#simhash" aria-hidden="true"><span class="octicon octicon-link"></span></a>SimHash</h2>
+
+<p>Having computed each users’ mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions)</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">simhash</span><span class="p">(</span><span class="n">v</span><span class="p">):</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">weighted_fingerprint</span><span class="p">([(</span><span class="n">fnvhash</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">w</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">v</span><span class="o">.</span><span class="n">items</span><span class="p">()])</span>
+
+<span class="n">transformed_df</span><span class="p">[</span><span class="s">'hash'</span><span class="p">]</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="nb">apply</span><span class="p">(</span><span class="n">simhash</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<ul>
+  <li>We can see that we have a lot of collisions using SimHash, but this is expected, since many users share similar preferences and our choice of hashing algorithm is intentional</li>
+  <li>SimHash is computationally inexpensive by design, not caring too much about hash collisions</li>
+</ul>
+
+<h2 id="defining-a-limited-number-of-clusters-for-demonstration-purposes">
+<a class="anchor" href="#defining-a-limited-number-of-clusters-for-demonstration-purposes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Defining a limited number of clusters for demonstration purposes</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">transformed_df</span><span class="p">[</span><span class="s">"cluster"</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span><span class="n">transformed_df</span><span class="p">[</span><span class="s">"hash"</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s">"1"</span><span class="p">,</span> <span class="s">"2"</span><span class="p">,</span> <span class="s">"3"</span><span class="p">,</span> <span class="s">"4"</span><span class="p">,</span> <span class="s">"5"</span><span class="p">])</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">transformed_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="s">'hash'</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s">'cluster'</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h2 id="visualizing-the-clusters">
+<a class="anchor" href="#visualizing-the-clusters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Visualizing the clusters</h2>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">plot_cluster_wordcloud</span><span class="p">(</span><span class="n">cluster_name</span><span class="p">):</span>
+    <span class="n">cluster_text</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">results</span><span class="o">.</span><span class="n">index</span> <span class="o">==</span> <span class="nb">str</span><span class="p">(</span><span class="n">cluster_name</span><span class="p">)]</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s">'records'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">wordcloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span> <span class="n">background_color</span><span class="o">=</span><span class="s">"white"</span><span class="p">)</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">cluster_text</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">9</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">wordcloud</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s">"off"</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="cluster-1">
+<a class="anchor" href="#cluster-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 1</h2>
+<blockquote>
+  <p>Action, Adventure, Western, IMAX</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="../images/floc_experiment/cluster_1.png" alt="cluster_1"></p>
+
+<h2 id="cluster-2">
+<a class="anchor" href="#cluster-2" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 2</h2>
+<blockquote>
+  <p>Drama, Romance</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="../images/floc_experiment/cluster_2.png" alt="cluster_2"></p>
+
+<h2 id="cluster-3">
+<a class="anchor" href="#cluster-3" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 3</h2>
+<blockquote>
+  <p>Crime, Documentary, Mistery, Film-Noir</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="../images/floc_experiment/cluster_3.png" alt="cluster_3"></p>
+
+<h2 id="cluster-4">
+<a class="anchor" href="#cluster-4" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 4</h2>
+<blockquote>
+  <p>Horror, Sci-Fi, Thriller</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="../images/floc_experiment/cluster_4.png" alt="cluster_4"></p>
+
+<h2 id="cluster-5">
+<a class="anchor" href="#cluster-5" aria-hidden="true"><span class="octicon octicon-link"></span></a>Cluster 5</h2>
+<blockquote>
+  <p>Animation, Children, Comedy, Fantasy, Musical</p>
+</blockquote>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">plot_cluster_wordcloud</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p><img src="../images/floc_experiment/cluster_5.png" alt="cluster_5"></p>
+
+<h1 id="conclusion">
+<a class="anchor" href="#conclusion" aria-hidden="true"><span class="octicon octicon-link"></span></a>Conclusion</h1>
+
+<p>With the growing concern for users’ privacy, some machine learning techniques have shown promise. <strong>Federated learning</strong> seems to be an interesting alternative for this type of application and it is worth studying it further.</p>
+
+<p>I recommend that you read more about <a href="https://blog.google/products/ads-commerce/2021-01-privacy-sandbox">Privacy Sandbox</a>, Chrome’s initiative to, according to Google, “help publishers and advertisers succeed, while protecting people’s privacy.”</p>
+
+<h1 id="references">
+<a class="anchor" href="#references" aria-hidden="true"><span class="octicon octicon-link"></span></a>References</h1>
+<ul>
+  <li>https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html</li>
+  <li>https://venturebeat.com/2020/08/04/mozilla-firefox-79/</li>
+  <li>https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020</li>
+  <li>https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html</li>
+  <li>https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf</li>
+  <li>https://blog.google/products/ads-commerce/2021-01-privacy-sandbox</li>
+  <li>https://github.com/scrapinghub/python-simhash</li>
+  <li>https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173</li>
+</ul>
+
+  </div><a class="u-url" href="/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Data Science and Machine Learning blog.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/millengustavo" title="millengustavo"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,4 +1,201 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-14T10:11:53-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Machine Learning Engineering</title><link href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" rel="alternate" type="text/html" title="Machine Learning Engineering" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-14T10:21:09-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;Photo by &lt;a href=&quot;https://unsplash.com/@foodess?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Food Photographer | Jennifer Pallian&lt;/a&gt; on &lt;a href=&quot;/s/photos/cookie?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The code is available here &lt;a href=&quot;https://github.com/millengustavo/floc-experiment&quot;&gt;https://github.com/millengustavo/floc-experiment&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;the-end-of-third-party-cookies-for-advertisers&quot;&gt;The end of third-party cookies for advertisers&lt;/h1&gt;
+
+&lt;p&gt;Third-party cookies have (since 1994) been a key enabler of the commercial Internet and &lt;strong&gt;fine-grained digital ad targeting&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;They helped achieve &lt;strong&gt;unprecedented audience segmentation and attribution&lt;/strong&gt; - helping to connect marketing tactics with results in ways that were virtually impossible in the most traditional forms of media.&lt;/p&gt;
+
+&lt;p&gt;To bring users more transparency and better consent management, most browsers are ending support for third-party cookies.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://venturebeat.com/2020/08/04/mozilla-firefox-79/&quot;&gt;Firefox 79 clears redirect tracking cookies every 24 hours&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020&quot;&gt;Apple teases new tracking protections and an approximate location feature in iOS 14&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html&quot;&gt;Google has announced plans to stop supporting third-party cookies on its Chrome browser in 2021&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Some alternatives are being proposed to replace the need for third-party cookies, ensuring users’ privacy, but without loss of performance for advertisers.&lt;/p&gt;
+
+&lt;p&gt;In this post you will learn a little more about &lt;strong&gt;FLoC&lt;/strong&gt;, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.&lt;/p&gt;
+
+&lt;h1 id=&quot;flocs-goal&quot;&gt;FLoC’s Goal&lt;/h1&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;“Preserve interest based advertising, but in a privacy-preserving manner”&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;Relies on a &lt;strong&gt;cohort&lt;/strong&gt; assigning mechanism: a function that allocates a cohort id to a user based on their &lt;strong&gt;browsing history&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;This cohort id &lt;strong&gt;must be shared by at least k distinct users&lt;/strong&gt; for privacy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;privacy-x-utility&quot;&gt;Privacy x Utility&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;“The more users share a cohort id, the &lt;strong&gt;harder it is to derive individual&lt;/strong&gt; user’s behavior from across the web. On the other hand, a large cohort is more likely to have a diverse set of users, thus making it harder to use this information for &lt;strong&gt;fine-grained ads personalization&lt;/strong&gt; purposes.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;strong&gt;Ideal cohort assignment&lt;/strong&gt;: group together a large number of users interested in similar things&lt;/p&gt;
+
+&lt;h2 id=&quot;intersections-with-data-science&quot;&gt;Intersections with Data Science&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://federated.withgoogle.com/&quot;&gt;Federated Learning&lt;/a&gt;: machine learning technique that trains an algorithm across multiple decentralized edge devices or servers holding local data samples, &lt;strong&gt;without exchanging them&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;Cohort assignment algorithm should be &lt;strong&gt;unsupervised&lt;/strong&gt;, since each provider has their own optimization function&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h1 id=&quot;evaluating-googles-approach-on-a-public-dataset&quot;&gt;Evaluating Google’s approach on a public dataset&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;Let’s evaluate &lt;a href=&quot;https://static.googleusercontent.com/media/research.google.com/pt-BR//pubs/archive/33026.pdf&quot;&gt;SimHash&lt;/a&gt; (originally developed to identify near duplicate documents quickly) proposed in the FLoC whitepaper as a cohort assignment mechanism using the dataset &lt;strong&gt;MovieLens 25M&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“MovieLens 25M movie ratings. Stable benchmark dataset. 25 million ratings and one million tag applications applied to 62,000 movies by 162,000 users.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;installing-the-simhash-python-package&quot;&gt;Installing the SimHash Python package&lt;/h2&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;git&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;clone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;github&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;com&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scrapinghub&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;simhash&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cd&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;simhash&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;setup&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;py&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;install&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;numpy&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sklearn.preprocessing&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MultiLabelBinarizer&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;wordcloud&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WordCloud&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;simhash&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weighted_fingerprint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fnvhash&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;downloading-movielens-25m&quot;&gt;Downloading MovieLens 25m&lt;/h2&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wget&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;https&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;//&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;files&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;grouplens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datasets&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movielens&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ml&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;no&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;check&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;certificate&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unzip&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ml&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;m&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;zip&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;movies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ml-25m/movies.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ratings&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read_csv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ml-25m/ratings.csv&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# join movie genres with user ratings
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ratings&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;userId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;movieId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;rating&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;merge&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;movies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;movieId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;genres&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;movieId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;genres&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;genres&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;|&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# create a genre per column dataset
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mlb&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MultiLabelBinarizer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sparse_output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;DataFrame&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sparse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;from_spmatrix&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;mlb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fit_transform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;genres&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mlb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;classes_&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# multiply user rating to each genre to give us an idea of an weighted genre vector for each user
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;my_genres&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;col&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;userId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;movieId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;rating&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;genre&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;my_genres&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;rating&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;asarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;genre&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;int8&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;# compute each user's mean genre vector
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;rating&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;movieId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;userId&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;simhash&quot;&gt;SimHash&lt;/h2&gt;
+
+&lt;p&gt;Having computed each users’ mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions)&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;simhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weighted_fingerprint&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fnvhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;w&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;items&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hash'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;simhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;We can see that we have a lot of collisions using SimHash, but this is expected, since many users share similar preferences and our choice of hashing algorithm is intentional&lt;/li&gt;
+  &lt;li&gt;SimHash is computationally inexpensive by design, not caring too much about hash collisions&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;defining-a-limited-number-of-clusters-for-demonstration-purposes&quot;&gt;Defining a limited number of clusters for demonstration purposes&lt;/h2&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cluster&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;4&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hash'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'cluster'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;visualizing-the-clusters&quot;&gt;Visualizing the clusters&lt;/h2&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cluster_text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'records'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;wordcloud&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WordCloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;450&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;background_color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;white&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generate_from_frequencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figure&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imshow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;off&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;cluster-1&quot;&gt;Cluster 1&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Action, Adventure, Western, IMAX&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_1.png&quot; alt=&quot;cluster_1&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cluster-2&quot;&gt;Cluster 2&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Drama, Romance&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_2.png&quot; alt=&quot;cluster_2&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cluster-3&quot;&gt;Cluster 3&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Crime, Documentary, Mistery, Film-Noir&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_3.png&quot; alt=&quot;cluster_3&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cluster-4&quot;&gt;Cluster 4&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Horror, Sci-Fi, Thriller&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_4.png&quot; alt=&quot;cluster_4&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;cluster-5&quot;&gt;Cluster 5&lt;/h2&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Animation, Children, Comedy, Fantasy, Musical&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;../images/floc_experiment/cluster_5.png&quot; alt=&quot;cluster_5&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h1&gt;
+
+&lt;p&gt;With the growing concern for users’ privacy, some machine learning techniques have shown promise. &lt;strong&gt;Federated learning&lt;/strong&gt; seems to be an interesting alternative for this type of application and it is worth studying it further.&lt;/p&gt;
+
+&lt;p&gt;I recommend that you read more about &lt;a href=&quot;https://blog.google/products/ads-commerce/2021-01-privacy-sandbox&quot;&gt;Privacy Sandbox&lt;/a&gt;, Chrome’s initiative to, according to Google, “help publishers and advertisers succeed, while protecting people’s privacy.”&lt;/p&gt;
+
+&lt;h1 id=&quot;references&quot;&gt;References&lt;/h1&gt;
+&lt;ul&gt;
+  &lt;li&gt;https://www.deloittedigital.com/us/en/blog-list/2020/what-the-end-of-third-party-cookies-means-for-advertisers.html&lt;/li&gt;
+  &lt;li&gt;https://venturebeat.com/2020/08/04/mozilla-firefox-79/&lt;/li&gt;
+  &lt;li&gt;https://www.theverge.com/2020/6/22/21299407/apple-ios-14-new-privacy-features-data-location-tracking-premissions-wwdc-2020&lt;/li&gt;
+  &lt;li&gt;https://blog.chromium.org/2020/01/building-more-private-web-path-towards.html&lt;/li&gt;
+  &lt;li&gt;https://github.com/google/ads-privacy/blob/master/proposals/FLoC/FLOC-Whitepaper-Google.pdf&lt;/li&gt;
+  &lt;li&gt;https://blog.google/products/ads-commerce/2021-01-privacy-sandbox&lt;/li&gt;
+  &lt;li&gt;https://github.com/scrapinghub/python-simhash&lt;/li&gt;
+  &lt;li&gt;https://towardsdatascience.com/federated-learning-of-cohorts-googles-cookie-killer-7f63b2395173&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">Photo by Food Photographer | Jennifer Pallian on Unsplash</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/floc_experiment/cookie.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/floc_experiment/cookie.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Machine Learning Engineering</title><link href="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html" rel="alternate" type="text/html" title="Machine Learning Engineering" /><published>2021-01-30T00:00:00-06:00</published><updated>2021-01-30T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/machine%20learning%20engineering/python/data%20science/2021/01/30/ml-engineering.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
 
 &lt;p&gt;Author: Andriy Burkov&lt;/p&gt;
 
@@ -4320,865 +4517,4 @@ def run_model(data):
   &lt;li&gt;&lt;a href=&quot;https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88&quot;&gt;https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892&quot;&gt;https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;&lt;a href=&quot;https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019&quot;&gt;https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Statistical forecasting: notes on regression and time series analysis</title><link href="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/02/03/statistical-forecasting.html" rel="alternate" type="text/html" title="Statistical forecasting: notes on regression and time series analysis" /><published>2020-02-03T00:00:00-06:00</published><updated>2020-02-03T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/02/03/statistical-forecasting</id><content type="html" xml:base="https://millengustavo.github.io/blog/book/time%20series/forecasting/data%20science/machine%20learning/statistics/2020/02/03/statistical-forecasting.html">&lt;p&gt;My notes and highlights on the book.&lt;/p&gt;
-
-&lt;p&gt;Author: Robert Nau&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://people.duke.edu/~rnau/411home.htm&quot;&gt;Available here&lt;/a&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;“This web site contains notes and materials for an advanced elective course on statistical forecasting that is taught at the Fuqua School of Business, Duke University. It covers linear regression and time series forecasting models as well as general principles of thoughtful data analysis.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;“I have seen the future and it is very much like the present, only longer.” 
-– Kehlog Albran, &lt;em&gt;The Profit&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;1-get-to-know-your-data&quot;&gt;1. Get to know your data&lt;/h1&gt;
-&lt;h2 id=&quot;principles-and-risks-of-forecasting&quot;&gt;Principles and risks of forecasting&lt;/h2&gt;
-&lt;p&gt;Statistical forecasting: art and science of forecasting from data, with or without knowing in advance what equation you should use&lt;/p&gt;
-
-&lt;h3 id=&quot;signal-vs-noise&quot;&gt;Signal vs. noise&lt;/h3&gt;
-&lt;p&gt;Variable you want to predict = signal + noise&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Signal: predictable component&lt;/li&gt;
-  &lt;li&gt;Noise: what is left over&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Sensitive statistical tests are needed to get a better idea of whether the pattern you see in the data is really random or whether there is some signal yet to be extracted. If you fail to detect a signal that is really there, or falsely detect a signal that isn’t really there, your forecasts will be at best suboptimal and at worst dangerously misleading&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;random walk model&lt;/strong&gt;: the variable takes random steps up and down as it goes forward:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;if you transform by taking the period-to-period changes (the “first difference”) it becomes a time series that is described by the mean model&lt;/li&gt;
-  &lt;li&gt;the confidence limits for the forecasts gets wider at longer forecast horizons&lt;/li&gt;
-  &lt;li&gt;typical of random walk patterns -&amp;gt; they don’t look random as they are! -&amp;gt; analyze the statistical properties: momentum, mean-reversion, seasonality&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;risks-of-forecasting&quot;&gt;Risks of forecasting&lt;/h3&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;“If you live by the crystal ball you end up eating broken glass”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Intrinsic risk&lt;/strong&gt;: random variation beyond explanation with the data and tools available&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Parameter risk&lt;/strong&gt;: errors in estimating the parameters of the forecasting model, under the assumption that you are fitting the correct model to the data in the first place
-    &lt;blockquote&gt;
-      &lt;p&gt;When predicting time series, more sample data is not always better -&amp;gt; might include older data that is not as representative of current conditions. &lt;strong&gt;Blur of history&lt;/strong&gt; problem: no pattern really stays the same forever&lt;/p&gt;
-    &lt;/blockquote&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;You can’t eliminate instrinsic risk and parameter risk, &lt;em&gt;you can and should try to quantify&lt;/em&gt; them in relative terms -&amp;gt; so the appropriate risk-return tradeoffs can be made when decisions are based on the forecast&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Model risk&lt;/strong&gt;: risk of choosing the wrong model. &lt;em&gt;Most serious form of forecast error&lt;/em&gt; -&amp;gt; can be reduced by following good statistical practices: Follow good practices for exploring the data, understand the assumptions that are behind the models and test the assumptions.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;If the errors are not pure noise -&amp;gt; there is some pattern in them, and you could make them smaller by adjusting the model to explain that pattern&lt;/p&gt;
-
-&lt;h2 id=&quot;get-to-know-your-data&quot;&gt;Get to know your data&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Where did it come from?&lt;/li&gt;
-  &lt;li&gt;Where has it been?&lt;/li&gt;
-  &lt;li&gt;Is it clean or dirty?&lt;/li&gt;
-  &lt;li&gt;In what units is it measured?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Assembling, cleaning, adjusting and documenting the units of the data is often the most tedious step of forecasting&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;plot-the-data&quot;&gt;PLOT THE DATA!&lt;/h3&gt;
-&lt;p&gt;You should graph your data to get a feel for its qualitative properties -&amp;gt; your model must accommodate these features and ideally it should shed light on their underlying causes&lt;/p&gt;
-
-&lt;h2 id=&quot;inflation-adjustment-deflation&quot;&gt;Inflation adjustment (“deflation”)&lt;/h2&gt;
-&lt;p&gt;Accomplished by dividing a monetary time series by a price index, such as the Consumer Price Index (CPI) -&amp;gt; uncover the real growth&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;original series: “nominal dollars” or “current dollars”&lt;/li&gt;
-  &lt;li&gt;deflated series: “constant dollars”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Not always necessary, sometimes forecasting the nominal data or log transforming for stabilizing the variance is simpler&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Inflation adjustment is only appropriated for money series. If a non-monetary series shows signs of exponential growth or increasing variance -&amp;gt; try a logarithm transformation&lt;/p&gt;
-
-&lt;h2 id=&quot;seasonal-adjustment&quot;&gt;Seasonal adjustment&lt;/h2&gt;
-&lt;h3 id=&quot;multiplicative-adjustment&quot;&gt;Multiplicative adjustment&lt;/h3&gt;
-&lt;p&gt;Increasing amplitude of seasonal variations is suggestive of a multiplicative seasonal pattern -&amp;gt; can be removed by &lt;strong&gt;multiplicative seasonal adjustment&lt;/strong&gt;: dividing each value of the time series by a seasonal index that is representative of normal typically observed in that season&lt;/p&gt;
-
-&lt;h3 id=&quot;additive-adjustment&quot;&gt;Additive adjustment&lt;/h3&gt;
-&lt;p&gt;For time series whose seasonal variations are roughly constant in magnitude, independent of the current average level of the series -&amp;gt; adding or subtracting a quantity that represents the absolute amount by which the value in that season of the year tends to be below or above normal, as estimated from past data&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Additive seasonal patterns are somewhat rare, but if applying log transform -&amp;gt; you should use additive rather than multiplicative&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;acronyms&quot;&gt;Acronyms&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;SA&lt;/strong&gt;: seasonally adjusted&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;NSA&lt;/strong&gt;: not seasonally adjusted&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;SAAR&lt;/strong&gt;: seasonally adjusted annual rate -&amp;gt; each period’s value has been adjusted for seasonality and then multiplied by the number of periods in a year, as though the same value had been obtained in every period for a whole year&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;stationarity-and-differencing&quot;&gt;Stationarity and differencing&lt;/h2&gt;
-&lt;h3 id=&quot;statistical-stationarity&quot;&gt;Statistical stationarity&lt;/h3&gt;
-&lt;p&gt;A stationary time series is one whose statistical properties such as mean, variance, autocorrelation, etc. are all constant over time. Most statistical forecasting methods are based on the assumption that the time series can be rendered approximately stationary (i.e., “stationarized”) through the use of mathematical transformations&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;trend-stationary&lt;/strong&gt;: series has a stable long-run rend and tends to revert to the trend line following a disturbance -&amp;gt; to stationarize it = detrending&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;difference-stationary&lt;/strong&gt;: if the mean, variance, and autocorrelations of the original series are not constant in time, even after detrending, perhaps the statistics of the changes in the series between periods or between seasons will be constant&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Unit root test&lt;/strong&gt;: to understand if a series is trend-stationary or difference-stationary&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;first-difference&quot;&gt;First-difference&lt;/h3&gt;
-&lt;p&gt;Series of changes from one period to the next&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;random walk model&lt;/strong&gt;: if first-difference of a series is stationary and also completely random (not autocorrelated)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ETS or ARIMA&lt;/strong&gt;: can be used when the first-difference of a series is stationary but not completely random (its value at period t is autocorrelated with its value at earlier periods)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;the-logarithm-transformation&quot;&gt;The logarithm transformation&lt;/h2&gt;
-&lt;h3 id=&quot;change-in-natural-log--percentage-change&quot;&gt;Change in natural log ≈ percentage change&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Small&lt;/strong&gt; changes in the natural log of a variable are directly interpretable as percentage changes to a very close approximation&lt;/p&gt;
-
-&lt;h3 id=&quot;linearization-of-exponential-growth-and-inflation&quot;&gt;Linearization of exponential growth and inflation&lt;/h3&gt;
-&lt;p&gt;The log transformation converts the exponential growth pattern to a linear growth pattern, and it simultaneously converts the multiplicative (proportional-variance) seasonal pattern to an additive (constant-variance) seasonal pattern&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Logging a series often has an effect very similar to deflating: it straightens out exponential growth patterns and reduces heteroscedasticity (i.e., stabilizes variance). Logging is therefore a “poor man’s deflator” which does not require any external data&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Geometric random walk&lt;/strong&gt;: logging the data before fitting a random walk model -&amp;gt; commonly used for stock price data&lt;/p&gt;
-
-&lt;h3 id=&quot;trend-measured-in-natural-log-units--percentage-growth&quot;&gt;Trend measured in natural-log units ≈ percentage growth&lt;/h3&gt;
-&lt;p&gt;Usually the trend is estimated more precisely by fitting a statistical model that explicitly includes a local or global trend parameter, such as a linear trend or random-walk-with-drift or linear exponential smoothing model.  When a model of this kind is fitted in conjunction with a log transformation, its trend parameter can be interpreted as a percentage growth rate.&lt;/p&gt;
-
-&lt;h3 id=&quot;errors-measured-in-natural-log-units--percentage-errors&quot;&gt;Errors measured in natural-log units ≈ percentage errors&lt;/h3&gt;
-&lt;p&gt;If you look at the error statistics in logged units, you can interpret them as percentages if they are not too large – if the standard deviation is 0.1 or less&lt;/p&gt;
-
-&lt;h3 id=&quot;coefficients-in-log-log-regressions--proportional-percentage-changes&quot;&gt;Coefficients in log-log regressions ≈ proportional percentage changes&lt;/h3&gt;
-&lt;p&gt;In many economic situations (particularly price-demand relationships), the marginal effect of one variable on the expected value of another is linear in terms of percentage changes rather than absolute changes&lt;/p&gt;
-
-&lt;h1 id=&quot;2-introduction-to-forecasting-the-simplest-models&quot;&gt;2. Introduction to forecasting: the simplest models&lt;/h1&gt;
-&lt;h2 id=&quot;review-of-basic-statistics-and-the-simplest-forecasting-model-the-sample-mean&quot;&gt;Review of basic statistics and the simplest forecasting model: the sample mean&lt;/h2&gt;
-&lt;p&gt;Historical sample mean (or constant model, or intercept-only regression): if the series consists of i.i.d. values, the sample mean should be the next value if the goal is to minimize MSE&lt;/p&gt;
-
-&lt;h4 id=&quot;why-squared-error&quot;&gt;Why &lt;em&gt;squared&lt;/em&gt; error?&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;the central value around which the um of squared deviations are minimized is the sample mean&lt;/li&gt;
-  &lt;li&gt;variances are additive when random variables that are statistically independent are added together&lt;/li&gt;
-  &lt;li&gt;large errors often have disproportionately worse consequences than small errors, hence the squared error is more representative of the economic consequences of error&lt;/li&gt;
-  &lt;li&gt;variances and covariances play a key rola in normal distribution theory and regression analysis&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;nonlinear transformations of the data (e.g., log or power transformations) can often be used to turn skewed distributions into symmetric (ideally normal) ones, allowing such data to be well fitted by models that focus on mean values.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h4 id=&quot;fundamental-law-of-forecasting-risk&quot;&gt;Fundamental law of forecasting risk&lt;/h4&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Variance of forecasting risk = 
-variance of intrinsic risk + 
-variance of parameter risk
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Confidence intervals: sort like a probability, but not exactly -&amp;gt; there’s an x% probability that your future data will fall in your x% confidence interval for the forecast&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Confidence interval = 
-forecast ± 
-(critical t-value) × (standard error of forecast)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;95% confidence interval is (roughly) the forecat “plus-or-minus two standard errors”&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A rule of thumb: when adjusted R-squared is fairly small (say, less than 20%), the percentage by which the standard error of the regression model is less than the standard error of the mean model is roughly one-half of adjusted R-squared.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;t-stats, P-values, and R-squared, and other test statistics are numbers you should know how to interpret and use, but they are not the most important numbers in your analysis and they are not the bottom line:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;what new things have you learned from your data?&lt;/li&gt;
-  &lt;li&gt;what assumptions does your model make?&lt;/li&gt;
-  &lt;li&gt;would these assumptions make sense to someone else?&lt;/li&gt;
-  &lt;li&gt;would a simpler model perform almost as well?&lt;/li&gt;
-  &lt;li&gt;how accurate are your model’s predictions?&lt;/li&gt;
-  &lt;li&gt;how accurate it is likely to be to predict the future?&lt;/li&gt;
-  &lt;li&gt;how good are the inferences and decisions?&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;notes-on-the-random-walk-model&quot;&gt;Notes on the random walk model&lt;/h2&gt;
-&lt;p&gt;Model assumes that &lt;em&gt;in each period the variable takes a random step away from its previous value, and the steps are independently and identically distributed in size (“i.i.d.”)&lt;/em&gt;. This is equivalent to saying that the first difference of the variable is a series to which the mean model should be applied.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;if you begin with a series that wanders all over the map, the first difference looks i.i.d. sequence -&amp;gt; random walk model is a potentially good candidate&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;without drift: all future values will equal the last observed value&lt;/li&gt;
-  &lt;li&gt;with drift: the average increase from one period to the next (estimated drift = slope = d)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;Square root of time rule&lt;/strong&gt;: The confidence interval for a k-period-ahead random walk forecast is wider than that of a 1-period-ahead forecast by a factor of square-root-of-k&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Are the daily changes statistically independent as well having a mean of zero? autocorrelation plot -&amp;gt; &lt;strong&gt;random walk without drift&lt;/strong&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;the-geometric-random-walk-model&quot;&gt;The geometric random walk model&lt;/h3&gt;
-&lt;p&gt;The natural logarithm of the variable is assumed to walk a random walk, usually with drift&lt;/p&gt;
-
-&lt;p&gt;Diff-logs are interpretable as (approximate) percentage changes&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;it is very hard to estimate the trend in a random-walk-with-drift model based on the mean growth that was observed in the sample of data unless the sample size is very large&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Fitting a random-walk-with-drift model to the logged series is equivalent to fitting the geometric random walk model to the original series.&lt;/p&gt;
-
-&lt;h3 id=&quot;reasons-for-using-the-random-walk-model&quot;&gt;Reasons for using the random walk model&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;If you see what looks like pure noise (i.i.d. variations) after performing a 1st -difference or diff-log transformation, then your data is telling you that you that it is a random walk. This isn’t very exciting in terms of the point forecasts you should make (“next month will be the same as last month, plus average growth”), but it has very important implications in terms of how much uncertainty there is in forecasting more than one period ahead.&lt;/li&gt;
-  &lt;li&gt;benchmark against which to compare more complicated time series models, particularly regression models&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;mean-constant-model&quot;&gt;Mean (constant) model&lt;/h2&gt;
-&lt;p&gt;Predicting a variable whose values are i.i.d.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Sample mean&lt;/strong&gt;: by definition an unbiased predictor and minimizes the mean squared forecasting error regardless of the probability distribution -&amp;gt; it is the value around which the sum of squared deviations of the sample data is minimized&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Standard error of the mean&lt;/em&gt;: how accurate is the estimate of the sample mean -&amp;gt; equals the sample stdev divided by the sqrt of the sample size&lt;/p&gt;
-
-&lt;p&gt;Central limit theorem -&amp;gt; large samples: 95% confidence interval = mean +- 2*stdev&lt;/p&gt;
-
-&lt;p&gt;&lt;em&gt;Standard error of the forecast&lt;/em&gt;: equal to the sample stdev * sqrt(1+1/n)&lt;/p&gt;
-
-&lt;p&gt;Confidence interval for a forecast is the point forecast plus-or-minus the appropriate critical t-value times the standard error of the forecast&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The critical t-value for a 50% confidence interval is approximately 2/3, so a 50% confidence interval is one-third the width of a 95% confidence interval. The nice thing about a 50% confidence interval is that it is a &lt;strong&gt;“coin flip”&lt;/strong&gt; as to whether the true value will fall inside or outside of it, which is extremely easy to think about&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;If we can find some mathematical transformation (e.g., differencing, logging, deflating, etc.) that converts the original time series into a sequence of values that are i.i.d., we can use the mean model to obtain forecasts and confidence limits for the transformed series, and then reverse the transformation to obtain corresponding forecasts and confidence limits for the original series.&lt;/p&gt;
-
-&lt;h2 id=&quot;linear-trend-model&quot;&gt;Linear trend model&lt;/h2&gt;
-&lt;p&gt;aka trend-line model: special case of a simple regression model in which the independent variable is just a time index variable.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;R-squared = 0.143 -&amp;gt; the variance of the regression model’s errors is 14.3% less than the variance of the mean model’s errors, i.e., the model has “explained” 14.3% of the variance in the series&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;If the model has succeeded in extracting all the “signal” from the data, there should be no pattern at all in the errors: the error in the next period should not be correlated with any previous errors:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;lag-1 autocorrelation&lt;/strong&gt;: should be very close to zero&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Durbin-Watson statistic&lt;/strong&gt;: ought to be very close to 2&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;trend lines have their use as visual aids, but are often poor for forecasting&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;random-walk-model&quot;&gt;Random walk model&lt;/h2&gt;
-&lt;p&gt;Time series with irregular growth -&amp;gt; predict the change from one period to the next (first difference)&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;autocorrelation at lag k&lt;/strong&gt; -&amp;gt; correlation between the variable and itself lagged by k periods&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;random-walk-without-drift&lt;/strong&gt;: assumes that at each point, the series merely takes a random step away from its last recorded position, with steps whose mean value is zero -&amp;gt; values of the autocorrelations are not significantly different than zero (95% confidence interval), no change from one period to the next, because past data provides no information about the direction of future movements&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;random-walk-with-drift&lt;/strong&gt;: mean step size is some nonzero value&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In the random-walk-without-drift model, the standard error of the 1-step ahead forecast is the root-mean-squared-value of the period-to-period changes&lt;/p&gt;
-
-&lt;p&gt;For a random-walk-with-drift, the forecast standard error is the sample standard deviation of the period-to-period changes.&lt;/p&gt;
-
-&lt;p&gt;“Square root of time” rule for the errors of random walk forecasts: the standard error of a k-step-ahead forecast is larger than that of the 1-step-ahead forecast by a factor of square-root-of-k. This explains the sideways-parabola shape of the confidence bands for long-term forecasts.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Random walk may look trivial -&amp;gt; naive model (always predict that tomorrow will be the same as today). The square-root-of-time pattern in its confidence bands for long-term forecasts is of profound importance in finance (it is the basis of the theory of options pricing), and the random walk model often provides a good benchmark against which to judge the performance of more complicated models&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;RWM -&amp;gt; special case of an ARIMA model -&amp;gt; ARIMA(0, 1, 0)&lt;/p&gt;
-
-&lt;h2 id=&quot;geometric-random-walk-model&quot;&gt;Geometric random walk model&lt;/h2&gt;
-&lt;p&gt;Natural logarithm transformation: linearize exponential growth and stabilize variance of changes (“diff-log”)&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;It can be dangerous to estimate the average rate of return to be expected in the future (let alone anticipate short-term changes in direction), by fitting straight lines to finite samples of data!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;strong&gt;Geometric random walk model&lt;/strong&gt;:  Application of the random walk model to the logged series implies that the forecast for the next month’s value of the original series will equal the previous month’s value plus a constant percentage increase.&lt;/p&gt;
-
-&lt;p&gt;In unlogged units, the 95% confidence limits for long-term forecasts are noticeably asymmetric&lt;/p&gt;
-
-&lt;h3 id=&quot;more-general-random-walk-forecasting-models&quot;&gt;More general random walk forecasting models&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;RW model 1: basic geometric random walk -&amp;gt; assumes series in different periods are statistically independent (uncorrelated) and also identically distributed&lt;/li&gt;
-  &lt;li&gt;RW model 2: assumes the series in different periods are statistically independent but not identically distributed&lt;/li&gt;
-  &lt;li&gt;RW model 3: assumes that returns in different periods are uncorrelated but not otherwise independent. The &lt;strong&gt;ARCH&lt;/strong&gt; (autoregressive conditional heteroscedasticity) and &lt;strong&gt;GARCH&lt;/strong&gt; (generalized ARCH) models assume that the local volatility follows an autoregressive process, which is characterized by sudden jumps in volatility with a slow reversion to an average volatility&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;three-types-of-forecasts-estimation-validation-and-the-future&quot;&gt;Three types of forecasts: estimation, validation, and the future&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Out-of-sample validation&lt;/strong&gt;: withhold some of the sample data from the model identification and estimation process, then use the model to make predictions for the hold-out data to see how accurate they are and to determine whether the statistics of their errors are similar to those that the model made within the sample of data that was fitted&lt;/p&gt;
-
-&lt;p&gt;Overfitting (likely when):&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;model with a large number of parameters fitted to a small sample of data&lt;/li&gt;
-  &lt;li&gt;model has been selected from a large set of potential models precisely by minimizing the MSE in the estimation period&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Backtests: one-step-ahead forecasts in the validation period (held out during parameter estimation)&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;If you test a great number of models and choose the model whose errors are smallest in the validation period, you may end up overfitting the data within the validation period as well as in the estimation period&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Holding data out for validation purposes&lt;/strong&gt; is probably the single most important diagnostic test of a model: it gives the best indication of the accuracy that can be expected when forecasting the future&lt;/li&gt;
-  &lt;li&gt;When you’re ready to forecast the future in real time, you should of course use all the available data for estimation, so that the most recent data is used&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Forecasts into the future are “true” forecasts that are made for time periods beyond the end of the available data&lt;/p&gt;
-
-&lt;p&gt;The model with the tightest confidence intervals is not always the best model -&amp;gt; a bad model not always know it is a bad model&lt;/p&gt;
-
-&lt;h1 id=&quot;3-averaging-and-smoothing-models&quot;&gt;3. Averaging and smoothing models&lt;/h1&gt;
-&lt;h2 id=&quot;simple-moving-averages&quot;&gt;Simple moving averages&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;mean model: best predictor of tomorrow is the avg of everything that has happened until now&lt;/li&gt;
-  &lt;li&gt;random walk model: best predictor of tomorrow is what happened today, ignoring previous history&lt;/li&gt;
-  &lt;li&gt;moving average: take an average of what has happened in some window of the recent past&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;moving average model&lt;/strong&gt;: superior to the mean model in adapting to cyclical pattern and superior to the random walk model in not being too sensitive to random shocks from one period to the next&lt;/p&gt;
-
-&lt;p&gt;Simple moving average (SMA):&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Each of the past m observations gets a weight of &lt;code class=&quot;highlighter-rouge&quot;&gt;1/m&lt;/code&gt; in the averaging formula, so as &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; gets larger, each individual observation in the recent past receives less weight. This implies that larger values of &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; will filter out more of the period-to-period noise and yield &lt;em&gt;smoother-looking&lt;/em&gt; series of forecasts&lt;/li&gt;
-  &lt;li&gt;average age of the data in the forecast is &lt;code class=&quot;highlighter-rouge&quot;&gt;(m+1)/2&lt;/code&gt; -&amp;gt; amount by which the forecasts will tend to lag behind in trying to follow trends or respond to turning points&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Value of &lt;code class=&quot;highlighter-rouge&quot;&gt;m&lt;/code&gt; tradeoff: filtering out more noise vs. being too slow to respond to trends and turning points&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;comparing-measures-of-forecast-error-between-models&quot;&gt;Comparing measures of forecast error between models&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;RMSE&lt;/strong&gt;: root mean squared error: (the most common standard of goodness-of-fit, penalizes big errors relatively more than small errors because it squares them first; it is approximately the standard deviation of the errors if the mean error is close to zero)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;MAE&lt;/strong&gt;: mean absolute error (the average of the absolute values of the errors, more tolerant of the occasional big error because errors are not squared)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;MAPE&lt;/strong&gt;: mean absolute percentage error (perhaps better to focus on if the data varies over a wide range due to compound growth or inflation or seasonality, in which case you may be more concerned about measuring errors in percentage terms)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;ME&lt;/strong&gt;: mean error (this indicates whether forecasts are biased high or low—should be close to 0)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;MPE&lt;/strong&gt;: mean percentage error (ditto in percentage terms)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Best measure for size of error = RMSE&lt;/p&gt;
-
-&lt;p&gt;Easier for non-specialists to understand = MAE and MAPE&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;SMA with a trend = SMD + drift&lt;/code&gt; (add a constant to the SMA forecasting equation)&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Tapered Moving Average&lt;/code&gt;: put only half as much weight on the newest and oldest values -&amp;gt; more robust to outliers in the data&lt;/p&gt;
-
-&lt;h2 id=&quot;simple-exponential-smoothing&quot;&gt;Simple exponential smoothing&lt;/h2&gt;
-&lt;p&gt;SMA problems:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;putting equal weight on the last m observations and no weight on any previous observations is usually not the best way to average values that are arriving consecutively in time&lt;/li&gt;
-  &lt;li&gt;would make more sense to gradually decrease the weights placed on the older values&lt;/li&gt;
-  &lt;li&gt;its confidence intervals for long-horizon forecasts do not widen at all&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Simple exponential smoothing (SES) aka Exponentially weighted moving average model&lt;/strong&gt;: addresses these shortcomings of SMA&lt;/p&gt;
-
-&lt;p&gt;most used time series model in business applications:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;good forecast under a wide range of conditions&lt;/li&gt;
-  &lt;li&gt;computationally it is extremely simple&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;the SES model is an interpolation between the mean model and the random walk model with respect to the way it responds to new data. As such it might be expected to do better than either of them in situations where the random walk model over-responds and the mean model under-responds, and indeed it does&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Overall the SES model is superior to the SMA model in responding a bit more quickly to the newest data while treating older data more even-handedly, when the models otherwise yield the same average age&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;all models are based on assumptions about how the world works, and you need to understand what the assumptions are and (ideally) you should believe in the assumptions of your chosen model and be able to explain and defend them.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;linear-exponential-smoothing-les&quot;&gt;Linear Exponential Smoothing (LES)&lt;/h2&gt;
-&lt;p&gt;Generalization of the SES to obtain a model that computes local estimates of both level and trend -&amp;gt; same basic logic, but now you have two smoothing constants, one for the level and one for the trend&lt;/p&gt;
-
-&lt;p&gt;Any smoothing model will lag behind to some extent in responding to unforeseen changes in level or trend&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;many time series that arise in business and economics (as well as engineering and the natural sciences) which are inherently non-seasonal or which have been seasonally adjusted display a pattern of &lt;strong&gt;random variations around a local mean value or a local trend line that changes slowly with time&lt;/strong&gt;. The first difference of such a series is negatively autocorrelated at lag 1: a positive change tends to be followed by a (smaller) negative one. For time series of this type, a smoothing or averaging model is the appropriate forecasting model.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;out-of-sample-validation&quot;&gt;Out-of-sample validation&lt;/h2&gt;
-&lt;p&gt;Aka “backtesting”: holding out some of the data while estimating parameters of alternative models, then freezing those parameter estimates and using them to make predictions for the hold-out data&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;You hope to find the statistics of the errors of the predictions for the hold-out data look very similar to those of the predictions for the sample data&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;If the data exhibits exponential growth due to compounding or inflation, then it will display greater volatility in absolute terms toward the end of the series, even if the volatility is constant in percentage terms. In situations like this you may want to use a nonlinear transformation such as logging or deflating as part of your model&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;it is usually best to look at &lt;strong&gt;MAPE’s&lt;/strong&gt; rather than RMSE’s when asking whether a given model performed about as well in the validation period as in the estimation period.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;moving-average-and-exponential-smoothing-models&quot;&gt;Moving average and exponential smoothing models&lt;/h2&gt;
-&lt;p&gt;Moving beyond mean models, random walk models, and linear trend models, nonseasonal patterns and trends can be extrapolated using a moving-average or smoothing model.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Which type of trend-extrapolation is best: horizontal or linear? Empirical evidence suggests that, if the data have already been adjusted (if necessary) for inflation, then it may be imprudent to extrapolate short-term linear trends very far into the future. Trends evident today may slacken in the future due to varied causes such as product obsolescence, increased competition, and cyclical downturns or upturns in an industry. For this reason, simple exponential smoothing often performs better out-of-sample than might otherwise be expected, despite its “naive” horizontal trend extrapolation.  Damped trend modifications of the linear exponential smoothing model are also often used in practice to introduce a note of conservatism into its trend projections.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;forecasting-with-adjustments-for-inflation-and-seasonality&quot;&gt;Forecasting with adjustments for inflation and seasonality&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Deflation with prices indices&lt;/li&gt;
-  &lt;li&gt;Seasonal decompositon&lt;/li&gt;
-  &lt;li&gt;Time series forecasting models for seasonal data
-    &lt;ul&gt;
-      &lt;li&gt;Averaging and smoothing combined with seasonal adjustment&lt;/li&gt;
-      &lt;li&gt;Winters seasonal exponential smoothing model&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;modeling-the-effect-of-inflation&quot;&gt;Modeling the effect of inflation&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;Why?&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;to measure real growth and estimate its dependence on other real factors&lt;/li&gt;
-  &lt;li&gt;to remove much of the trend and stabilize variance before fitting the model&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;How?&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;to “deflate” a variable, you divide it by an appropriate price index variable&lt;/li&gt;
-  &lt;li&gt;e.g.: general price index, product-specific index&lt;/li&gt;
-  &lt;li&gt;to “re-inflate” forecasts of a deflated series, you multiply the forecasts and confidence limits by a forecast of the price index&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Log vs. deflate&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Deflation should be used when you are interested in knowing the forecast in “real” terms and/or if the inflation rate is expected to change&lt;/li&gt;
-  &lt;li&gt;Logging is sufficient if you just want a forecast in “nominal” terms and inflation is expected to remain constant—inflation just gets lumped with other sources of compound growth in the model.&lt;/li&gt;
-  &lt;li&gt;Logging also ensures that forecasts and confidence limits have positive values, even in the presence of downward trends and/or high volatility.&lt;/li&gt;
-  &lt;li&gt;If inflation has been minimal and/or there is little overall trend or change in volatility, neither may be necessary&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;seasonality&quot;&gt;Seasonality&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;repeating, preiodic pattern in the data that is keyed to the calendar of the clock&lt;/li&gt;
-  &lt;li&gt;!= than “cyclality”, which do not have a predictable periodicity&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Seasonal patterns are complex, because the calendar is not rational: months and years don’t have whole numbers of weeks, a given month does not always have the same number of trading days/weekends, Christmans day can fall on any day of the week, some major holidays are “moveable feasts” that do not occur on the same calendar dates each year&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Quarterly data is easiest to handle: 4 quarters in a year, 3 months in a quarter, trading day adjustments have only minor effects.&lt;/li&gt;
-  &lt;li&gt;Monthly data is more complicated: 12 months in a year, but not 4 weeks in a month; trading day adjustments may be important.&lt;/li&gt;
-  &lt;li&gt;Weekly data requires special handling because a year is not exactly 52 weeks.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;multiplicative-seasonality&quot;&gt;Multiplicative seasonality&lt;/h3&gt;
-&lt;p&gt;Most natural seasonal patterns are multiplicative&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Seasonal variations are roughly constant in percentage terms&lt;/li&gt;
-  &lt;li&gt;Seasonal swings get larger or smaller in absolute magnitude as the average level of the series rises or falls due to long-term trends and/or business cycle effects&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;additive-seasonality&quot;&gt;Additive seasonality&lt;/h3&gt;
-&lt;p&gt;Additive seasonal pattern has constant-amplitude seasonal swings in the presence of trends and cycles.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;A log transformation converts a multiplicative pattern to an additive one, so if your model includes a log transformation, use additive rather than multiplicative seasonal adjustment.&lt;/li&gt;
-  &lt;li&gt;If the historical data sample has little trend and seasonal variations are not large in relative terms, additive and multiplicative adjustment yield very similar results&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;seasonal-index&quot;&gt;Seasonal index&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Represents the expected percentage of “normal” in a given month or quarter&lt;/li&gt;
-  &lt;li&gt;When the seasonal indices are assumed to be stable over time, they can be estimated by the “ratio to moving average” (RMA) method&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;winters-seasonal-smoothing&quot;&gt;Winters’ Seasonal Smoothing&lt;/h3&gt;
-&lt;p&gt;The logic of Holt’s LES model can be extended to recursively estimate time-varying seasonal indices as well as level and trend.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Issues&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Estimation of Winters’ model is tricky&lt;/li&gt;
-  &lt;li&gt;There are three separate smoothing constants to be jointly estimated by nonlinear least squares.&lt;/li&gt;
-  &lt;li&gt;Initialization is also tricky, especially for the seasonal indices.&lt;/li&gt;
-  &lt;li&gt;Confidence intervals sometimes come out extremely wide because the model “lacks confidence in itself.”&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;In practice&lt;/strong&gt;:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;The Winters model is popular in “automatic forecasting” software, because it has a little of everything (level, trend, seasonality).&lt;/li&gt;
-  &lt;li&gt;Often it works very well, but difficulties in initialization &amp;amp; estimation can lead to strange results in some cases.&lt;/li&gt;
-  &lt;li&gt;It responds to recent changes in the seasonal pattern as well as the trend, but with some danger of unstable long-term trend projections.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h1 id=&quot;4-linear-regression-models&quot;&gt;4. Linear regression models&lt;/h1&gt;
-&lt;h2 id=&quot;introduction-to-linear-regression&quot;&gt;Introduction to linear regression&lt;/h2&gt;
-&lt;p&gt;Regression analysis: art and science of fitting straight lines to patterns of data&lt;/p&gt;
-
-&lt;p&gt;Assumptions:&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;The expected value of Y is a linear function of the X variables&lt;/li&gt;
-  &lt;li&gt;The unexplained variations of Y are independent random variables (in particular, not “autocorrelated” if the variables are time series)&lt;/li&gt;
-  &lt;li&gt;The all have the same variance (“homoscedasticity”)&lt;/li&gt;
-  &lt;li&gt;They are normally distributed&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;No model is perfect - these assumptions will never be exactly satisfied by real-world messy data - but you hope that they are not badly wrong. The art of regression modeling is to (most importantly!) collect data that is relevant and informative with respect to your decision or inference problem, and then define your variables and construct your model in such a way that the assumptions listed above are plausible, at least as a first-order approximation to what is really happening&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;correlation-and-regression-to-mediocrity&quot;&gt;Correlation and regression-to-mediocrity&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Regression-to-mediocrity aka regression to the mean&lt;/strong&gt;: Purely statistical phenomenon that can be viewed as a form of selection bias. Every quantitative measurement is a combination of signal and noise. When a value above the mean is observed, it is probable that the value of the signal was above average and the value of the noise was above average. Now suppose there is some other quantity (say, some measurable trait of the offspring—not necessarily the same one) whose value depends only on the signal, not the noise, in the first quantity. Then a measurement of the second quantity should also be expected to be above the mean, but less so in relative terms, because only the above-average signal is passed on; the above-average noise is not. In fact, it is the independent noise in the second quantity that prevents variations from ever dying out over generations.&lt;/p&gt;
-
-&lt;p&gt;The coefficient of correlation between X and Y is the average product of their standardized values&lt;/p&gt;
-
-&lt;p&gt;It is a number that lies somewhere between -1 and +1, where -1 indicates a perfect negative linear relationship, +1 indicates a perfect positive linear relationship, and zero indicates no linear relationship.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A correlation of zero between X and Y does not necessarily mean that there is no relationship, just that there is no linear relationship within the historical sample of data that is being analyzed. e.g., y = xˆ2&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;When we speak of “regressing” one variable on a group of others, we mean the fitting of a linear equation that minimizes the sum of squared errors in predicting that variable from the others.&lt;/p&gt;
-
-&lt;h2 id=&quot;mathematics-of-a-regression-model&quot;&gt;Mathematics of a regression model&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;The coefficients and error measures for a regression model are entirely determined by the following summary statistics: means, standard deviations, and correlations of the variables, and the sample size&lt;/li&gt;
-  &lt;li&gt;The correlation between Y and X is equal to the average product of their standardized values&lt;/li&gt;
-  &lt;li&gt;The slope coefficient in a simple regression of Y on X is the correlation between Y and X multiplied by the ratio of their standard deviations&lt;/li&gt;
-  &lt;li&gt;In a simple regression model, the percentage of variance “explained” by the model, which is called R-squared, is the square of the correlation between Y and X&lt;/li&gt;
-  &lt;li&gt;The sample standard deviation of the errors is a downward-biased estimate of the size of the true unexplained deviations in Y because it does not adjust for the additional “degree of freedom” used up by estimating the slope coefficient&lt;/li&gt;
-  &lt;li&gt;Adjusted R-squared, which is obtained by adjusting R-squared for the degrees if freedom for error in exactly the same way, is an unbiased estimate of the amount of variance explained&lt;/li&gt;
-  &lt;li&gt;For models fitted to the same sample of the same dependent variable, adjusted R-squared always goes up when the standard error of the regression goes down. A model does not always improve when more variables are added: adjusted R-squared can go down (even go negative) if irrelevant variables are added&lt;/li&gt;
-  &lt;li&gt;The standard error of a coefficient estimate is the estimated standard deviation of the error in measuring it. And the estimated height of the regression line for a given value of X has its own standard error, which is called the standard error of the mean at X. All of these standard errors are proportional to the standard error of the regression divided by the square root of the sample size&lt;/li&gt;
-  &lt;li&gt;The standard error of the forecast for Y for a given value of X is the square root of the sum of squares of the standard error of the regression and the standard error of the mean at X&lt;/li&gt;
-  &lt;li&gt;Two-sided confidence limits for coefficient estimates, means, and forecasts are all equal to their point estimates plus-or-minus the appropriate critical t-value times their respective standard errors.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;what-to-look-for-in-regression-model-output&quot;&gt;What to look for in regression model output&lt;/h2&gt;
-
-&lt;h3 id=&quot;standard-error-of-the-regression-root-mean-squared-error-adjusted-for-degrees-of-freedom&quot;&gt;Standard error of the regression (root-mean-squared error adjusted for degrees of freedom)&lt;/h3&gt;
-&lt;p&gt;It is a lower bound on the standard error of any forecast generated from the model&lt;/p&gt;
-
-&lt;p&gt;In time series forecasting, also common to look the mean absolute error (MAE) and, for positive data, the mean absolute percentage error (MAPE)&lt;/p&gt;
-
-&lt;p&gt;Mean absolute scaled error -&amp;gt; measures improvement in mean absolute error relative to a random-walk-without-drift model&lt;/p&gt;
-
-&lt;h3 id=&quot;adjusted-r-squared&quot;&gt;Adjusted R-squared&lt;/h3&gt;
-&lt;p&gt;R-squared (the fraction by which the variance of the errors is less than the variance of the dependent variable) adjusted for the number of coefficients in the model relative to the sample size in order to correct it for bias.&lt;/p&gt;
-
-&lt;p&gt;Adjusted R-squared is the fraction by which the square of the standard error of the regression is less than the variance of the dependent variable&lt;/p&gt;
-
-&lt;p&gt;Unitless statistic, but there is no absolute standard for what is a “good” value&lt;/p&gt;
-
-&lt;h3 id=&quot;significance-of-the-estimated-coefficients&quot;&gt;Significance of the estimated coefficients&lt;/h3&gt;
-&lt;p&gt;Are the t-statistics greater than 2 in magnitude, corresponding to p-values less than 0.05?  If they are not, you should probably try to refit the model with the least significant variable excluded, which is the “backward stepwise” approach to model refinement.&lt;/p&gt;
-
-&lt;h3 id=&quot;values-of-the-estimated-coefficients&quot;&gt;Values of the estimated coefficients&lt;/h3&gt;
-&lt;p&gt;In general you are interested not only in the statistical significance of an independent variable, you are also interested in its practical significance. In theory, the coefficient of a given independent variable is its proportional effect on the average value of the dependent variable, others things being equal -&amp;gt; “bang for the buck”.&lt;/p&gt;
-
-&lt;h3 id=&quot;plots-of-forecasts-and-residuals&quot;&gt;Plots of forecasts and residuals&lt;/h3&gt;
-&lt;p&gt;DO NOT FAIL TO LOOK AT PLOTS OF THE FORECASTS AND ERRORS. Do the forecasts “track” the data in a satisfactory way, apart from the inevitable regression-to-the mean? (In the case of time series data, you are especially concerned with how the model fits the data at the “business end”, i.e., the most recent values.) Do the residuals appear random, or do you see some systematic patterns in their signs or magnitudes?  Are they free from trends, autocorrelation, and heteroscedasticity? Are they normally distributed? There are a variety of statistical tests for these sorts of problems, but the best way to determine whether they are present and whether they are serious is to look at the pictures.&lt;/p&gt;
-
-&lt;h3 id=&quot;out-of-sample-validation-1&quot;&gt;Out-of-sample validation&lt;/h3&gt;
-&lt;p&gt;A good model should have small error measures in both the estimation and validation periods, compared to other models, and its validation period statistics should be similar to its own estimation period statistics. Regression models with many independent variables are especially susceptible to overfitting the data in the estimation period, so watch out for models that have suspiciously low error measures in the estimation period and disappointingly high error measures in the validation period.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Be aware that if you test a large number of models and rigorously rank them on the basis of their validation period statistics, you may end up with just as much “data snooping bias” as if you had only looked at estimation-period statistics–i.e., you may end up picking a model that is more lucky than good! &lt;strong&gt;The best defense against this is to choose the simplest and most intuitively plausible model that gives comparatively good results.&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;whats-the-bottom-line-how-to-compare-models&quot;&gt;What’s the bottom line? How to compare models&lt;/h2&gt;
-&lt;p&gt;After fitting a number of different regression or time series forecasting models to a given data set, you have many criteria by which they can be compared:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Error measures in the estimation period: root mean squared error, mean absolute error, mean absolute percentage error, mean absolute scaled error, mean error, mean percentage error&lt;/li&gt;
-  &lt;li&gt;Error measures in the validation period (if you have done out-of-sample testing): Ditto&lt;/li&gt;
-  &lt;li&gt;Residual diagnostics and goodness-of-fit tests: plots of actual and predicted values; plots of residuals versus time, versus predicted values, and versus other variables; residual autocorrelation plots, cross-correlation plots, and tests for normally distributed errors; measures of extreme or influential observations; tests for excessive runs, changes in mean, or changes in variance (lots of things that can be “OK” or “not OK”)&lt;/li&gt;
-  &lt;li&gt;Qualitative considerations: intuitive reasonableness of the model, simplicity of the model, and above all, usefulness for decision making!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;The bottom line is that you should put the most weight on the error measures in the estimation period–most often the RMSE, but sometimes MAE or MAPE–when comparing among models.&lt;/p&gt;
-
-&lt;p&gt;The MASE statistic provides a very useful reality check for a model fitted to time series data: is it any better than a naive model?&lt;/p&gt;
-
-&lt;p&gt;You may also want to look at Cp, AIC or BIC, which more heavily penalize model complexity. But you should keep an eye on the residual diagnostic tests, cross-validation tests (if available), and qualitative considerations such as the intuitive reasonableness and simplicity of your model.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;K.I.S.S. (keep it simple…)&lt;/strong&gt;: If two models are generally similar in terms of their error statistics and other diagnostics, you should prefer the one that is simpler and/or easier to understand.&lt;/p&gt;
-
-&lt;h1 id=&quot;5-arima-models-for-time-series-forecasting&quot;&gt;5. ARIMA models for time series forecasting&lt;/h1&gt;
-
-&lt;p&gt;&lt;strong&gt;A&lt;/strong&gt;uto-&lt;strong&gt;R&lt;/strong&gt;egressive &lt;strong&gt;I&lt;/strong&gt;ntegrated &lt;strong&gt;M&lt;/strong&gt;oving &lt;strong&gt;A&lt;/strong&gt;verage&lt;/p&gt;
-
-&lt;h2 id=&quot;what-arima-stands-for&quot;&gt;What ARIMA stands for&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Series which needs to be differenced to be made stationary = an “integrated” (&lt;strong&gt;I&lt;/strong&gt;) series&lt;/li&gt;
-  &lt;li&gt;Lags of the stationarized series are called “auto-regressive” (&lt;strong&gt;AR&lt;/strong&gt;) terms&lt;/li&gt;
-  &lt;li&gt;Lags of the forecast errors are called “moving average” (&lt;strong&gt;MA&lt;/strong&gt;) terms&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;arima-models-put-it-all-together&quot;&gt;ARIMA models put it all together&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Generalized random walk models fine-tuned to eliminate all residual autocorrelation&lt;/li&gt;
-  &lt;li&gt;Generalized exponential smoothing models that can incorporate long-term trends and seasonality&lt;/li&gt;
-  &lt;li&gt;Stationarized regression models that use lags of the dependent variables and/or lags of the forecast errors as regressors&lt;/li&gt;
-  &lt;li&gt;The most general class of forecasting models for time series that can be stationarized* by transformations such as differencing, logging, and or deflating&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;construction-of-an-arima-model&quot;&gt;Construction of an ARIMA model&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;Stationarize the series, if necessary, by differencing (&amp;amp; perhaps also logging, deflating, etc.)&lt;/li&gt;
-  &lt;li&gt;Study the pattern of autocorrelations and partial autocorrelations to determine if lags of the stationarized series and/or lags of the forecast errors should be included in the forecasting equation&lt;/li&gt;
-  &lt;li&gt;Fit the model that is suggested and check its residual diagnostics, particularly the residual ACF and PACF plots, to see if all coefficients are significant and all of the pattern has been explained.&lt;/li&gt;
-  &lt;li&gt;Patterns that remain in the ACF and PACF may suggest the need for additional AR or MA terms&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;arima-terminology&quot;&gt;ARIMA terminology&lt;/h2&gt;
-&lt;p&gt;ARIMA(p,d,q) -&amp;gt; non-seasonal ARIMA:&lt;/p&gt;
-
-&lt;p&gt;p = number of autoregressive terms&lt;/p&gt;
-
-&lt;p&gt;q = number of non-seasonal differences&lt;/p&gt;
-
-&lt;p&gt;d = number of moving-average terms&lt;/p&gt;
-
-&lt;h2 id=&quot;do-you-need-both-ar-and-ma-terms&quot;&gt;Do you need both AR and MA terms?&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;in general, you don’t&lt;/li&gt;
-  &lt;li&gt;If the stationarized series has positive autocorrelation at lag 1, AR terms often work best. If it has negative autocorrelation at lag 1, MA terms often work best.&lt;/li&gt;
-  &lt;li&gt;An MA(1) term often works well to fine-tune the effect of a nonseasonal difference, while an AR(1) term often works well to compensate for the lack of a nonseasonal difference, so the choice between them may depend on whether a difference has been used.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;interpretation-of-ar-terms&quot;&gt;Interpretation of AR terms&lt;/h2&gt;
-&lt;p&gt;Autoregressive (AR) behavior: apparently feels a “restoring force” that tends to pull it back toward its mean&lt;/p&gt;
-
-&lt;h2 id=&quot;interpretation-of-ma-terms&quot;&gt;Interpretation of MA terms&lt;/h2&gt;
-&lt;p&gt;Moving average (MA) behavior: apparently undergoes random “shocks” whose effects are felt in two or more consecutive periods&lt;/p&gt;
-
-&lt;h2 id=&quot;tools-for-identifying-arima-models-acf-and-pacf-plots&quot;&gt;Tools for identifying ARIMA models: ACF and PACF plots&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;Autocorrelation function (ACF) plot: shows the correlation of the series with itself at different lags&lt;/li&gt;
-  &lt;li&gt;Partial autocorrelation function (PACF) plot: shows the amount of autocorrelation at lag &lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt; that is not explained by lower-order autocorrelations&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;ar-and-ma-signatures&quot;&gt;AR and MA “signatures”&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;ACF that dies out gradually and PACF that cuts off sharply after a few lags -&amp;gt; &lt;strong&gt;AR signature&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;AR series is usually &lt;em&gt;positive autocorrelated at lag 1&lt;/em&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;ACF that cuts off sharply after a few lags and PACF that dies out more gradually -&amp;gt; &lt;strong&gt;MA signature&lt;/strong&gt;
-    &lt;ul&gt;
-      &lt;li&gt;MA series is usually &lt;em&gt;negatively autocorrelated at lag 1&lt;/em&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Whether a series displays AR or MA behavior often depends on the extent to which it has been differenced. “Underdifferenced” series -&amp;gt; AR signature (positive autocorrelation). After one or more orders of differencing, the autocorrelation will become more negative and an MA signature will emerge&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;model-fitting-steps&quot;&gt;Model-fitting steps&lt;/h2&gt;
-&lt;ol&gt;
-  &lt;li&gt;Determine the order of differencing&lt;/li&gt;
-  &lt;li&gt;Determine the numbers of AR &amp;amp; MA terms&lt;/li&gt;
-  &lt;li&gt;Fit the model—check to see if residuals are “white noise,” highest-order coefficients are significant (w/ no “unit “roots”), and forecasts look reasonable. If not, return to step 1 or 2.&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;technical-issues&quot;&gt;Technical issues&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Backforecasting&lt;/strong&gt;: Estimation algorithm begins by forecasting backward into the past to get start-up values&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Unit roots&lt;/strong&gt;: Look at sum of AR coefficients and sum of MA coefficients—if they are too close to 1 you may want to consider higher or lower of differencing&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Overdifferencing&lt;/strong&gt;: A series that has been differenced one too many times will show very strong negative autocorrelation and a strong MA signature, probably with a unit root in MA coefficients&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;seasonal-arima-models&quot;&gt;Seasonal ARIMA models&lt;/h2&gt;
-&lt;p&gt;Rely on seasonal lags and differences to fit the seasonal pattern. Generalizes the regression approach.&lt;/p&gt;
-
-&lt;h3 id=&quot;terminology&quot;&gt;Terminology&lt;/h3&gt;
-&lt;p&gt;Seasonal part of an ARIMA model is summarized by three additional numbers:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;P = # of seasonal autoregressive terms&lt;/li&gt;
-  &lt;li&gt;D = # of seasonal differences&lt;/li&gt;
-  &lt;li&gt;Q = # of seasonal moving average terms&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;“ARIMA(p,d,q)x(P,D,Q)” model&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;P, D and Q should never be larger than 1&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;model-fitting-steps-1&quot;&gt;Model fitting steps&lt;/h3&gt;
-&lt;ul&gt;
-  &lt;li&gt;Start by trying various combinations of one seasonal difference and/or one non-seasonal difference to stationarize the series and remove gross features of seasonal pattern.&lt;/li&gt;
-  &lt;li&gt;If the seasonal pattern is strong and stable, you MUST use a seasonal difference (otherwise it will “die out” in long-term forecasts)&lt;/li&gt;
-  &lt;li&gt;After differencing, inspect the ACF and PACF at
-multiples of the seasonal period (s):
-    &lt;ul&gt;
-      &lt;li&gt;Positive spikes in ACF at lag s, 2s, 3s…, single positive spike in PACF at lag s -&amp;gt; SAR=1&lt;/li&gt;
-      &lt;li&gt;Negative spike in ACF at lag s, negative spikes in PACF at lags s, 2s, 3s,… -&amp;gt; SMA=1&lt;/li&gt;
-      &lt;li&gt;SMA=1 often works well in conjunction with a seasonal difference.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Same principles as for non-seasonal models, except focused on what happens at multiples of lag &lt;code class=&quot;highlighter-rouge&quot;&gt;s&lt;/code&gt; in ACF and PACF.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;bottom-line-suggestion&quot;&gt;Bottom-line suggestion&lt;/h2&gt;
-&lt;p&gt;Strong seasonal pattern, try:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;ARIMA(0,1,q)x(0,1,1) model (q=1 or 2)&lt;/li&gt;
-  &lt;li&gt;ARIMA(p,0,0)x(0,1,1)+c model (p=1, 2 or 3)&lt;/li&gt;
-  &lt;li&gt;If there is a significant trend and/or the seasonal pattern is multiplicative, you should also try a natural log transformation.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;take-aways&quot;&gt;Take-aways&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Advantages&lt;/strong&gt;: solid underlying theory, stable estimation of time-varying trends and seasonal patterns, relatively few parameters.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Drawbacks&lt;/strong&gt;: no explicit seasonal indices, hard to interpret coefficients or explain “how the model works”, danger of overfitting or mis-identification if not used with care.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;seasonal-differencing-in-arima-models&quot;&gt;Seasonal differencing in ARIMA models&lt;/h2&gt;
-&lt;p&gt;&lt;strong&gt;Seasonal difference&lt;/strong&gt;: series of changes from one season to the next. i.e. 12 periods in a season -&amp;gt; seasonal difference = &lt;code class=&quot;highlighter-rouge&quot;&gt;Y(t)-Y(t-12)&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Usually removes the gross features of seasonality from a series, as well as most of the trend.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;First difference of the seasonal difference&lt;/strong&gt; = &lt;code class=&quot;highlighter-rouge&quot;&gt;(Y(t)-Y(t-12))-(Y(t-1)-Y(t-13))&lt;/code&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;summary-of-rules-for-identifying-arima-models&quot;&gt;Summary of rules for identifying ARIMA models&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;https://people.duke.edu/~rnau/arimrule.htm&quot;&gt;Direct Source for the text below&lt;/a&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;identifying-the-order-of-differencing-and-the-constant&quot;&gt;Identifying the order of differencing and the constant:&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 1&lt;/strong&gt;: If the series has positive autocorrelations out to a high number of lags (say, 10 or more), then it probably needs a higher order of differencing.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 2&lt;/strong&gt;: If the lag-1 autocorrelation is zero or negative, or the autocorrelations are all small and patternless, then the series does not need a higher order of differencing. If the lag-1 autocorrelation is -0.5 or more negative, the series may be overdifferenced. &lt;strong&gt;BEWARE OF OVERDIFFERENCING&lt;/strong&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 3&lt;/strong&gt;: The optimal order of differencing is often the order of differencing at which the standard deviation is lowest. (Not always, though. Slightly too much or slightly too little differencing can also be corrected with AR or MA terms. See rules 6 and 7.)&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 4&lt;/strong&gt;: A model with no orders of differencing assumes that the original series is stationary (among other things, mean-reverting). A model with one order of differencing assumes that the original series has a constant average trend (e.g. a random walk or SES-type model, with or without growth). A model with two orders of total differencing assumes that the original series has a time-varying trend (e.g. a random trend or LES-type model).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 5&lt;/strong&gt;: A model with no orders of differencing normally includes a constant term (which allows for a non-zero mean value). A model with two orders of total differencing normally does not include a constant term. In a model with one order of total differencing, a constant term should be included if the series has a non-zero average trend.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;identifying-the-numbers-of-ar-and-ma-terms&quot;&gt;Identifying the numbers of AR and MA terms:&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 6&lt;/strong&gt;: If the partial autocorrelation function (PACF) of the differenced series displays a sharp cutoff and/or the lag-1 autocorrelation is positive–i.e., if the series appears slightly “underdifferenced”–then consider adding one or more AR terms to the model. The lag beyond which the PACF cuts off is the indicated number of AR terms.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 7&lt;/strong&gt;: If the autocorrelation function (ACF) of the differenced series displays a sharp cutoff and/or the lag-1 autocorrelation is negative–i.e., if the series appears slightly “overdifferenced”–then consider adding an MA term to the model. The lag beyond which the ACF cuts off is the indicated number of MA terms.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 8&lt;/strong&gt;: It is possible for an AR term and an MA term to cancel each other’s effects, so if a mixed AR-MA model seems to fit the data, also try a model with one fewer AR term and one fewer MA term–particularly if the parameter estimates in the original model require more than 10 iterations to converge. &lt;strong&gt;BEWARE OF USING MULTIPLE AR TERMS AND MULTIPLE MA TERMS IN THE SAME MODEL&lt;/strong&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 9&lt;/strong&gt;: If there is a unit root in the AR part of the model–i.e., if the sum of the AR coefficients is almost exactly 1–you should reduce the number of AR terms by one and increase the order of differencing by one.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 10&lt;/strong&gt;: If there is a unit root in the MA part of the model–i.e., if the sum of the MA coefficients is almost exactly 1–you should reduce the number of MA terms by one and reduce the order of differencing by one.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 11&lt;/strong&gt;: If the long-term forecasts* appear erratic or unstable, there may be a unit root in the AR or MA coefficients.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;identifying-the-seasonal-part-of-the-model&quot;&gt;Identifying the seasonal part of the model:&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 12&lt;/strong&gt;: If the series has a strong and consistent seasonal pattern, then you must use an order of seasonal differencing (otherwise the model assumes that the seasonal pattern will fade away over time). However, never use more than one order of seasonal differencing or more than 2 orders of total differencing (seasonal+nonseasonal).&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Rule 13&lt;/strong&gt;: If the autocorrelation of the appropriately differenced series is positive at lag s, where s is the number of periods in a season, then consider adding an SAR term to the model. If the autocorrelation of the differenced series is negative at lag s, consider adding an SMA term to the model. The latter situation is likely to occur if a seasonal difference has been used, which should be done if the data has a stable and logical seasonal pattern. The former is likely to occur if a seasonal difference has not been used, which would only be appropriate if the seasonal pattern is not stable over time. You should try to avoid using more than one or two seasonal parameters (SAR+SMA) in the same model, as this is likely to lead to overfitting of the data and/or problems in estimation.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;A caveat about long-term forecasting in general&lt;/strong&gt;: linear time series models such as ARIMA and exponential smoothing models predict the more distant future by making a series of one-period-ahead forecasts and plugging them in for unknown future values as they look farther ahead. However, the models are identified and optimized based on their one-period-ahead forecasting performance, and rigid extrapolation of them may not be the best way to forecast many periods ahead (say, more than one year when working with monthly or quarterly business data), particularly when the modeling assumptions are at best only approximately satisfied (which is nearly always the case). If one of your objectives is to generate long-term forecasts, it would be good to also draw on other sources of information during the model selection process and/or to optimize the parameter estimates for multi-period forecasting if your software allows it and/or use an auxiliary model (possibly one that incorporates expert opinion) for long-term forecasting.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h1 id=&quot;6-choosing-the-right-forecasting-model&quot;&gt;6. Choosing the right forecasting model&lt;/h1&gt;
-&lt;h2 id=&quot;steps-in-choosing-a-forecasting-model&quot;&gt;Steps in choosing a forecasting model&lt;/h2&gt;
-&lt;h3 id=&quot;deflation&quot;&gt;Deflation?&lt;/h3&gt;
-&lt;p&gt;If the series show inflationary growth. Help to account for the growth pattern and reduce heteroscedasticity in the residuals.&lt;/p&gt;
-&lt;h3 id=&quot;logarithm-transformation&quot;&gt;Logarithm transformation?&lt;/h3&gt;
-&lt;p&gt;If the series shows compound growth and/or a multiplicative seasonal pattern, a logarithm transformation may be helpful in addition to or lieu of deflation. Logging the data will not flatten an inflationary growth pattern, but it will straighten it out it so that it can be fitted by a linear model (e.g., a random walk or ARIMA model with constant growth, or a linear exponential smoothing model).&lt;/p&gt;
-
-&lt;p&gt;Convert multiplicative seasonal patterns to additive patterns, so that if you perform seasonal adjustment after logging, you should use the additive type.&lt;/p&gt;
-
-&lt;p&gt;Another important use for the log transformation is linearizing relationships among variables in a regression model&lt;/p&gt;
-
-&lt;h3 id=&quot;seasonal-adjustment-1&quot;&gt;Seasonal adjustment?&lt;/h3&gt;
-&lt;p&gt;If the series has a strong seasonal pattern which is believed to be constant from year to year, seasonal adjustment may be an appropriate way to estimate and extrapolate the pattern.&lt;/p&gt;
-
-&lt;p&gt;The advantage of seasonal adjustment is that it models the seasonal pattern explicitly, giving you the option of studying the seasonal indices and the seasonally adjusted data.&lt;/p&gt;
-
-&lt;p&gt;The disadvantage is that it requires the estimation of a large number of additional parameters (particularly for monthly data), and it provides no theoretical rationale for the calculation of “correct” confidence intervals&lt;/p&gt;
-
-&lt;h3 id=&quot;independent-variables&quot;&gt;Independent variables?&lt;/h3&gt;
-&lt;p&gt;If there are other time series which you believe to have explanatory power with respect to your series of interest (e.g., leading economic indicators or policy variables such as price, advertising, promotions, etc.)&lt;/p&gt;
-
-&lt;h3 id=&quot;smoothing-averaging-or-random-walk&quot;&gt;Smoothing, averaging, or random walk?&lt;/h3&gt;
-&lt;p&gt;If you have chosen to seasonally adjust the data–or if the data are not seasonal to begin with–then you may wish to use an &lt;strong&gt;averaging or smoothing model&lt;/strong&gt; to fit the nonseasonal pattern which remains in the data at this point&lt;/p&gt;
-
-&lt;p&gt;If smoothing or averaging does not seem to be helpful–i.e., if the best predictor of the next value of the time series is simply its previous value–then a &lt;strong&gt;random walk model&lt;/strong&gt; is indicated.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Brown’s linear exponential smoothing&lt;/strong&gt; can be used to fit a series with slowly time-varying linear trends, but be cautious about extrapolating such trends very far into the future.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Holt’s linear smoothing&lt;/strong&gt; also estimates time-varying trends, but uses separate parameters for smoothing the level and trend, which usually provides a better fit to the data than Brown’s model.&lt;/p&gt;
-
-&lt;h3 id=&quot;winters-seasonal-exponential-smoothing&quot;&gt;Winters Seasonal Exponential Smoothing?&lt;/h3&gt;
-&lt;p&gt;Extension of exponential smoothing that simultaneously estimates time-varying level, trend, and seasonal factors using recursive equations. (Thus, if you use this model, you would not first seasonally adjust the data.)&lt;/p&gt;
-
-&lt;p&gt;The Winters seasonal factors can be either multiplicative or additive: normally you should choose the multiplicative option unless you have logged the data. Although the Winters model is clever and reasonably intuitive, it can be tricky to apply in practice: it has three smoothing parameters–alpha, beta, and gamma–for separately smoothing the level, trend, and seasonal factors, which must be estimated simultaneously.&lt;/p&gt;
-
-&lt;h3 id=&quot;arima&quot;&gt;ARIMA?&lt;/h3&gt;
-&lt;p&gt;If you do not choose seasonal adjustment (or if the data are non-seasonal), you may wish to use the ARIMA model framework.&lt;/p&gt;
-
-&lt;p&gt;ARIMA models are a very general class of models that includes random walk, random trend, exponential smoothing, and autoregressive models as special cases.&lt;/p&gt;
-
-&lt;p&gt;The conventional wisdom is that a series is a good candidate for an ARIMA model if:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;(i) it can be stationarized by a combination of differencing and other mathematical transformations such as logging, and&lt;/li&gt;
-  &lt;li&gt;(ii) you have a substantial amount of data to work with: at least 4 full seasons in the case of seasonal data. (If the series cannot be adequately stationarized by differencing–e.g., if it is very irregular or seems to be qualitatively changing its behavior over time–or if you have fewer than 4 seasons of data, then you might be better off with a model that uses seasonal adjustment and some kind of simple averaging or smoothing.)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;steps&quot;&gt;Steps&lt;/h4&gt;
-&lt;ol&gt;
-  &lt;li&gt;Determine the appropriate order of differencing needed to stationarize the series and remove the gross features of seasonality&lt;/li&gt;
-  &lt;li&gt;Determine whether to include a constant term in the model: usually you do include a constant term if the total order of differencing is 1 or less, otherwise you don’t&lt;/li&gt;
-  &lt;li&gt;Choose the numbers of autoregressive and moving average parameters (p, d, q, P, D, Q) that are needed to eliminate any autocorrelation that remains in the residuals of the naive model (i.e., any correlation that remains after mere differencing).&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;It is usually better to proceed in a forward stepwise rather than backward stepwise fashion when tweaking the model specifications: start with simpler models and only add more terms if there is a clear need.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;forecasting-flow-chart&quot;&gt;Forecasting Flow Chart&lt;/h2&gt;
-&lt;p&gt;Source: &lt;a href=&quot;https://people.duke.edu/~rnau/411flow.gif&quot;&gt;https://people.duke.edu/~rnau/411flow.gif&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://people.duke.edu/~rnau/411flow.gif&quot; title=&quot;flow_chart&quot; width=&quot;800&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;automatic-forecasting-software&quot;&gt;Automatic Forecasting Software&lt;/h2&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;WARNING&lt;/strong&gt;: Properly used, and guided by experience with “manual” model-fitting, the best of such software can put more data-analysis power at your fingertips and speed up routine forecasting applications. Carelessly used, it merely allows you to foul things up in a bigger way, obtaining results without insight while getting a false sense of security that “the computer knows best.” &lt;strong&gt;Automatic forecasting software is a complement to, not a substitute for, your own forecasting expertise.&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;how-to-avoid-trouble-principles-of-good-data-analysis&quot;&gt;How to avoid trouble: principles of good data analysis&lt;/h2&gt;
-&lt;p&gt;Source: &lt;a href=&quot;https://people.duke.edu/~rnau/notroubl.htm&quot;&gt;https://people.duke.edu/~rnau/notroubl.htm&lt;/a&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Do some background research before running any numbers.  Be sure you understand the objective, the theory, the jargon, and the conventional wisdom. Ask others what they know about the problem. Do more of the same web-searching that brought you to this site, and be critical of everything you find.&lt;/li&gt;
-  &lt;li&gt;Be thorough in your search for data.  In the end, your forecasts will contain no information that is not hidden in it somewhere.  In some cases (say, designed experiments) the data may be limited in scope and already in hand, but in many cases it will be up to you to identify and collect it, and this may the most important and time-consuming part of the project.  We now live in the era of “megadata”, but often the data that you need is not so easy to find.&lt;/li&gt;
-  &lt;li&gt;Check the data carefully once you have it:  make sure you know where the numbers came from, what they mean, how they were measured, how they are aligned in time, and whether they are accurate. A lot of cleaning and merging of data may be needed before any analysis can begin, and you should know how to do it. You may find that you need yet-more-data or better-quality data to answer the key questions, and sometimes the most useful lesson is that the organization will need to do a better job of managing its data in the future.&lt;/li&gt;
-  &lt;li&gt;Use descriptive, self-explanatory names for your variables (not Y’s and X’s or cryptological character strings) so that their meaning and units are clear and so that your computer output is self-documenting to the greatest extent possible.&lt;/li&gt;
-  &lt;li&gt;Once you begin your analysis, follow good modeling practices:  perform exploratory data analysis, use appropriate model types, interpret their estimated parameters, check their residual diagnostics, question their assumptions, and validate them with out-of-sample testing where possible.&lt;/li&gt;
-  &lt;li&gt;Make effective use of statistical graphics in your own analysis and in your presentation of your results to others, and follow rules of good graphics.  Among other things: graphs should be self-explanatory and not contain visual puzzles, they should have titles that are specific to the variables and models, axes should be well-scaled and well-labeled, the data area should have a white background, grid lines (if any are needed) should not be too dark, point and line widths should be sized appropriately for the density of the data, self-promoting artwork (3-D perspective, etc.) should be avoided, and above all, the data should tell its own story.&lt;/li&gt;
-  &lt;li&gt;Keep in mind that not all relationships are linear and additive, not all randomness is normally distributed, and regression models are not magic boxes that can predict anything from anything.  Be aware that it may be necessary to transform some of your variables (through deflating, logging, differencing, etc.) in order to match their patterns up with each other in the way that linear models require.&lt;/li&gt;
-  &lt;li&gt;When comparing models, focus on the right objectives, which are usually making the smallest possible errors in the future and deriving inferences that are genuinely useful for decision making.  A good fit to past data does not always guarantee an equally good prediction of what will happen next, and statistical significance is not always the same as practical significance.&lt;/li&gt;
-  &lt;li&gt;Other things being equal, KEEP IT SIMPLE and intuitively reasonable. If others don’t understand the model, they may not use it, and perhaps they shouldn’t: simple models often outperform complicated models in practice.&lt;/li&gt;
-  &lt;li&gt;If you use automatic forecasting software, you are still responsible for the model that is chosen, and you should be able to explain its logic to others.  The availability of such software does not make it unnecessary to know how the models work.  Rather, it makes that knowledge even more important. Be aware that in automatic rankings of models, there may be only tiny differences in error stats between the winner and its near competitors, and you may need to take other factors into account in your final selection, such as simplicity, clarity, and intuition. And again, your software cannot make something out of nothing. If your data is not informative or not properly organized to begin with, automatic methods will not turn it into gold.&lt;/li&gt;
-  &lt;li&gt;Leave a paper trail, i.e., keep well-annotated records of your model-fitting efforts.  Don’t just save your computer files:  write up notes as you go along.  Someone else (who may be a sharp-penciled auditor or perhaps only yourself 12 months hence) may need to reconstruct what you did and why you did it. Intelligent naming of variables and labeling of tables and charts will make this easier.&lt;/li&gt;
-  &lt;li&gt;Neither overstate nor understate the accuracy of your forecast, and do not merely give a point value. Always report standard errors and/or confidence intervals.&lt;/li&gt;
-  &lt;li&gt;If different forecasting approaches lead to different results, focus on differences in their underlying assumptions, their sources of data, their intrinsic biases, and their respective margins for error.  Don’t just argue over the outputs.  Look for opportunities to combine independent viewpoints and information.&lt;/li&gt;
-  &lt;li&gt;After all has been said, if you believe your model is more useful and better supported than the alternatives, stand up for it.  The future may still be very uncertain, but decisions ought to be based on the best understanding of that uncertainty. If you don’t have confidence in your model (or anyone else’s), admit it, and keep digging.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">My notes and highlights on the book.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/statistical_forecasting/statistical_forecasting.gif" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
