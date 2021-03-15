@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-14T16:26:22-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/food-photographer-jennifer-pallian-OfdDiqx8Cz8-unsplash.jpg&quot; alt=&quot;cookie_photo&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-15T07:32:03-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/food-photographer-jennifer-pallian-OfdDiqx8Cz8-unsplash.jpg&quot; alt=&quot;cookie_photo&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Photo by &lt;a href=&quot;https://unsplash.com/@foodess?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Food Photographer | Jennifer Pallian&lt;/a&gt; on &lt;a href=&quot;/s/photos/cookie?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
 
@@ -20,9 +20,9 @@
 
 &lt;p&gt;Some alternatives are being proposed to replace the need for third-party cookies, ensuring users’ privacy, but without loss of performance for advertisers.&lt;/p&gt;
 
-&lt;p&gt;In this post you will learn a little more about &lt;strong&gt;FLoC&lt;/strong&gt;, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.&lt;/p&gt;
+&lt;p&gt;In this post you will learn a little more about &lt;strong&gt;Federated Learning of Cohorts (FLoC)&lt;/strong&gt;, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.&lt;/p&gt;
 
-&lt;h1 id=&quot;floc&quot;&gt;FLoC&lt;/h1&gt;
+&lt;h1 id=&quot;federated-learning-of-cohorts-floc&quot;&gt;Federated Learning of Cohorts (FLoC)&lt;/h1&gt;
 
 &lt;h2 id=&quot;goal&quot;&gt;Goal&lt;/h2&gt;
 &lt;blockquote&gt;
@@ -105,7 +105,7 @@
 
 &lt;h2 id=&quot;simhash&quot;&gt;SimHash&lt;/h2&gt;
 
-&lt;p&gt;Having computed each users’ mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions)&lt;/p&gt;
+&lt;p&gt;Having computed each users’ mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions).&lt;/p&gt;
 
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;simhash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;v&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -119,13 +119,18 @@
   &lt;li&gt;SimHash is computationally inexpensive by design, not caring too much about hash collisions&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;defining-a-limited-number-of-clusters-for-demonstration-purposes&quot;&gt;Defining a limited number of clusters for demonstration purposes&lt;/h2&gt;
+&lt;h2 id=&quot;defining-a-limited-number-of-cohorts-for-demonstration-purposes&quot;&gt;Defining a limited number of cohorts for demonstration purposes&lt;/h2&gt;
+
+&lt;p&gt;Ideally, a cohort groups together a large number of users interested in similar things so that we can correctly target advertising that interests that group of people.&lt;/p&gt;
+
+&lt;p&gt;Next, we will limit the number of cohorts arbitrarily to five so that we can visually identify common preferences. In a real scenario, we would have another type of “hash grouping” to meet privacy and performance requirements.&lt;/p&gt;
+
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;cluster&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cut&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bins&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;1&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;3&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;4&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;5&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;transformed_df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'hash'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;groupby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'cluster'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;span class=&quot;n&quot;&gt;weighted_results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mean&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h2 id=&quot;visualizing-the-clusters&quot;&gt;Visualizing the clusters&lt;/h2&gt;
+&lt;h2 id=&quot;visualizing-the-cohorts&quot;&gt;Visualizing the cohorts&lt;/h2&gt;
 &lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;plot_cluster_wordcloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;cluster_text&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;weighted_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;loc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;weighted_results&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;orient&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'records'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
     &lt;span class=&quot;n&quot;&gt;wordcloud&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;WordCloud&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;800&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;450&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;background_color&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;white&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;generate_from_frequencies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cluster_text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
@@ -134,7 +139,7 @@
     &lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;off&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;h3 id=&quot;cluster-1&quot;&gt;Cluster 1&lt;/h3&gt;
+&lt;h3 id=&quot;cohort-1&quot;&gt;Cohort 1&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Action, Adventure, Western, IMAX&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -144,7 +149,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_1.png&quot; alt=&quot;cluster_1&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;cluster-2&quot;&gt;Cluster 2&lt;/h3&gt;
+&lt;h3 id=&quot;cohort-2&quot;&gt;Cohort 2&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Drama, Romance&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -154,7 +159,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_2.png&quot; alt=&quot;cluster_2&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;cluster-3&quot;&gt;Cluster 3&lt;/h3&gt;
+&lt;h3 id=&quot;cohort-3&quot;&gt;Cohort 3&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Crime, Documentary, Mistery, Film-Noir&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -164,7 +169,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_3.png&quot; alt=&quot;cluster_3&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;cluster-4&quot;&gt;Cluster 4&lt;/h3&gt;
+&lt;h3 id=&quot;cohort-4&quot;&gt;Cohort 4&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Horror, Sci-Fi, Thriller&lt;/p&gt;
 &lt;/blockquote&gt;
@@ -174,7 +179,7 @@
 
 &lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/cluster_4.png&quot; alt=&quot;cluster_4&quot; /&gt;&lt;/p&gt;
 
-&lt;h3 id=&quot;cluster-5&quot;&gt;Cluster 5&lt;/h3&gt;
+&lt;h3 id=&quot;cohort-5&quot;&gt;Cohort 5&lt;/h3&gt;
 &lt;blockquote&gt;
   &lt;p&gt;Animation, Children, Comedy, Fantasy, Musical&lt;/p&gt;
 &lt;/blockquote&gt;
