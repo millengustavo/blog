@@ -26,9 +26,9 @@ To bring users more transparency and better consent management, most browsers ar
 
 Some alternatives are being proposed to replace the need for third-party cookies, ensuring users' privacy, but without loss of performance for advertisers.
 
-In this post you will learn a little more about **FLoC**, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.
+In this post you will learn a little more about **Federated Learning of Cohorts (FLoC)**, an alternative proposed by Google, and we will navigate through a simplified demonstration of the algorithm using a public dataset.
 
-# FLoC
+# Federated Learning of Cohorts (FLoC)
 
 ## Goal
 > **"Preserve interest based advertising, but in a privacy-preserving manner"**
@@ -104,7 +104,7 @@ transformed_df = transformed_df.groupby(by="userId").mean()
 
 ## SimHash
 
-Having computed each users' mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions)
+Having computed each users' mean genre vector preferences, we can compute the SimHash on this vector, so each user interest will be represented by some hash of all of his preferences combined (with collisions).
 
 ```python
 def simhash(v):
@@ -117,14 +117,19 @@ transformed_df['hash'] = transformed_df.apply(simhash, axis=1)
 - We can see that we have a lot of collisions using SimHash, but this is expected, since many users share similar preferences and our choice of hashing algorithm is intentional
 - SimHash is computationally inexpensive by design, not caring too much about hash collisions
 
-## Defining a limited number of clusters for demonstration purposes
+## Defining a limited number of cohorts for demonstration purposes
+
+Ideally, a cohort groups together a large number of users interested in similar things so that we can correctly target advertising that interests that group of people.
+
+Next, we will limit the number of cohorts arbitrarily to five so that we can visually identify common preferences. In a real scenario, we would have another type of "hash grouping" to meet privacy and performance requirements.
+
 ```python
 transformed_df["cluster"] = pd.cut(transformed_df["hash"], bins=5, labels=["1", "2", "3", "4", "5"])
 results = transformed_df.drop(columns='hash').groupby('cluster').mean()
 weighted_results = results / results.mean()
 ```
 
-## Visualizing the clusters
+## Visualizing the cohorts
 ```python
 def plot_cluster_wordcloud(cluster_name):
     cluster_text = weighted_results.loc[weighted_results.index == str(cluster_name)].to_dict(orient='records')[0]
@@ -134,7 +139,7 @@ def plot_cluster_wordcloud(cluster_name):
     plt.axis("off");
 ```
 
-### Cluster 1
+### Cohort 1
 > Action, Adventure, Western, IMAX
 
 ```python
@@ -143,7 +148,7 @@ plot_cluster_wordcloud(1)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_1.png" alt="cluster_1">
 
-### Cluster 2
+### Cohort 2
 > Drama, Romance
 
 ```python
@@ -152,7 +157,7 @@ plot_cluster_wordcloud(2)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_2.png" alt="cluster_2">
 
-### Cluster 3
+### Cohort 3
 > Crime, Documentary, Mistery, Film-Noir
 
 ```python
@@ -161,7 +166,7 @@ plot_cluster_wordcloud(3)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_3.png" alt="cluster_3">
 
-### Cluster 4
+### Cohort 4
 > Horror, Sci-Fi, Thriller
 
 ```python
@@ -170,7 +175,7 @@ plot_cluster_wordcloud(4)
 
 <img src="{{ site.url }}{{ site.baseurl }}/images/floc_experiment/cluster_4.png" alt="cluster_4">
 
-### Cluster 5
+### Cohort 5
 > Animation, Children, Comedy, Fantasy, Musical
 
 ```python
