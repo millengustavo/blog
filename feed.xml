@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-03-27T09:27:16-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/food-photographer-jennifer-pallian-OfdDiqx8Cz8-unsplash.jpg&quot; alt=&quot;cookie_photo&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="https://millengustavo.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://millengustavo.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-04-04T16:43:37-05:00</updated><id>https://millengustavo.github.io/blog/feed.xml</id><title type="html">Gustavo Millen</title><subtitle>Data Science and Machine Learning blog.</subtitle><entry><title type="html">IBGE Censo - Associando Localização com Setores Censitários</title><link href="https://millengustavo.github.io/blog/dados%20p%C3%BAblicos/machine%20learning/python/data%20science/2021/04/04/ibge-censo-cep-coordenadas.html" rel="alternate" type="text/html" title="IBGE Censo - Associando Localização com Setores Censitários" /><published>2021-04-04T00:00:00-05:00</published><updated>2021-04-04T00:00:00-05:00</updated><id>https://millengustavo.github.io/blog/dados%20p%C3%BAblicos/machine%20learning/python/data%20science/2021/04/04/ibge-censo-cep-coordenadas</id><content type="html" xml:base="https://millengustavo.github.io/blog/dados%20p%C3%BAblicos/machine%20learning/python/data%20science/2021/04/04/ibge-censo-cep-coordenadas.html">&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/ibge_censo/geospatial_plot.png&quot; alt=&quot;geospatial_plot&quot; /&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;o-censo-do-ibge&quot;&gt;O Censo do IBGE&lt;/h1&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Em 2010, o IBGE realizou o XII Censo Demográfico, que se constituiu no grande retrato em extensão e profundidade da população brasileira e das suas características sócio-econômicas e, ao mesmo tempo, na base sobre a qual deverá se assentar todo o planejamento público e privado da próxima década. 
+O Censo 2010 é um retrato de corpo inteiro do país com o perfil da população e as características de seus domicílios, ou seja, ele nos diz como somos, onde estamos e como vivemos.” - &lt;a href=&quot;https://censo2010.ibge.gov.br/sobre-censo.html&quot;&gt;https://censo2010.ibge.gov.br/sobre-censo.html&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Para tomar decisões mais assertivas baseadas em dados, dependemos de informações diversas e ricas. Um dado que comumente é requisitado ao usuário para o fornecimento de serviços é o código postal (CEP) ou algum identificador de localização (coordenadas geográficas, endereço, etc). Preservando a privacidade do usuário, esse dado é armazenado com precisão reduzida, mas ainda tem muito valor por levar a associações esclarecedoras, ainda que aproximadas.&lt;/p&gt;
+
+&lt;p&gt;Do Censo de 2010 do IBGE, temos os códigos dos setores censitários, seus polígonos baseados em coordenadas que delimitam regiões brasileiras, e as mais variadas respostas a perguntas sócio-econômicas. Entre essas respostas temos, por exemplo, a renda, o número de pessoas, o número de banheiros nos domicílios, entre outros. Essas informações são de 2010, portanto alguns ajustes devem ser feitos nas análises.&lt;/p&gt;
+
+&lt;h1 id=&quot;geopandas&quot;&gt;GeoPandas&lt;/h1&gt;
+
+&lt;p&gt;Para utilizarmos os dados do Censo com dados de localização uma ferramenta poderosa, o GeoPandas, permite que façamos o Spatial Join, associando pontos de coordenadas (longitude e latitude) aos seus respectivos polígonos e consequentemente ao seu código de setor censitário. As análises seguintes são feitas com um simples join dos agregados usando o código de setor censitário como chave.&lt;/p&gt;
+
+&lt;h1 id=&quot;dataset-no-kaggle&quot;&gt;Dataset no Kaggle&lt;/h1&gt;
+
+&lt;p&gt;Disponibilizei no Kaggle um exemplo de aplicação com CEP, coordenadas, código de setor censitário e renda per capita aproximada. 
+&lt;a href=&quot;https://www.kaggle.com/silveiragustavo/ibge-censo-cep-coordenadas-renda-per-capita&quot;&gt;https://www.kaggle.com/silveiragustavo/ibge-censo-cep-coordenadas-renda-per-capita&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;O código usado para construir essa base também está aberto no meu Github:
+&lt;a href=&quot;https://github.com/millengustavo/ibge-censo-cep-coordenadas&quot;&gt;https://github.com/millengustavo/ibge-censo-cep-coordenadas&lt;/a&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;fairness-em-machine-learning&quot;&gt;Fairness em Machine Learning&lt;/h1&gt;
+
+&lt;p&gt;É sempre válido lembrar que o analista/cientista que manipula esses dados tem a responsabilidade moral e ética de tratar os indivíduos de forma igualitária ou de forma correta/razoável, o chamado &lt;strong&gt;Fairness&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Isso é especialmente importante para algoritmos de Machine Learning cujas decisões podem privar determinados indivíduos do acesso a serviços ou oportunidades. Esse tema é crucial para a construção de um futuro mais justo. Como introdução aos estudos no tema recomendo a talk da Tatyana Zabanova, &lt;a href=&quot;https://www.youtube.com/watch?v=LWt4LZmpasc&quot;&gt;“Fairness em Machine Learning Nubank ML Meetup”&lt;/a&gt;.&lt;/p&gt;</content><author><name></name></author><summary type="html"></summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/ibge_censo/geospatial_plot.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/ibge_censo/geospatial_plot.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Federated Learning of Cohorts (FLoC) - Google’s solution for interest based advertising in a world without third-party cookies</title><link href="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html" rel="alternate" type="text/html" title="Federated Learning of Cohorts (FLoC) - Google's solution for interest based advertising in a world without third-party cookies" /><published>2021-03-14T00:00:00-06:00</published><updated>2021-03-14T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment</id><content type="html" xml:base="https://millengustavo.github.io/blog/advertising/machine%20learning/python/data%20science/2021/03/14/floc-experiment.html">&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/floc_experiment/food-photographer-jennifer-pallian-OfdDiqx8Cz8-unsplash.jpg&quot; alt=&quot;cookie_photo&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;Photo by &lt;a href=&quot;https://unsplash.com/@foodess?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Food Photographer | Jennifer Pallian&lt;/a&gt; on &lt;a href=&quot;/s/photos/cookie?utm_source=unsplash&amp;amp;utm_medium=referral&amp;amp;utm_content=creditCopyText&quot;&gt;Unsplash&lt;/a&gt;&lt;/p&gt;
 
@@ -4214,317 +4243,4 @@ def run_model(data):
 
 &lt;h1 id=&quot;reference&quot;&gt;Reference:&lt;/h1&gt;
 
-&lt;p&gt;Willink, Jocko. Leadership Strategy and Tactics: Field Manual. &lt;a href=&quot;https://www.amazon.com/Leadership-Strategy-Tactics-Field-Manual/dp/1250226848&quot;&gt;https://www.amazon.com/Leadership-Strategy-Tactics-Field-Manual/dp/1250226848&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">What makes leadership so hard is dealing with people, and people are crazy. And the craziest person a leader has to deal with is themselves.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/leadership/leadership_book_cover.jpg" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/leadership/leadership_book_cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry><entry><title type="html">Causal Impact: state-space models in settings where a randomized experiment is unavailable</title><link href="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html" rel="alternate" type="text/html" title="Causal Impact: state-space models in settings where a randomized experiment is unavailable" /><published>2020-02-19T00:00:00-06:00</published><updated>2020-02-19T00:00:00-06:00</updated><id>https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact</id><content type="html" xml:base="https://millengustavo.github.io/blog/data%20science/machine%20learning/causality/statistics/2020/02/19/causalimpact.html">&lt;p&gt;&lt;strong&gt;TL;DR&lt;/strong&gt;: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://github.com/millengustavo/trends-causal-impact/blob/master/causal-searches.ipynb&quot;&gt;Jupyter notebook with the code for this post&lt;/a&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
-
-&lt;p&gt;At work, you are responsible for making many decisions that can impact aspects of your business in different ways. Most of the time, there are simple approaches to measure the impact of these decisions.&lt;/p&gt;
-
-&lt;p&gt;You launched an advertising campaign and, looking at sales that increased by 5% a month later, concluded that your campaign was a success. Right? Well, did you do a random experiment? Did you consider other factors such as seasonality or sales trend?&lt;/p&gt;
-
-&lt;p&gt;Similar to this scenario, there are a plethora of other cases in which we may be interested in measuring the causal impact of the action.&lt;/p&gt;
-
-&lt;h2 id=&quot;causal-impact-by-google&quot;&gt;Causal Impact by Google&lt;/h2&gt;
-
-&lt;p&gt;There are some complex aspects of infering the causality of an intervention. In 2015 some awesome researchers from Google, published a paper entitled: “&lt;em&gt;INFERRING CAUSAL IMPACT USING BAYESIAN STRUCTURAL TIME-SERIES MODELS&lt;/em&gt;”.&lt;/p&gt;
-
-&lt;p&gt;Along with the paper they also introduced &lt;a href=&quot;https://google.github.io/CausalImpact/CausalImpact.html&quot;&gt;CausalImpact&lt;/a&gt;, an R package (there is also a &lt;a href=&quot;https://github.com/dafiti/causalimpact&quot;&gt;Python port by Dafiti&lt;/a&gt;) that implements their approach. In this tutorial we are going to use the Python version.&lt;/p&gt;
-
-&lt;p&gt;Quoting directly from the abstract of the paper:&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;This paper proposes to infer causal impact on the basis of a diffusion-regression state-space model that &lt;strong&gt;predicts the counterfactual market response in a synthetic control that would have occurred had no intervention taken place&lt;/strong&gt;. In contrast to classical difference-in-differences schemes, state-space models make it possible to (i) infer the temporal evolution of attributable impact, (ii) incorporate empirical priors on the parameters in a fully Bayesian treatment, and (iii) flexibly accommodate multiple sources of variation, including local trends, seasonality and the time-varying influence of contemporaneous covariates&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;measuring-the-causal-impact-of-mentioning-an-unusual-term-on-a-popular-brazilian-tv-show&quot;&gt;Measuring the causal impact of mentioning an unusual term on a popular brazilian TV show&lt;/h2&gt;
-
-&lt;h2 id=&quot;context&quot;&gt;Context&lt;/h2&gt;
-&lt;p&gt;Big Brother Brasil (BBB) is an international TV show that is popular in Brazil and broadcast on prime time open television. One of the participants suggested, live, that another participant search Google for an unusual term that she had spoken. The unusual word was “sororidade” (“sorority”).&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm&quot;&gt;Many&lt;/a&gt; &lt;a href=&quot;https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88&quot;&gt;media&lt;/a&gt; &lt;a href=&quot;https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892&quot;&gt;outlets&lt;/a&gt; later reported that the episode caused searches for the term to increase 250%.&lt;/p&gt;
-
-&lt;p&gt;The episode took place on February 9, 2020 between 9 pm and 10 pm Brazilian time.&lt;/p&gt;
-
-&lt;p&gt;Let’s investigate the causality of the intervention in increasing interest in the term based on Google trends.&lt;/p&gt;
-
-&lt;h2 id=&quot;1-gathering-the-data&quot;&gt;1. Gathering the data&lt;/h2&gt;
-
-&lt;p&gt;We are going to download the data from Google Trends.&lt;/p&gt;
-
-&lt;p&gt;There are two main ways of doing this:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;We can navigate to the &lt;a href=&quot;https://trends.google.com/trends/?geo=BR&quot;&gt;website&lt;/a&gt; and specify which term we are looking for, the region and timeframe&lt;/li&gt;
-  &lt;li&gt;We can do this directly in Python, using a third-party library such as &lt;a href=&quot;https://github.com/GeneralMills/pytrends&quot;&gt;pytrends&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To install &lt;code class=&quot;highlighter-rouge&quot;&gt;pytrends&lt;/code&gt;, switch to your preferred environment and run the command:&lt;/p&gt;
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pip &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;pytrends
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;From the presentation of the causal impact, the author of the package suggests that we use between 5 and 10 related time series that can help to model the behavior of our time series of interest.&lt;/p&gt;
-
-&lt;p&gt;Therefore, we are going to download some common Brazilian terms in the same period that may help our Bayesian structural time series model to understand the search behavior of our target term.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pytrends.request&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TrendReq&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;pytrends&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TrendReq&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'pt-BR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tz&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;kw_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sororidade&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;futebol&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;carro&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;temperatura&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;restaurante&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pytrends&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build_payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kw_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeframe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2020-02-06T08 2020-02-13T07&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;# the interest_over_time() method returns a pandas DataFrame
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pytrends&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interest_over_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;date&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;sororidade&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;futebol&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;carro&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;temperatura&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;restaurante&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;isPartial&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2020-02-06 08:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;1&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;9&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2020-02-06 09:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;11&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;6&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2020-02-06 10:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;7&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;8&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2020-02-06 11:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;8&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;17&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;10&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2020-02-06 12:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;0&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;10&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;22&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;2-organizing-the-data&quot;&gt;2. Organizing the data&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;isPartial&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;figsize&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;9&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;sns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;despine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ylabel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Interest over time (Google Trends)&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;plt&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;xticks&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rotation&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/interest_over_time.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# changing the zeros to 0.1 so the model converge
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sororidade&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;sororidade&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;apply&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;lambda&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;3-causal-impact&quot;&gt;3. Causal Impact&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;pre_period&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2020-02-09T22:00:00.000000000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;post_period&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2020-02-09T23:00:00.000000000&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CausalImpact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pre_period&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post_period&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Calling the summary method on the CausalImpact object we obtain a numerical summary of the analysis.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/ci_summary.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'report'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;For additional guidance about the correct interpretation of the summary table, the package provides a verbal interpretation, printed using the same method but with &lt;code class=&quot;highlighter-rouge&quot;&gt;output=&quot;report&quot;&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/ci_report.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Explaining the plots, in the package documentation:&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;“By default, the plot contains three panels. The first panel shows the data and a counterfactual prediction for the post-treatment period. The second panel shows the difference between observed data and counterfactual predictions. This is the pointwise causal effect, as estimated by the model. The third panel adds up the pointwise contributions from the second panel, resulting in a plot of the cumulative effect of the intervention.”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/sororidade_plots.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Just by looking at the &lt;em&gt;sorority&lt;/em&gt; interest over time plot we may have concluded that it was obvious the causal effect.&lt;/p&gt;
-
-&lt;p&gt;In addition, the CausalImpact report is somewhat misleading: our series had a lot of zeros, as it is an unusual term and we have counted the metrics of interest from Google trends over time. Because of this, all changes are greatly expanded, and this reflects the increase of &lt;code class=&quot;highlighter-rouge&quot;&gt;+6735.8%&lt;/code&gt; in the response variable.&lt;/p&gt;
-
-&lt;p&gt;Let’s look at another example to consolidate our understanding.&lt;/p&gt;
-
-&lt;h1 id=&quot;another-example---amazon-rainforest-burns&quot;&gt;Another example - Amazon rainforest burns&lt;/h1&gt;
-
-&lt;h2 id=&quot;context-1&quot;&gt;Context&lt;/h2&gt;
-&lt;p&gt;From &lt;a href=&quot;https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019&quot;&gt;wikipedia&lt;/a&gt;:&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;“The forest fires in the Amazon in 2019 were a series of forest fires that affected South America, mainly Brazil. At least 161.236 fires were recorded in the country from January to October 2019, 45% more compared to the same period in 2018, which reached 84% in August”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Also from the same article:&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;“&lt;strong&gt;On August 11, Amazonas declared a state of emergency&lt;/strong&gt;. NASA images showed that on August 13, smoke from fires was visible from space […]”&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;We will set August 11, 2019 as the intervention period for our causality study.&lt;/p&gt;
-
-&lt;h2 id=&quot;causal-impact&quot;&gt;Causal Impact&lt;/h2&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;kw_list&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Amazônia&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Pantanal&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Cerrado&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Caatinga&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Pampas&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;pytrends&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;build_payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kw_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timeframe&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'2019-03-01 2020-01-01'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pytrends&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interest_over_time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;date&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Amazônia&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Pantanal&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Cerrado&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Caatinga&lt;/th&gt;
-      &lt;th style=&quot;text-align: right&quot;&gt;Pampas&lt;/th&gt;
-      &lt;th style=&quot;text-align: left&quot;&gt;isPartial&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2019-03-03 00:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;3&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;12&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;39&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;2&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;14&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2019-03-10 00:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;12&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;42&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2019-03-17 00:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;5&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;43&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;14&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2019-03-24 00:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;5&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;42&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;15&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;2019-03-31 00:00:00&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;5&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;42&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;4&lt;/td&gt;
-      &lt;td style=&quot;text-align: right&quot;&gt;13&lt;/td&gt;
-      &lt;td style=&quot;text-align: left&quot;&gt;False&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/iot_amazon.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;isPartial&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;pre_period&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;min&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2019-08-11&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;post_period&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;datetime64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;2019-09-22&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;np&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;index&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;values&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)),&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CausalImpact&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pre_period&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;post_period&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/amazon_summary.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;summary&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;output&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'report'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/amazon_report.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;ci&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;plot&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://millengustavo.github.io/blog/images/causal_impact/amazon_plots.png&quot; alt=&quot;visual&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Here we have something closer to what we find on a daily basis, but still a little exaggerated.&lt;/p&gt;
-
-&lt;p&gt;We see that the percentage increase in the response variable after the intervention was &lt;code class=&quot;highlighter-rouge&quot;&gt;+51.24%&lt;/code&gt; and this change was statistically significant.&lt;/p&gt;
-
-&lt;h2 id=&quot;final-thoughts&quot;&gt;Final thoughts&lt;/h2&gt;
-
-&lt;p&gt;The examples shown here help to illustrate the concept and API of the package.&lt;/p&gt;
-
-&lt;p&gt;I invite you to go further and try to create business scenarios in which this type of report can be useful. At work, I had no trouble finding these scenarios and it is your duty, as a data scientist, to provide data-driven value where you deem it appropriate.&lt;/p&gt;
-
-&lt;h4 id=&quot;references&quot;&gt;References&lt;/h4&gt;
-&lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://google.github.io/CausalImpact/CausalImpact.html&quot;&gt;https://google.github.io/CausalImpact/CausalImpact.html&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/dafiti/causalimpact&quot;&gt;https://github.com/dafiti/causalimpact&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm&quot;&gt;https://www.uol.com.br/universa/noticias/redacao/2020/02/11/sororidade-buscas-no-google-crescem-250-apos-fala-de-manu-gavassi-no-bbb.htm&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88&quot;&gt;https://www.huffpostbrasil.com/entry/sororidade-manu-gavassi_br_5e442423c5b61b84d3438b88&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892&quot;&gt;https://emais.estadao.com.br/noticias/tv,bbb-20-buscas-por-sororidade-no-google-sobem-250-apos-fala-de-manu-gavassi,70003193892&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019&quot;&gt;https://pt.wikipedia.org/wiki/Inc%C3%AAndios_florestais_na_Amaz%C3%B4nia_em_2019&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">TL;DR: There are ways of measuring the causal impact of some business intervention even in scenarios where a randomized experiment is unavailable. In this post we investigated the increase in Google trends popularity index of some search terms caused by different interventions. The same logic can be applied in business contexts such as the impact of a new product launch, the onset of an advertising campaign and other problems in economics, epidemiology, biology among others.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/causal_impact/amazon_plots_cover.png" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
+&lt;p&gt;Willink, Jocko. Leadership Strategy and Tactics: Field Manual. &lt;a href=&quot;https://www.amazon.com/Leadership-Strategy-Tactics-Field-Manual/dp/1250226848&quot;&gt;https://www.amazon.com/Leadership-Strategy-Tactics-Field-Manual/dp/1250226848&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><summary type="html">What makes leadership so hard is dealing with people, and people are crazy. And the craziest person a leader has to deal with is themselves.</summary><media:thumbnail xmlns:media="http://search.yahoo.com/mrss/" url="https://millengustavo.github.io/blog/images/leadership/leadership_book_cover.jpg" /><media:content medium="image" url="https://millengustavo.github.io/blog/images/leadership/leadership_book_cover.jpg" xmlns:media="http://search.yahoo.com/mrss/" /></entry></feed>
