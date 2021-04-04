@@ -13,13 +13,15 @@ image: "/images/ibge_censo/geospatial_plot.png"
 > "Em 2010, o IBGE realizou o XII Censo Demográfico, que se constituiu no grande retrato em extensão e profundidade da população brasileira e das suas características sócio-econômicas e, ao mesmo tempo, na base sobre a qual deverá se assentar todo o planejamento público e privado da próxima década. 
 > O Censo 2010 é um retrato de corpo inteiro do país com o perfil da população e as características de seus domicílios, ou seja, ele nos diz como somos, onde estamos e como vivemos." - [https://censo2010.ibge.gov.br/sobre-censo.html](https://censo2010.ibge.gov.br/sobre-censo.html)
 
-Para tomar decisões mais assertivas baseadas em dados, dependemos de informações diversas e ricas. Um dado que comumente é requisitado ao usuário para o fornecimento de serviços é o código postal (CEP) ou algum identificador de localização (coordenadas geográficas, endereço, etc). Preservando a privacidade do usuário, esse dado é armazenado com precisão reduzida, mas ainda tem muito valor por levar a associações esclarecedoras, ainda que aproximadas. 
+Para tomar decisões mais assertivas baseadas em dados, dependemos de informações diversas e ricas. Um dado que é comumente requisitado ao usuário para o fornecimento de serviços é o código postal (CEP) ou algum identificador de localização (coordenadas geográficas, endereço, etc). Esse dado deve ser armazenado com precisão reduzida para preservar a privacidade do usuário, mas ainda tem muito valor por levar a associações esclarecedoras, ainda que aproximadas. 
 
-Do Censo de 2010 do IBGE, temos os códigos dos setores censitários, seus polígonos baseados em coordenadas que delimitam regiões brasileiras, e as mais variadas respostas a perguntas sócio-econômicas. Entre essas respostas temos, por exemplo, a renda, o número de pessoas, o número de banheiros nos domicílios, entre outros. Essas informações são de 2010, portanto alguns ajustes devem ser feitos nas análises. 
+Do Censo de 2010 do IBGE, temos os códigos dos setores censitários, seus polígonos baseados em coordenadas que delimitam regiões brasileiras, e as mais variadas respostas a perguntas sócio-econômicas. Entre essas respostas temos por exemplo a renda, o número de pessoas, o número de banheiros nos domicílios, entre outros. Essas informações são de 2010, portanto alguns ajustes devem ser feitos nas análises. 
 
 # GeoPandas
 
-Para utilizarmos os dados do Censo com dados de localização uma ferramenta poderosa, o GeoPandas, permite que façamos o Spatial Join, associando pontos de coordenadas (longitude e latitude) aos seus respectivos polígonos e consequentemente ao seu código de setor censitário. As análises seguintes são feitas com um simples join dos agregados usando o código de setor censitário como chave. 
+Para utilizarmos os dados do Censo com dados de localização podemos utilizar uma ferramenta poderosa, o *GeoPandas*. Ele permite que façamos o Spatial Join, associando pontos de coordenadas (longitude e latitude) aos seus respectivos polígonos e consequentemente ao seu código de setor censitário. 
+
+Com os códigos para cada localização, as análises posteriores podem ser feitas com um simples join dos agregados usando o código de setor censitário como chave. 
 
 # Dataset no Kaggle 
 
