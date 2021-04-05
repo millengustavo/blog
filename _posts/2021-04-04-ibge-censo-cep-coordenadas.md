@@ -19,7 +19,7 @@ Do Censo de 2010 do IBGE, temos os códigos dos setores censitários, seus polí
 
 # GeoPandas
 
-Para utilizarmos os dados do Censo com dados de localização podemos utilizar uma ferramenta poderosa, o *GeoPandas*. Ele permite que façamos o Spatial Join, associando pontos de coordenadas (longitude e latitude) aos seus respectivos polígonos e consequentemente ao seu código de setor censitário. 
+Para utilizarmos os dados do Censo com dados de localização podemos utilizar uma ferramenta poderosa, o *GeoPandas*. Ele permite que façamos o [Spatial Join](https://geopandas.org/gallery/spatial_joins.html), associando pontos de coordenadas (longitude e latitude) aos seus respectivos polígonos e consequentemente ao seu código de setor censitário. 
 
 Com os códigos para cada localização, as análises posteriores podem ser feitas com um simples join dos agregados usando o código de setor censitário como chave. 
 
